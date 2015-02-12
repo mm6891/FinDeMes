@@ -34,6 +34,27 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
     public final String TIPO_MOVIMIENTO_GASTO = "GASTO";
     public final String TIPO_MOVIMIENTO_INGRESO = "INGRESO";
 
+    public boolean checkedPlus;
+
+    public boolean isCheckedPlus() {
+        return checkedPlus;
+    }
+
+    public void setCheckedPlus(boolean checkedPlus) {
+        this.checkedPlus = checkedPlus;
+    }
+
+    public boolean isCheckedMinus() {
+        return checkedMinus;
+    }
+
+    public void setCheckedMinus(boolean checkedMinus) {
+        this.checkedMinus = checkedMinus;
+    }
+
+    public boolean checkedMinus;
+
+
     public MovimientoAdapter(Context context, ArrayList<MovimientoItem> items) {
         this.context = context;
         this.items = items;
@@ -105,17 +126,18 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
 
             @Override
             protected Filter.FilterResults performFiltering(CharSequence constraint) {
+                FilterResults results = new FilterResults();
 
-                if(constraint.toString().equals(TIPO_MOVIMIENTO_GASTO)){
-                    //ya esta filtrado
-                    if(items.size() == itemsFiltrado.size()){
+               /* if(constraint.toString().equals(TIPO_MOVIMIENTO_GASTO) && isCheckedMinus()
+                        || constraint.toString().equals(TIPO_MOVIMIENTO_INGRESO) && isCheckedPlus()){
+                    //ya esta filtrado, reiniciamos el filtro
+                   results.values = items;
+                    results.count = items.size();
 
-                    }
-                }
+                    return results;
+                }*/
 
                 String filterString = constraint.toString().toLowerCase();
-
-                FilterResults results = new FilterResults();
 
                 final ArrayList<MovimientoItem> list = items;
 

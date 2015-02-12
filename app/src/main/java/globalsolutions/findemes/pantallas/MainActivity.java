@@ -417,15 +417,21 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
 
     //eventos click filtro gasto e ingreso
     public void filtraGasto(View v){
-        //si no esta chequeado mostramos todos los gastos
-        boolean isChecked = ((CheckBox) findViewById(R.id.cbIconPlus)).isChecked();
-
+        ((CheckBox) findViewById(R.id.cbIconPlus)).setChecked(false);
         ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(TIPO_MOVIMIENTO_GASTO);
+        //despues de aplicar el filtro obtenemos el estado de los checks y los pasamos al apapter
+        //boolean isCheckedPlus = ((CheckBox) findViewById(R.id.cbIconPlus)).isChecked();
+        //boolean isCheckedMinus = ((CheckBox) findViewById(R.id.cbIconMinus)).isChecked();
+        //((MovimientoAdapter) listViewMovs.getAdapter()).setCheckedMinus(isCheckedMinus);
+        //((MovimientoAdapter) listViewMovs.getAdapter()).setCheckedPlus(isCheckedPlus);
     }
     public void filtraIngreso(View v){
-        //si no esta chequeado mostramos todos los ingresos
-        boolean isChecked = ((CheckBox) findViewById(R.id.cbIconMinus)).isChecked();
-
+        ((CheckBox) findViewById(R.id.cbIconMinus)).setChecked(false);
         ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(TIPO_MOVIMIENTO_INGRESO);
+        //despues de aplicar el filtro obtenemos el estado de los checks y los pasamos al apapter
+        //boolean isCheckedPlus = ((CheckBox) findViewById(R.id.cbIconPlus)).isChecked();
+        //boolean isCheckedMinus = ((CheckBox) findViewById(R.id.cbIconMinus)).isChecked();
+        //((MovimientoAdapter) listViewMovs.getAdapter()).setCheckedMinus(isCheckedMinus);
+        //((MovimientoAdapter) listViewMovs.getAdapter()).setCheckedPlus(isCheckedPlus);
     }
 }
