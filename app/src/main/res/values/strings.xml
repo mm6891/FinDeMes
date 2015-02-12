@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FinDeMes</string>
+    <string name="action_settings">Settings</string>
+    <string name="Categoria">Categoría:</string>
+    <string name="Gasto">Gasto:</string>
+    <string name="Decripcion">Decripción:</string>
+    <string name="Ingreso">Ingreso:</string>
+    <string name="Guardar">Guardar:</string>
+    <string name="Movimiento_accion">Editar:</string>
+</resources>
