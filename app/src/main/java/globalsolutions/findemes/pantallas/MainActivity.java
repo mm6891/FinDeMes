@@ -37,33 +37,20 @@ import globalsolutions.findemes.database.dao.GastoDAO;
 import globalsolutions.findemes.database.dao.GrupoGastoDAO;
 import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
 import globalsolutions.findemes.database.dao.IngresoDAO;
+import globalsolutions.findemes.database.dao.MovimientoDAO;
 import globalsolutions.findemes.database.model.Gasto;
 import globalsolutions.findemes.database.model.GrupoGasto;
 import globalsolutions.findemes.database.model.GrupoIngreso;
 import globalsolutions.findemes.database.model.Ingreso;
 import globalsolutions.findemes.database.model.MovimientoItem;
+import globalsolutions.findemes.database.util.Constantes;
 import globalsolutions.findemes.database.util.MyDatabaseHelper;
 
 
 public class MainActivity extends FragmentActivity implements DatePickerDialog.OnDateSetListener {
 
-    private final String MENU_GASTOS = "Gasto";
-    private final String MENU_INGRESOS = "Ingreso";
-    private final String MENU_MOVIMIENTOS = "Movimientos";
-    private final String MENU_INFORMES = "Informes";
-    private final String MENU_REGISTROS = "Movimientos frecuentes";
-	private final String MENU_OPCIONES = "Opciones";
-
-    public final String TIPO_MOVIMIENTO_GASTO = "GASTO";
-    public final String TIPO_MOVIMIENTO_INGRESO = "INGRESO";
-
-    public final String ACCION_ELIMINAR = "Eliminar";
-    public final String ACCION_MODIFICAR = "Modificar";
-
     private ListView listView;
-    private RelativeLayout relativeLayout;
     private Spinner categoria;
-    private Button btnGuardar;
     private ListView listViewMovs;
     private ImageButton datePicker;
 
@@ -75,12 +62,12 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
         listView = (ListView) findViewById(R.id.listView);
 
         List items = new ArrayList();
-        items.add(new ClipData.Item(MENU_GASTOS));
-        items.add(new ClipData.Item(MENU_INGRESOS));
-        items.add(new ClipData.Item(MENU_MOVIMIENTOS));
-        items.add(new ClipData.Item(MENU_INFORMES));
-        items.add(new ClipData.Item(MENU_REGISTROS));
-		items.add(new ClipData.Item(MENU_OPCIONES));
+        items.add(new ClipData.Item(Constantes.MENU_GASTOS));
+        items.add(new ClipData.Item(Constantes.MENU_INGRESOS));
+        items.add(new ClipData.Item(Constantes.MENU_MOVIMIENTOS));
+        items.add(new ClipData.Item(Constantes.MENU_INFORMES));
+        items.add(new ClipData.Item(Constantes.MENU_REGISTROS));
+		items.add(new ClipData.Item(Constantes.MENU_OPCIONES));
 
         // Sets the data behind this ListView
         listView.setAdapter(new ItemAdapter(this, items));
@@ -97,29 +84,27 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
                                     long id) {
 
                 ClipData.Item itemSeleccionado = (ClipData.Item) listView.getItemAtPosition(position);
-                if(itemSeleccionado.getText().equals(MENU_INGRESOS)){
+                if(itemSeleccionado.getText().equals(Constantes.MENU_INGRESOS)){
                     int optionId = R.layout.ingreso_list_item;
                     modificaMenu(optionId);
                     //cargamos categorias ingreso
                     addCategoriasIngreso();
-                    btnGuardar = (Button) findViewById(R.id.btnGuardarIngreso);
                     setFechaHora();
                 }
 
-                if(itemSeleccionado.getText().equals(MENU_GASTOS)){
+                if(itemSeleccionado.getText().equals(Constantes.MENU_GASTOS)){
                     int optionId = R.layout.gasto_list_item;
                     modificaMenu(optionId);
                     //cargamos categorias gasto
                     addCategoriasGasto();
-                    btnGuardar = (Button) findViewById(R.id.btnGuardarGasto);
                     setFechaHora();
                 }
 
-                if(itemSeleccionado.getText().equals(MENU_MOVIMIENTOS)){
+                if(itemSeleccionado.getText().equals(Constantes.MENU_MOVIMIENTOS)){
                     int optionId = R.layout.movimientos_list_item;
                     modificaMenu(optionId);
                     //recuperamos movimientos
-                    final ArrayList<MovimientoItem> movs = cargaMovimientos();
+                    final ArrayList<MovimientoItem> movs = new MovimientoDAO().cargaMovimientos(getApplicationContext());
                     if(movs.size() <= 0 )
                         showToast("NO HAY MOVIMIENTOS ACTUALMENTE");
                     listViewMovs = (ListView) findViewById(R.id.listViewMov);
@@ -130,7 +115,7 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
                                                 long id) {
 
                             final MovimientoItem movSeleccionado = (MovimientoItem) listViewMovs.getItemAtPosition(position);
-                            final CharSequence[] items = {ACCION_MODIFICAR, ACCION_ELIMINAR};
+                            final CharSequence[] items = {Constantes.ACCION_MODIFICAR, Constantes.ACCION_ELIMINAR};
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                             builder.setTitle("OPCIONES");
@@ -139,14 +124,14 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
                                     //Eliminar Movimiento
                                     String accion = (String)items[item];
 									boolean realizado;
-                                    if(accion.equals(ACCION_ELIMINAR)) {
+                                    if(accion.equals(Constantes.ACCION_ELIMINAR)) {
                                         if(movSeleccionado.getTipoMovimiento().trim().equals("GASTO")){
                                             GastoDAO gastoDAO = new GastoDAO(MainActivity.this);
                                             realizado = gastoDAO.deleteGasto(movSeleccionado.getDescripcion(), movSeleccionado.getValor(),
                                                     movSeleccionado.getFecha());
 											if(realizado) {
                                                 showToast("¡Gasto eliminado!");
-                                                ArrayList<MovimientoItem> newList = cargaMovimientos();
+                                                ArrayList<MovimientoItem> newList = new MovimientoDAO().cargaMovimientos(getApplicationContext());
                                                 ((MovimientoAdapter)listViewMovs.getAdapter()).updateReceiptsList(newList);
                                             }
 											else
@@ -158,7 +143,7 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
                                                     movSeleccionado.getFecha());
 											if(realizado) {
                                                 showToast("¡Ingreso eliminado!");
-                                                ArrayList<MovimientoItem> newList = cargaMovimientos();
+                                                ArrayList<MovimientoItem> newList = new MovimientoDAO().cargaMovimientos(getApplicationContext());
                                                 ((MovimientoAdapter)listViewMovs.getAdapter()).updateReceiptsList(newList);
                                             }
 											else
@@ -367,34 +352,6 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
         }
     }
 
-    public ArrayList<MovimientoItem> cargaMovimientos(){
-        MovimientoItem[] movsArray;
-        Gasto[] gastos = new GastoDAO(this.getApplicationContext()).selectGastos();
-        Ingreso[] ingresos = new IngresoDAO(this.getApplicationContext()).selectIngresos();
-        movsArray = new MovimientoItem[gastos.length + ingresos.length];
-        for(int i = 0 ; i < gastos.length ; i++){
-            MovimientoItem m = new MovimientoItem();
-            m.setValor(gastos[i].getValor());
-            m.setDescripcion(gastos[i].getDescripcion());
-            m.setFecha(gastos[i].getFecha());
-            m.setCategoria(gastos[i].getGrupoGasto().getGrupo());
-            m.setTipoMovimiento(TIPO_MOVIMIENTO_GASTO);
-            movsArray[i] = m;
-        }
-
-        for(int j = 0 ; j < ingresos.length ; j++){
-            MovimientoItem m = new MovimientoItem();
-            m.setValor(ingresos[j].getValor());
-            m.setDescripcion(ingresos[j].getDescripcion());
-            m.setFecha(ingresos[j].getFecha());
-            m.setCategoria(ingresos[j].getGrupoIngreso().getGrupo());
-            m.setTipoMovimiento(TIPO_MOVIMIENTO_INGRESO);
-            movsArray[gastos.length + j] = m;
-        }
-
-        return new ArrayList(Arrays.asList(movsArray));
-    }
-
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getFragmentManager(),"Fecha");
@@ -417,21 +374,17 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
 
     //eventos click filtro gasto e ingreso
     public void filtraGasto(View v){
-        ((CheckBox) findViewById(R.id.cbIconPlus)).setChecked(false);
-        ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(TIPO_MOVIMIENTO_GASTO);
-        //despues de aplicar el filtro obtenemos el estado de los checks y los pasamos al apapter
-        //boolean isCheckedPlus = ((CheckBox) findViewById(R.id.cbIconPlus)).isChecked();
-        //boolean isCheckedMinus = ((CheckBox) findViewById(R.id.cbIconMinus)).isChecked();
-        //((MovimientoAdapter) listViewMovs.getAdapter()).setCheckedMinus(isCheckedMinus);
-        //((MovimientoAdapter) listViewMovs.getAdapter()).setCheckedPlus(isCheckedPlus);
+        //((CheckBox) findViewById(R.id.cbIconPlus)).setChecked(false);
+        if(!((CheckBox) findViewById(R.id.cbIconMinus)).isChecked())
+            ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_FILTRO_RESETEO);
+        else
+            ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_MOVIMIENTO_GASTO);
     }
     public void filtraIngreso(View v){
-        ((CheckBox) findViewById(R.id.cbIconMinus)).setChecked(false);
-        ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(TIPO_MOVIMIENTO_INGRESO);
-        //despues de aplicar el filtro obtenemos el estado de los checks y los pasamos al apapter
-        //boolean isCheckedPlus = ((CheckBox) findViewById(R.id.cbIconPlus)).isChecked();
-        //boolean isCheckedMinus = ((CheckBox) findViewById(R.id.cbIconMinus)).isChecked();
-        //((MovimientoAdapter) listViewMovs.getAdapter()).setCheckedMinus(isCheckedMinus);
-        //((MovimientoAdapter) listViewMovs.getAdapter()).setCheckedPlus(isCheckedPlus);
+        //((CheckBox) findViewById(R.id.cbIconMinus)).setChecked(false);
+        if(!((CheckBox) findViewById(R.id.cbIconPlus)).isChecked())
+            ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_FILTRO_RESETEO);
+        else
+            ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_MOVIMIENTO_INGRESO);
     }
 }

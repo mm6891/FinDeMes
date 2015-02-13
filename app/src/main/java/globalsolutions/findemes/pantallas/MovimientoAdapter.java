@@ -17,6 +17,7 @@ import java.util.List;
 
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.GastoDAO;
+import globalsolutions.findemes.database.dao.MovimientoDAO;
 import globalsolutions.findemes.database.model.Gasto;
 import globalsolutions.findemes.database.model.MovimientoItem;
 
@@ -31,28 +32,10 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
     private ArrayList<MovimientoItem> itemsFiltrado;
     private ItemFilter mFilter = new ItemFilter();
 
-    public final String TIPO_MOVIMIENTO_GASTO = "GASTO";
-    public final String TIPO_MOVIMIENTO_INGRESO = "INGRESO";
-
-    public boolean checkedPlus;
-
-    public boolean isCheckedPlus() {
-        return checkedPlus;
-    }
-
-    public void setCheckedPlus(boolean checkedPlus) {
-        this.checkedPlus = checkedPlus;
-    }
-
-    public boolean isCheckedMinus() {
-        return checkedMinus;
-    }
-
-    public void setCheckedMinus(boolean checkedMinus) {
-        this.checkedMinus = checkedMinus;
-    }
-
-    public boolean checkedMinus;
+    //tipos de filtro
+    public final String TIPO_FILTRO_GASTO = "GASTO";
+    public final String TIPO_FILTRO_INGRESO = "INGRESO";
+    public final String TIPO_FILTRO_RESETEO = "TODO";
 
 
     public MovimientoAdapter(Context context, ArrayList<MovimientoItem> items) {
@@ -126,36 +109,37 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
 
             @Override
             protected Filter.FilterResults performFiltering(CharSequence constraint) {
+
+                items = new MovimientoDAO().cargaMovimientos(context);
                 FilterResults results = new FilterResults();
 
-               /* if(constraint.toString().equals(TIPO_MOVIMIENTO_GASTO) && isCheckedMinus()
-                        || constraint.toString().equals(TIPO_MOVIMIENTO_INGRESO) && isCheckedPlus()){
-                    //ya esta filtrado, reiniciamos el filtro
-                   results.values = items;
+                if(constraint.toString().equals(TIPO_FILTRO_RESETEO)){
+
+                    results.values = items;
                     results.count = items.size();
 
-                    return results;
-                }*/
-
-                String filterString = constraint.toString().toLowerCase();
-
-                final ArrayList<MovimientoItem> list = items;
-
-                int count = list.size();
-                final ArrayList<MovimientoItem> nlist = new ArrayList<MovimientoItem>(count);
-
-                String filterableString;
-
-                for (int i = 0; i < count; i++) {
-                    filterableString = list.get(i).getTipoMovimiento();
-                    if (filterableString.toLowerCase().trim().equals(filterString.trim())) {
-                        nlist.add(list.get(i));
-                    }
                 }
+                else {
+                    String filterString = constraint.toString().toLowerCase();
 
-                results.values = nlist;
-                results.count = nlist.size();
+                    final ArrayList<MovimientoItem> list = items;
 
+                    int count = list.size();
+                    final ArrayList<MovimientoItem> nlist = new ArrayList<MovimientoItem>(count);
+
+                    String filterableString;
+
+                    for (int i = 0; i < count; i++) {
+                        filterableString = list.get(i).getTipoMovimiento();
+                        if (filterableString.toLowerCase().trim().equals(filterString.trim())) {
+                            nlist.add(list.get(i));
+                        }
+                    }
+
+                    results.values = nlist;
+                    results.count = nlist.size();
+
+                }
                 return results;
             }
 
