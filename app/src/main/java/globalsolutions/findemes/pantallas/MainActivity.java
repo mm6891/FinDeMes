@@ -2,6 +2,7 @@ package globalsolutions.findemes.pantallas;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.ClipData;
 import android.content.DialogInterface;
@@ -26,6 +27,8 @@ import android.widget.Toast;
 
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,6 +54,8 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
 
     private ListView listView;
     private Spinner categoria;
+    private ArrayAdapter<String> dataAdapter;
+
     private ListView listViewMovs;
     private ImageButton datePicker;
 
@@ -111,7 +116,7 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
                     listViewMovs.setAdapter(new MovimientoAdapter(getApplicationContext(), movs));
                     listViewMovs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position,
+                        public void onItemClick(AdapterView<?> parent, final View view, int position,
                                                 long id) {
 
                             final MovimientoItem movSeleccionado = (MovimientoItem) listViewMovs.getItemAtPosition(position);
@@ -149,12 +154,22 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
                                                 showToast("No se ha podido eliminar el ingreso");
                                         }
                                     }
-                                    if (accion.equals(Constantes.ACCION_MODIFICAR)) {
-
-                                    }
+                                        if (accion.equals(Constantes.ACCION_MODIFICAR)) {
+                                            if (movSeleccionado.getTipoMovimiento().trim().equals("GASTO")) {
+                                                // custom dialog gasto
+                                                //se cargan las propiedades del item seleccionado
+                                                /*((EditText) findViewById(R.id.txtGasto)).setText(movSeleccionado.getValor());
+                                                ((EditText) findViewById(R.id.txtDecripcion)).setText(movSeleccionado.getDescripcion());
+                                                int spinnerPostion = dataAdapter.getPosition(movSeleccionado.getCategoria());
+                                                ((Spinner) findViewById(R.id.spCategoriaGasto)).setSelection(spinnerPostion);
+                                                ((TextView) findViewById(R.id.tvDia)).setText(movSeleccionado.getFecha().split(" ")[0]);
+                                                ((TextView) findViewById(R.id.tvHora)).setText(movSeleccionado.getFecha().split(" ")[1]);*/
+                                                // Create an instance of the dialog fragment and show it
+                                                showGastoDialog(view);
+                                            }
+                                        }
                                     }
                                 }
-
                                 ).
 
                                 show();
@@ -274,7 +289,7 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
         String[] categoriasGastos = grupoGastoDAO.selectGrupos();
         list = Arrays.asList(categoriasGastos);
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+        dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoria.setAdapter(dataAdapter);
@@ -290,7 +305,7 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
         String[] categoriasIngresos = grupoIngresoDAO.selectGrupos();
         list = Arrays.asList(categoriasIngresos);
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+       dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categoria.setAdapter(dataAdapter);
@@ -316,6 +331,10 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
             Gasto nuevoGasto = new Gasto();
             nuevoGasto.setDescripcion(descripcion);
             nuevoGasto.setValor(valor);
+            String fecha = (String) ((TextView) findViewById(R.id.tvDia)).getText();
+            String hora = (String) ((TextView) findViewById(R.id.tvHora)).getText();
+            nuevoGasto.setFecha(fecha + " " + hora);
+
             GrupoGasto grupo = new GrupoGasto();
             grupo.setGrupo(categoriaGasto);
             nuevoGasto.setGrupoGasto(grupo);
@@ -345,6 +364,10 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
             Ingreso nuevoIngreso = new Ingreso();
             nuevoIngreso.setDescripcion(descripcion);
             nuevoIngreso.setValor(valor);
+            String fecha = (String) ((TextView) findViewById(R.id.tvDia)).getText();
+            String hora = (String) ((TextView) findViewById(R.id.tvHora)).getText();
+            nuevoIngreso.setFecha(fecha + " " + hora);
+
             GrupoIngreso grupo = new GrupoIngreso();
             grupo.setGrupo(categoriaIngreso);
             nuevoIngreso.setGrupoIngreso(grupo);
@@ -358,9 +381,15 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
         }
     }
 
+    //dialogos
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getFragmentManager(),"Fecha");
+    }
+
+    public void showGastoDialog(View v) {
+        DialogFragment newFragment = new GastoDialog();
+        newFragment.show(getFragmentManager(),"Modificar Gasto");
     }
 
     @Override

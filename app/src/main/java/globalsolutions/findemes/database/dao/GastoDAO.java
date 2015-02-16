@@ -77,4 +77,5 @@ public class GastoDAO {
                 GASTOS_DESC + "='" + descripcion +"' AND " + GASTOS_VALOR + "='" + valor+ "' AND " +
                         GASTOS_FECHA + "='" + fecha + "'", null) > 0;
     }
+
 }
