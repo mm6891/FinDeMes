@@ -79,7 +79,7 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
         TextView tvfecha = (TextView) rowView.findViewById(R.id.tvFechaMov);
         ImageView ivIconMov = (ImageView) rowView.findViewById(R.id.ivIcon);
 
-        MovimientoItem item = this.items.get(position);
+        MovimientoItem item = this.itemsFiltrado.get(position);
         tvDescr.setText(item.getDescripcion());
         tvvalor.setText(item.getValor());
         tvgrupo.setText(item.getCategoria());

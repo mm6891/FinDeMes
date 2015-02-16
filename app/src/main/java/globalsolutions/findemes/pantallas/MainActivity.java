@@ -122,38 +122,44 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
                             builder.setItems(items, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int item) {
                                     //Eliminar Movimiento
-                                    String accion = (String)items[item];
-									boolean realizado;
-                                    if(accion.equals(Constantes.ACCION_ELIMINAR)) {
-                                        if(movSeleccionado.getTipoMovimiento().trim().equals("GASTO")){
+                                    String accion = (String) items[item];
+                                    boolean realizado;
+
+                                    if (accion.equals(Constantes.ACCION_ELIMINAR)) {
+                                        if (movSeleccionado.getTipoMovimiento().trim().equals("GASTO")) {
                                             GastoDAO gastoDAO = new GastoDAO(MainActivity.this);
                                             realizado = gastoDAO.deleteGasto(movSeleccionado.getDescripcion(), movSeleccionado.getValor(),
                                                     movSeleccionado.getFecha());
-											if(realizado) {
+                                            if (realizado) {
                                                 showToast("¡Gasto eliminado!");
                                                 ArrayList<MovimientoItem> newList = new MovimientoDAO().cargaMovimientos(getApplicationContext());
-                                                ((MovimientoAdapter)listViewMovs.getAdapter()).updateReceiptsList(newList);
-                                            }
-											else
+                                                ((MovimientoAdapter) listViewMovs.getAdapter()).updateReceiptsList(newList);
+                                            } else
                                                 showToast("No se ha podido eliminar el gasto");
                                         }
-                                        if(movSeleccionado.getTipoMovimiento().trim().equals("INGRESO")){
+                                        if (movSeleccionado.getTipoMovimiento().trim().equals("INGRESO")) {
                                             IngresoDAO ingresoDAO = new IngresoDAO(MainActivity.this);
                                             realizado = ingresoDAO.deleteIngreso(movSeleccionado.getDescripcion(), movSeleccionado.getValor(),
                                                     movSeleccionado.getFecha());
-											if(realizado) {
+                                            if (realizado) {
                                                 showToast("¡Ingreso eliminado!");
                                                 ArrayList<MovimientoItem> newList = new MovimientoDAO().cargaMovimientos(getApplicationContext());
-                                                ((MovimientoAdapter)listViewMovs.getAdapter()).updateReceiptsList(newList);
-                                            }
-											else
+                                                ((MovimientoAdapter) listViewMovs.getAdapter()).updateReceiptsList(newList);
+                                            } else
                                                 showToast("No se ha podido eliminar el ingreso");
                                         }
                                     }
+                                    if (accion.equals(Constantes.ACCION_MODIFICAR)) {
+
+                                    }
+                                    }
                                 }
-                            }).show();
-                        }
-                    });
+
+                                ).
+
+                                show();
+                            }
+                        });
                 }
             }
         });
@@ -374,14 +380,14 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
 
     //eventos click filtro gasto e ingreso
     public void filtraGasto(View v){
-        //((CheckBox) findViewById(R.id.cbIconPlus)).setChecked(false);
+        ((CheckBox) findViewById(R.id.cbIconPlus)).setChecked(false);
         if(!((CheckBox) findViewById(R.id.cbIconMinus)).isChecked())
             ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_FILTRO_RESETEO);
         else
             ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_MOVIMIENTO_GASTO);
     }
     public void filtraIngreso(View v){
-        //((CheckBox) findViewById(R.id.cbIconMinus)).setChecked(false);
+        ((CheckBox) findViewById(R.id.cbIconMinus)).setChecked(false);
         if(!((CheckBox) findViewById(R.id.cbIconPlus)).isChecked())
             ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_FILTRO_RESETEO);
         else
