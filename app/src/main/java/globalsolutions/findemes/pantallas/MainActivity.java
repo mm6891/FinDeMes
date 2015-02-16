@@ -156,16 +156,14 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
                                     }
                                         if (accion.equals(Constantes.ACCION_MODIFICAR)) {
                                             if (movSeleccionado.getTipoMovimiento().trim().equals("GASTO")) {
-                                                // custom dialog gasto
-                                                //se cargan las propiedades del item seleccionado
-                                                /*((EditText) findViewById(R.id.txtGasto)).setText(movSeleccionado.getValor());
-                                                ((EditText) findViewById(R.id.txtDecripcion)).setText(movSeleccionado.getDescripcion());
-                                                int spinnerPostion = dataAdapter.getPosition(movSeleccionado.getCategoria());
-                                                ((Spinner) findViewById(R.id.spCategoriaGasto)).setSelection(spinnerPostion);
-                                                ((TextView) findViewById(R.id.tvDia)).setText(movSeleccionado.getFecha().split(" ")[0]);
-                                                ((TextView) findViewById(R.id.tvHora)).setText(movSeleccionado.getFecha().split(" ")[1]);*/
-                                                // Create an instance of the dialog fragment and show it
-                                                showGastoDialog(view);
+                                                Bundle bundle = new Bundle();
+                                                bundle.putString("valor", movSeleccionado.getValor());
+                                                bundle.putString("descripcion", movSeleccionado.getDescripcion());
+                                                bundle.putString("categoria", movSeleccionado.getCategoria());
+                                                bundle.putString("fecha", movSeleccionado.getFecha());
+
+                                                // Create an instance of the dialog fragment and show it*/
+                                                showGastoDialog(view, bundle);
                                             }
                                         }
                                     }
@@ -387,8 +385,9 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
         newFragment.show(getFragmentManager(),"Fecha");
     }
 
-    public void showGastoDialog(View v) {
+    public void showGastoDialog(View v, Bundle bundle) {
         DialogFragment newFragment = new GastoDialog();
+        newFragment.setArguments(bundle);
         newFragment.show(getFragmentManager(),"Modificar Gasto");
     }
 
