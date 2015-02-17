@@ -19,10 +19,12 @@ public class ItemAdapter extends BaseAdapter {
 
     private Context context;
     private List<ClipData.Item> items;
+    private final Integer[] imageId;
 
-    public ItemAdapter(Context context, List<ClipData.Item> items) {
+    public ItemAdapter(Context context, List<ClipData.Item> items, Integer[] imageID) {
         this.context = context;
         this.items = items;
+        this.imageId = imageID;
     }
 
     @Override
@@ -53,12 +55,13 @@ public class ItemAdapter extends BaseAdapter {
         }
 
         // Set data into the view.
-        //ImageView ivItem = (ImageView) rowView.findViewById(R.id.ivItem);
+        ImageView ivItem = (ImageView) rowView.findViewById(R.id.ivItem);
         TextView tvTitle = (TextView) rowView.findViewById(R.id.tvTitle);
+
 
         ClipData.Item item = this.items.get(position);
         tvTitle.setText(item.getText());
-        //ivItem.setImageResource(item.getImage());
+        ivItem.setImageResource(imageId[position]);
 
         return rowView;
     }

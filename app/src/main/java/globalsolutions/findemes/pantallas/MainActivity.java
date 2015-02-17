@@ -59,6 +59,15 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
     private ListView listViewMovs;
     private ImageButton datePicker;
 
+    Integer[] imageId = {
+            R.drawable.gasto,
+            R.drawable.ingreso,
+            R.drawable.movimiento,
+            R.drawable.report,
+            R.drawable.movimiento,
+            R.drawable.options
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +84,7 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
 		items.add(new ClipData.Item(Constantes.MENU_OPCIONES));
 
         // Sets the data behind this ListView
-        listView.setAdapter(new ItemAdapter(this, items));
+        listView.setAdapter(new ItemAdapter(this, items, imageId));
 
         //cargamos categorias gasto inicialmente, al iniciar la app
         addCategoriasGasto();
@@ -168,9 +177,7 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
                                         }
                                     }
                                 }
-                                ).
-
-                                show();
+                                ).show();
                             }
                         });
                 }
