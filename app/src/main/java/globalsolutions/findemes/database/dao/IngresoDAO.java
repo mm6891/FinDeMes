@@ -76,4 +76,33 @@ public class IngresoDAO {
                 INGRESOS_DESC + "='" + descripcion +"' AND " + INGRESOS_VALOR + "='" + valor+ "' AND " +
                         INGRESOS_FECHA + "='" + fecha + "'", null) > 0;
     }
+
+    public boolean existeIngreso(Ingreso ing){
+        boolean ret = false;
+        String[] cols = new String[] {INGRESOS_GRUPO, INGRESOS_DESC, INGRESOS_VALOR,INGRESOS_FECHA};
+        String[] args = new String[] {ing.getGrupoIngreso().getGrupo(),ing.getDescripcion(),ing.getValor(),ing.getFecha()};
+
+        Cursor mCursor = database.query(true, INGRESOS_TABLA,cols,
+                INGRESOS_GRUPO + "=? AND " + INGRESOS_DESC+"=? AND " + INGRESOS_VALOR + "=? AND " + INGRESOS_FECHA + "=?"
+                , args, null, null, null, null);
+
+        if(mCursor.getCount() > 0)
+            ret = true;
+        return ret;
+    }
+
+    public boolean updateIngreso(Ingreso ing){
+        String[] cols = new String[] {INGRESOS_GRUPO, INGRESOS_DESC, INGRESOS_VALOR,INGRESOS_FECHA};
+        String[] args = new String[] {ing.getGrupoIngreso().getGrupo(),ing.getDescripcion(),ing.getValor(),ing.getFecha()};
+
+        //Establecemos los campos-valores a actualizar
+        ContentValues valores = new ContentValues();
+        valores.put(INGRESOS_GRUPO,ing.getGrupoIngreso().getGrupo());
+        valores.put(INGRESOS_DESC,ing.getDescripcion());
+        valores.put(INGRESOS_VALOR,ing.getValor());
+        valores.put(INGRESOS_FECHA,ing.getFecha());
+
+        int rows = database.update(INGRESOS_TABLA,valores,INGRESOS_GRUPO + "=? AND " + INGRESOS_DESC+"=? AND " + INGRESOS_VALOR + "=? AND " + INGRESOS_FECHA + "=?",args);
+        return rows > 0;
+    }
 }

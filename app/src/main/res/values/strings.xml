@@ -7,6 +7,6 @@
     <string name="Gasto">Gasto:</string>
     <string name="Decripcion">Decripción:</string>
     <string name="Ingreso">Ingreso:</string>
-    <string name="Guardar">Guardar:</string>
-    <string name="Movimiento_accion">Editar:</string>
+    <string name="Guardar">Guardar</string>
+    <string name="Guardar_MOD">Actualizar</string>
 </resources>

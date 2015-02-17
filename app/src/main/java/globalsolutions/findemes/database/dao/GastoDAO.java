@@ -78,4 +78,33 @@ public class GastoDAO {
                         GASTOS_FECHA + "='" + fecha + "'", null) > 0;
     }
 
+    public boolean existeGasto(Gasto g){
+        boolean ret = false;
+        String[] cols = new String[] {GASTOS_GRUPO, GASTOS_DESC, GASTOS_VALOR,GASTOS_FECHA};
+        String[] args = new String[] {g.getGrupoGasto().getGrupo(),g.getDescripcion(),g.getValor(),g.getFecha()};
+
+        Cursor mCursor = database.query(true, GASTOS_TABLA,cols,
+                GASTOS_GRUPO + "=? AND " + GASTOS_DESC+"=? AND " + GASTOS_VALOR + "=? AND " + GASTOS_FECHA + "=?"
+                , args, null, null, null, null);
+
+        if(mCursor.getCount() > 0)
+            ret = true;
+        return ret;
+    }
+
+    public boolean updateGasto(Gasto g){
+        String[] cols = new String[] {GASTOS_GRUPO, GASTOS_DESC, GASTOS_VALOR,GASTOS_FECHA};
+        String[] args = new String[] {g.getGrupoGasto().getGrupo(),g.getDescripcion(),g.getValor(),g.getFecha()};
+
+        //Establecemos los campos-valores a actualizar
+        ContentValues valores = new ContentValues();
+        valores.put(GASTOS_GRUPO,g.getGrupoGasto().getGrupo());
+        valores.put(GASTOS_DESC,g.getDescripcion());
+        valores.put(GASTOS_VALOR,g.getValor());
+        valores.put(GASTOS_FECHA,g.getFecha());
+
+        int rows = database.update(GASTOS_TABLA,valores,GASTOS_GRUPO + "=? AND " + GASTOS_DESC+"=? AND " + GASTOS_VALOR + "=? AND " + GASTOS_FECHA + "=?",args);
+        return rows > 0;
+    }
+
 }

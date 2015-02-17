@@ -164,15 +164,19 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
                                         }
                                     }
                                         if (accion.equals(Constantes.ACCION_MODIFICAR)) {
-                                            if (movSeleccionado.getTipoMovimiento().trim().equals("GASTO")) {
                                                 Bundle bundle = new Bundle();
                                                 bundle.putString("valor", movSeleccionado.getValor());
                                                 bundle.putString("descripcion", movSeleccionado.getDescripcion());
                                                 bundle.putString("categoria", movSeleccionado.getCategoria());
                                                 bundle.putString("fecha", movSeleccionado.getFecha());
 
+                                            if (movSeleccionado.getTipoMovimiento().trim().equals(Constantes.TIPO_MOVIMIENTO_GASTO)){
                                                 // Create an instance of the dialog fragment and show it*/
                                                 showGastoDialog(view, bundle);
+                                            }
+                                            else if (movSeleccionado.getTipoMovimiento().trim().equals(Constantes.TIPO_MOVIMIENTO_INGRESO)) {
+                                                // Create an instance of the dialog fragment and show it*/
+                                                showIngresoDialog(view, bundle);
                                             }
                                         }
                                     }
@@ -344,7 +348,11 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
             grupo.setGrupo(categoriaGasto);
             nuevoGasto.setGrupoGasto(grupo);
             GastoDAO gastoDAO = new GastoDAO(getApplicationContext());
-            gastoDAO.createRecords(nuevoGasto);
+            boolean existeGasto = gastoDAO.existeGasto(nuevoGasto);
+            if(existeGasto)
+                gastoDAO.updateGasto(nuevoGasto);
+            else
+                gastoDAO.createRecords(nuevoGasto);
             showToast("¡Gasto guardado!");
         }
         else{
@@ -377,6 +385,11 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
             grupo.setGrupo(categoriaIngreso);
             nuevoIngreso.setGrupoIngreso(grupo);
             IngresoDAO ingresoDAO = new IngresoDAO(getApplicationContext());
+            boolean existeIngeso = ingresoDAO.existeIngreso(nuevoIngreso);
+            if(existeIngeso)
+                ingresoDAO.updateIngreso(nuevoIngreso);
+            else
+                ingresoDAO.createRecords(nuevoIngreso);
             ingresoDAO.createRecords(nuevoIngreso);
             showToast("¡Ingreso guardado!");
         }
@@ -395,7 +408,13 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
     public void showGastoDialog(View v, Bundle bundle) {
         DialogFragment newFragment = new GastoDialog();
         newFragment.setArguments(bundle);
-        newFragment.show(getFragmentManager(),"Modificar Gasto");
+        newFragment.show(getFragmentManager(),"MODIFICACION");
+    }
+
+    public void showIngresoDialog(View v, Bundle bundle) {
+        DialogFragment newFragment = new IngresoDialog();
+        newFragment.setArguments(bundle);
+        newFragment.show(getFragmentManager(),"MODIFICACION");
     }
 
     @Override
