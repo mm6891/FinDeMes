@@ -3,7 +3,8 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="35">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".GastoActivity">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/lyLinear1"
         android:layout_width="match_parent"
@@ -12,11 +13,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Ingreso"
-            android:inputType="number"
+            android:text="@string/Gasto"
             android:layout_weight="1"/>
         <EditText
-            android:id="@+id/txtIngreso"
+            android:id="@+id/txtGasto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Categoria"
             android:layout_weight="1"/>
-        <Spinner android:id="@+id/spCategoriaIngreso"
+        <Spinner android:id="@+id/spCategoriaGasto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
@@ -97,10 +97,10 @@
         android:orientation="horizontal"
         android:layout_below="@+id/lyLinear5">
         <Button
-            android:id="@+id/btnGuardarIngreso"
+            android:id="@+id/btnGuardarGasto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="guardarIngreso"
+            android:onClick="guardarGasto"
             android:text="@string/Guardar"/>
     </LinearLayout>
 </RelativeLayout>

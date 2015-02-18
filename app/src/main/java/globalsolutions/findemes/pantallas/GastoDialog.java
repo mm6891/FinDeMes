@@ -7,21 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import globalsolutions.findemes.R;
-import globalsolutions.findemes.database.dao.GastoDAO;
-import globalsolutions.findemes.database.dao.GrupoGastoDAO;
-import globalsolutions.findemes.database.model.Gasto;
-import globalsolutions.findemes.database.model.GrupoGasto;
 
 /**
  * Created by manuel.molero on 16/02/2015.
@@ -32,7 +22,7 @@ public class GastoDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.gasto_list_item, container, false);
+        View view = inflater.inflate(R.layout.activity_gasto, container, false);
 
         //se cargan las propiedades del item seleccionado
         ((EditText) view.findViewById(R.id.txtGasto)).setText(getArguments().getString("valor"));

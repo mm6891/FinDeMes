@@ -16,6 +16,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".pantallas.GastoActivity"
+            android:label="@string/title_activity_gasto" >
+        </activity>
+        <activity
+            android:name=".pantallas.IngresoActivity"
+            android:label="@string/title_activity_ingreso" >
+        </activity>
+        <activity
+            android:name=".pantallas.MovimientosActivity"
+            android:label="@string/title_activity_ingreso" >
+        </activity>
     </application>
 
 </manifest>

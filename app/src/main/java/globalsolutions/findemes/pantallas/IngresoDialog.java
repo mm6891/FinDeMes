@@ -21,7 +21,7 @@ public class IngresoDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.ingreso_list_item, container, false);
+        View view = inflater.inflate(R.layout.activity_ingreso, container, false);
 
         //se cargan las propiedades del item seleccionado
         ((EditText) view.findViewById(R.id.txtIngreso)).setText(getArguments().getString("valor"));
