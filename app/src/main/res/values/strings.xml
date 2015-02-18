@@ -17,5 +17,7 @@
     <string name="title_activity_gasto">Gasto</string>
     <string name="title_activity_ingreso">Ingreso</string>
     <string name="title_activity_movimientos">Movimientos</string>
+    <string name="title_activity_borrar">borrar</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
