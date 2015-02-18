@@ -3,12 +3,24 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="35">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MovimientosActivity">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/lyBackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageButton android:id="@+id/btnBackButton"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:src="@drawable/back"/>
+    </LinearLayout>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/lyLinearFiltroMov"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_below="@+id/lyBackButton">
         <CheckBox
             android:id="@+id/cbIconPlus"
             android:button="@drawable/custom_plusfilter"

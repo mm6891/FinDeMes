@@ -1,5 +1,7 @@
 package globalsolutions.findemes.pantallas;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -49,7 +51,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
         //MOVIMIENTOS
-        btnMovimientos = (Button) findViewById(R.id.imgBtn10);
+        btnMovimientos = (Button) findViewById(R.id.imgBtn02);
         btnMovimientos.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MovimientosActivity.class);
@@ -122,5 +124,19 @@ public class MainActivity extends ActionBarActivity {
             // Don't forget to close database connection
             dbHelper.close();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("¿Salir?")
+                .setMessage("¿Esta seguro de abandonar la aplicación?")
+                .setNegativeButton("NO", null)
+                .setPositiveButton("SI", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        MainActivity.super.onBackPressed();
+                    }
+                }).create().show();
     }
 }

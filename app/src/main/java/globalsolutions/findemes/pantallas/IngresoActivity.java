@@ -2,6 +2,7 @@ package globalsolutions.findemes.pantallas;
 
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
@@ -37,6 +38,14 @@ public class IngresoActivity extends FragmentActivity implements DatePickerDialo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingreso);
+
+        //boton retroceder
+        ImageButton btnReturn = (ImageButton) findViewById(R.id.btnBackButton);
+        btnReturn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                backActivity();
+            }
+        });
 
         //cargamos el combo de categorias
         Spinner categoria = (Spinner) findViewById(R.id.spCategoriaIngreso);
@@ -142,5 +151,17 @@ public class IngresoActivity extends FragmentActivity implements DatePickerDialo
 
     public void showToast(String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        backActivity();
+    }
+
+    private void backActivity(){
+        Intent in = new Intent(IngresoActivity.this, MainActivity.class);
+        startActivity(in);
+        setResult(RESULT_OK);
+        finish();
     }
 }

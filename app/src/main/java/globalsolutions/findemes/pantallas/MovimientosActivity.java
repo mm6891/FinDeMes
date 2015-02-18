@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -30,6 +32,14 @@ public class MovimientosActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movimientos);
+
+        //boton retroceder
+        ImageButton btnReturn = (ImageButton) findViewById(R.id.btnBackButton);
+        btnReturn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                backActivity();
+            }
+        });
 
         //recuperamos movimientos
         final ArrayList<MovimientoItem> movs = new MovimientoDAO().cargaMovimientos(getApplicationContext());
@@ -130,5 +140,17 @@ public class MovimientosActivity extends Activity {
             ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_FILTRO_RESETEO);
         else
             ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_MOVIMIENTO_INGRESO);
+    }
+
+    @Override
+    public void onBackPressed() {
+        backActivity();
+    }
+
+    private void backActivity(){
+        Intent in = new Intent(MovimientosActivity.this, MainActivity.class);
+        startActivity(in);
+        setResult(RESULT_OK);
+        finish();
     }
 }
