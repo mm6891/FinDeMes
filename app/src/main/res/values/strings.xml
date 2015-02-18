@@ -3,10 +3,18 @@
 
     <string name="app_name">FinDeMes</string>
     <string name="action_settings">Settings</string>
+
     <string name="Categoria">Categoría:</string>
     <string name="Gasto">Gasto:</string>
     <string name="Decripcion">Decripción:</string>
     <string name="Ingreso">Ingreso:</string>
     <string name="Guardar">Guardar</string>
-    <string name="Guardar_MOD">Actualizar</string>
+
+    <string name="MENU_GASTOS">Gasto</string>
+    <string name="MENU_INGRESOS">Ingreso</string>
+    <string name="MENU_MOVIMIENTOS">Movimientos</string>
+    <string name="MENU_INFORMES">Informes</string>
+    <string name="MENU_REGISTROS">Movimientos frecuentes</string>
+    <string name="MENU_OPCIONES">Opciones</string>
+
 </resources>

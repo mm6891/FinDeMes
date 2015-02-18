@@ -177,9 +177,9 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
                                             else if (movSeleccionado.getTipoMovimiento().trim().equals(Constantes.TIPO_MOVIMIENTO_INGRESO)) {
                                                 // Create an instance of the dialog fragment and show it*/
                                                 showIngresoDialog(view, bundle);
-                                            }
                                         }
                                     }
+                                }
                                 }
                                 ).show();
                             }
@@ -390,7 +390,6 @@ public class MainActivity extends FragmentActivity implements DatePickerDialog.O
                 ingresoDAO.updateIngreso(nuevoIngreso);
             else
                 ingresoDAO.createRecords(nuevoIngreso);
-            ingresoDAO.createRecords(nuevoIngreso);
             showToast("¡Ingreso guardado!");
         }
         else{
