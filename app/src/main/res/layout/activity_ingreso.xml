@@ -3,33 +3,20 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".GastoActivity">
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/lyBackButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <ImageButton android:id="@+id/btnBackButton"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:src="@drawable/calendar"/>
-    </LinearLayout>
-
+    >
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/lyLinear1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/lyBackButton">
+        android:orientation="horizontal">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Gasto"
+            android:text="@string/Ingreso"
+            android:inputType="number"
             android:layout_weight="1"/>
         <EditText
-            android:id="@+id/txtGasto"
+            android:id="@+id/txtIngreso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="number"
@@ -47,7 +34,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Categoria"
             android:layout_weight="1"/>
-        <Spinner android:id="@+id/spCategoriaGasto"
+        <Spinner android:id="@+id/spCategoriaIngreso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
@@ -110,10 +97,10 @@
         android:orientation="horizontal"
         android:layout_below="@+id/lyLinear5">
         <Button
-            android:id="@+id/btnGuardarGasto"
+            android:id="@+id/btnGuardarIngreso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="guardarGasto"
+            android:onClick="guardarIngreso"
             android:text="@string/Guardar"/>
     </LinearLayout>
 </RelativeLayout>

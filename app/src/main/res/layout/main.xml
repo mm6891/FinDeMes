@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity2">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lyHeader">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/movimiento"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="35sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:text="TITULO"
+                android:layout_weight="1"/>
+    </LinearLayout>
+
+    <GridLayout
+        android:id="@+id/glMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:columnCount="2"
+        android:rowCount="3"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lyHeader">
+        <Button
+                android:id="@+id/imgBtn00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableTop="@drawable/gasto"
+                android:layout_gravity="top|center"
+                android:layout_margin="10dp"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:text="@string/MENU_GASTOS" />
+        <Button
+            android:id="@+id/imgBtn01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/ingreso"
+            android:layout_gravity="top|center"
+            android:layout_margin="10dp"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:text="@string/MENU_INGRESOS" />
+        <Button
+            android:id="@+id/imgBtn02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/movimiento"
+            android:layout_gravity="top|center"
+            android:layout_margin="10dp"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:text="@string/MENU_MOVIMIENTOS" />
+        <Button
+            android:id="@+id/imgBtn10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/report"
+            android:layout_gravity="top|center"
+            android:layout_margin="10dp"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:text="@string/MENU_INFORMES" />
+        <Button
+            android:id="@+id/imgBtn11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/movimiento"
+            android:layout_gravity="top|center"
+            android:layout_margin="10dp"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:text="@string/MENU_REGISTROS" />
+        <Button
+            android:id="@+id/imgBtn12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/options"
+            android:layout_gravity="top|center"
+            android:layout_margin="10dp"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:text="@string/MENU_OPCIONES" />
+
+        </GridLayout>
+    </RelativeLayout>
