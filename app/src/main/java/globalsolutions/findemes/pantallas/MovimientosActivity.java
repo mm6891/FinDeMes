@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -58,11 +59,12 @@ public class MovimientosActivity extends Activity {
         spFiltroMes.setAdapter(new ArrayAdapter<Meses>(this, android.R.layout.simple_spinner_item, Meses.values()));
         spFiltroMes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Object item = parent.getItemAtPosition(position);
-
+                filtraMes(view,position);
             }
             public void onNothingSelected(AdapterView<?> parent) {
-
+                int month = Calendar.getInstance().get(Calendar.MONTH);
+                //String mes = new DateFormatSymbols().getMonths()[month-1];
+                spFiltroMes.setSelection(month);
             }
         });
 
@@ -87,7 +89,8 @@ public class MovimientosActivity extends Activity {
                 }
                 tdy1 = Calendar.getInstance();
                 int year = tdy1.get(Calendar.YEAR);
-                anyos.add(String.valueOf(new Integer(year)));
+                if(!anyos.contains(String.valueOf(new Integer(year))))
+                    anyos.add(String.valueOf(new Integer(year)));
             }
             spFitroAnyo.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, anyos));
         }
@@ -192,10 +195,8 @@ public class MovimientosActivity extends Activity {
             ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_MOVIMIENTO_INGRESO);
     }
 
-    public void filtraMes(View v){
-        Meses mes = (Meses) ((Spinner) findViewById(R.id.spMeses)).getSelectedItem();
-        String value = mes.toString();
-         ((MovimientoAdapter)listViewMovs.getAdapter()).setMesSeleccionado(value);
+    public void filtraMes(View v, int mes){
+         ((MovimientoAdapter)listViewMovs.getAdapter()).setMesSeleccionado(mes);
         ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_FILTRO_MES);
     }
 

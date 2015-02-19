@@ -12,7 +12,9 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import globalsolutions.findemes.R;
@@ -20,6 +22,7 @@ import globalsolutions.findemes.database.dao.GastoDAO;
 import globalsolutions.findemes.database.dao.MovimientoDAO;
 import globalsolutions.findemes.database.model.Gasto;
 import globalsolutions.findemes.database.model.MovimientoItem;
+import globalsolutions.findemes.database.util.Constantes;
 
 /**
  * Created by manuel.molero on 04/02/2015.
@@ -32,16 +35,11 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
     private ArrayList<MovimientoItem> itemsFiltrado;
     private ItemFilter mFilter = new ItemFilter();
 
-    //tipos de filtro
-    public final String TIPO_FILTRO_GASTO = "GASTO";
-    public final String TIPO_FILTRO_INGRESO = "INGRESO";
-    public final String TIPO_FILTRO_RESETEO = "TODO";
-
-    private String mesSeleccionado = "";
-    public String getMesSeleccionado(){
+    private int mesSeleccionado;
+    public int getMesSeleccionado(){
         return mesSeleccionado;
     }
-    public void setMesSeleccionado(String mesSeleccionado){
+    public void setMesSeleccionado(int mesSeleccionado){
         this.mesSeleccionado = mesSeleccionado;
     }
 
@@ -120,11 +118,41 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                 items = new MovimientoDAO().cargaMovimientos(context);
                 FilterResults results = new FilterResults();
 
-                if(constraint.toString().equals(TIPO_FILTRO_RESETEO)){
+                if(constraint.toString().equals(Constantes.TIPO_FILTRO_RESETEO)){
 
                     results.values = items;
                     results.count = items.size();
 
+                }
+                else if(constraint.toString().equals(Constantes.TIPO_FILTRO_MES)){
+                    int mesSeleccionado1 = getMesSeleccionado();
+
+                    final ArrayList<MovimientoItem> list = itemsFiltrado;
+
+                    int count = list.size();
+                    final ArrayList<MovimientoItem> nlist = new ArrayList<MovimientoItem>(count);
+
+                    String filterableString;
+
+                    for (int i = 0; i < count; i++) {
+                        filterableString = list.get(i).getFecha();
+                        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                        java.util.Date d1 = null;
+                        Calendar tdy1;
+                        try {
+                            d1 = formato.parse(filterableString);
+                        } catch (java.text.ParseException e) {
+                            e.printStackTrace();
+                        }
+                        tdy1 = Calendar.getInstance();
+                        int mesIterable = tdy1.get(Calendar.MONTH);
+                        if (mesIterable == mesSeleccionado1) {
+                            nlist.add(list.get(i));
+                        }
+                    }
+
+                    results.values = nlist;
+                    results.count = nlist.size();
                 }
                 else {
                     String filterString = constraint.toString().toLowerCase();
