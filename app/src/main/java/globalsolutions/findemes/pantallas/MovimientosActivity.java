@@ -56,6 +56,16 @@ public class MovimientosActivity extends Activity {
         //cargamos meses
         spFiltroMes = (Spinner) findViewById(R.id.spMeses);
         spFiltroMes.setAdapter(new ArrayAdapter<Meses>(this, android.R.layout.simple_spinner_item, Meses.values()));
+        spFiltroMes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Object item = parent.getItemAtPosition(position);
+
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         spFitroAnyo = (Spinner) findViewById(R.id.spAnyos);
 
         //recuperamos movimientos
@@ -133,14 +143,14 @@ public class MovimientosActivity extends Activity {
                                     if (movSeleccionado.getTipoMovimiento().trim().equals(Constantes.TIPO_MOVIMIENTO_GASTO)){
                                         // Create an instance of the dialog fragment and show it*/
                                         showGastoDialog(view, bundle);
-                                        ArrayList<MovimientoItem> newList = new MovimientoDAO().cargaMovimientos(getApplicationContext());
-                                        ((MovimientoAdapter) listViewMovs.getAdapter()).updateReceiptsList(newList);
+                                        /*ArrayList<MovimientoItem> newList = new MovimientoDAO().cargaMovimientos(getApplicationContext());
+                                        ((MovimientoAdapter) listViewMovs.getAdapter()).updateReceiptsList(newList);*/
                                     }
                                     else if (movSeleccionado.getTipoMovimiento().trim().equals(Constantes.TIPO_MOVIMIENTO_INGRESO)) {
                                         // Create an instance of the dialog fragment and show it*/
                                         showIngresoDialog(view, bundle);
-                                        ArrayList<MovimientoItem> newList = new MovimientoDAO().cargaMovimientos(getApplicationContext());
-                                        ((MovimientoAdapter) listViewMovs.getAdapter()).updateReceiptsList(newList);
+                                        /*ArrayList<MovimientoItem> newList = new MovimientoDAO().cargaMovimientos(getApplicationContext());
+                                        ((MovimientoAdapter) listViewMovs.getAdapter()).updateReceiptsList(newList);*/
                                     }
                                 }
                             }
@@ -180,6 +190,13 @@ public class MovimientosActivity extends Activity {
             ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_FILTRO_RESETEO);
         else
             ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_MOVIMIENTO_INGRESO);
+    }
+
+    public void filtraMes(View v){
+        Meses mes = (Meses) ((Spinner) findViewById(R.id.spMeses)).getSelectedItem();
+        String value = mes.toString();
+         ((MovimientoAdapter)listViewMovs.getAdapter()).setMesSeleccionado(value);
+        ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_FILTRO_MES);
     }
 
     @Override

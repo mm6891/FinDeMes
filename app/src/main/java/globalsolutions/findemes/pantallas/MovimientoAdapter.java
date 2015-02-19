@@ -37,6 +37,13 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
     public final String TIPO_FILTRO_INGRESO = "INGRESO";
     public final String TIPO_FILTRO_RESETEO = "TODO";
 
+    private String mesSeleccionado = "";
+    public String getMesSeleccionado(){
+        return mesSeleccionado;
+    }
+    public void setMesSeleccionado(String mesSeleccionado){
+        this.mesSeleccionado = mesSeleccionado;
+    }
 
     public MovimientoAdapter(Context context, ArrayList<MovimientoItem> items) {
         this.context = context;
