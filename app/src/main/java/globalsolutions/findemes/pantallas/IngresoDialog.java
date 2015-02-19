@@ -34,7 +34,7 @@ public class IngresoDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.activity_ingreso, container, false);
+        final View view = inflater.inflate(R.layout.activity_ingreso_dialog, container, false);
         //cargamos el combo de categorias
         Spinner categoria = (Spinner) view.findViewById(R.id.spCategoriaIngreso);
 
@@ -49,12 +49,25 @@ public class IngresoDialog extends DialogFragment {
         categoria.setAdapter(dataAdapter);
 
         //se cargan las propiedades del item seleccionado
+        String valor = getArguments().getString("valor");
+        String descripcion = getArguments().getString("descripcion");
+        String categoriaStr = getArguments().getString("categoria");
+        String fecha = getArguments().getString("fecha");
+
         ((EditText) view.findViewById(R.id.txtIngreso)).setText(getArguments().getString("valor"));
         ((EditText) view.findViewById(R.id.txtDecripcion)).setText(getArguments().getString("descripcion"));
         int spinnerPostion = dataAdapter.getPosition(getArguments().getString("categoria"));
         categoria.setSelection(spinnerPostion);
         ((TextView) view.findViewById(R.id.tvDia)).setText(getArguments().getString("fecha").split(" ")[0]);
         ((TextView) view.findViewById(R.id.tvHora)).setText(getArguments().getString("fecha").split(" ")[1]);
+
+        final Ingreso aMod = new Ingreso();
+        aMod.setValor(valor);
+        aMod.setDescripcion(descripcion);
+        aMod.setFecha(fecha);
+        GrupoIngreso grupo = new GrupoIngreso();
+        grupo.setGrupo(categoriaStr);
+        aMod.setGrupoIngreso(grupo);
 
         Button btnModificar = (Button) view.findViewById(R.id.btnGuardarIngreso);
 
@@ -86,12 +99,14 @@ public class IngresoDialog extends DialogFragment {
                     grupo.setGrupo(categoriaIngreso);
                     nuevoIngreso.setGrupoIngreso(grupo);
                     IngresoDAO ingresoDAO = new IngresoDAO(view.getContext());
-                    boolean existeIngeso = ingresoDAO.existeIngreso(nuevoIngreso);
-                    if(existeIngeso)
-                        ingresoDAO.updateIngreso(nuevoIngreso);
+                    boolean actualizado = ingresoDAO.updateIngreso(aMod, nuevoIngreso);
+                    if(actualizado) {
+                        showToast(view.getContext(), "¡Ingreso guardado!");
+                        dismiss();
+                    }
+
                     else
-                        ingresoDAO.createRecords(nuevoIngreso);
-                    showToast(view.getContext(),"¡Ingreso guardado!");
+                        showToast(view.getContext(),"¡No se ha podido actualizar!");
                 }
                 else{
                     showToast(view.getContext(),"Debe seleccionar una categoría");

@@ -92,16 +92,16 @@ public class GastoDAO {
         return ret;
     }
 
-    public boolean updateGasto(Gasto g){
+    public boolean updateGasto(Gasto antiguo, Gasto nuevo){
         String[] cols = new String[] {GASTOS_GRUPO, GASTOS_DESC, GASTOS_VALOR,GASTOS_FECHA};
-        String[] args = new String[] {g.getGrupoGasto().getGrupo(),g.getDescripcion(),g.getValor(),g.getFecha()};
+        String[] args = new String[] {antiguo.getGrupoGasto().getGrupo(),antiguo.getDescripcion(),antiguo.getValor(),antiguo.getFecha()};
 
         //Establecemos los campos-valores a actualizar
         ContentValues valores = new ContentValues();
-        valores.put(GASTOS_GRUPO,g.getGrupoGasto().getGrupo());
-        valores.put(GASTOS_DESC,g.getDescripcion());
-        valores.put(GASTOS_VALOR,g.getValor());
-        valores.put(GASTOS_FECHA,g.getFecha());
+        valores.put(GASTOS_GRUPO,nuevo.getGrupoGasto().getGrupo());
+        valores.put(GASTOS_DESC,nuevo.getDescripcion());
+        valores.put(GASTOS_VALOR,nuevo.getValor());
+        valores.put(GASTOS_FECHA,nuevo.getFecha());
 
         int rows = database.update(GASTOS_TABLA,valores,GASTOS_GRUPO + "=? AND " + GASTOS_DESC+"=? AND " + GASTOS_VALOR + "=? AND " + GASTOS_FECHA + "=?",args);
         return rows > 0;

@@ -91,16 +91,16 @@ public class IngresoDAO {
         return ret;
     }
 
-    public boolean updateIngreso(Ingreso ing){
+    public boolean updateIngreso(Ingreso antiguo, Ingreso nuevo){
         String[] cols = new String[] {INGRESOS_GRUPO, INGRESOS_DESC, INGRESOS_VALOR,INGRESOS_FECHA};
-        String[] args = new String[] {ing.getGrupoIngreso().getGrupo(),ing.getDescripcion(),ing.getValor(),ing.getFecha()};
+        String[] args = new String[] {antiguo.getGrupoIngreso().getGrupo(),antiguo.getDescripcion(),antiguo.getValor(),antiguo.getFecha()};
 
         //Establecemos los campos-valores a actualizar
         ContentValues valores = new ContentValues();
-        valores.put(INGRESOS_GRUPO,ing.getGrupoIngreso().getGrupo());
-        valores.put(INGRESOS_DESC,ing.getDescripcion());
-        valores.put(INGRESOS_VALOR,ing.getValor());
-        valores.put(INGRESOS_FECHA,ing.getFecha());
+        valores.put(INGRESOS_GRUPO,nuevo.getGrupoIngreso().getGrupo());
+        valores.put(INGRESOS_DESC,nuevo.getDescripcion());
+        valores.put(INGRESOS_VALOR,nuevo.getValor());
+        valores.put(INGRESOS_FECHA,nuevo.getFecha());
 
         int rows = database.update(INGRESOS_TABLA,valores,INGRESOS_GRUPO + "=? AND " + INGRESOS_DESC+"=? AND " + INGRESOS_VALOR + "=? AND " + INGRESOS_FECHA + "=?",args);
         return rows > 0;

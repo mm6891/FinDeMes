@@ -16,11 +16,26 @@
             android:src="@drawable/back"/>
     </LinearLayout>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/lyLinearFiltroMov0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lyBackButton">
+        <Spinner android:id="@+id/spMeses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <Spinner android:id="@+id/spAnyos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        </LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/lyLinearFiltroMov"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@+id/lyBackButton">
+        android:layout_below="@+id/lyLinearFiltroMov0">
         <CheckBox
             android:id="@+id/cbIconPlus"
             android:button="@drawable/custom_plusfilter"
@@ -35,6 +50,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="filtraGasto"/>
+        <Spinner android:id="@+id/spCategoriaMovimiento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
     </LinearLayout>
     <ListView
         android:id="@+id/listViewMov"

@@ -19,4 +19,6 @@ public class Constantes {
     public static final CharSequence ACCION_ELIMINAR = "Eliminar";
     public static final CharSequence ACCION_MODIFICAR = "Modificar";
 
+    
+
 }

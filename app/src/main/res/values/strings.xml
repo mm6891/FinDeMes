@@ -8,6 +8,7 @@
     <string name="Decripcion">Decripción:</string>
     <string name="Ingreso">Ingreso:</string>
     <string name="Guardar">Guardar</string>
+    <string name="Modificar">Modificar</string>
     <string name="MENU_GASTOS">Gasto</string>
     <string name="MENU_INGRESOS">Ingreso</string>
     <string name="MENU_MOVIMIENTOS">Movimientos</string>

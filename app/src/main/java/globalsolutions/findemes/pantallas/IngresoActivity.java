@@ -121,11 +121,7 @@ public class IngresoActivity extends FragmentActivity implements DatePickerDialo
             grupo.setGrupo(categoriaIngreso);
             nuevoIngreso.setGrupoIngreso(grupo);
             IngresoDAO ingresoDAO = new IngresoDAO(getApplicationContext());
-            boolean existeIngeso = ingresoDAO.existeIngreso(nuevoIngreso);
-            if(existeIngeso)
-                ingresoDAO.updateIngreso(nuevoIngreso);
-            else
-                ingresoDAO.createRecords(nuevoIngreso);
+            ingresoDAO.createRecords(nuevoIngreso);
             showToast("¡Ingreso guardado!");
         }
         else{

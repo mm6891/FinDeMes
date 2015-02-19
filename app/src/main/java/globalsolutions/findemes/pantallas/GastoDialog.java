@@ -3,6 +3,7 @@ package globalsolutions.findemes.pantallas;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +36,7 @@ public class GastoDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.activity_gasto, container, false);
+        final View view = inflater.inflate(R.layout.activity_gasto_dialog, container, false);
 
         //cargamos el combo de categorias
         Spinner categoria = (Spinner) view.findViewById(R.id.spCategoriaGasto);
@@ -50,12 +52,25 @@ public class GastoDialog extends DialogFragment {
         categoria.setAdapter(dataAdapter);
 
         //se cargan las propiedades del item seleccionado
-        ((EditText) view.findViewById(R.id.txtGasto)).setText(getArguments().getString("valor"));
-        ((EditText) view.findViewById(R.id.txtDecripcion)).setText(getArguments().getString("descripcion"));
-         int spinnerPostion = dataAdapter.getPosition(getArguments().getString("categoria"));
+        String valor = getArguments().getString("valor");
+        String descripcion = getArguments().getString("descripcion");
+        String categoriaStr = getArguments().getString("categoria");
+        String fecha = getArguments().getString("fecha");
+
+        ((EditText) view.findViewById(R.id.txtGasto)).setText(valor);
+        ((EditText) view.findViewById(R.id.txtDecripcion)).setText(descripcion);
+         int spinnerPostion = dataAdapter.getPosition(categoriaStr);
         categoria.setSelection(spinnerPostion);
-        ((TextView) view.findViewById(R.id.tvDia)).setText(getArguments().getString("fecha").split(" ")[0]);
-        ((TextView) view.findViewById(R.id.tvHora)).setText(getArguments().getString("fecha").split(" ")[1]);
+        ((TextView) view.findViewById(R.id.tvDia)).setText(fecha.split(" ")[0]);
+        ((TextView) view.findViewById(R.id.tvHora)).setText(fecha.split(" ")[1]);
+
+        final Gasto aMod = new Gasto();
+        aMod.setValor(valor);
+        aMod.setDescripcion(descripcion);
+        aMod.setFecha(fecha);
+        GrupoGasto grupo = new GrupoGasto();
+        grupo.setGrupo(categoriaStr);
+        aMod.setGrupoGasto(grupo);
 
         Button btnModificar = (Button) view.findViewById(R.id.btnGuardarGasto);
 
@@ -87,12 +102,13 @@ public class GastoDialog extends DialogFragment {
                     grupo.setGrupo(categoriaGasto);
                     nuevoGasto.setGrupoGasto(grupo);
                     GastoDAO gastoDAO = new GastoDAO(view.getContext());
-                    boolean existeGasto = gastoDAO.existeGasto(nuevoGasto);
-                    if(existeGasto)
-                        gastoDAO.updateGasto(nuevoGasto);
+                    boolean actualizado = gastoDAO.updateGasto(aMod, nuevoGasto);
+                    if(actualizado){
+                        showToast(view.getContext(),"¡Gasto guardado!");
+                        dismiss();
+                    }
                     else
-                        gastoDAO.createRecords(nuevoGasto);
-                    showToast(view.getContext(),"¡Gasto guardado!");
+                        showToast(view.getContext(),"¡No se ha podido actualizar!");
                 }
                 else{
                     showToast(view.getContext(),"Debe seleccionar una categoría");
@@ -117,5 +133,4 @@ public class GastoDialog extends DialogFragment {
     public void showToast(Context c, String message){
         Toast.makeText(c, message, Toast.LENGTH_SHORT).show();
     }
-
 }

@@ -145,11 +145,7 @@ public class GastoActivity extends FragmentActivity implements DatePickerDialog.
             grupo.setGrupo(categoriaGasto);
             nuevoGasto.setGrupoGasto(grupo);
             GastoDAO gastoDAO = new GastoDAO(getApplicationContext());
-            boolean existeGasto = gastoDAO.existeGasto(nuevoGasto);
-            if(existeGasto)
-                gastoDAO.updateGasto(nuevoGasto);
-            else
-                gastoDAO.createRecords(nuevoGasto);
+            gastoDAO.createRecords(nuevoGasto);
             showToast("¡Gasto guardado!");
         }
         else{

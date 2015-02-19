@@ -11,11 +11,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.GastoDAO;
@@ -26,7 +31,14 @@ import globalsolutions.findemes.database.util.Constantes;
 
 public class MovimientosActivity extends Activity {
 
+    public enum Meses {
+        ENERO, FEBRERO, MARZO, ABRIL,
+        MAYO, JUNIO, JULIO, AGOSTO, SEPTIEMBRE, OCTUBRE, NOVIEMBRE, DICIEMBRE
+    }
+
     private ListView listViewMovs;
+    private Spinner spFiltroMes;
+    private Spinner spFitroAnyo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +53,34 @@ public class MovimientosActivity extends Activity {
             }
         });
 
+        //cargamos meses
+        spFiltroMes = (Spinner) findViewById(R.id.spMeses);
+        spFiltroMes.setAdapter(new ArrayAdapter<Meses>(this, android.R.layout.simple_spinner_item, Meses.values()));
+        spFitroAnyo = (Spinner) findViewById(R.id.spAnyos);
+
         //recuperamos movimientos
         final ArrayList<MovimientoItem> movs = new MovimientoDAO().cargaMovimientos(getApplicationContext());
+        //cargamos anyos
+        ArrayList<String> anyos = new ArrayList<String>();
         if(movs.size() <= 0 )
             showToast("NO HAY MOVIMIENTOS ACTUALMENTE");
+        else{
+            for(MovimientoItem mov : movs){
+                String fecha = mov.getFecha();
+                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                java.util.Date d1 = null;
+                Calendar tdy1;
+                try {
+                    d1 = formato.parse(fecha);
+                } catch (java.text.ParseException e) {
+                    e.printStackTrace();
+                }
+                tdy1 = Calendar.getInstance();
+                int year = tdy1.get(Calendar.YEAR);
+                anyos.add(String.valueOf(new Integer(year)));
+            }
+            spFitroAnyo.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, anyos));
+        }
         listViewMovs = (ListView) findViewById(R.id.listViewMov);
         listViewMovs.setAdapter(new MovimientoAdapter(getApplicationContext(), movs));
         listViewMovs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
