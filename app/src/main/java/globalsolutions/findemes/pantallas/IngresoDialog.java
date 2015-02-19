@@ -101,7 +101,7 @@ public class IngresoDialog extends DialogFragment {
                     IngresoDAO ingresoDAO = new IngresoDAO(view.getContext());
                     boolean actualizado = ingresoDAO.updateIngreso(aMod, nuevoIngreso);
                     if(actualizado) {
-                        showToast(view.getContext(), "¡Ingreso guardado!");
+                        showToast(view.getContext(), "¡Ingreso actualizado!");
                         dismiss();
                     }
 

@@ -104,7 +104,7 @@ public class GastoDialog extends DialogFragment {
                     GastoDAO gastoDAO = new GastoDAO(view.getContext());
                     boolean actualizado = gastoDAO.updateGasto(aMod, nuevoGasto);
                     if(actualizado){
-                        showToast(view.getContext(),"¡Gasto guardado!");
+                        showToast(view.getContext(),"¡Gasto actualizado!");
                         dismiss();
                     }
                     else

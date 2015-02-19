@@ -133,10 +133,14 @@ public class MovimientosActivity extends Activity {
                                     if (movSeleccionado.getTipoMovimiento().trim().equals(Constantes.TIPO_MOVIMIENTO_GASTO)){
                                         // Create an instance of the dialog fragment and show it*/
                                         showGastoDialog(view, bundle);
+                                        ArrayList<MovimientoItem> newList = new MovimientoDAO().cargaMovimientos(getApplicationContext());
+                                        ((MovimientoAdapter) listViewMovs.getAdapter()).updateReceiptsList(newList);
                                     }
                                     else if (movSeleccionado.getTipoMovimiento().trim().equals(Constantes.TIPO_MOVIMIENTO_INGRESO)) {
                                         // Create an instance of the dialog fragment and show it*/
                                         showIngresoDialog(view, bundle);
+                                        ArrayList<MovimientoItem> newList = new MovimientoDAO().cargaMovimientos(getApplicationContext());
+                                        ((MovimientoAdapter) listViewMovs.getAdapter()).updateReceiptsList(newList);
                                     }
                                 }
                             }
