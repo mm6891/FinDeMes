@@ -135,8 +135,8 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                     String filterableString;
 
                     for (int i = 0; i < count; i++) {
-                        filterableString = list.get(i).getFecha();
-                        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                        filterableString = list.get(i).getFecha().split(" ")[0];
+                        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
                         java.util.Date d1 = null;
                         Calendar tdy1;
                         try {

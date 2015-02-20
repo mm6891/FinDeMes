@@ -1,6 +1,7 @@
 package globalsolutions.findemes.database.util;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -52,6 +53,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             database.execSQL(CREATE_TABLE_GRUPO_GASTOS);
             database.execSQL(CREATE_TABLE_INGRESOS);
             database.execSQL(CREATE_TABLE_GRUPO_INGRESOS);
+
     }
 
     // Method is called during an upgrade of the database,
@@ -75,6 +77,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
      */
     public static boolean checkDataBase(Context context) {
         SQLiteDatabase checkDB = null;
+        int count = 0;
         try {
             if(android.os.Build.VERSION.SDK_INT >= 17){
                 DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
@@ -85,11 +88,18 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             }
             checkDB = SQLiteDatabase.openDatabase(DB_PATH + DATABASE_NAME, null,
                     SQLiteDatabase.OPEN_READONLY);
+
+            String selectRegistros = "SELECT COUNT(*) FROM Grupo_Gastos";
+
+            Cursor mCursor = checkDB.query(true, "Grupo_Gastos",new String[]{"_id"},null
+                    , null, null, null, null, null);
+            count = mCursor.getCount();
+
             checkDB.close();
         } catch (SQLiteException e) {
             // database doesn't exist yet.
             return  false;
         }
-        return checkDB != null ? true : false;
+        return count > 0;
     }
 }

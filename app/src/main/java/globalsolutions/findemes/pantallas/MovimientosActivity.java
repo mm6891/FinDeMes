@@ -54,20 +54,6 @@ public class MovimientosActivity extends Activity {
             }
         });
 
-        //cargamos meses
-        spFiltroMes = (Spinner) findViewById(R.id.spMeses);
-        spFiltroMes.setAdapter(new ArrayAdapter<Meses>(this, android.R.layout.simple_spinner_item, Meses.values()));
-        spFiltroMes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                filtraMes(view,position);
-            }
-            public void onNothingSelected(AdapterView<?> parent) {
-                int month = Calendar.getInstance().get(Calendar.MONTH);
-                //String mes = new DateFormatSymbols().getMonths()[month-1];
-                spFiltroMes.setSelection(month);
-            }
-        });
-
         spFitroAnyo = (Spinner) findViewById(R.id.spAnyos);
 
         //recuperamos movimientos
@@ -92,10 +78,24 @@ public class MovimientosActivity extends Activity {
                 if(!anyos.contains(String.valueOf(new Integer(year))))
                     anyos.add(String.valueOf(new Integer(year)));
             }
-            spFitroAnyo.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, anyos));
+            spFitroAnyo.setAdapter(new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice, anyos));
         }
         listViewMovs = (ListView) findViewById(R.id.listViewMov);
         listViewMovs.setAdapter(new MovimientoAdapter(getApplicationContext(), movs));
+        //cargamos meses
+        spFiltroMes = (Spinner) findViewById(R.id.spMeses);
+        spFiltroMes.setAdapter(new ArrayAdapter<Meses>(this, android.R.layout.select_dialog_singlechoice, Meses.values()));
+        spFiltroMes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                filtraMes(view, position);
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+                int month = Calendar.getInstance().get(Calendar.MONTH);
+                //String mes = new DateFormatSymbols().getMonths()[month-1];
+                spFiltroMes.setSelection(month);
+            }
+        });
+
         listViewMovs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position,
