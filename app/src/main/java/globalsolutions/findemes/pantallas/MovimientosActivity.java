@@ -95,6 +95,8 @@ public class MovimientosActivity extends Activity {
                 spFiltroMes.setSelection(month);
             }
         });
+        int month = Calendar.getInstance().get(Calendar.MONTH);
+        spFiltroMes.setSelection(month);
 
         listViewMovs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
