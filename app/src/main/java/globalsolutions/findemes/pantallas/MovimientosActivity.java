@@ -115,7 +115,7 @@ public class MovimientosActivity extends Activity {
                                 boolean realizado;
 
                                 if (accion.equals(Constantes.ACCION_ELIMINAR)) {
-                                    if (movSeleccionado.getTipoMovimiento().trim().equals("GASTO")) {
+                                    if (movSeleccionado.getTipoMovimiento().trim().equals(Constantes.TIPO_MOVIMIENTO_GASTO)) {
                                         GastoDAO gastoDAO = new GastoDAO(MovimientosActivity.this);
                                         realizado = gastoDAO.deleteGasto(movSeleccionado.getDescripcion(), movSeleccionado.getValor(),
                                                 movSeleccionado.getFecha());
@@ -126,7 +126,7 @@ public class MovimientosActivity extends Activity {
                                         } else
                                             showToast("No se ha podido eliminar el gasto");
                                     }
-                                    if (movSeleccionado.getTipoMovimiento().trim().equals("INGRESO")) {
+                                    if (movSeleccionado.getTipoMovimiento().trim().equals(Constantes.TIPO_MOVIMIENTO_INGRESO)) {
                                         IngresoDAO ingresoDAO = new IngresoDAO(MovimientosActivity.this);
                                         realizado = ingresoDAO.deleteIngreso(movSeleccionado.getDescripcion(), movSeleccionado.getValor(),
                                                 movSeleccionado.getFecha());
