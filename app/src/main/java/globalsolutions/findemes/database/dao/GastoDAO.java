@@ -43,6 +43,7 @@ public class GastoDAO {
         values.put(GASTOS_DESC, gasto.getDescripcion());
         values.put(GASTOS_VALOR, gasto.getValor());
         values.put(GASTOS_GRUPO, gasto.getGrupoGasto().getGrupo());
+        values.put(GASTOS_FECHA, gasto.getFecha());
 
         return database.insert(GASTOS_TABLA, null, values);
     }

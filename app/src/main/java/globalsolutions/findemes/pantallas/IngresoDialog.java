@@ -1,5 +1,6 @@
 package globalsolutions.findemes.pantallas;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -30,9 +31,21 @@ import globalsolutions.findemes.database.model.Ingreso;
  */
 public class IngresoDialog extends DialogFragment {
 
+    private OnIngresoDialogListener callback;
+
+    public interface OnIngresoDialogListener {
+        public void onIngresoDialogSubmit(String result);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        try {
+            callback = (OnIngresoDialogListener) getActivity();
+        } catch (ClassCastException e) {
+            throw new ClassCastException("Calling Fragment must implement OnGastoDialogListener");
+        }
 
         final View view = inflater.inflate(R.layout.activity_ingreso_dialog, container, false);
         //cargamos el combo de categorias
@@ -102,6 +115,7 @@ public class IngresoDialog extends DialogFragment {
                     boolean actualizado = ingresoDAO.updateIngreso(aMod, nuevoIngreso);
                     if(actualizado) {
                         showToast(view.getContext(), "¡Ingreso actualizado!");
+                        callback.onIngresoDialogSubmit(String.valueOf(Activity.RESULT_OK));
                         dismiss();
                     }
 

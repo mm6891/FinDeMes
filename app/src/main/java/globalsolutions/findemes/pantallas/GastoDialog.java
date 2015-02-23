@@ -1,5 +1,6 @@
 package globalsolutions.findemes.pantallas;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -32,9 +33,21 @@ import globalsolutions.findemes.database.model.GrupoGasto;
  */
 public class GastoDialog extends DialogFragment {
 
+    private OnGastoDialogListener callback;
+
+    public interface OnGastoDialogListener {
+        public void onGastoDialogSubmit(String result);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        try {
+            callback = (OnGastoDialogListener) getActivity();
+        } catch (ClassCastException e) {
+            throw new ClassCastException("Calling Fragment must implement OnGastoDialogListener");
+        }
 
         final View view = inflater.inflate(R.layout.activity_gasto_dialog, container, false);
 
@@ -105,6 +118,7 @@ public class GastoDialog extends DialogFragment {
                     boolean actualizado = gastoDAO.updateGasto(aMod, nuevoGasto);
                     if(actualizado){
                         showToast(view.getContext(),"¡Gasto actualizado!");
+                        callback.onGastoDialogSubmit(String.valueOf(Activity.RESULT_OK));
                         dismiss();
                     }
                     else

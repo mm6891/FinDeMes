@@ -43,6 +43,14 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
         this.mesSeleccionado = mesSeleccionado;
     }
 
+    private int anyoSeleccionado;
+    public int getAnyoSeleccionado() {
+        return anyoSeleccionado;
+    }
+    public void setAnyoSeleccionado(int anyoSeleccionado) {
+        this.anyoSeleccionado = anyoSeleccionado;
+    }
+
     public MovimientoAdapter(Context context, ArrayList<MovimientoItem> items) {
         this.context = context;
         this.items = items;
@@ -118,25 +126,21 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                 items = new MovimientoDAO().cargaMovimientos(context);
                 FilterResults results = new FilterResults();
 
+                int mesSeleccionado1 = getMesSeleccionado();
+                int anyoSeleccionado = getAnyoSeleccionado();
+
+                final ArrayList<MovimientoItem> list = items;
+
                 if(constraint.toString().equals(Constantes.TIPO_FILTRO_RESETEO)){
-
-                    results.values = items;
-                    results.count = items.size();
-
-                }
-                else if(constraint.toString().equals(Constantes.TIPO_FILTRO_MES)){
-                    int mesSeleccionado1 = getMesSeleccionado();
-
-                    final ArrayList<MovimientoItem> list = itemsFiltrado;
-
-                    int count = list.size();
+                    //filtro por mes y anyo, que son filtros permanentes
+                    int count = items.size();
                     final ArrayList<MovimientoItem> nlist = new ArrayList<MovimientoItem>(count);
 
                     String filterableString;
 
                     for (int i = 0; i < count; i++) {
                         filterableString = list.get(i).getFecha().split(" ")[0];
-                        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
                         java.util.Date d1 = null;
                         Calendar tdy1;
                         try {
@@ -145,8 +149,9 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                             e.printStackTrace();
                         }
                         tdy1 = Calendar.getInstance();
-                        int mesIterable = tdy1.get(Calendar.MONTH);
-                        if (mesIterable == mesSeleccionado1) {
+                        int mes = tdy1.get(Calendar.MONTH);
+                        int anyo = tdy1.get(Calendar.YEAR);
+                        if (mes == mesSeleccionado1 && anyo == anyoSeleccionado) {
                             nlist.add(list.get(i));
                         }
                     }
@@ -154,10 +159,9 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                     results.values = nlist;
                     results.count = nlist.size();
                 }
+                //filtro por gasto o ingreso
                 else {
                     String filterString = constraint.toString().toLowerCase();
-
-                    final ArrayList<MovimientoItem> list = items;
 
                     int count = list.size();
                     final ArrayList<MovimientoItem> nlist = new ArrayList<MovimientoItem>(count);
@@ -165,15 +169,26 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                     String filterableString;
 
                     for (int i = 0; i < count; i++) {
+                        String fecha = list.get(i).getFecha().split(" ")[0];
+                        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                        java.util.Date d1 = null;
+                        Calendar tdy1;
+                        try {
+                            d1 = formato.parse(fecha);
+                        } catch (java.text.ParseException e) {
+                            e.printStackTrace();
+                        }
+                        tdy1 = Calendar.getInstance();
+                        int mes = tdy1.get(Calendar.MONTH);
+                        int anyo = tdy1.get(Calendar.YEAR);
                         filterableString = list.get(i).getTipoMovimiento();
                         if (filterableString.toLowerCase().trim().equals(filterString.trim())) {
-                            nlist.add(list.get(i));
+                            if (mes == mesSeleccionado1 && anyo == anyoSeleccionado)
+                                nlist.add(list.get(i));
                         }
                     }
-
                     results.values = nlist;
                     results.count = nlist.size();
-
                 }
                 return results;
             }

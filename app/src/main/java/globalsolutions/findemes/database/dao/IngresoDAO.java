@@ -42,6 +42,7 @@ public class IngresoDAO {
         values.put(INGRESOS_DESC, ingreso.getDescripcion());
         values.put(INGRESOS_VALOR, ingreso.getValor());
         values.put(INGRESOS_GRUPO, ingreso.getGrupoIngreso().getGrupo());
+        values.put(INGRESOS_FECHA, ingreso.getFecha());
 
         return database.insert(INGRESOS_TABLA, null, values);
     }
