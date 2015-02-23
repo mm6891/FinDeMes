@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
+import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,6 +44,7 @@ public class MainActivity extends Activity {
     private TextView tvIngresosValor;
     private TextView tvGastosValor;
     private TextView tvSaldo;
+    private TextView tvMes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,16 @@ public class MainActivity extends Activity {
             }
         });
 
+        //INFORMES
+        btnInformes = (Button) findViewById(R.id.imgBtn10);
+        btnInformes.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, InformesActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         //tamanyo de gridlayout segun pantalla en pixeles
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -85,7 +97,7 @@ public class MainActivity extends Activity {
         int width = size.x;
         int height = size.y;
         //margen establecido en main.xml como dp
-        int margen = 15;
+        int margen = 10;
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         int px = Math.round(margen * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
         gv = (GridLayout) findViewById(R.id.glMenu);
@@ -135,6 +147,8 @@ public class MainActivity extends Activity {
         saldo = ingresos - gastos;
         tvSaldo = (TextView) findViewById(R.id.tvSaldoValor);
         tvSaldo.setText(String.valueOf(saldo));
+        tvMes = (TextView) findViewById(R.id.tvMesResumen);
+        tvMes.setText(new DateFormatSymbols().getMonths()[mesActual-1]);
     }
 
     public void CreaRegistros(){

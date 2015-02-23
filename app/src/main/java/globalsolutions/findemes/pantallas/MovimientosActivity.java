@@ -105,7 +105,7 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                 if(!anyos.contains(String.valueOf(new Integer(year))))
                     anyos.add(String.valueOf(new Integer(year)));
             }
-            spFitroAnyo.setAdapter(new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice, anyos));
+            spFitroAnyo.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, anyos));
             mSpinnerCount++;
             spFitroAnyo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -126,7 +126,7 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
             listViewMovs.setAdapter(new MovimientoAdapter(getApplicationContext(), movs));
             //cargamos meses
             spFiltroMes = (Spinner) findViewById(R.id.spMeses);
-            spFiltroMes.setAdapter(new ArrayAdapter<Meses>(this, android.R.layout.select_dialog_singlechoice, Meses.values()));
+            spFiltroMes.setAdapter(new ArrayAdapter<Meses>(this, android.R.layout.simple_spinner_dropdown_item, Meses.values()));
             mSpinnerCount++;
             spFiltroMes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -144,8 +144,7 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
             });
             int month = Calendar.getInstance().get(Calendar.MONTH);
             int year = Calendar.getInstance().get(Calendar.YEAR);
-            /*spFiltroMes.setSelection(month);
-            spFitroAnyo.setSelection(year);*/
+            spFiltroMes.setSelection(month);
 
             listViewMovs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
