@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:background="@color/material_blue_grey_800">
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -13,20 +14,112 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:id="@+id/lyHeader">
             <ImageView
                 android:layout_width="54dp"
                 android:layout_height="60dp"
                 android:src="@drawable/money" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="30sp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:text="@string/titulo"
-                android:layout_weight="1"/>
     </LinearLayout>
+
+    <GridLayout
+        android:id="@+id/glResumen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center"
+        android:columnCount="3"
+        android:rowCount="4"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/lyHeader">
+        <TextView
+            android:id="@+id/tvMesResumen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text="@string/mesResumen"
+            android:layout_row="0"
+            android:layout_column="0"
+            />
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/options"
+            android:layout_row="0"
+            android:layout_column="2"
+            />
+        <TextView
+            android:id="@+id/tvIngresos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text="@string/Ingresos"
+            android:layout_row="1"
+            android:layout_column="0"
+            />
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/plus"
+            android:layout_row="1"
+            android:layout_column="1"
+            />
+        <TextView
+            android:id="@+id/tvIngresosValor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:layout_row="1"
+            android:layout_column="2"
+            />
+        <TextView
+            android:id="@+id/tvGastos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text="@string/Gastos"
+            android:layout_row="2"
+            android:layout_column="0"
+            />
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/minus"
+            android:layout_row="2"
+            android:layout_column="1"
+            />
+        <TextView
+            android:id="@+id/tvGastosValor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:layout_row="2"
+            android:layout_column="2"
+            />
+        <TextView
+            android:id="@+id/tvSaldo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text="@string/Saldo"
+            android:layout_row="3"
+            android:layout_column="0"
+            />
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/equal"
+            android:layout_row="3"
+            android:layout_column="1"
+            />
+        <TextView
+            android:id="@+id/tvSaldoValor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:layout_row="3"
+            android:layout_column="2"
+            />
+    </GridLayout>
 
     <GridLayout
         android:id="@+id/glMenu"
@@ -36,10 +129,11 @@
         android:columnCount="2"
         android:rowCount="3"
         android:orientation="horizontal"
-        android:layout_below="@+id/lyHeader"
+        android:layout_below="@+id/glResumen"
         android:layout_centerHorizontal="true">
         <Button
                 android:id="@+id/imgBtn00"
+                android:textColor="@android:color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/gasto"
@@ -50,6 +144,7 @@
                 android:text="@string/MENU_GASTOS" />
         <Button
             android:id="@+id/imgBtn01"
+            android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/ingreso"
@@ -60,6 +155,7 @@
             android:text="@string/MENU_INGRESOS" />
         <Button
             android:id="@+id/imgBtn02"
+            android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/movimiento"
@@ -70,6 +166,7 @@
             android:text="@string/MENU_MOVIMIENTOS" />
         <Button
             android:id="@+id/imgBtn10"
+            android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/report"
@@ -80,8 +177,8 @@
             android:text="@string/MENU_INFORMES" />
         <Button
             android:id="@+id/imgBtn11"
+            android:textColor="@android:color/white"
             android:layout_width="wrap_content"
-            android:maxWidth="120dp"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/movimiento"
             android:layout_gravity="top|center"
@@ -91,6 +188,7 @@
             android:text="@string/MENU_REGISTROS" />
         <Button
             android:id="@+id/imgBtn12"
+            android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/options"
@@ -101,5 +199,16 @@
             android:text="@string/MENU_OPCIONES" />
 
         </GridLayout>
-    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="25sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:text="@string/titulo"
+        android:layout_weight="1"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>
 </ScrollView>

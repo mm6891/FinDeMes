@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">FinDeMes</string>
+    <string name="app_name">Fin de Mes</string>
     <string name="action_settings">Settings</string>
     <string name="Categoria">Categoría:</string>
     <string name="Gasto">Gasto:</string>
+    <string name="Gastos">Gastos:</string>
+    <string name="Saldo">Saldo:</string>
     <string name="Decripcion">Decripción:</string>
     <string name="Ingreso">Ingreso:</string>
+    <string name="Ingresos">Ingresos:</string>
     <string name="Guardar">Guardar</string>
     <string name="Modificar">Modificar</string>
     <string name="MENU_GASTOS">Gasto</string>
@@ -19,4 +22,6 @@
     <string name="title_activity_ingreso">Ingreso</string>
     <string name="title_activity_movimientos">Movimientos</string>
     <string name="titulo">Fin de Mes</string>
+    <string name="mesResumen">Mes</string>
+
     </resources>

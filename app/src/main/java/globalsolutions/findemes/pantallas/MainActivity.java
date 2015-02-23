@@ -4,15 +4,27 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.GrupoGastoDAO;
 import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
+import globalsolutions.findemes.database.dao.MovimientoDAO;
 import globalsolutions.findemes.database.model.GrupoGasto;
 import globalsolutions.findemes.database.model.GrupoIngreso;
+import globalsolutions.findemes.database.model.MovimientoItem;
+import globalsolutions.findemes.database.util.Constantes;
 import globalsolutions.findemes.database.util.MyDatabaseHelper;
 
 
@@ -25,6 +37,12 @@ public class MainActivity extends Activity {
     private Button btnInformes;
     private Button btnMovimientosFrecuentes;
     private Button btnOpciones;
+    private GridLayout gv;
+
+    //resumen
+    private TextView tvIngresosValor;
+    private TextView tvGastosValor;
+    private TextView tvSaldo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +77,64 @@ public class MainActivity extends Activity {
                 finish();
             }
         });
+
+        //tamanyo de gridlayout segun pantalla en pixeles
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+        //margen establecido en main.xml como dp
+        int margen = 15;
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int px = Math.round(margen * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        gv = (GridLayout) findViewById(R.id.glMenu);
+        int anchoBoton = (width/2)  - (px*3);
+
+        for (int i = 0; i < gv.getChildCount(); i++)
+        {
+            Button row = (Button)gv.getChildAt(i);
+            row.setWidth(anchoBoton);
+        }
+
+        //load resumen
+        //recuperamos movimientos
+        final ArrayList<MovimientoItem> movs = new MovimientoDAO().cargaMovimientos(getApplicationContext());
+
+        int mesActual = Calendar.getInstance().get(Calendar.MONTH);
+        int anyoActal = Calendar.getInstance().get(Calendar.YEAR);
+        Double ingresos = new Double(0.00);
+        Double gastos = new Double(0.00);
+        Double saldo = new Double(0.00);
+
+        for(MovimientoItem mov : movs){
+            String fecha = mov.getFecha();
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            java.util.Date d1 = null;
+            Calendar tdy1;
+            try {
+                d1 = formato.parse(fecha);
+            } catch (java.text.ParseException e) {
+                e.printStackTrace();
+            }
+            tdy1 = Calendar.getInstance();
+            int mesMovimiento = tdy1.get(Calendar.MONTH);
+            int anyoMovimiento = tdy1.get(Calendar.YEAR);
+            if (mov.getTipoMovimiento().equals(Constantes.TIPO_MOVIMIENTO_GASTO)
+                    && mesMovimiento == mesActual && anyoActal == anyoMovimiento)
+                gastos += Double.valueOf(mov.getValor());
+            else if (mov.getTipoMovimiento().equals(Constantes.TIPO_MOVIMIENTO_INGRESO)
+                    && mesMovimiento == mesActual && anyoActal == anyoMovimiento)
+                ingresos += Double.valueOf(mov.getValor());
+        }
+
+        tvIngresosValor = (TextView) findViewById(R.id.tvIngresosValor);
+        tvIngresosValor.setText(String.valueOf(ingresos));
+        tvGastosValor = (TextView) findViewById(R.id.tvGastosValor);
+        tvGastosValor.setText(String.valueOf(gastos));
+        saldo = ingresos - gastos;
+        tvSaldo = (TextView) findViewById(R.id.tvSaldoValor);
+        tvSaldo.setText(String.valueOf(saldo));
     }
 
     public void CreaRegistros(){

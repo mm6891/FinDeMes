@@ -31,6 +31,15 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
 
     @Override
     public void onGastoDialogSubmit(String result) {
+        actualizarFiltro(result);
+    }
+
+    @Override
+    public void onIngresoDialogSubmit(String result) {
+        actualizarFiltro(result);
+    }
+
+    public void actualizarFiltro(String result) {
         if(result.equals(String.valueOf(Activity.RESULT_OK))){
             ((MovimientoAdapter)listViewMovs.getAdapter()).setMesSeleccionado(spFiltroMes.getSelectedItemPosition());
             ((MovimientoAdapter)listViewMovs.getAdapter()).setAnyoSeleccionado(new Integer((String) spFitroAnyo.getSelectedItem()).intValue());
@@ -41,14 +50,6 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                 ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_MOVIMIENTO_GASTO);
             else
                 ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_FILTRO_RESETEO);
-        }
-    }
-
-    @Override
-    public void onIngresoDialogSubmit(String result) {
-        if(result.equals(String.valueOf(Activity.RESULT_OK))){
-            ArrayList<MovimientoItem> newList = new MovimientoDAO().cargaMovimientos(getApplicationContext());
-            ((MovimientoAdapter) listViewMovs.getAdapter()).updateReceiptsList(newList);
         }
     }
 
