@@ -28,6 +28,10 @@
             android:name=".pantallas.MovimientosActivity"
             android:label="@string/title_activity_movimientos" >
         </activity>
+        <activity
+            android:name=".pantallas.InformesActivity"
+            android:label="@string/title_activity_informes" >
+        </activity>
     </application>
 
 </manifest>

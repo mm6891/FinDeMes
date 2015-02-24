@@ -21,6 +21,7 @@
     <string name="title_activity_gasto">Gasto</string>
     <string name="title_activity_ingreso">Ingreso</string>
     <string name="title_activity_movimientos">Movimientos</string>
+    <string name="title_activity_informes">Informes</string>
     <string name="titulo">Fin de Mes</string>
     <string name="mesResumen">Mes</string>
 
