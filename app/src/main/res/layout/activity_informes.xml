@@ -40,4 +40,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
     </LinearLayout>
+    <ListView
+        android:id="@+id/listViewMovInforme"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lyLinearFiltroMov"
+        android:layout_weight="1" />
 </RelativeLayout>
