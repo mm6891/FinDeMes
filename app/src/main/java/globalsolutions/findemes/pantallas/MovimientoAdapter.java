@@ -141,17 +141,18 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                     for (int i = 0; i < count; i++) {
                         filterableString = list.get(i).getFecha().split(" ")[0];
                         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-                        java.util.Date d1 = null;
-                        Calendar tdy1;
+
+                        Calendar cal  = Calendar.getInstance();
                         try {
-                            d1 = formato.parse(filterableString);
+                            cal.setTime(formato.parse(filterableString));
                         } catch (java.text.ParseException e) {
                             e.printStackTrace();
                         }
-                        tdy1 = Calendar.getInstance();
-                        int mes = tdy1.get(Calendar.MONTH);
-                        int anyo = tdy1.get(Calendar.YEAR);
-                        if (mes == mesSeleccionado1 && anyo == anyoSeleccionado) {
+                        int mesMov = cal.get(Calendar.MONTH);
+                        int anyoMov = cal.get(Calendar.YEAR);
+                        int mesActual = Calendar.getInstance().MONTH;
+                        int anyoActual = Calendar.getInstance().YEAR;
+                        if (mesMov == mesActual && anyoMov == anyoActual) {
                             nlist.add(list.get(i));
                         }
                     }
@@ -171,19 +172,17 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                     for (int i = 0; i < count; i++) {
                         String fecha = list.get(i).getFecha().split(" ")[0];
                         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-                        java.util.Date d1 = null;
-                        Calendar tdy1;
+                        Calendar cal  = Calendar.getInstance();
                         try {
-                            d1 = formato.parse(fecha);
+                            cal.setTime(formato.parse(fecha));
                         } catch (java.text.ParseException e) {
                             e.printStackTrace();
                         }
-                        tdy1 = Calendar.getInstance();
-                        int mes = tdy1.get(Calendar.MONTH);
-                        int anyo = tdy1.get(Calendar.YEAR);
+                        int mesMov = cal.get(Calendar.MONTH);
+                        int anyoMov = cal.get(Calendar.YEAR);
                         filterableString = list.get(i).getTipoMovimiento();
                         if (filterableString.toLowerCase().trim().equals(filterString.trim())) {
-                            if (mes == mesSeleccionado1 && anyo == anyoSeleccionado)
+                            if (mesMov == mesSeleccionado1 && anyoMov == anyoSeleccionado)
                                 nlist.add(list.get(i));
                         }
                     }

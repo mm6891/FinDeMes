@@ -127,14 +127,14 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
             //cargamos meses
             spFiltroMes = (Spinner) findViewById(R.id.spMeses);
             spFiltroMes.setAdapter(new ArrayAdapter<Meses>(this, android.R.layout.simple_spinner_dropdown_item, Meses.values()));
-            mSpinnerCount++;
+            //mSpinnerCount++;
             spFiltroMes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if (mSpinnerInitializedCount < mSpinnerCount)
+                  /*  if (mSpinnerInitializedCount < mSpinnerCount)
                     {
                         mSpinnerInitializedCount++;
                     }
-                    else
+                    else*/
                         filtraMesAnyo(view, position, new Integer((String) spFitroAnyo.getSelectedItem()).intValue());
                 }
                 public void onNothingSelected(AdapterView<?> parent) {
@@ -145,6 +145,7 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
             int month = Calendar.getInstance().get(Calendar.MONTH);
             int year = Calendar.getInstance().get(Calendar.YEAR);
             spFiltroMes.setSelection(month);
+            spFitroAnyo.setSelection(spFitroAnyo.getSelectedItemPosition());
 
             listViewMovs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -196,14 +197,10 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                                         if (movSeleccionado.getTipoMovimiento().trim().equals(Constantes.TIPO_MOVIMIENTO_GASTO)){
                                             // Create an instance of the dialog fragment and show it*/
                                             showGastoDialog(view, bundle);
-                                            /*ArrayList<MovimientoItem> newList = new MovimientoDAO().cargaMovimientos(getApplicationContext());
-                                            ((MovimientoAdapter) listViewMovs.getAdapter()).updateReceiptsList(newList);*/
                                         }
                                         else if (movSeleccionado.getTipoMovimiento().trim().equals(Constantes.TIPO_MOVIMIENTO_INGRESO)) {
                                             // Create an instance of the dialog fragment and show it*/
                                             showIngresoDialog(view, bundle);
-                                            /*ArrayList<MovimientoItem> newList = new MovimientoDAO().cargaMovimientos(getApplicationContext());
-                                            ((MovimientoAdapter) listViewMovs.getAdapter()).updateReceiptsList(newList);*/
                                         }
                                     }
                                 }
@@ -232,6 +229,11 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
 
     //eventos click filtro gasto e ingreso
     public void filtraGasto(View v){
+        int mes = spFiltroMes.getSelectedItemPosition();
+        int anyo = new Integer((String) spFitroAnyo.getSelectedItem()).intValue();
+        ((MovimientoAdapter)listViewMovs.getAdapter()).setMesSeleccionado(mes);
+        ((MovimientoAdapter)listViewMovs.getAdapter()).setAnyoSeleccionado(anyo);
+
         ((CheckBox) findViewById(R.id.cbIconPlus)).setChecked(false);
         if(!((CheckBox) findViewById(R.id.cbIconMinus)).isChecked())
             ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_FILTRO_RESETEO);
@@ -239,6 +241,11 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
             ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_MOVIMIENTO_GASTO);
     }
     public void filtraIngreso(View v){
+         int mes = spFiltroMes.getSelectedItemPosition();
+         int anyo = new Integer((String) spFitroAnyo.getSelectedItem()).intValue();
+        ((MovimientoAdapter)listViewMovs.getAdapter()).setMesSeleccionado(mes);
+        ((MovimientoAdapter)listViewMovs.getAdapter()).setAnyoSeleccionado(anyo);
+
         ((CheckBox) findViewById(R.id.cbIconMinus)).setChecked(false);
         if(!((CheckBox) findViewById(R.id.cbIconPlus)).isChecked())
             ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_FILTRO_RESETEO);
