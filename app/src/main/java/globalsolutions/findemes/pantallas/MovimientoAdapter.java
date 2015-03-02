@@ -150,9 +150,7 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                         }
                         int mesMov = cal.get(Calendar.MONTH);
                         int anyoMov = cal.get(Calendar.YEAR);
-                        int mesActual = Calendar.getInstance().MONTH;
-                        int anyoActual = Calendar.getInstance().YEAR;
-                        if (mesMov == mesActual && anyoMov == anyoActual) {
+                        if (mesMov == mesSeleccionado1 && anyoMov == anyoSeleccionado){
                             nlist.add(list.get(i));
                         }
                     }

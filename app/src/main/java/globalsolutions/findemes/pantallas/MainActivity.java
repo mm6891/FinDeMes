@@ -122,16 +122,14 @@ public class MainActivity extends Activity {
         for(MovimientoItem mov : movs){
             String fecha = mov.getFecha();
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-            java.util.Date d1 = null;
-            Calendar tdy1;
+            Calendar cal  = Calendar.getInstance();
             try {
-                d1 = formato.parse(fecha);
+                cal.setTime(formato.parse(fecha));
             } catch (java.text.ParseException e) {
                 e.printStackTrace();
             }
-            tdy1 = Calendar.getInstance();
-            int mesMovimiento = tdy1.get(Calendar.MONTH);
-            int anyoMovimiento = tdy1.get(Calendar.YEAR);
+            int mesMovimiento = cal.get(Calendar.MONTH);
+            int anyoMovimiento = cal.get(Calendar.YEAR);
             if (mov.getTipoMovimiento().equals(Constantes.TIPO_MOVIMIENTO_GASTO)
                     && mesMovimiento == mesActual && anyoActal == anyoMovimiento)
                 gastos += Double.valueOf(mov.getValor());

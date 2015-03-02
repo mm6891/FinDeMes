@@ -93,15 +93,13 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
             for(MovimientoItem mov : movs){
                 String fecha = mov.getFecha();
                 SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-                java.util.Date d1 = null;
-                Calendar tdy1;
+                Calendar cal  = Calendar.getInstance();
                 try {
-                    d1 = formato.parse(fecha);
+                    cal.setTime(formato.parse(fecha));
                 } catch (java.text.ParseException e) {
                     e.printStackTrace();
                 }
-                tdy1 = Calendar.getInstance();
-                int year = tdy1.get(Calendar.YEAR);
+                int year = cal.get(Calendar.YEAR);
                 if(!anyos.contains(String.valueOf(new Integer(year))))
                     anyos.add(String.valueOf(new Integer(year)));
             }
@@ -127,24 +125,17 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
             //cargamos meses
             spFiltroMes = (Spinner) findViewById(R.id.spMeses);
             spFiltroMes.setAdapter(new ArrayAdapter<Meses>(this, android.R.layout.simple_spinner_dropdown_item, Meses.values()));
-            //mSpinnerCount++;
+
             spFiltroMes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                  /*  if (mSpinnerInitializedCount < mSpinnerCount)
-                    {
-                        mSpinnerInitializedCount++;
-                    }
-                    else*/
-                        filtraMesAnyo(view, position, new Integer((String) spFitroAnyo.getSelectedItem()).intValue());
+                    filtraMesAnyo(view, position, new Integer((String) spFitroAnyo.getSelectedItem()).intValue());
                 }
                 public void onNothingSelected(AdapterView<?> parent) {
                     int month = Calendar.getInstance().get(Calendar.MONTH);
                     spFiltroMes.setSelection(month);
                 }
             });
-            int month = Calendar.getInstance().get(Calendar.MONTH);
-            int year = Calendar.getInstance().get(Calendar.YEAR);
-            spFiltroMes.setSelection(month);
+            spFiltroMes.setSelection(Calendar.getInstance().get(Calendar.MONTH));
             spFitroAnyo.setSelection(spFitroAnyo.getSelectedItemPosition());
 
             listViewMovs.setOnItemClickListener(new AdapterView.OnItemClickListener() {

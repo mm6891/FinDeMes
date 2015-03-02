@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -38,7 +40,7 @@ public class InformesActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movimientos);
+        setContentView(R.layout.activity_informes);
 
         //boton retroceder
         ImageButton btnReturn = (ImageButton) findViewById(R.id.btnBackButton);
@@ -55,6 +57,15 @@ public class InformesActivity extends Activity{
         tiposMovimientos.add(Constantes.TIPO_MOVIMIENTO_GASTO.toString());
         spTipoMovimiento = (Spinner) findViewById(R.id.spTipoMovimiento);
         spTipoMovimiento.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, tiposMovimientos));
+
+        spTipoMovimiento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //filtraMesAnyo(view, position, new Integer((String) spFitroAnyo.getSelectedItem()).intValue());
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         //spinner periodo
         ArrayList<String> periodos = new ArrayList<String>();
@@ -75,15 +86,13 @@ public class InformesActivity extends Activity{
             for (MovimientoItem mov : movs) {
                 String fecha = mov.getFecha();
                 SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-                java.util.Date d1 = null;
-                Calendar tdy1;
+                Calendar cal  = Calendar.getInstance();
                 try {
-                    d1 = formato.parse(fecha);
+                    cal.setTime(formato.parse(fecha));
                 } catch (java.text.ParseException e) {
                     e.printStackTrace();
                 }
-                tdy1 = Calendar.getInstance();
-                int year = tdy1.get(Calendar.YEAR);
+                int year = cal.get(Calendar.YEAR);
                 if (!anyos.contains(String.valueOf(new Integer(year))))
                     anyos.add(String.valueOf(new Integer(year)));
             }
