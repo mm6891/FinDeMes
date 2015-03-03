@@ -10,14 +10,17 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.MovimientoDAO;
+import globalsolutions.findemes.database.model.InformeItem;
 import globalsolutions.findemes.database.model.MovimientoItem;
 import globalsolutions.findemes.database.util.Constantes;
 
@@ -37,6 +40,12 @@ public class InformesActivity extends Activity{
 
     private ListView listViewMovsInforme;
 
+    //this counts how many Spinner's are on the UI
+    private int mSpinnerCount=0;
+
+    //this counts how many Spinner's have been initialized
+    private int mSpinnerInitializedCount=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,23 +56,6 @@ public class InformesActivity extends Activity{
         btnReturn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 backActivity();
-            }
-        });
-
-        //spinner movimiento
-        ArrayList<String> tiposMovimientos = new ArrayList<String>();
-        tiposMovimientos.add(Constantes.TIPO_FILTRO_RESETEO.toString());
-        tiposMovimientos.add(Constantes.TIPO_MOVIMIENTO_INGRESO.toString());
-        tiposMovimientos.add(Constantes.TIPO_MOVIMIENTO_GASTO.toString());
-        spTipoMovimiento = (Spinner) findViewById(R.id.spTipoMovimiento);
-        spTipoMovimiento.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, tiposMovimientos));
-
-        spTipoMovimiento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //filtraMesAnyo(view, position, new Integer((String) spFitroAnyo.getSelectedItem()).intValue());
-            }
-            public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
@@ -98,10 +90,89 @@ public class InformesActivity extends Activity{
             }
             spAnyosInforme.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, anyos));
 
+            mSpinnerCount++;
+            spAnyosInforme.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if (mSpinnerInitializedCount < mSpinnerCount)
+                    {
+                        mSpinnerInitializedCount++;
+                    }
+                    else
+                        filtraInformeMesAnyo(view, (String)spTipoMovimiento.getSelectedItem(), new Integer((String) spAnyosInforme.getSelectedItem()).intValue());
+                }
+                public void onNothingSelected(AdapterView<?> parent) {
+                    int year = Calendar.getInstance().get(Calendar.YEAR);
+                    spAnyosInforme.setSelection(year);
+                }
+            });
+
+            //spinner movimiento
+            ArrayList<String> tiposMovimientos = new ArrayList<String>();
+            tiposMovimientos.add(Constantes.TIPO_FILTRO_RESETEO.toString());
+            tiposMovimientos.add(Constantes.TIPO_MOVIMIENTO_INGRESO.toString());
+            tiposMovimientos.add(Constantes.TIPO_MOVIMIENTO_GASTO.toString());
+            spTipoMovimiento = (Spinner) findViewById(R.id.spTipoMovimiento);
+            spTipoMovimiento.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, tiposMovimientos));
+            mSpinnerCount++;
+            spTipoMovimiento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    if (mSpinnerInitializedCount < mSpinnerCount)
+                    {
+                        mSpinnerInitializedCount++;
+                    }
+                    else
+                    filtraInformeMesAnyo(view, (String)spTipoMovimiento.getSelectedItem(), new Integer((String) spAnyosInforme.getSelectedItem()).intValue());
+                }
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
+            });
+
+            //cargamos adaptador de informes
             listViewMovsInforme = (ListView) findViewById(R.id.listViewMovInforme);
-            listViewMovsInforme.setAdapter(new MovimientoAdapter(getApplicationContext(), movs));
+
+            //load resumen
+            int mesActual = Calendar.getInstance().get(Calendar.MONTH);
+            int anyoActal = Calendar.getInstance().get(Calendar.YEAR);
+            Double ingresos = new Double(0.00);
+            Double gastos = new Double(0.00);
+            Double saldo = new Double(0.00);
+
+            for(MovimientoItem mov : movs){
+                String fecha = mov.getFecha();
+                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                Calendar cal  = Calendar.getInstance();
+                try {
+                    cal.setTime(formato.parse(fecha));
+                } catch (java.text.ParseException e) {
+                    e.printStackTrace();
+                }
+                int mesMovimiento = cal.get(Calendar.MONTH);
+                int anyoMovimiento = cal.get(Calendar.YEAR);
+                if (mov.getTipoMovimiento().equals(Constantes.TIPO_MOVIMIENTO_GASTO)
+                        && mesMovimiento == mesActual && anyoActal == anyoMovimiento)
+                    gastos += Double.valueOf(mov.getValor());
+                else if (mov.getTipoMovimiento().equals(Constantes.TIPO_MOVIMIENTO_INGRESO)
+                        && mesMovimiento == mesActual && anyoActal == anyoMovimiento)
+                    ingresos += Double.valueOf(mov.getValor());
+            }
+
+            ArrayList<InformeItem> informes = new ArrayList<InformeItem>();
+
+            InformeItem informe = new InformeItem();
+            informe.setIngresoValor(String.valueOf(ingresos));
+            informe.setGastoValor(String.valueOf(gastos));
+            saldo = ingresos - gastos;
+            informe.setTotalValor(String.valueOf(saldo));
+            informe.setPeriodoDesc(new DateFormatSymbols().getMonths()[mesActual-1]);
+
+            listViewMovsInforme.setAdapter(new InformeAdapter(getApplicationContext(), informes));
         }
 
+    }
+
+    public void filtraInformeMesAnyo(View v, String tipoFiltro, int anyo){
+        ((MovimientoAdapter)listViewMovsInforme.getAdapter()).setAnyoSeleccionado(anyo);
+        ((MovimientoAdapter)listViewMovsInforme.getAdapter()).getFilter().filter(tipoFiltro);
     }
 
     public void showToast(String message){
