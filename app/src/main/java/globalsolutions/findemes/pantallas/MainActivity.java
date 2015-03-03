@@ -146,7 +146,7 @@ public class MainActivity extends Activity {
         tvSaldo = (TextView) findViewById(R.id.tvSaldoValor);
         tvSaldo.setText(String.valueOf(saldo));
         tvMes = (TextView) findViewById(R.id.tvMesResumen);
-        tvMes.setText(new DateFormatSymbols().getMonths()[mesActual-1]);
+        tvMes.setText(new DateFormatSymbols().getMonths()[mesActual]);
     }
 
     public void CreaRegistros(){

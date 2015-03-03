@@ -66,7 +66,7 @@ public class InformesActivity extends Activity{
         spPeriodo = (Spinner) findViewById(R.id.spPeriodo);
         spPeriodo.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, periodos));
 
-        spAnyosInforme = (Spinner) findViewById(R.id.spAnyos);
+        spAnyosInforme = (Spinner) findViewById(R.id.spAnyosInforme);
         //lista movimientos
         //recuperamos movimientos
         final ArrayList<MovimientoItem> movs = new MovimientoDAO().cargaMovimientos(getApplicationContext());
@@ -163,7 +163,9 @@ public class InformesActivity extends Activity{
             informe.setGastoValor(String.valueOf(gastos));
             saldo = ingresos - gastos;
             informe.setTotalValor(String.valueOf(saldo));
-            informe.setPeriodoDesc(new DateFormatSymbols().getMonths()[mesActual-1]);
+            informe.setPeriodoDesc(new DateFormatSymbols().getMonths()[mesActual]);
+
+            informes.add(informe);
 
             listViewMovsInforme.setAdapter(new InformeAdapter(getApplicationContext(), informes));
         }
