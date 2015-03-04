@@ -43,15 +43,6 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
         this.itemsFiltrado = items;
     }
 
-    public int getPeriodoFiltroSeleccionado() {
-        return periodoFiltroSeleccionado;
-    }
-    public void setPeriodoFiltroSeleccionado(int periodoFiltroSeleccionado) {
-        this.periodoFiltroSeleccionado = periodoFiltroSeleccionado;
-    }
-    private int periodoFiltroSeleccionado;
-
-
     @Override
     public int getCount() {
         return this.itemsFiltrado.size();
@@ -123,7 +114,6 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
             if(tipoMovimiento.equals(Constantes.TIPO_FILTRO_RESETEO)){
                 //filtrotodo y mensual
                 if(periodo.equals(Constantes.TIPO_FILTRO_INFORME_MENSUAL)){
-                    int mesActual = Integer.MIN_VALUE;
                     int anyoActual = new Integer(periodoFiltro).intValue();
 
                     for(int i = 0 ; i < movs.size() ; i++) {
@@ -135,16 +125,16 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
                         } catch (java.text.ParseException e) {
                             e.printStackTrace();
                         }
-                        //int mesMovimiento = cal.get(Calendar.MONTH);
+                        int mesMovimiento = cal.get(Calendar.MONTH);
                         int anyoMovimiento = cal.get(Calendar.YEAR);
 
                         if (anyoMovimiento == anyoActual) {
-                            boolean existeMes = existeMesInforme(mesActual);
+                            boolean existeMes = existeMesInforme(mesMovimiento);
                             if(!existeMes){
-                                nuevoMesInforme(mesActual, movs.get(i));
+                                nuevoMesInforme(mesMovimiento, movs.get(i));
                             }
                             else{
-                                actualizaMesInforme(mesActual, movs.get(i));
+                                actualizaMesInforme(mesMovimiento, movs.get(i));
                             }
                         }
                     }
@@ -161,8 +151,26 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
         private ArrayList<InformeItem> calculaInformes(){
             ArrayList<InformeItem> result = new ArrayList<InformeItem>(informes.size());
             for(Integer integer : informes.keySet()){
+                ArrayList<MovimientoItem> movsMes = informes.get(integer);
 
+                Double ingresos = new Double(0.00);
+                Double gastos = new Double(0.00);
+                Double saldo = new Double(0.00);
 
+                for(MovimientoItem mov : movsMes){
+                    if (mov.getTipoMovimiento().equals(Constantes.TIPO_MOVIMIENTO_GASTO))
+                        gastos += Double.valueOf(mov.getValor());
+                    else if (mov.getTipoMovimiento().equals(Constantes.TIPO_MOVIMIENTO_INGRESO))
+                        ingresos += Double.valueOf(mov.getValor());
+                }
+
+                InformeItem nuevoInforme = new InformeItem();
+                nuevoInforme.setGastoValor(String.valueOf(gastos));
+                nuevoInforme.setIngresoValor(String.valueOf(ingresos));
+                saldo = ingresos - gastos;
+                nuevoInforme.setTotalValor(String.valueOf(saldo));
+                nuevoInforme.setPeriodoDesc(new DateFormatSymbols().getMonths()[integer.intValue()]);
+                result.add(nuevoInforme);
             }
             return result;
         }

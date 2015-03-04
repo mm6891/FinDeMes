@@ -139,7 +139,8 @@
         android:layout_centerHorizontal="true">
         <Button
                 android:id="@+id/imgBtn00"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
+                android:background="@android:color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/gasto"
@@ -150,7 +151,8 @@
                 android:text="@string/MENU_GASTOS" />
         <Button
             android:id="@+id/imgBtn01"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
+            android:background="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/ingreso"
@@ -161,7 +163,8 @@
             android:text="@string/MENU_INGRESOS" />
         <Button
             android:id="@+id/imgBtn02"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
+            android:background="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/movimiento"
@@ -172,7 +175,8 @@
             android:text="@string/MENU_MOVIMIENTOS" />
         <Button
             android:id="@+id/imgBtn10"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
+            android:background="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/report"
@@ -183,7 +187,8 @@
             android:text="@string/MENU_INFORMES" />
         <Button
             android:id="@+id/imgBtn11"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
+            android:background="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/transaction"
@@ -194,7 +199,8 @@
             android:text="@string/MENU_REGISTROS" />
         <Button
             android:id="@+id/imgBtn12"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
+            android:background="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/options"
