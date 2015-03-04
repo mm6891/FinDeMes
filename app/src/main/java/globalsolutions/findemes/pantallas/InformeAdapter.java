@@ -38,13 +38,14 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
         this.itemsFiltrado = items;
     }
 
-    private int anyoSeleccionado;
-    public int getAnyoSeleccionado() {
-        return anyoSeleccionado;
+    public int getPeriodoFiltroSeleccionado() {
+        return periodoFiltroSeleccionado;
     }
-    public void setAnyoSeleccionado(int anyoSeleccionado) {
-        this.anyoSeleccionado = anyoSeleccionado;
+    public void setPeriodoFiltroSeleccionado(int periodoFiltroSeleccionado) {
+        this.periodoFiltroSeleccionado = periodoFiltroSeleccionado;
     }
+    private int periodoFiltroSeleccionado;
+
 
     @Override
     public int getCount() {
@@ -105,46 +106,83 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
             protected FilterResults performFiltering(CharSequence constraint) {
 
                 FilterResults results = new FilterResults();
-                String filterString = constraint.toString().toLowerCase();
+                String[] filtersString = constraint.toString().split(";");
+                String tipoMovimiento = filtersString[0];
+                String periodo = filtersString[1];
+                String periodoFiltro = filtersString[2];
 
-                if(constraint.toString().equals(Constantes.TIPO_FILTRO_RESETEO)){
-                    
-                }
-
-                //load resumen
                 //recuperamos movimientos
                 final ArrayList<MovimientoItem> movs = new MovimientoDAO().cargaMovimientos(context);
 
-                /*int mesActual = Calendar.getInstance().get(Calendar.MONTH);
-                int anyoActal = Calendar.getInstance().get(Calendar.YEAR);*/
-                /*Double ingresos = new Double(0.00);
-                Double gastos = new Double(0.00);
-                Double saldo = new Double(0.00);
+                if(tipoMovimiento.equals(Constantes.TIPO_FILTRO_RESETEO)){
+                    //filtrotodo y mensual
+                    if(periodo.equals(Constantes.TIPO_FILTRO_INFORME_MENSUAL)){
+                        int mesActual = -1;
+                        int anyoActual = new Integer(periodoFiltro).intValue();
+                        Double ingresos = new Double(0.00);
+                        Double gastos = new Double(0.00);
+                        Double saldo = new Double(0.00);
+                        InformeItem informe;
 
-                for(MovimientoItem mov : movs){
-                    String fecha = mov.getFecha();
-                    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-                    Calendar cal  = Calendar.getInstance();
-                    try {
-                        cal.setTime(formato.parse(fecha));
-                    } catch (java.text.ParseException e) {
-                        e.printStackTrace();
+                        ArrayList<InformeItem> informes = new ArrayList<InformeItem>();
+                        for(int i = 0 ; i < movs.size() ; i++) {
+                            String fecha = movs.get(i).getFecha();
+                            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                            Calendar cal = Calendar.getInstance();
+                            try {
+                                cal.setTime(formato.parse(fecha));
+                            } catch (java.text.ParseException e) {
+                                e.printStackTrace();
+                            }
+                            int mesMovimiento = cal.get(Calendar.MONTH);
+                            int anyoMovimiento = cal.get(Calendar.YEAR);
+                            mesActual = mesMovimiento;
+                            if (anyoMovimiento == anyoActual  && mesMovimiento != mesActual) {
+                                if (mesActual != -1) {
+                                    //agregamos informe actual
+                                    informe = new InformeItem();
+                                    informe.setIngresoValor(String.valueOf(ingresos));
+                                    informe.setGastoValor(String.valueOf(gastos));
+                                    saldo = ingresos - gastos;
+                                    informe.setTotalValor(String.valueOf(saldo));
+                                    informe.setPeriodoDesc(new DateFormatSymbols().getMonths()[mesActual]);
+                                    informes.add(informe);
+                                }
+
+                                //creamos nuevo informe y reseteamos valores
+                                ingresos = new Double(0.00);
+                                gastos = new Double(0.00);
+                                saldo = new Double(0.00);
+                                if (movs.get(i).getTipoMovimiento().equals(Constantes.TIPO_MOVIMIENTO_GASTO))
+                                    gastos += Double.valueOf(movs.get(i).getValor());
+                                else if (movs.get(i).getTipoMovimiento().equals(Constantes.TIPO_MOVIMIENTO_INGRESO))
+                                    ingresos += Double.valueOf(movs.get(i).getValor());
+
+                                mesActual = mesMovimiento;
+                            }
+                            else if (mesActual == mesMovimiento && anyoActual == anyoMovimiento) {
+                                if (movs.get(i).getTipoMovimiento().equals(Constantes.TIPO_MOVIMIENTO_GASTO))
+                                    gastos += Double.valueOf(movs.get(i).getValor());
+                                else if (movs.get(i).getTipoMovimiento().equals(Constantes.TIPO_MOVIMIENTO_INGRESO))
+                                    ingresos += Double.valueOf(movs.get(i).getValor());
+
+                                if (movs.size() == i + 1) {
+                                    //agregamos informe actual
+                                    informe = new InformeItem();
+                                    informe.setIngresoValor(String.valueOf(ingresos));
+                                    informe.setGastoValor(String.valueOf(gastos));
+                                    saldo = ingresos - gastos;
+                                    informe.setTotalValor(String.valueOf(saldo));
+                                    informe.setPeriodoDesc(new DateFormatSymbols().getMonths()[mesActual]);
+                                    informes.add(informe);
+                                }
+                            }
+                        }
+
+                        results.values = informes;
+                        results.count = informes.size();
                     }
-                    //int mesMovimiento = cal.get(Calendar.MONTH);
-                    int anyoMovimiento = cal.get(Calendar.YEAR);
-                    if (mov.getTipoMovimiento().equals(Constantes.TIPO_MOVIMIENTO_GASTO)
-                            && mesMovimiento == getMesSeleccionado() && getAnyoSeleccionado() == anyoMovimiento)
-                        gastos += Double.valueOf(mov.getValor());
-                    else if (mov.getTipoMovimiento().equals(Constantes.TIPO_MOVIMIENTO_INGRESO)
-                            && mesMovimiento == getMesSeleccionado() && getAnyoSeleccionado() == anyoMovimiento)
-                        ingresos += Double.valueOf(mov.getValor());
-                }*/
-
-               /* tvIngresosValor.setText(String.valueOf(ingresos));
-                tvGastosValor.setText(String.valueOf(gastos));
-                saldo = ingresos - gastos;
-                tvSaldo.setText(String.valueOf(saldo));
-                tvMes.setText(new DateFormatSymbols().getMonths()[mesActual-1]);*/
+                }
 
                 return results;
             }
