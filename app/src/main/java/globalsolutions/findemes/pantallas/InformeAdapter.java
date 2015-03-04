@@ -107,103 +107,78 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
 
     private class ItemFilter extends Filter {
 
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
 
-                FilterResults results = new FilterResults();
-                String[] filtersString = constraint.toString().split(";");
-                String tipoMovimiento = filtersString[0];
-                String periodo = filtersString[1];
-                String periodoFiltro = filtersString[2];
+            FilterResults results = new FilterResults();
+            String[] filtersString = constraint.toString().split(";");
+            String tipoMovimiento = filtersString[0];
+            String periodo = filtersString[1];
+            String periodoFiltro = filtersString[2];
 
-                //recuperamos movimientos
-                final ArrayList<MovimientoItem> movs = new MovimientoDAO().cargaMovimientos(context);
-                informes.clear();
+            //recuperamos movimientos
+            final ArrayList<MovimientoItem> movs = new MovimientoDAO().cargaMovimientos(context);
+            informes.clear();
 
-                if(tipoMovimiento.equals(Constantes.TIPO_FILTRO_RESETEO)){
-                    //filtrotodo y mensual
-                    if(periodo.equals(Constantes.TIPO_FILTRO_INFORME_MENSUAL)){
-                        int mesActual = Integer.MIN_VALUE;
-                        int anyoActual = new Integer(periodoFiltro).intValue();
-                        Double ingresos = new Double(0.00);
-                        Double gastos = new Double(0.00);
-                        Double saldo = new Double(0.00);
-                        InformeItem informe;
+            if(tipoMovimiento.equals(Constantes.TIPO_FILTRO_RESETEO)){
+                //filtrotodo y mensual
+                if(periodo.equals(Constantes.TIPO_FILTRO_INFORME_MENSUAL)){
+                    int mesActual = Integer.MIN_VALUE;
+                    int anyoActual = new Integer(periodoFiltro).intValue();
 
-                        ArrayList<InformeItem> informesResult = new ArrayList<InformeItem>();
+                    for(int i = 0 ; i < movs.size() ; i++) {
+                        String fecha = movs.get(i).getFecha();
+                        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                        Calendar cal = Calendar.getInstance();
+                        try {
+                            cal.setTime(formato.parse(fecha));
+                        } catch (java.text.ParseException e) {
+                            e.printStackTrace();
+                        }
+                        //int mesMovimiento = cal.get(Calendar.MONTH);
+                        int anyoMovimiento = cal.get(Calendar.YEAR);
 
-                        for(int i = 0 ; i < movs.size() ; i++) {
-                            String fecha = movs.get(i).getFecha();
-                            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-                            Calendar cal = Calendar.getInstance();
-                            try {
-                                cal.setTime(formato.parse(fecha));
-                            } catch (java.text.ParseException e) {
-                                e.printStackTrace();
+                        if (anyoMovimiento == anyoActual) {
+                            boolean existeMes = existeMesInforme(mesActual);
+                            if(!existeMes){
+                                nuevoMesInforme(mesActual, movs.get(i));
                             }
-                            int mesMovimiento = cal.get(Calendar.MONTH);
-                            int anyoMovimiento = cal.get(Calendar.YEAR);
-
-                            if (mesMovimiento != mesActual && anyoMovimiento == anyoActual) {
-                                mesActual = mesMovimiento;
-                                //boolean anadeMovimiento = addMovimiento(mesMovimiento, movs.get(i));
-                                /*if (mesActual != -1) {
-                                    //agregamos informe actual
-                                    informe = new InformeItem();
-                                    informe.setIngresoValor(String.valueOf(ingresos));
-                                    informe.setGastoValor(String.valueOf(gastos));
-                                    saldo = ingresos - gastos;
-                                    informe.setTotalValor(String.valueOf(saldo));
-                                    informe.setPeriodoDesc(new DateFormatSymbols().getMonths()[mesActual]);
-                                    informes.add(informe);
-                                }
-
-                                //creamos nuevo informe y reseteamos valores
-                                ingresos = new Double(0.00);
-                                gastos = new Double(0.00);
-                                saldo = new Double(0.00);
-                                if (movs.get(i).getTipoMovimiento().equals(Constantes.TIPO_MOVIMIENTO_GASTO))
-                                    gastos += Double.valueOf(movs.get(i).getValor());
-                                else if (movs.get(i).getTipoMovimiento().equals(Constantes.TIPO_MOVIMIENTO_INGRESO))
-                                    ingresos += Double.valueOf(movs.get(i).getValor());
-
-                                mesActual = mesMovimiento;
-                            }
-                            else if (mesActual == mesMovimiento && anyoActual == anyoMovimiento) {
-                                if (movs.get(i).getTipoMovimiento().equals(Constantes.TIPO_MOVIMIENTO_GASTO))
-                                    gastos += Double.valueOf(movs.get(i).getValor());
-                                else if (movs.get(i).getTipoMovimiento().equals(Constantes.TIPO_MOVIMIENTO_INGRESO))
-                                    ingresos += Double.valueOf(movs.get(i).getValor());
-
-                                if (movs.size() == i + 1) {
-                                    //agregamos informe actual
-                                    informe = new InformeItem();
-                                    informe.setIngresoValor(String.valueOf(ingresos));
-                                    informe.setGastoValor(String.valueOf(gastos));
-                                    saldo = ingresos - gastos;
-                                    informe.setTotalValor(String.valueOf(saldo));
-                                    informe.setPeriodoDesc(new DateFormatSymbols().getMonths()[mesActual]);
-                                    informes.add(informe);
-                                }*/
+                            else{
+                                actualizaMesInforme(mesActual, movs.get(i));
                             }
                         }
-
-                        results.values = informes;
-                        results.count = informes.size();
                     }
-                }
 
-                return results;
+                    ArrayList<InformeItem> resultado = calculaInformes();
+                    results.values = resultado;
+                    results.count = resultado.size();
+                }
             }
 
-        public boolean existeMesInforme(int key, MovimientoItem mov){
+            return results;
+        }
+
+        private ArrayList<InformeItem> calculaInformes(){
+            ArrayList<InformeItem> result = new ArrayList<InformeItem>(informes.size());
+            for(Integer integer : informes.keySet()){
+
+
+            }
+            return result;
+        }
+
+        public boolean existeMesInforme(int key){
             return informes.containsKey(new Integer(key));
         }
 
-        public boolean anyadeMesInforme(int key, MovimientoItem mov){
-            ArrayList<InformeItem> informes = new ArrayList<InformeItem>();
-            //informes.put(key, informes);
-            return false;
+        public void actualizaMesInforme(int key, MovimientoItem mov){
+            informes.get(key).add(mov);
+        }
+
+        public void nuevoMesInforme(int key,MovimientoItem nuevo){
+            ArrayList<MovimientoItem> nuevoArray = new ArrayList<MovimientoItem>();
+            nuevoArray.add(nuevo);
+            informes.put(key, nuevoArray);
         }
 
             @SuppressWarnings("unchecked")
