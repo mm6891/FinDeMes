@@ -10,10 +10,12 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.MovimientoDAO;
@@ -31,6 +33,9 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
     private ArrayList<InformeItem> items;
     private ArrayList<InformeItem> itemsFiltrado;
     private ItemFilter mFilter = new ItemFilter();
+
+    //mes, array de movimientos
+    private HashMap<Integer,ArrayList<MovimientoItem>> informes = new HashMap<Integer,ArrayList<MovimientoItem>>();
 
     public InformeAdapter(Context context, ArrayList<InformeItem> items) {
         this.context = context;
@@ -113,18 +118,20 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
 
                 //recuperamos movimientos
                 final ArrayList<MovimientoItem> movs = new MovimientoDAO().cargaMovimientos(context);
+                informes.clear();
 
                 if(tipoMovimiento.equals(Constantes.TIPO_FILTRO_RESETEO)){
                     //filtrotodo y mensual
                     if(periodo.equals(Constantes.TIPO_FILTRO_INFORME_MENSUAL)){
-                        int mesActual = -1;
+                        int mesActual = Integer.MIN_VALUE;
                         int anyoActual = new Integer(periodoFiltro).intValue();
                         Double ingresos = new Double(0.00);
                         Double gastos = new Double(0.00);
                         Double saldo = new Double(0.00);
                         InformeItem informe;
 
-                        ArrayList<InformeItem> informes = new ArrayList<InformeItem>();
+                        ArrayList<InformeItem> informesResult = new ArrayList<InformeItem>();
+
                         for(int i = 0 ; i < movs.size() ; i++) {
                             String fecha = movs.get(i).getFecha();
                             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -136,9 +143,11 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
                             }
                             int mesMovimiento = cal.get(Calendar.MONTH);
                             int anyoMovimiento = cal.get(Calendar.YEAR);
-                            mesActual = mesMovimiento;
-                            if (anyoMovimiento == anyoActual  && mesMovimiento != mesActual) {
-                                if (mesActual != -1) {
+
+                            if (mesMovimiento != mesActual && anyoMovimiento == anyoActual) {
+                                mesActual = mesMovimiento;
+                                //boolean anadeMovimiento = addMovimiento(mesMovimiento, movs.get(i));
+                                /*if (mesActual != -1) {
                                     //agregamos informe actual
                                     informe = new InformeItem();
                                     informe.setIngresoValor(String.valueOf(ingresos));
@@ -175,7 +184,7 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
                                     informe.setTotalValor(String.valueOf(saldo));
                                     informe.setPeriodoDesc(new DateFormatSymbols().getMonths()[mesActual]);
                                     informes.add(informe);
-                                }
+                                }*/
                             }
                         }
 
@@ -186,6 +195,16 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
 
                 return results;
             }
+
+        public boolean existeMesInforme(int key, MovimientoItem mov){
+            return informes.containsKey(new Integer(key));
+        }
+
+        public boolean anyadeMesInforme(int key, MovimientoItem mov){
+            ArrayList<InformeItem> informes = new ArrayList<InformeItem>();
+            //informes.put(key, informes);
+            return false;
+        }
 
             @SuppressWarnings("unchecked")
             @Override
