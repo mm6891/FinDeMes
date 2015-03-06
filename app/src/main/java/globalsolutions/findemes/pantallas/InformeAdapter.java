@@ -63,24 +63,45 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
 
         View rowView = convertView;
 
-        if (convertView == null) {
+        //if (convertView == null) {
             // Create a new view into the list.
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            rowView = inflater.inflate(R.layout.informe_item, parent, false);
-        }
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        // Set data into the view.
-        TextView tvPeriodo = (TextView) rowView.findViewById(R.id.tvPeriodoInforme);
-        TextView tvIngresoValor = (TextView) rowView.findViewById(R.id.tvIngresosInformeValor);
-        TextView tvGastoValor = (TextView) rowView.findViewById(R.id.tvGastosInformeValor);
-        TextView tvTotalValor = (TextView) rowView.findViewById(R.id.tvTotalInformeValor);
-
+        //establer el item segun el tipo de movimiento
         InformeItem item = this.itemsFiltrado.get(position);
-        tvPeriodo.setText(item.getPeriodoDesc());
-        tvIngresoValor.setText(item.getIngresoValor());
-        tvGastoValor.setText(item.getGastoValor());
-        tvTotalValor.setText(item.getTotalValor());
+        if(item.getTipoInforme().equals(Constantes.TIPO_FILTRO_RESETEO)){
+            rowView = inflater.inflate(R.layout.informe_item, parent, false);
+            // Set data into the view.
+            TextView tvPeriodo = (TextView) rowView.findViewById(R.id.tvPeriodoInforme);
+            TextView tvIngresoValor = (TextView) rowView.findViewById(R.id.tvIngresosInformeValor);
+            TextView tvGastoValor = (TextView) rowView.findViewById(R.id.tvGastosInformeValor);
+            TextView tvTotalValor = (TextView) rowView.findViewById(R.id.tvTotalInformeValor);
+
+            tvPeriodo.setText(item.getPeriodoDesc());
+            tvIngresoValor.setText(item.getIngresoValor());
+            tvGastoValor.setText(item.getGastoValor());
+            tvTotalValor.setText(item.getTotalValor());
+        }
+        else if(item.getTipoInforme().equals(Constantes.TIPO_MOVIMIENTO_GASTO)){
+            rowView = inflater.inflate(R.layout.informe_item_gasto, parent, false);
+            // Set data into the view.
+            TextView tvPeriodo = (TextView) rowView.findViewById(R.id.tvPeriodoInforme);
+            TextView tvGastoValor = (TextView) rowView.findViewById(R.id.tvGastosInformeValor);
+
+            tvPeriodo.setText(item.getPeriodoDesc());
+            tvGastoValor.setText(item.getGastoValor());
+        }
+        if(item.getTipoInforme().equals(Constantes.TIPO_MOVIMIENTO_INGRESO)){
+            rowView = inflater.inflate(R.layout.informe_item_ingreso, parent, false);
+            // Set data into the view.
+            TextView tvPeriodo = (TextView) rowView.findViewById(R.id.tvPeriodoInforme);
+            TextView tvIngresoValor = (TextView) rowView.findViewById(R.id.tvIngresosInformeValor);
+
+            tvPeriodo.setText(item.getPeriodoDesc());
+            tvIngresoValor.setText(item.getIngresoValor());
+        }
+        //}
 
         return rowView;
     }
@@ -111,44 +132,107 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
             final ArrayList<MovimientoItem> movs = new MovimientoDAO().cargaMovimientos(context);
             informes.clear();
 
-            if(tipoMovimiento.equals(Constantes.TIPO_FILTRO_RESETEO)){
-                //filtrotodo y mensual
-                if(periodo.equals(Constantes.TIPO_FILTRO_INFORME_MENSUAL)){
-                    int anyoActual = new Integer(periodoFiltro).intValue();
+            //mensual
+            if(periodo.equals(Constantes.TIPO_FILTRO_INFORME_MENSUAL)){
+                int anyoActual = new Integer(periodoFiltro).intValue();
 
-                    for(int i = 0 ; i < movs.size() ; i++) {
-                        String fecha = movs.get(i).getFecha();
-                        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-                        Calendar cal = Calendar.getInstance();
-                        try {
-                            cal.setTime(formato.parse(fecha));
-                        } catch (java.text.ParseException e) {
-                            e.printStackTrace();
+                for(int i = 0 ; i < movs.size() ; i++) {
+                    String fecha = movs.get(i).getFecha();
+                    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                    Calendar cal = Calendar.getInstance();
+                    try {
+                        cal.setTime(formato.parse(fecha));
+                    } catch (java.text.ParseException e) {
+                        e.printStackTrace();
+                    }
+                    int mesMovimiento = cal.get(Calendar.MONTH);
+                    int anyoMovimiento = cal.get(Calendar.YEAR);
+
+                    if (anyoMovimiento == anyoActual) {
+                        boolean existePeriodoInforme = existePeriodoInforme(mesMovimiento);
+                        if(!existePeriodoInforme){
+                            nuevoMesInforme(mesMovimiento, movs.get(i));
                         }
-                        int mesMovimiento = cal.get(Calendar.MONTH);
-                        int anyoMovimiento = cal.get(Calendar.YEAR);
-
-                        if (anyoMovimiento == anyoActual) {
-                            boolean existeMes = existeMesInforme(mesMovimiento);
-                            if(!existeMes){
-                                nuevoMesInforme(mesMovimiento, movs.get(i));
-                            }
-                            else{
-                                actualizaMesInforme(mesMovimiento, movs.get(i));
-                            }
+                        else{
+                            actualizaMesInforme(mesMovimiento, movs.get(i));
                         }
                     }
-
-                    ArrayList<InformeItem> resultado = calculaInformes();
-                    results.values = resultado;
-                    results.count = resultado.size();
                 }
+
+                ArrayList<InformeItem> resultado = calculaInformes(tipoMovimiento,periodo);
+                results.values = resultado;
+                results.count = resultado.size();
+            }
+
+            //trimestral
+            if(periodo.equals(Constantes.TIPO_FILTRO_INFORME_TRIMESTRAL)){
+                int anyoActual = new Integer(periodoFiltro).intValue();
+
+                for(int i = 0 ; i < movs.size() ; i++) {
+                    String fecha = movs.get(i).getFecha();
+                    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                    Calendar cal = Calendar.getInstance();
+                    try {
+                        cal.setTime(formato.parse(fecha));
+                    } catch (java.text.ParseException e) {
+                        e.printStackTrace();
+                    }
+                    int trimestreMovimiento = (cal.get(Calendar.MONTH) / 3) + 1;
+                    int anyoMovimiento = cal.get(Calendar.YEAR);
+
+                    if (anyoMovimiento == anyoActual) {
+                        boolean existePeriodoInforme = existePeriodoInforme(trimestreMovimiento);
+                        if(!existePeriodoInforme){
+                            nuevoMesInforme(trimestreMovimiento, movs.get(i));
+                        }
+                        else{
+                            actualizaMesInforme(trimestreMovimiento, movs.get(i));
+                        }
+                    }
+                }
+
+                ArrayList<InformeItem> resultado = calculaInformes(tipoMovimiento,periodo);
+                results.values = resultado;
+                results.count = resultado.size();
+            }
+
+            //trimestral
+            if(periodo.equals(Constantes.TIPO_FILTRO_INFORME_QUINCENAL)){
+                int anyoActual = new Integer(periodoFiltro).intValue();
+
+                for(int i = 0 ; i < movs.size() ; i++) {
+                    String fecha = movs.get(i).getFecha();
+                    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+                    Calendar cal = Calendar.getInstance();
+                    try {
+                        cal.setTime(formato.parse(fecha));
+                    } catch (java.text.ParseException e) {
+                        e.printStackTrace();
+                    }
+                    int quincenaMovimiento = (cal.get(Calendar.DAY_OF_YEAR) / 14) + 1;
+                    int anyoMovimiento = cal.get(Calendar.YEAR);
+
+                    if (anyoMovimiento == anyoActual) {
+                        boolean existePeriodoInforme = existePeriodoInforme(quincenaMovimiento);
+                        if(!existePeriodoInforme){
+                            nuevoMesInforme(quincenaMovimiento, movs.get(i));
+                        }
+                        else{
+                            actualizaMesInforme(quincenaMovimiento, movs.get(i));
+                        }
+                    }
+                }
+
+                ArrayList<InformeItem> resultado = calculaInformes(tipoMovimiento,periodo);
+                results.values = resultado;
+                results.count = resultado.size();
             }
 
             return results;
         }
 
-        private ArrayList<InformeItem> calculaInformes(){
+        //tipoPeriodo:  MENSUAL, TRIMESTRAL, QUINCENAL
+        private ArrayList<InformeItem> calculaInformes(String tipoMovimiento, String tipoPeriodo){
             ArrayList<InformeItem> result = new ArrayList<InformeItem>(informes.size());
             for(Integer integer : informes.keySet()){
                 ArrayList<MovimientoItem> movsMes = informes.get(integer);
@@ -165,17 +249,126 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
                 }
 
                 InformeItem nuevoInforme = new InformeItem();
+                nuevoInforme.setTipoInforme(tipoMovimiento);
+
                 nuevoInforme.setGastoValor(String.valueOf(gastos));
                 nuevoInforme.setIngresoValor(String.valueOf(ingresos));
                 saldo = ingresos - gastos;
                 nuevoInforme.setTotalValor(String.valueOf(saldo));
-                nuevoInforme.setPeriodoDesc(new DateFormatSymbols().getMonths()[integer.intValue()]);
+
+                if(tipoPeriodo.equals(Constantes.TIPO_FILTRO_INFORME_MENSUAL)) {
+                    nuevoInforme.setPeriodoDesc(new DateFormatSymbols().getMonths()[integer.intValue()]);
+                }
+                else if(tipoPeriodo.equals(Constantes.TIPO_FILTRO_INFORME_TRIMESTRAL)) {
+                    //trimestres
+                    switch (integer.intValue()){
+                        case 1:
+                            nuevoInforme.setPeriodoDesc("1 Ene - 31 Mar");
+                            break;
+                        case 2:
+                            nuevoInforme.setPeriodoDesc("1 Abr - 30 Jun");
+                            break;
+                        case 3:
+                            nuevoInforme.setPeriodoDesc("1 Jul - 30 Sep");
+                            break;
+                        case 4:
+                            nuevoInforme.setPeriodoDesc("1 Oct - 31 Dic");
+                            break;
+                    }
+                }
+
+                else if(tipoPeriodo.equals(Constantes.TIPO_FILTRO_INFORME_QUINCENAL)) {
+                    //trimestres
+                    switch (integer.intValue()){
+                        case 1:
+                            nuevoInforme.setPeriodoDesc("1 Ene - 15 Ene");
+                            break;
+                        case 2:
+                            nuevoInforme.setPeriodoDesc("16 Ene - 31 Ene");
+                            break;
+                        case 3:
+                            nuevoInforme.setPeriodoDesc("1 Feb - 15 Feb");
+                            break;
+                        case 5:
+                            nuevoInforme.setPeriodoDesc("16 Feb - 28 Feb");
+                            break;
+                        case 6:
+                            nuevoInforme.setPeriodoDesc("01 Mar - 15 Mar");
+                            break;
+                        case 7:
+                            nuevoInforme.setPeriodoDesc("16 Mar - 31 Mar");
+                            break;
+                        case 8:
+                            nuevoInforme.setPeriodoDesc("01 Abr - 15 Abr");
+                            break;
+                        case 9:
+                            nuevoInforme.setPeriodoDesc("16 Abr - 30 Abr");
+                            break;
+                        case 10:
+                            nuevoInforme.setPeriodoDesc("01 May - 15 May");
+                            break;
+                        case 11:
+                            nuevoInforme.setPeriodoDesc("16 May - 31 May");
+                            break;
+                        case 12:
+                            nuevoInforme.setPeriodoDesc("01 Jun - 15 Jun");
+                            break;
+                        case 13:
+                            nuevoInforme.setPeriodoDesc("16 Jun - 30 Jun");
+                            break;
+                        case 14:
+                            nuevoInforme.setPeriodoDesc("01 Jul - 15 Jul");
+                            break;
+                        case 15:
+                            nuevoInforme.setPeriodoDesc("16 Jul - 31 Jul");
+                            break;
+                        case 16:
+                            nuevoInforme.setPeriodoDesc("01 Ago - 15 Ago");
+                            break;
+                        case 17:
+                            nuevoInforme.setPeriodoDesc("16 Ago - 31 Ago");
+                            break;
+                        case 18:
+                            nuevoInforme.setPeriodoDesc("01 Sep - 15 Sep");
+                            break;
+                        case 19:
+                            nuevoInforme.setPeriodoDesc("16 Sep - 30 Sep");
+                            break;
+                        case 20:
+                            nuevoInforme.setPeriodoDesc("01 Oct - 15 Oct");
+                            break;
+                        case 21:
+                            nuevoInforme.setPeriodoDesc("16 Oct - 31 Oct");
+                            break;
+                        case 22:
+                            nuevoInforme.setPeriodoDesc("01 Nov - 15 Nov");
+                            break;
+                        case 23:
+                            nuevoInforme.setPeriodoDesc("16 Nov - 30 Nov");
+                            break;
+                        case 24:
+                            nuevoInforme.setPeriodoDesc("01 Dic - 15 Dic");
+                            break;
+                        case 25:
+                            nuevoInforme.setPeriodoDesc("16 Dic - 31 Dic");
+                            break;
+                    }
+                }
+
+                //si es un gasto o ingreso sin valor, no se incluye en la lista
+                if(tipoMovimiento.equals(Constantes.TIPO_MOVIMIENTO_GASTO) &&
+                        Double.parseDouble(nuevoInforme.getGastoValor()) == (new Double(0.00)))
+                    continue;
+                if(tipoMovimiento.equals(Constantes.TIPO_MOVIMIENTO_INGRESO) &&
+                        Double.parseDouble(nuevoInforme.getIngresoValor()) == (new Double(0.00)))
+                    continue;
+
                 result.add(nuevoInforme);
             }
             return result;
         }
 
-        public boolean existeMesInforme(int key){
+        public boolean existePeriodoInforme(int key){
             return informes.containsKey(new Integer(key));
         }
 

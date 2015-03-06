@@ -30,6 +30,7 @@
         android:rowCount="4"
         android:orientation="horizontal"
         android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
         android:layout_below="@+id/lyHeader">
         <TextView
             android:id="@+id/tvMesResumen"

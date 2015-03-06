@@ -62,6 +62,20 @@ public class InformesActivity extends Activity{
         spPeriodo = (Spinner) findViewById(R.id.spPeriodo);
         spPeriodo.setAdapter(new ArrayAdapter<Periodos>(this, android.R.layout.simple_spinner_dropdown_item, Periodos.values()));
 
+        mSpinnerCount++;
+        spPeriodo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (mSpinnerInitializedCount < mSpinnerCount)
+                {
+                    mSpinnerInitializedCount++;
+                }
+                else
+                    filtraInforme(view, (String) spTipoMovimiento.getSelectedItem(), ((Periodos) spPeriodo.getSelectedItem()).toString(), (String) spPeriodoFiltro.getSelectedItem());
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
         spPeriodoFiltro = (Spinner) findViewById(R.id.spPeriodoFiltro);
         //lista movimientos
         //recuperamos movimientos
@@ -97,8 +111,6 @@ public class InformesActivity extends Activity{
                         filtraInforme(view, (String) spTipoMovimiento.getSelectedItem(), ((Periodos) spPeriodo.getSelectedItem()).toString(), (String) spPeriodoFiltro.getSelectedItem());
                 }
                 public void onNothingSelected(AdapterView<?> parent) {
-                    int year = Calendar.getInstance().get(Calendar.YEAR);
-                    spPeriodoFiltro.setSelection(year);
                 }
             });
 

@@ -9,6 +9,16 @@ public class InformeItem {
     String ingresoValor;
     String gastoValor;
 
+    public String getTipoInforme() {
+        return tipoInforme;
+    }
+
+    public void setTipoInforme(String tipoInforme) {
+        this.tipoInforme = tipoInforme;
+    }
+
+    //TODOS, INGRESOS o GASTOS
+    String tipoInforme;
     public String getPeriodoDesc() {
         return periodoDesc;
     }
