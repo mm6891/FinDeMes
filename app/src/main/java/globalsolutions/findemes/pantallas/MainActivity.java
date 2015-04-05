@@ -90,6 +90,16 @@ public class MainActivity extends Activity {
             }
         });
 
+        //OPCIONES
+        btnOpciones = (Button) findViewById(R.id.imgBtn12);
+        btnOpciones.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, OpcionesActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         //tamanyo de gridlayout segun pantalla en pixeles
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
@@ -146,7 +156,7 @@ public class MainActivity extends Activity {
         tvSaldo = (TextView) findViewById(R.id.tvSaldoValor);
         tvSaldo.setText(String.valueOf(saldo));
         tvMes = (TextView) findViewById(R.id.tvMesResumen);
-        tvMes.setText(new DateFormatSymbols().getMonths()[mesActual]);
+        tvMes.setText(new DateFormatSymbols().getMonths()[mesActual].toUpperCase());
     }
 
     public void CreaRegistros(){

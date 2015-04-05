@@ -38,6 +38,11 @@ public class GrupoGastoDAO {
         return database.insert(GRUPO_GASTOS_TABLA, null, values);
     }
 
+    public boolean deleteRecords(String descripcion){
+        return  database.delete(GRUPO_GASTOS_TABLA,
+                GRUPO_GASTOS_DESC + "='" + descripcion +"'", null) > 0;
+    }
+
     public String[] selectGrupos() {
         String[] ret;
         String[] cols = new String[] {GRUPO_GASTOS_DESC};
@@ -53,5 +58,17 @@ public class GrupoGastoDAO {
         }
 
         return ret; // iterate to get each value.
+    }
+
+    public boolean updateGrupoGasto(GrupoGasto antiguo, GrupoGasto nuevo){
+        String[] cols = new String[] {GRUPO_GASTOS_DESC};
+        String[] args = new String[] {antiguo.getGrupo()};
+
+        //Establecemos los campos-valores a actualizar
+        ContentValues valores = new ContentValues();
+        valores.put(GRUPO_GASTOS_DESC,nuevo.getGrupo());
+
+        int rows = database.update(GRUPO_GASTOS_TABLA,valores,GRUPO_GASTOS_DESC+"=?",args);
+        return rows > 0;
     }
 }

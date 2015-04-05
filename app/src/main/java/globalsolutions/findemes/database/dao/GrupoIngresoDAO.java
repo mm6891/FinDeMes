@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import globalsolutions.findemes.database.model.GrupoGasto;
 import globalsolutions.findemes.database.model.GrupoIngreso;
 import globalsolutions.findemes.database.util.MyDatabaseHelper;
 
@@ -39,6 +38,11 @@ public class GrupoIngresoDAO {
         return database.insert(GRUPO_INGRESOS_TABLA, null, values);
     }
 
+    public boolean deleteRecords(String descripcion){
+        return  database.delete(GRUPO_INGRESOS_TABLA,
+                GRUPO_INGRESOS_DESC + "='" + descripcion +"'", null) > 0;
+    }
+
     public String[] selectGrupos() {
         String[] ret;
         String[] cols = new String[] {GRUPO_INGRESOS_DESC};
@@ -54,5 +58,17 @@ public class GrupoIngresoDAO {
         }
 
         return ret; // iterate to get each value.
+    }
+
+    public boolean updateGrupoIngreso(GrupoIngreso antiguo, GrupoIngreso nuevo){
+        String[] cols = new String[] {GRUPO_INGRESOS_DESC};
+        String[] args = new String[] {antiguo.getGrupo()};
+
+        //Establecemos los campos-valores a actualizar
+        ContentValues valores = new ContentValues();
+        valores.put(GRUPO_INGRESOS_DESC,nuevo.getGrupo());
+
+        int rows = database.update(GRUPO_INGRESOS_TABLA,valores,GRUPO_INGRESOS_DESC+"=?",args);
+        return rows > 0;
     }
 }

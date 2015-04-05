@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".EditCategoriaGastoDialog">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/lyLinear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lyLinear2">
+        <TextView
+            android:id="@+id/tvDescripcionCatGas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/edicionCategoriaGastos"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/lyLinear4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lyLinear">
+        <EditText
+            android:id="@+id/txtDecripcionCatGas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="20"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_below="@+id/tvDescripcionCatGas"/>
+    </LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/lyLinear5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lyLinear4">
+        <Button
+            android:id="@+id/btnModCatGas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="modificarCategoriaGasto"
+            android:text="@string/Modificar"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+    </LinearLayout>
+</RelativeLayout>

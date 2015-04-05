@@ -1,12 +1,10 @@
 package globalsolutions.findemes.pantallas;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -15,12 +13,9 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import globalsolutions.findemes.R;
-import globalsolutions.findemes.database.dao.GastoDAO;
 import globalsolutions.findemes.database.dao.MovimientoDAO;
-import globalsolutions.findemes.database.model.Gasto;
 import globalsolutions.findemes.database.model.MovimientoItem;
 import globalsolutions.findemes.database.util.Constantes;
 

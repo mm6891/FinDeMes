@@ -4,8 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
-import globalsolutions.findemes.database.model.Gasto;
 import globalsolutions.findemes.database.model.GrupoIngreso;
 import globalsolutions.findemes.database.model.Ingreso;
 import globalsolutions.findemes.database.util.MyDatabaseHelper;

@@ -5,8 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.sql.Timestamp;
-
 import globalsolutions.findemes.database.model.Gasto;
 import globalsolutions.findemes.database.model.GrupoGasto;
 import globalsolutions.findemes.database.util.MyDatabaseHelper;

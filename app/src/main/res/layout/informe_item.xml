@@ -14,6 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="18sp"
             />
         </LinearLayout>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -28,6 +30,8 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:text="@string/Ingresos"
+            android:textStyle="bold"
+            android:textSize="18sp"
             android:layout_weight="1"/>
         <ImageView
             android:src="@drawable/plus"
@@ -40,6 +44,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="18sp"
             android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -54,6 +60,8 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:text="@string/Gastos"
+            android:textStyle="bold"
+            android:textSize="18sp"
             android:layout_weight="1"/>
         <ImageView
             android:src="@drawable/minus"
@@ -66,6 +74,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="18sp"
             android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -78,6 +88,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="18sp"
             android:layout_weight="1"/>
         <ImageView
             android:src="@drawable/equal"
@@ -90,6 +102,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="18sp"
             android:layout_weight="1"/>
     </LinearLayout>
 </RelativeLayout>

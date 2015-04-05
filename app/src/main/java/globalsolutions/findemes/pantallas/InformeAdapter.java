@@ -7,10 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -63,8 +61,7 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
 
         View rowView = convertView;
 
-        //if (convertView == null) {
-            // Create a new view into the list.
+        // Create a new view into the list.
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -101,7 +98,6 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
             tvPeriodo.setText(item.getPeriodoDesc());
             tvIngresoValor.setText(item.getIngresoValor());
         }
-        //}
 
         return rowView;
     }
@@ -210,7 +206,7 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
                 nuevoInforme.setTotalValor(String.valueOf(saldo));
 
                 if(tipoPeriodo.equals(Constantes.TIPO_FILTRO_INFORME_MENSUAL)) {
-                    nuevoInforme.setPeriodoDesc(new DateFormatSymbols().getMonths()[integer.intValue()]);
+                    nuevoInforme.setPeriodoDesc(new DateFormatSymbols().getMonths()[integer.intValue()].toUpperCase());
                 }
                 else if(tipoPeriodo.equals(Constantes.TIPO_FILTRO_INFORME_TRIMESTRAL)) {
                     //trimestres

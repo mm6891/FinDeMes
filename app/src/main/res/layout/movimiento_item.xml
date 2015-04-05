@@ -14,12 +14,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="18sp"
             android:layout_weight="0.4"/>
         <TextView
         android:id="@+id/tvValorMov"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
+        android:textStyle="bold"
+        android:textSize="18sp"
         android:layout_weight="0.4"/>
         <ImageView
             android:id="@+id/ivIcon"
@@ -39,12 +43,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="18sp"
             android:layout_weight="1"/>
         <TextView
             android:id="@+id/tvFechaMov"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="18sp"
             android:layout_weight="1"/>
         </LinearLayout>
 </RelativeLayout>
