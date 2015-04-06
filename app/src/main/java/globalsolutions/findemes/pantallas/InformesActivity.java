@@ -21,6 +21,8 @@ import globalsolutions.findemes.database.model.InformeItem;
 import globalsolutions.findemes.database.model.MovimientoItem;
 import globalsolutions.findemes.database.util.Constantes;
 
+import static android.app.PendingIntent.getActivity;
+
 /**
  * Created by Manuel on 23/02/2015.
  */
@@ -136,23 +138,28 @@ public class InformesActivity extends Activity {
         listViewMovsInforme.setAdapter(new InformeAdapter(getApplicationContext(), new ArrayList<InformeItem>()));
         ((InformeAdapter)listViewMovsInforme.getAdapter()).setOnDataChangeListener(new InformeAdapter.OnDataChangeListener() {
             @Override
-            public void onDataChanged(ArrayList<InformeItem> informes) {
-                 //load resumen
-                Double ingresos = new Double(0.00);
-                Double gastos = new Double(0.00);
-                Double saldo = new Double(0.00);
+            public void onDataChanged(final ArrayList<InformeItem> informes) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //load resumen
+                        Double ingresos = new Double(0.00);
+                        Double gastos = new Double(0.00);
+                        Double saldo = new Double(0.00);
 
-                for(InformeItem inf : informes){
-                    ingresos += Double.valueOf(inf.getIngresoValor());
-                    gastos += Double.valueOf(inf.getGastoValor());
-                }
-                saldo = ingresos - gastos;
-                TextView tvIngresosTotal = (TextView) findViewById(R.id.tvIngresosInformesValor);
-                tvIngresosTotal.setText(String.valueOf(ingresos));
-                TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);
-                tvGastosTotal.setText(String.valueOf(gastos));
-                TextView tvSaldoTotal = (TextView) findViewById(R.id.tvSaldoInformesValor);
-                tvSaldoTotal.setText(String.valueOf(saldo));
+                        for(InformeItem inf : informes){
+                            ingresos += Double.valueOf(inf.getIngresoValor());
+                            gastos += Double.valueOf(inf.getGastoValor());
+                        }
+                        saldo = ingresos - gastos;
+                        // This code will always run on the UI thread, therefore is safe to modify UI elements.
+                        ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos));
+                        TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);
+                        tvGastosTotal.setText(String.valueOf(gastos));
+                        TextView tvSaldoTotal = (TextView) findViewById(R.id.tvSaldoInformesValor);
+                        tvSaldoTotal.setText(String.valueOf(saldo));
+                    }
+                });
             }
         });
     }
