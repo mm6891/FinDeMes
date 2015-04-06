@@ -36,6 +36,10 @@
             android:name=".pantallas.OpcionesActivity"
             android:label="@string/MENU_OPCIONES" >
         </activity>
+        <activity
+            android:name=".pantallas.RegistrosActivity"
+            android:label="@string/MENU_REGISTROS" >
+        </activity>
     </application>
 
 </manifest>

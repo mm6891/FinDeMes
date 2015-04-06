@@ -86,12 +86,6 @@ public class IngresoActivity extends FragmentActivity implements DatePickerDialo
         newFragment.show(getFragmentManager(),"Fecha");
     }
 
-    public void showGastoDialog(View v, Bundle bundle) {
-        DialogFragment newFragment = new GastoDialog();
-        newFragment.setArguments(bundle);
-        newFragment.show(getFragmentManager(),"MODIFICACION");
-    }
-
     public void guardarIngreso(View view) {
         //descripcion , valor , fecha
         String valor = (String)((EditText) findViewById(R.id.txtIngreso)).getText().toString();

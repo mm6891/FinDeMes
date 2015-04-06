@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="Categoria">Category:</string>
-    <string name="Gasto">Gasto:</string>
-    <string name="Gastos">Gastos:</string>
+    <string name="Gasto">Expend:</string>
+    <string name="Gastos">Expenses:</string>
     <string name="Saldo">Saldo:</string>
     <string name="Decripcion">Description:</string>
-    <string name="Ingreso">Ingreso:</string>
-    <string name="Ingresos">Ingresos:</string>
+    <string name="Ingreso">Deposit:</string>
+    <string name="Ingresos">Deposit:</string>
     <string name="Guardar">Save</string>
     <string name="Modificar">Update</string>
     <string name="Cerrar">Close</string>
     <string name="MENU_GASTOS">Gasto</string>
-    <string name="MENU_INGRESOS">Ingreso</string>
+    <string name="MENU_INGRESOS">Deposit</string>
     <string name="MENU_MOVIMIENTOS">Movimientos</string>
     <string name="MENU_INFORMES">Reports</string>
     <string name="MENU_REGISTROS">Movimientos frecuentes</string>
     <string name="MENU_OPCIONES">Options</string>
     <string name="titulo">Fin de Mes</string>
-    <string name="tituloCategoriaIngresos">Categorías de ingresos</string>
-    <string name="tituloCategoriaGastos">Categorías de gastos</string>
+    <string name="tituloCategoriaIngresos">Categories of income</string>
+    <string name="tituloCategoriaGastos">Categories of expenditure</string>
     <string name="edicionCategoriaGastos">Editar categoría Gasto</string>
     <string name="edicionCategoriaIngresos">Editar categoría Ingreso</string>
     <string name="nuevaCategoriaGastos">Nueva categoría Gasto</string>
     <string name="nuevaCategoriaIngresos">Nueva categoría Ingreso</string>
-    <string name="CrearCategoria">New</string>
+    <string name="CrearCategoria">New Category</string>
+    <string name="OPCIONES_FORMATO_MONEDA">Formato de moneda</string>
+    <string name="OPCIONES_FORMATO_FECHA">Formato de fecha y hora</string>
+    <string name="OPCIONES_BASEDATOS">Base de datos</string>
+    <string name="OPCIONES_CONTRASENYA">Password</string>
+    <string name="OPCIONES_CALIFICAR">Calificar aplicación</string>
+    <string name="OPCIONES_ACERCA_APLICACION">Acerca de la aplicación</string>
+    <string name="OPCIONES_FUNCIONES_PRO">Acerca de las funciones PRO</string>
+    <string name="OPCIONES_DESARROLLO_CONTACTO">Desarrollo y contacto</string>
+    <string name="OPCIONES_AYUDA">Help</string>
     </resources>

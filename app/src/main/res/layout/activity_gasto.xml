@@ -14,8 +14,18 @@
         <ImageButton android:id="@+id/btnBackButton"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:src="@drawable/back"
             android:background="@android:color/white"
-            android:src="@drawable/back"/>
+            android:layout_weight="1" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="25sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:text="@string/MENU_GASTOS"
+            android:layout_marginLeft="10dp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

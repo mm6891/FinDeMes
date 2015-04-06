@@ -100,6 +100,16 @@ public class MainActivity extends Activity {
             }
         });
 
+        //REGISTROS FRECUENTES
+        btnMovimientosFrecuentes = (Button) findViewById(R.id.imgBtn11);
+        btnMovimientosFrecuentes.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RegistrosActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         //tamanyo de gridlayout segun pantalla en pixeles
         Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();

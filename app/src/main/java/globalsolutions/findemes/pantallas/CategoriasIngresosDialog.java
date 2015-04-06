@@ -27,7 +27,7 @@ import globalsolutions.findemes.database.util.Constantes;
 /**
  * Created by manuel.molero on 16/02/2015.
  */
-public class CategoriasIngresosDialog extends DialogFragment implements EditCategoriaIngresoDialog.OnCategoriaIngresoDialogListener,NewCategoriaIngresoDialog.OnCategoriaIngresoDialogListener {
+public class CategoriasIngresosDialog extends DialogFragment {
 
     private ListView listViewCategoriasIngresos;
     private ImageButton btnPlusCategory;
@@ -85,7 +85,7 @@ public class CategoriasIngresosDialog extends DialogFragment implements EditCate
             }
         });
 
-        btnPlusCategory = (ImageButton) view.findViewById(R.id.btnPlusCategory);
+        btnPlusCategory = (ImageButton) view.findViewById(R.id.btnPlusIngresoCategory);
         btnPlusCategory.setOnClickListener(new AdapterView.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,6 +108,7 @@ public class CategoriasIngresosDialog extends DialogFragment implements EditCate
 
     public void showNewIngresoDialog() {
         DialogFragment newFragment = new NewCategoriaIngresoDialog();
+        newFragment.setTargetFragment(this,1);
         newFragment.show(getFragmentManager(),"CREACION");
     }
 
@@ -118,10 +119,10 @@ public class CategoriasIngresosDialog extends DialogFragment implements EditCate
     public void showEditIngresoDialog(View v, Bundle bundle) {
         DialogFragment newFragment = new EditCategoriaIngresoDialog();
         newFragment.setArguments(bundle);
+        newFragment.setTargetFragment(this,1);
         newFragment.show(getFragmentManager(),"MODIFICACION");
     }
 
-    @Override
     public void OnCategoriaIngresoDialogSubmit(String result) {
         if(result.equals(String.valueOf(Activity.RESULT_OK))){
             GrupoIngresoDAO grupoIngresoDAO = new GrupoIngresoDAO(getActivity());

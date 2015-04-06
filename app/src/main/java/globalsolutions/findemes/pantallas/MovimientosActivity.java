@@ -89,7 +89,7 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         ArrayList<String> anyos = new ArrayList<String>();
         if(movs.size() <= 0 )
             showToast("NO HAY MOVIMIENTOS ACTUALMENTE");
-        else{
+        /*else{*/
             for(MovimientoItem mov : movs){
                 String fecha = mov.getFecha();
                 SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -111,8 +111,10 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                     {
                         mSpinnerInitializedCount++;
                     }
-                    else
-                        filtraMesAnyo(view, spFiltroMes.getSelectedItemPosition(), new Integer((String) spFitroAnyo.getSelectedItem()).intValue());
+                    else {
+                        int anyoSpinner = spFitroAnyo.getSelectedItem() != null ? new Integer((String) spFitroAnyo.getSelectedItem()).intValue() : -1;
+                        filtraMesAnyo(view, spFiltroMes.getSelectedItemPosition(), anyoSpinner);
+                    }
                 }
                 public void onNothingSelected(AdapterView<?> parent) {
                     int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -128,7 +130,8 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
 
             spFiltroMes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    filtraMesAnyo(view, position, new Integer((String) spFitroAnyo.getSelectedItem()).intValue());
+                    int anyoSpinner = spFitroAnyo.getSelectedItem() != null ? new Integer((String) spFitroAnyo.getSelectedItem()).intValue() : -1;
+                    filtraMesAnyo(view, position, anyoSpinner);
                 }
                 public void onNothingSelected(AdapterView<?> parent) {
                     int month = Calendar.getInstance().get(Calendar.MONTH);
@@ -199,7 +202,7 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                     ).show();
                 }
             });
-        }
+        //}
     }
 
     public void showToast(String message){
@@ -220,8 +223,8 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
 
     //eventos click filtro gasto e ingreso
     public void filtraGasto(View v){
-        int mes = spFiltroMes.getSelectedItemPosition();
-        int anyo = new Integer((String) spFitroAnyo.getSelectedItem()).intValue();
+        int mes = spFiltroMes != null ? spFiltroMes.getSelectedItemPosition() : -1;
+        int anyo = spFitroAnyo != null && spFitroAnyo.getSelectedItem() != null ? new Integer((String) spFitroAnyo.getSelectedItem()).intValue() : -1;
         ((MovimientoAdapter)listViewMovs.getAdapter()).setMesSeleccionado(mes);
         ((MovimientoAdapter)listViewMovs.getAdapter()).setAnyoSeleccionado(anyo);
 
@@ -232,8 +235,8 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
             ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_MOVIMIENTO_GASTO);
     }
     public void filtraIngreso(View v){
-         int mes = spFiltroMes.getSelectedItemPosition();
-         int anyo = new Integer((String) spFitroAnyo.getSelectedItem()).intValue();
+         int mes = spFiltroMes != null ? spFiltroMes.getSelectedItemPosition() : -1;
+         int anyo = spFitroAnyo != null && spFitroAnyo.getSelectedItem() != null ? new Integer((String) spFitroAnyo.getSelectedItem()).intValue() : -1;
         ((MovimientoAdapter)listViewMovs.getAdapter()).setMesSeleccionado(mes);
         ((MovimientoAdapter)listViewMovs.getAdapter()).setAnyoSeleccionado(anyo);
 

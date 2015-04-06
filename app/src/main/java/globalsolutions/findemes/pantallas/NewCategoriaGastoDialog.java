@@ -22,33 +22,22 @@ import globalsolutions.findemes.database.model.GrupoGasto;
  */
 public class NewCategoriaGastoDialog extends DialogFragment {
 
-    private OnCategoriaGastoDialogListener callback;
-
-    public interface OnCategoriaGastoDialogListener {
-        public void OnCategoriaGastoDialogSubmit(String result);
-    }
-
     private Button btnNewCatGas;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        try {
-            callback = (OnCategoriaGastoDialogListener) getActivity();
-        } catch (ClassCastException e) {
-            throw new ClassCastException("Calling Fragment must implement OnCategoriaGastoDialogListener");
-        }
 
-        View view = inflater.inflate(R.layout.new_category_gasto_dialog, container, false);
+        final View view = inflater.inflate(R.layout.new_category_gasto_dialog, container, false);
 
         btnNewCatGas = (Button) view.findViewById(R.id.btnNewCatGas);
 
         btnNewCatGas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String descripcion = (String)((EditText) v.findViewById(R.id.txtNuevaCatGas)).getText().toString();
+                String descripcion = (String)((EditText)view.findViewById(R.id.txtNuevaCatGas)).getText().toString();
                 if(descripcion == null || descripcion.isEmpty()) {
-                    ((EditText) v.findViewById(R.id.txtNuevaCatGas)).setError("Debe incluir el nombre de la nueva categoría");
+                    ((EditText) view.findViewById(R.id.txtNuevaCatGas)).setError("Debe incluir el nombre de la nueva categoría");
                     return;
                 }
 
@@ -59,12 +48,12 @@ public class NewCategoriaGastoDialog extends DialogFragment {
                 boolean actualizado = grupoDAO.createRecords(nuevoGrupo) > 0;
 
                 if(actualizado){
-                    showToast(v.getContext(),"¡Categoria de Grupo creada!");
-                    callback.OnCategoriaGastoDialogSubmit(String.valueOf(Activity.RESULT_OK));
+                    showToast(view.getContext(),"¡Categoria de Grupo creada!");
+                    ((CategoriasGastosDialog)getTargetFragment()).OnCategoriaGastoDialogSubmit(String.valueOf(Activity.RESULT_OK));
                     dismiss();
                 }
                 else
-                    showToast(v.getContext(),"¡No se ha podido crear!");
+                    showToast(view.getContext(),"¡No se ha podido crear!");
             }
         });
 

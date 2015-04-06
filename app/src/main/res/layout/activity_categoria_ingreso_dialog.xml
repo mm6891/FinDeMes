@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@+id/lyLinear1">
-        <ImageButton android:id="@+id/btnPlusCategory"
+        <ImageButton android:id="@+id/btnPlusIngresoCategory"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_weight="0.6"

@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import globalsolutions.findemes.database.util.Constantes;
 /**
  * Created by Manuel on 23/02/2015.
  */
-public class InformesActivity extends Activity{
+public class InformesActivity extends Activity {
 
     public enum Periodos{
         MENSUAL, TRIMESTRAL, QUINCENAL
@@ -65,8 +66,10 @@ public class InformesActivity extends Activity{
                 {
                     mSpinnerInitializedCount++;
                 }
-                else
-                    filtraInforme(view, (String) spTipoMovimiento.getSelectedItem(), ((Periodos) spPeriodo.getSelectedItem()).toString(), (String) spPeriodoFiltro.getSelectedItem());
+                else {
+                    String periodoFiltro = spPeriodoFiltro.getSelectedItem() != null ? (String) spPeriodoFiltro.getSelectedItem() : "-1";
+                    filtraInforme(view, (String) spTipoMovimiento.getSelectedItem(), ((Periodos) spPeriodo.getSelectedItem()).toString(), periodoFiltro);
+                }
             }
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -79,57 +82,79 @@ public class InformesActivity extends Activity{
         //cargamos anyos
         ArrayList<String> anyos = new ArrayList<String>();
         if(movs.size() <= 0 )
-            showToast("NO HAY MOVIMIENTOS ACTUALMENTE");
-        else {
-            for(MovimientoItem mov : movs){
-                String fecha = mov.getFecha();
-                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-                Calendar cal  = Calendar.getInstance();
-                try {
-                    cal.setTime(formato.parse(fecha));
-                } catch (java.text.ParseException e) {
-                    e.printStackTrace();
-                }
-                int year = cal.get(Calendar.YEAR);
-                if(!anyos.contains(String.valueOf(new Integer(year))))
-                    anyos.add(String.valueOf(new Integer(year)));
+            showToast("NO HAY INFORMES ACTUALMENTE");
+
+        for(MovimientoItem mov : movs){
+            String fecha = mov.getFecha();
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            Calendar cal  = Calendar.getInstance();
+            try {
+                cal.setTime(formato.parse(fecha));
+            } catch (java.text.ParseException e) {
+                e.printStackTrace();
             }
-            spPeriodoFiltro.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, anyos));
-
-            mSpinnerCount++;
-            spPeriodoFiltro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if (mSpinnerInitializedCount < mSpinnerCount)
-                    {
-                        mSpinnerInitializedCount++;
-                    }
-                    else
-                        filtraInforme(view, (String) spTipoMovimiento.getSelectedItem(), ((Periodos) spPeriodo.getSelectedItem()).toString(), (String) spPeriodoFiltro.getSelectedItem());
-                }
-                public void onNothingSelected(AdapterView<?> parent) {
-                }
-            });
-
-            //spinner movimiento
-            ArrayList<String> tiposMovimientos = new ArrayList<String>();
-            tiposMovimientos.add(Constantes.TIPO_FILTRO_RESETEO.toString());
-            tiposMovimientos.add(Constantes.TIPO_MOVIMIENTO_INGRESO.toString());
-            tiposMovimientos.add(Constantes.TIPO_MOVIMIENTO_GASTO.toString());
-            spTipoMovimiento = (Spinner) findViewById(R.id.spTipoMovimiento);
-            spTipoMovimiento.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, tiposMovimientos));
-            spTipoMovimiento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    filtraInforme(view, (String)spTipoMovimiento.getSelectedItem(), ((Periodos) spPeriodo.getSelectedItem()).toString(), (String) spPeriodoFiltro.getSelectedItem());
-                }
-                public void onNothingSelected(AdapterView<?> parent) {
-                }
-            });
-
-            //cargamos adaptador de informes
-            listViewMovsInforme = (ListView) findViewById(R.id.listViewMovInforme);
-            listViewMovsInforme.setAdapter(new InformeAdapter(getApplicationContext(), new ArrayList<InformeItem>()));
+            int year = cal.get(Calendar.YEAR);
+            if(!anyos.contains(String.valueOf(new Integer(year))))
+                anyos.add(String.valueOf(new Integer(year)));
         }
+        spPeriodoFiltro.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, anyos));
 
+        mSpinnerCount++;
+        spPeriodoFiltro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (mSpinnerInitializedCount < mSpinnerCount)
+                {
+                    mSpinnerInitializedCount++;
+                }
+                else {
+                    String periodoFiltro = spPeriodoFiltro.getSelectedItem() != null ? (String) spPeriodoFiltro.getSelectedItem() : "-1";
+                    filtraInforme(view, (String) spTipoMovimiento.getSelectedItem(), ((Periodos) spPeriodo.getSelectedItem()).toString(), periodoFiltro);
+                }
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        //spinner movimiento
+        ArrayList<String> tiposMovimientos = new ArrayList<String>();
+        tiposMovimientos.add(Constantes.TIPO_FILTRO_RESETEO.toString());
+        tiposMovimientos.add(Constantes.TIPO_MOVIMIENTO_INGRESO.toString());
+        tiposMovimientos.add(Constantes.TIPO_MOVIMIENTO_GASTO.toString());
+        spTipoMovimiento = (Spinner) findViewById(R.id.spTipoMovimiento);
+        spTipoMovimiento.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, tiposMovimientos));
+        spTipoMovimiento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String periodoFiltro = spPeriodoFiltro.getSelectedItem() != null ? (String) spPeriodoFiltro.getSelectedItem() : "-1";
+                filtraInforme(view, (String)spTipoMovimiento.getSelectedItem(), ((Periodos) spPeriodo.getSelectedItem()).toString(), periodoFiltro);
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        //cargamos adaptador de informes
+        listViewMovsInforme = (ListView) findViewById(R.id.listViewMovInforme);
+        listViewMovsInforme.setAdapter(new InformeAdapter(getApplicationContext(), new ArrayList<InformeItem>()));
+        ((InformeAdapter)listViewMovsInforme.getAdapter()).setOnDataChangeListener(new InformeAdapter.OnDataChangeListener() {
+            @Override
+            public void onDataChanged(ArrayList<InformeItem> informes) {
+                 //load resumen
+                Double ingresos = new Double(0.00);
+                Double gastos = new Double(0.00);
+                Double saldo = new Double(0.00);
+
+                for(InformeItem inf : informes){
+                    ingresos += Double.valueOf(inf.getIngresoValor());
+                    gastos += Double.valueOf(inf.getGastoValor());
+                }
+                saldo = ingresos - gastos;
+                TextView tvIngresosTotal = (TextView) findViewById(R.id.tvIngresosInformesValor);
+                tvIngresosTotal.setText(String.valueOf(ingresos));
+                TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);
+                tvGastosTotal.setText(String.valueOf(gastos));
+                TextView tvSaldoTotal = (TextView) findViewById(R.id.tvSaldoInformesValor);
+                tvSaldoTotal.setText(String.valueOf(saldo));
+            }
+        });
     }
 
     public void filtraInforme(View v, String tipoMovimiento, String periodo, String periodoFiltro){

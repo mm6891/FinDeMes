@@ -86,12 +86,6 @@ public class GastoActivity extends FragmentActivity implements DatePickerDialog.
         newFragment.show(getFragmentManager(),"Fecha");
     }
 
-    public void showGastoDialog(View v, Bundle bundle) {
-        DialogFragment newFragment = new GastoDialog();
-        newFragment.setArguments(bundle);
-        newFragment.show(getFragmentManager(),"MODIFICACION");
-    }
-
     //eventos botones guardar gasto e ingreso
     public void guardarGasto(View view) {
         //descripcion , valor , fecha

@@ -28,9 +28,8 @@
             android:id="@+id/tvIngresosInforme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
             android:text="@string/Ingresos"
-            android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:layout_weight="1"/>
         <ImageView
@@ -44,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
-            android:textStyle="bold"
+            android:gravity="right"
             android:textSize="18sp"
             android:layout_weight="1"/>
     </LinearLayout>
@@ -58,9 +57,8 @@
             android:id="@+id/tvGastosInforme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
             android:text="@string/Gastos"
-            android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:layout_weight="1"/>
         <ImageView
@@ -74,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
-            android:textStyle="bold"
+            android:gravity="right"
             android:textSize="18sp"
             android:layout_weight="1"/>
     </LinearLayout>
@@ -88,7 +86,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
-            android:textStyle="bold"
             android:textSize="18sp"
             android:layout_weight="1"/>
         <ImageView
@@ -102,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
-            android:textStyle="bold"
+            android:gravity="right"
             android:textSize="18sp"
             android:layout_weight="1"/>
     </LinearLayout>

@@ -22,25 +22,14 @@ import globalsolutions.findemes.database.model.GrupoIngreso;
  */
 public class EditCategoriaIngresoDialog extends DialogFragment {
 
-    private OnCategoriaIngresoDialogListener callback;
-
-    public interface OnCategoriaIngresoDialogListener {
-        public void OnCategoriaIngresoDialogSubmit(String result);
-    }
-
     private EditText txtDecripcionCatIng;
     private Button btnModCatIng;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        try {
-            callback = (OnCategoriaIngresoDialogListener) getActivity();
-        } catch (ClassCastException e) {
-            throw new ClassCastException("Calling Fragment must implement OnCategoriaIngresoDialogListener");
-        }
 
-        View view = inflater.inflate(R.layout.edit_category_ingreso_dialog, container, false);
+        final View view = inflater.inflate(R.layout.edit_category_ingreso_dialog, container, false);
 
         txtDecripcionCatIng = (EditText) view.findViewById(R.id.txtDecripcionCatIng);
         txtDecripcionCatIng.setText(getArguments().getString("nameCategory"));
@@ -53,9 +42,9 @@ public class EditCategoriaIngresoDialog extends DialogFragment {
         btnModCatIng.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String descripcion = (String)((EditText) v.findViewById(R.id.txtDecripcionCatIng)).getText().toString();
+                String descripcion = (String)((EditText) view.findViewById(R.id.txtDecripcionCatIng)).getText().toString();
                 if(descripcion == null || descripcion.isEmpty()) {
-                    ((EditText) v.findViewById(R.id.txtDecripcionCatIng)).setError("Debe incluir el nombre de la categoría");
+                    ((EditText) view.findViewById(R.id.txtDecripcionCatIng)).setError("Debe incluir el nombre de la categoría");
                     return;
                 }
 
@@ -65,12 +54,12 @@ public class EditCategoriaIngresoDialog extends DialogFragment {
                 GrupoIngresoDAO grupoDAO = new GrupoIngresoDAO(v.getContext());
                 boolean actualizado = grupoDAO.updateGrupoIngreso(aMod,nuevoGrupo);
                 if(actualizado){
-                    showToast(v.getContext(),"¡Categoria de Grupo actualizada!");
-                    callback.OnCategoriaIngresoDialogSubmit(String.valueOf(Activity.RESULT_OK));
+                    showToast(view.getContext(),"¡Categoria de Grupo actualizada!");
+                    ((CategoriasIngresosDialog)getTargetFragment()).OnCategoriaIngresoDialogSubmit(String.valueOf(Activity.RESULT_OK));
                     dismiss();
                 }
                 else
-                    showToast(v.getContext(),"¡No se ha podido actualizar!");
+                    showToast(view.getContext(),"¡No se ha podido actualizar!");
             }
         });
 

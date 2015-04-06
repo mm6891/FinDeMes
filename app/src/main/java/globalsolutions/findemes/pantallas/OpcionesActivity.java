@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
@@ -21,24 +22,9 @@ import globalsolutions.findemes.database.model.OptionItem;
 /**
  * Created by Manuel on 23/02/2015.
  */
-public class OpcionesActivity extends Activity{
+public class OpcionesActivity extends FragmentActivity {
 
-    public static final String CATEGORIAS_INGRESOS = "Categorías de ingresos";
-    public static final String CATEGORIAS_GASTOS = "Categorías de gastos";
-    public static final String FORMATO_MONEDA = "Formato de moneda";
-    public static final String FORMATO_FECHA = "Formato de fecha y hora";
-    public static final String BASEDATOS = "Base de datos";
-    public static final String CONTRASEÑA = "Contraseña";
-    public static final String CALIFICAR = "Calificar aplicación";
-    public static final String ACERCA_APLICACION = "Acerca de la aplicación";
-    public static final String FUNCIONES_PRO = "Acerca de las funciones PRO";
-    public static final String DESARROLLO_CONTACTO = "Desarrollo y contacto";
-    public static final String AYUDA = "Ayuda";
-
-   public String[] options = {CATEGORIAS_INGRESOS, CATEGORIAS_GASTOS, FORMATO_MONEDA,FORMATO_FECHA, BASEDATOS,
-           CONTRASEÑA,CALIFICAR,ACERCA_APLICACION,FUNCIONES_PRO,DESARROLLO_CONTACTO,AYUDA};
-
-    public static int [] prgmImages={R.drawable.pluscategory,R.drawable.minusoption,R.drawable.dollaroption,
+    public static int [] prgmImages={R.drawable.plusoption,R.drawable.minusoption,R.drawable.dollaroption,
             R.drawable.calendaroption,R.drawable.databaseoption,R.drawable.padlockicon,R.drawable.staroption,
             R.drawable.appoption,R.drawable.prooption,R.drawable.developeroption,R.drawable.interrogationoption};
 
@@ -56,7 +42,9 @@ public class OpcionesActivity extends Activity{
                 backActivity();
             }
         });
+        String[] options = creaOpciones();
         ArrayList<OptionItem> opcionesArray = new ArrayList<OptionItem>(options.length);
+
         for(String op : options){
             OptionItem nuevo = new OptionItem();
             nuevo.setDescripcion(op);
@@ -72,11 +60,11 @@ public class OpcionesActivity extends Activity{
             public void onItemClick(AdapterView<?> parent, final View view, int position,long id) {
                 OptionItem optSelected = (OptionItem) listViewOptions.getItemAtPosition(position);
 
-                switch (optSelected.getDescripcion()){
-                    case CATEGORIAS_INGRESOS:
+                switch (position){
+                    case 0:
                         showCategoriasIngresosDialog();
                         break;
-                    case CATEGORIAS_GASTOS:
+                    case 1:
                         showCategoriasGastosDialog();
                         break;
                     default:
@@ -102,21 +90,29 @@ public class OpcionesActivity extends Activity{
         finish();
     }
 
-    public void anyadeGasto(String value){
-        GrupoGasto nuevo = new GrupoGasto();
-        nuevo.setGrupo(value);
-        GrupoGastoDAO grupoGastoDAO = new GrupoGastoDAO(getApplicationContext());
-        grupoGastoDAO.createRecords(nuevo);
-    }
-
     public void showCategoriasIngresosDialog() {
         DialogFragment newFragment = new CategoriasIngresosDialog();
         newFragment.show(getFragmentManager(),"INGRESOS");
     }
 
     public void showCategoriasGastosDialog() {
-        DialogFragment newFragment = new CategoriasIngresosDialog();
+        DialogFragment newFragment = new CategoriasGastosDialog();
         newFragment.show(getFragmentManager(),"INGRESOS");
     }
 
+    public String[] creaOpciones(){
+        String[] options = {
+        getResources().getString(R.string.tituloCategoriaIngresos),
+        getResources().getString(R.string.tituloCategoriaGastos),
+        getResources().getString(R.string.OPCIONES_FORMATO_MONEDA),
+        getResources().getString(R.string.OPCIONES_FORMATO_FECHA),
+        getResources().getString(R.string.OPCIONES_BASEDATOS),
+        getResources().getString(R.string.OPCIONES_CONTRASENYA),
+        getResources().getString(R.string.OPCIONES_CALIFICAR),
+        getResources().getString(R.string.OPCIONES_ACERCA_APLICACION),
+        getResources().getString(R.string.OPCIONES_FUNCIONES_PRO),
+        getResources().getString(R.string.OPCIONES_DESARROLLO_CONTACTO),
+        getResources().getString(R.string.OPCIONES_AYUDA)};
+        return options;
+    }
 }

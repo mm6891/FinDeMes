@@ -108,6 +108,15 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
         this.notifyDataSetChanged();
     }
 
+    public interface OnDataChangeListener{
+        public void onDataChanged(ArrayList<InformeItem> informes);
+    }
+
+    OnDataChangeListener mOnDataChangeListener;
+    public void setOnDataChangeListener(OnDataChangeListener onDataChangeListener){
+        mOnDataChangeListener = onDataChangeListener;
+    }
+
     @Override
     public Filter getFilter() {
         return mFilter;
@@ -168,6 +177,10 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
             ArrayList<InformeItem> resultado = calculaInformes(tipoMovimiento,periodo);
             results.values = resultado;
             results.count = resultado.size();
+
+            if(mOnDataChangeListener != null){
+                mOnDataChangeListener.onDataChanged(resultado);
+            }
 
             return results;
         }
@@ -323,11 +336,11 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
             informes.put(key, nuevoArray);
         }
 
-            @SuppressWarnings("unchecked")
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-                updateReceiptsList((ArrayList<InformeItem>) results.values);
-            }
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            updateReceiptsList((ArrayList<InformeItem>) results.values);
+        }
 
         }
 }

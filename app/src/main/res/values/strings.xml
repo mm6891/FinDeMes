@@ -23,5 +23,14 @@
     <string name="edicionCategoriaIngresos">Editar categoría Ingreso</string>
     <string name="nuevaCategoriaGastos">Nueva categoría Gasto</string>
     <string name="nuevaCategoriaIngresos">Nueva categoría Ingreso</string>
-    <string name="CrearCategoria">Nuevo</string>
+    <string name="CrearCategoria">Nueva Categoría</string>
+    <string name="OPCIONES_FORMATO_MONEDA">Formato de moneda</string>
+    <string name="OPCIONES_FORMATO_FECHA">Formato de fecha y hora</string>
+    <string name="OPCIONES_BASEDATOS">Base de datos</string>
+    <string name="OPCIONES_CONTRASENYA">Contraseña</string>
+    <string name="OPCIONES_CALIFICAR">Calificar aplicación</string>
+    <string name="OPCIONES_ACERCA_APLICACION">Acerca de la aplicación</string>
+    <string name="OPCIONES_FUNCIONES_PRO">Acerca de las funciones PRO</string>
+    <string name="OPCIONES_DESARROLLO_CONTACTO">Desarrollo y contacto</string>
+    <string name="OPCIONES_AYUDA">Ayuda</string>
     </resources>

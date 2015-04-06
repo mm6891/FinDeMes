@@ -28,7 +28,7 @@ import globalsolutions.findemes.database.util.Constantes;
 /**
  * Created by manuel.molero on 16/02/2015.
  */
-public class CategoriasGastosDialog extends DialogFragment implements EditCategoriaGastoDialog.OnCategoriaGastoDialogListener, NewCategoriaGastoDialog.OnCategoriaGastoDialogListener {
+public class CategoriasGastosDialog extends DialogFragment {
 
     private ListView listViewCategoriasGastos;
     private ImageButton btnPlusCategory;
@@ -37,21 +37,21 @@ public class CategoriasGastosDialog extends DialogFragment implements EditCatego
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.activity_categoria_ingreso_dialog, container, false);
+        final View view = inflater.inflate(R.layout.activity_categoria_gasto_dialog, container, false);
 
         List<String> list = new ArrayList<String>();
-        GrupoIngresoDAO grupoIngresoDAO = new GrupoIngresoDAO(view.getContext());
-        String[] categoriasIngresos = grupoIngresoDAO.selectGrupos();
-        list = Arrays.asList(categoriasIngresos);
+        GrupoGastoDAO grupoGastoDAO = new GrupoGastoDAO(view.getContext());
+        String[] categoriasGastos = grupoGastoDAO.selectGrupos();
+        list = Arrays.asList(categoriasGastos);
 
-        listViewCategoriasGastos = (ListView) view.findViewById(R.id.listViewCatIng);
+        listViewCategoriasGastos = (ListView) view.findViewById(R.id.listViewCatGas);
         listViewCategoriasGastos.setAdapter(new CategoriaAdapter(view.getContext(),new ArrayList<String>(list)));
 
         listViewCategoriasGastos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position,
                                     long id) {
-                final String categoriaIngreso = (String) listViewCategoriasGastos.getItemAtPosition(position);
+                final String categoriaGasto = (String) listViewCategoriasGastos.getItemAtPosition(position);
                 final CharSequence[] items = {Constantes.ACCION_MODIFICAR, Constantes.ACCION_ELIMINAR};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -64,11 +64,11 @@ public class CategoriasGastosDialog extends DialogFragment implements EditCatego
 
                                 if (accion.equals(Constantes.ACCION_ELIMINAR)) {
 
-                                    GrupoIngresoDAO grupoIngresoDAO = new GrupoIngresoDAO(getActivity());
-                                    realizado = grupoIngresoDAO.deleteRecords(categoriaIngreso);
+                                    GrupoGastoDAO grupoGastoDAO = new GrupoGastoDAO(getActivity());
+                                    realizado = grupoGastoDAO.deleteRecords(categoriaGasto);
                                     if (realizado) {
                                         showToast(view.getContext(),"¡Grupo eliminado!");
-                                       String[] newList = grupoIngresoDAO.selectGrupos();
+                                       String[] newList = grupoGastoDAO.selectGrupos();
                                         ((CategoriaAdapter) listViewCategoriasGastos.getAdapter()).updateReceiptsList(
                                                 new ArrayList<String>(Arrays.asList(newList)));
                                     } else
@@ -76,7 +76,7 @@ public class CategoriasGastosDialog extends DialogFragment implements EditCatego
                                 }
                                 if (accion.equals(Constantes.ACCION_MODIFICAR)) {
                                     Bundle bundle = new Bundle();
-                                    bundle.putString("nameCategory", categoriaIngreso);
+                                    bundle.putString("nameCategory", categoriaGasto);
                                     // Create an instance of the dialog fragment and show it*//*
                                     showEditGastoDialog(view, bundle);
                                 }
@@ -86,7 +86,7 @@ public class CategoriasGastosDialog extends DialogFragment implements EditCatego
             }
         });
 
-        btnPlusCategory = (ImageButton) view.findViewById(R.id.btnPlusCategory);
+        btnPlusCategory = (ImageButton) view.findViewById(R.id.btnPlusGastoCategory);
         btnPlusCategory.setOnClickListener(new AdapterView.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,15 +114,16 @@ public class CategoriasGastosDialog extends DialogFragment implements EditCatego
     public void showEditGastoDialog(View v, Bundle bundle) {
         DialogFragment newFragment = new EditCategoriaGastoDialog();
         newFragment.setArguments(bundle);
-        newFragment.show(getFragmentManager(),"MODIFICACION");
+        newFragment.setTargetFragment(this,1);
+        newFragment.show(getFragmentManager(),"EDITGASTO");
     }
 
     public void showNewGastoDialog() {
         DialogFragment newFragment = new NewCategoriaGastoDialog();
-        newFragment.show(getFragmentManager(),"CREACION");
+        newFragment.setTargetFragment(this,1);
+        newFragment.show(getFragmentManager(),"NEWGASTO");
     }
 
-    @Override
     public void OnCategoriaGastoDialogSubmit(String result) {
         if(result.equals(String.valueOf(Activity.RESULT_OK))){
             GrupoGastoDAO grupoGastoDAO = new GrupoGastoDAO(getActivity());
