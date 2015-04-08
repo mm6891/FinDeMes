@@ -67,6 +67,7 @@ public class GastoDialog extends DialogFragment {
         String descripcion = getArguments().getString("descripcion");
         String categoriaStr = getArguments().getString("categoria");
         String fecha = getArguments().getString("fecha");
+        String _id = getArguments().getString("_id");
 
         ((EditText) view.findViewById(R.id.txtGasto)).setText(valor);
         ((EditText) view.findViewById(R.id.txtDecripcion)).setText(descripcion);
@@ -76,12 +77,7 @@ public class GastoDialog extends DialogFragment {
         ((TextView) view.findViewById(R.id.tvHora)).setText(fecha.split(" ")[1]);
 
         final Gasto aMod = new Gasto();
-        aMod.setValor(valor);
-        aMod.setDescripcion(descripcion);
-        aMod.setFecha(fecha);
-        GrupoGasto grupo = new GrupoGasto();
-        grupo.setGrupo(categoriaStr);
-        aMod.setGrupoGasto(grupo);
+        aMod.set_id(Integer.valueOf(_id).intValue());
 
         Button btnModificar = (Button) view.findViewById(R.id.btnGuardarGasto);
 

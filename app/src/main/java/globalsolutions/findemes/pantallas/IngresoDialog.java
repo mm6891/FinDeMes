@@ -66,6 +66,7 @@ public class IngresoDialog extends DialogFragment {
         String descripcion = getArguments().getString("descripcion");
         String categoriaStr = getArguments().getString("categoria");
         String fecha = getArguments().getString("fecha");
+        String _id = getArguments().getString("_id");
 
         ((EditText) view.findViewById(R.id.txtIngreso)).setText(getArguments().getString("valor"));
         ((EditText) view.findViewById(R.id.txtDecripcion)).setText(getArguments().getString("descripcion"));
@@ -75,12 +76,7 @@ public class IngresoDialog extends DialogFragment {
         ((TextView) view.findViewById(R.id.tvHora)).setText(getArguments().getString("fecha").split(" ")[1]);
 
         final Ingreso aMod = new Ingreso();
-        aMod.setValor(valor);
-        aMod.setDescripcion(descripcion);
-        aMod.setFecha(fecha);
-        GrupoIngreso grupo = new GrupoIngreso();
-        grupo.setGrupo(categoriaStr);
-        aMod.setGrupoIngreso(grupo);
+        aMod.set_id(Integer.valueOf(_id).intValue());
 
         Button btnModificar = (Button) view.findViewById(R.id.btnGuardarIngreso);
 

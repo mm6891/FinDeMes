@@ -181,6 +181,7 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                                     }
                                     if (accion.equals(Constantes.ACCION_MODIFICAR)) {
                                         Bundle bundle = new Bundle();
+                                        bundle.putString("_id", String.valueOf(movSeleccionado.get_id()));
                                         bundle.putString("valor", movSeleccionado.getValor());
                                         bundle.putString("descripcion", movSeleccionado.getDescripcion());
                                         bundle.putString("categoria", movSeleccionado.getCategoria());

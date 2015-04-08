@@ -47,19 +47,29 @@ public class EditRegistroDialog extends DialogFragment {
 
         final View view = inflater.inflate(R.layout.edit_registro_dialog, container, false);
 
+        //se cargan las propiedades del item seleccionado
+        String _id = getArguments().getString("_id");
+        String nombre = getArguments().getString("nombre");
+        String periodicidad = getArguments().getString("periodicidad");
+        String valor = getArguments().getString("valor");
+        String fecha = getArguments().getString("fecha");
+        String categoria = getArguments().getString("categoria");
+        String tipo = getArguments().getString("tipo");
+        String activo = getArguments().getString("activo");
+
         //cargamos el combo de periodicidad
-        Spinner periodicidad = (Spinner) view.findViewById(R.id.spPeriodicidad);
+        Spinner periodicidadSp = (Spinner) view.findViewById(R.id.spPeriodicidad);
         List<String> listPeriod = new ArrayList<String>();
         listPeriod.add(getResources().getString(R.string.PERIODICIDAD_REGISTRO_MENSUAL));
         listPeriod.add(getResources().getString(R.string.PERIODICIDAD_REGISTRO_ANUAL));
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(view.getContext(),
                 android.R.layout.simple_spinner_item, listPeriod);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        periodicidad.setAdapter(dataAdapter);
-        
+        periodicidadSp.setAdapter(dataAdapter);
+        periodicidadSp.setSelection(dataAdapter.getPosition(periodicidad));
 
         //cargamos el combo tipo (gasto o ingreso)
-        final Spinner tipoMovimiento = (Spinner) view.findViewById(R.id.spTipo);
+        Spinner tipoMovimiento = (Spinner) view.findViewById(R.id.spTipo);
         List<String> listTipos = new ArrayList<String>();
         listTipos.add(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO));
         listTipos.add(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO));
@@ -67,57 +77,73 @@ public class EditRegistroDialog extends DialogFragment {
                 android.R.layout.simple_spinner_item, listTipos);
         dataAdapterTM.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tipoMovimiento.setAdapter(dataAdapterTM);
+        tipoMovimiento.setSelection(dataAdapterTM.getPosition(tipo));
 
         //cargamos el combo de categorias
-        Spinner categoria = (Spinner) view.findViewById(R.id.spCategoria);
-        categoria.setEnabled(false);
+        Spinner categoriaSp = (Spinner) view.findViewById(R.id.spCategoria);
+        categoriaSp.setEnabled(false);
+        List<String> listCategorias = new ArrayList<String>();
+        listCategorias.add(categoria);
+        ArrayAdapter<String> dataAdapterCat = new ArrayAdapter<String>(view.getContext(),
+                android.R.layout.simple_spinner_item, listCategorias);
+        dataAdapterCat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categoriaSp.setAdapter(dataAdapterCat);
+        categoriaSp.setSelection(dataAdapterCat.getPosition(categoria));
 
-        Button btnNuevoRegistro = (Button) view.findViewById(R.id.btnCrearRegistro);
+        ((EditText) view.findViewById(R.id.txtValor)).setText(valor);
+        ((EditText) view.findViewById(R.id.txtRegistro)).setText(nombre);
+        if(activo.equals(Constantes.REGISTRO_ACTIVO))
+            ((RadioButton)view.findViewById(R.id.rbActivo)).setChecked(true);
+        else
+            ((RadioButton)view.findViewById(R.id.rbActivo)).setChecked(false);
 
-        btnNuevoRegistro.setOnClickListener(new View.OnClickListener() {
+        final Registro aMod = new Registro();
+        aMod.set_id(Integer.valueOf(_id).intValue());
+
+        Button btnModificarReg = (Button) view.findViewById(R.id.btnModificarRegistro);
+
+        btnModificarReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //nombre , valor
-                String valor = (String)((EditText) view.findViewById(R.id.txtValor)).getText().toString();
-                if(valor == null || valor.isEmpty()) {
+                String valor = (String) ((EditText) view.findViewById(R.id.txtValor)).getText().toString();
+                if (valor == null || valor.isEmpty()) {
                     ((EditText) v.findViewById(R.id.txtValor)).setError("Debe incluir la cantidad del registro");
                     return;
                 }
-                String descripcion = (String)((EditText) view.findViewById(R.id.txtRegistro)).getText().toString();
-                if(descripcion == null || descripcion.isEmpty()) {
+                String descripcion = (String) ((EditText) view.findViewById(R.id.txtRegistro)).getText().toString();
+                if (descripcion == null || descripcion.isEmpty()) {
                     ((EditText) view.findViewById(R.id.txtRegistro)).setError("Debe incluir un nombre");
                     return;
                 }
 
                 //periodicidad
-                String periodicidad = (String)((Spinner) view.findViewById(R.id.spPeriodicidad)).getSelectedItem();
-                String tipoMovimiento = (String)((Spinner) view.findViewById(R.id.spPeriodicidad)).getSelectedItem();
-                String categoria = (String)((Spinner) view.findViewById(R.id.spCategoria)).getSelectedItem();
+                String periodicidad = (String) ((Spinner) view.findViewById(R.id.spPeriodicidad)).getSelectedItem();
+                String tipoMovimiento = (String) ((Spinner) view.findViewById(R.id.spPeriodicidad)).getSelectedItem();
+                String categoria = (String) ((Spinner) view.findViewById(R.id.spCategoria)).getSelectedItem();
 
-                if(categoria != null && !categoria.isEmpty()) {
+                if (categoria != null && !categoria.isEmpty()) {
                     Registro nuevoRegistro = new Registro();
                     nuevoRegistro.setDescripcion(descripcion);
                     nuevoRegistro.setPeriodicidad(periodicidad);
                     nuevoRegistro.setTipo(tipoMovimiento);
                     nuevoRegistro.setGrupo(categoria);
-                    Integer valueActivo = ((RadioButton)view.findViewById(R.id.rbActivo)).isChecked()
+                    Integer valueActivo = ((RadioButton) view.findViewById(R.id.rbActivo)).isChecked()
                             ? Integer.valueOf(Constantes.REGISTRO_ACTIVO.toString()) :
                             Integer.valueOf(Constantes.REGISTRO_INACTIVO.toString());
                     nuevoRegistro.setActivo(valueActivo);
                     nuevoRegistro.setValor(valor);
 
                     RegistroDAO registroDAO = new RegistroDAO(view.getContext());
-                    boolean actualizado = registroDAO.createRecords(nuevoRegistro) > 0;
-                    if(actualizado){
-                        showToast(view.getContext(),"¡Registro Modificador!");
+                    boolean actualizado = registroDAO.updateRegistro(aMod,nuevoRegistro);
+                    if (actualizado) {
+                        showToast(view.getContext(), "¡Registro modificado!");
                         callback.OnEditRegistroDialogSubmit(String.valueOf(Activity.RESULT_OK));
                         dismiss();
-                    }
-                    else
-                        showToast(view.getContext(),"¡No se ha podido modificar!");
-                }
-                else{
-                    showToast(view.getContext(),"Debe seleccionar una categoría");
+                    } else
+                        showToast(view.getContext(), "¡No se ha podido modificar!");
+                } else {
+                    showToast(view.getContext(), "Debe seleccionar una categoría");
                     return;
                 }
             }
