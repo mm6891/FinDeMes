@@ -42,6 +42,21 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             "create table Grupo_Ingresos( _id integer primary key," +
                     "grupo text not null);";
 
+    private static final String CREATE_TABLE_REGISTROS =
+            "create table Registros( _id integer primary key," +
+                    "descripcion text not null," +
+                    "periodicidad text not null," +
+                    "tipo text not null," +
+                    "valor text not null," +
+                    "grupo text not null)," +
+                    "fecha TIMESTAMP NOT NULL DEFAULT current_timestamp;";
+
+    private static final String CREATE_TABLE_PASSWORD =
+            "create table Password(password text primary key," +
+                    "mail text not null," +
+                    "activo text not null," +
+                    "fecha TIMESTAMP NOT NULL DEFAULT current_timestamp;";
+
     public MyDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -53,7 +68,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             database.execSQL(CREATE_TABLE_GRUPO_GASTOS);
             database.execSQL(CREATE_TABLE_INGRESOS);
             database.execSQL(CREATE_TABLE_GRUPO_INGRESOS);
-
+            database.execSQL(CREATE_TABLE_REGISTROS);
+            database.execSQL(CREATE_TABLE_PASSWORD);
     }
 
     // Method is called during an upgrade of the database,
@@ -66,6 +82,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         database.execSQL("DROP TABLE IF EXISTS Grupo_Gastos");
         database.execSQL("DROP TABLE IF EXISTS Ingresos");
         database.execSQL("DROP TABLE IF EXISTS Grupo_Ingresos");
+        database.execSQL("DROP TABLE IF EXISTS Registros");
+        database.execSQL("DROP TABLE IF EXISTS Password");
 
         onCreate(database);
     }
