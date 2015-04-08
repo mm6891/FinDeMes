@@ -28,7 +28,7 @@ public class NewCategoriaIngresoDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.new_category_ingreso_dialog, container, false);
+        final View view = inflater.inflate(R.layout.nueva_categoria_ingreso_dialog, container, false);
 
         btnNewCatIng = (Button) view.findViewById(R.id.btnNewCatIng);
 

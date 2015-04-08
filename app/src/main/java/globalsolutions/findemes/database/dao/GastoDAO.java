@@ -48,7 +48,7 @@ public class GastoDAO {
 
     public Gasto[] selectGastos() {
         Gasto[] ret;
-        String[] cols = new String[] {GASTOS_GRUPO, GASTOS_DESC, GASTOS_VALOR,GASTOS_FECHA};
+        String[] cols = new String[] {GASTOS_ID,GASTOS_GRUPO, GASTOS_DESC, GASTOS_VALOR,GASTOS_FECHA};
         Cursor mCursor = database.query(true, GASTOS_TABLA,cols,null
                 , null, null, null, null, null);
         ret = new Gasto[mCursor.getCount()];
@@ -56,12 +56,13 @@ public class GastoDAO {
         mCursor.moveToFirst();
         while (mCursor.isAfterLast() == false) {
             Gasto nuevoGasto = new Gasto();
+            nuevoGasto.set_id(mCursor.getInt(0));
             GrupoGasto categoria = new GrupoGasto();
-            categoria.setGrupo(mCursor.getString(0));
+            categoria.setGrupo(mCursor.getString(1));
             nuevoGasto.setGrupoGasto(categoria);
-            nuevoGasto.setDescripcion(mCursor.getString(1));
-            nuevoGasto.setValor(mCursor.getString(2));
-            nuevoGasto.setFecha(mCursor.getString(3));
+            nuevoGasto.setDescripcion(mCursor.getString(2));
+            nuevoGasto.setValor(mCursor.getString(3));
+            nuevoGasto.setFecha(mCursor.getString(4));
 
             ret[i] = nuevoGasto;
             i++;
@@ -70,30 +71,14 @@ public class GastoDAO {
         return ret; // iterate to get each value.
     }
 
-    public boolean deleteGasto(String descripcion, String valor, String fecha){
+    public boolean deleteGasto(int _id){
 
         return  database.delete(GASTOS_TABLA,
-                GASTOS_DESC + "='" + descripcion +"' AND " + GASTOS_VALOR + "='" + valor+ "' AND " +
-                        GASTOS_FECHA + "='" + fecha + "'", null) > 0;
-    }
-
-    public boolean existeGasto(Gasto g){
-        boolean ret = false;
-        String[] cols = new String[] {GASTOS_GRUPO, GASTOS_DESC, GASTOS_VALOR,GASTOS_FECHA};
-        String[] args = new String[] {g.getGrupoGasto().getGrupo(),g.getDescripcion(),g.getValor(),g.getFecha()};
-
-        Cursor mCursor = database.query(true, GASTOS_TABLA,cols,
-                GASTOS_GRUPO + "=? AND " + GASTOS_DESC+"=? AND " + GASTOS_VALOR + "=? AND " + GASTOS_FECHA + "=?"
-                , args, null, null, null, null);
-
-        if(mCursor.getCount() > 0)
-            ret = true;
-        return ret;
+                GASTOS_ID + "=" + _id , null) > 0;
     }
 
     public boolean updateGasto(Gasto antiguo, Gasto nuevo){
-        String[] cols = new String[] {GASTOS_GRUPO, GASTOS_DESC, GASTOS_VALOR,GASTOS_FECHA};
-        String[] args = new String[] {antiguo.getGrupoGasto().getGrupo(),antiguo.getDescripcion(),antiguo.getValor(),antiguo.getFecha()};
+        String[] args = new String[] {String.valueOf(antiguo.get_id())};
 
         //Establecemos los campos-valores a actualizar
         ContentValues valores = new ContentValues();
@@ -102,7 +87,7 @@ public class GastoDAO {
         valores.put(GASTOS_VALOR,nuevo.getValor());
         valores.put(GASTOS_FECHA,nuevo.getFecha());
 
-        int rows = database.update(GASTOS_TABLA,valores,GASTOS_GRUPO + "=? AND " + GASTOS_DESC+"=? AND " + GASTOS_VALOR + "=? AND " + GASTOS_FECHA + "=?",args);
+        int rows = database.update(GASTOS_TABLA,valores,GASTOS_ID + "=?",args);
         return rows > 0;
     }
 

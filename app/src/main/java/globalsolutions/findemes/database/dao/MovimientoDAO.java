@@ -74,7 +74,7 @@ public class MovimientoDAO {
         ArrayList<MovimientoItem> ret = new ArrayList<MovimientoItem>();
 
         for(int i = 0 ; i < registros.length ; i++) {
-            if (registros[i].getActivo().trim().equals(Constantes.REGISTRO_ACTIVO)) {
+            if (registros[i].getActivo().equals(Constantes.REGISTRO_ACTIVO)) {
                 if (registros[i].getPeriodicidad().equals(context.getResources().getString(R.string.PERIODICIDAD_REGISTRO_MENSUAL))){
                     //hay que desglosar el registro en 12 movimientos mensuales
                     for(int j = 1 ; j < 13 ; j++) {

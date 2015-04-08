@@ -35,4 +35,16 @@
     <string name="OPCIONES_AYUDA">Ayuda</string>
     <string name="PERIODICIDAD_REGISTRO_MENSUAL">Mensual</string>
     <string name="PERIODICIDAD_REGISTRO_ANUAL">Anual</string>
+    <string name="NUEVO_REGISTRO">Nuevo Registro</string>
+    <string name="EDITAR_REGISTRO">Editar Registro</string>
+    <string name="MODIFICAR_REGISTRO">Modificar Registro</string>
+    <string name="REGISTRO">Registro</string>
+    <string name="Periodicidad">Periodicidad:</string>
+    <string name="Tipo">Tipo:</string>
+    <string name="Valor">Valor:</string>
+    <string name="Activo">Activo:</string>
+    <string name="TIPO_MOVIMIENTO_GASTO">GASTO</string>
+    <string name="TIPO_MOVIMIENTO_INGRESO">INGRESO</string>
+    <string name="AFIRMACION">SI</string>
+    <string name="NEGACION">NO</string>
     </resources>

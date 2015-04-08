@@ -47,7 +47,7 @@ public class GastoDialog extends DialogFragment {
             throw new ClassCastException("Calling Fragment must implement OnGastoDialogListener");
         }
 
-        final View view = inflater.inflate(R.layout.activity_gasto_dialog, container, false);
+        final View view = inflater.inflate(R.layout.edit_gasto_dialog, container, false);
 
         //cargamos el combo de categorias
         Spinner categoria = (Spinner) view.findViewById(R.id.spCategoriaGasto);

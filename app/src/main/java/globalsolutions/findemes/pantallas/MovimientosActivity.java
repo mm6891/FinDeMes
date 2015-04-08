@@ -160,8 +160,7 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                                     if (accion.equals(Constantes.ACCION_ELIMINAR)) {
                                         if (movSeleccionado.getTipoMovimiento().trim().equals(Constantes.TIPO_MOVIMIENTO_GASTO)) {
                                             GastoDAO gastoDAO = new GastoDAO(MovimientosActivity.this);
-                                            realizado = gastoDAO.deleteGasto(movSeleccionado.getDescripcion(), movSeleccionado.getValor(),
-                                                    movSeleccionado.getFecha());
+                                            realizado = gastoDAO.deleteGasto(movSeleccionado.get_id());
                                             if (realizado) {
                                                 showToast("¡Gasto eliminado!");
                                                 ArrayList<MovimientoItem> newList = new MovimientoDAO().cargaMovimientos(getApplicationContext());
@@ -171,8 +170,7 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                                         }
                                         if (movSeleccionado.getTipoMovimiento().trim().equals(Constantes.TIPO_MOVIMIENTO_INGRESO)) {
                                             IngresoDAO ingresoDAO = new IngresoDAO(MovimientosActivity.this);
-                                            realizado = ingresoDAO.deleteIngreso(movSeleccionado.getDescripcion(), movSeleccionado.getValor(),
-                                                    movSeleccionado.getFecha());
+                                            realizado = ingresoDAO.deleteIngreso(movSeleccionado.get_id());
                                             if (realizado) {
                                                 showToast("¡Ingreso eliminado!");
                                                 ArrayList<MovimientoItem> newList = new MovimientoDAO().cargaMovimientos(getApplicationContext());

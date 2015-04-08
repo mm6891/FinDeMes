@@ -36,7 +36,7 @@ public class CategoriasIngresosDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.activity_categoria_ingreso_dialog, container, false);
+        final View view = inflater.inflate(R.layout.categoria_ingreso_dialog, container, false);
 
         List<String> list = new ArrayList<String>();
         GrupoIngresoDAO grupoIngresoDAO = new GrupoIngresoDAO(view.getContext());

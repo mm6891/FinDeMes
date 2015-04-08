@@ -8,6 +8,16 @@ public class MovimientoItem {
     String tipoMovimiento;
     String descripcion;
 
+    public int get_id() {
+        return _id;
+    }
+
+    public void set_id(int _id) {
+        this._id = _id;
+    }
+
+    int _id;
+
     public String getCategoria() {
         return categoria;
     }

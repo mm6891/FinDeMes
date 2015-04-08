@@ -33,4 +33,10 @@
     <string name="OPCIONES_FUNCIONES_PRO">Acerca de las funciones PRO</string>
     <string name="OPCIONES_DESARROLLO_CONTACTO">Desarrollo y contacto</string>
     <string name="OPCIONES_AYUDA">Help</string>
+    <string name="PERIODICIDAD_REGISTRO_MENSUAL">Mensual</string>
+    <string name="PERIODICIDAD_REGISTRO_ANUAL">Anual</string>
+    <string name="NUEVO_REGISTRO">Nuevo Registro</string>
+    <string name="Periodicidad">Periodicidad:</string>
+    <string name="Tipo">Tipo:</string>
+    <string name="Valor">Valor:</string>
     </resources>

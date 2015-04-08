@@ -92,9 +92,9 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
         tvvalor.setText(item.getValor());
         tvgrupo.setText(item.getCategoria());
         tvfecha.setText(item.getFecha());
-        if(item.getTipoMovimiento().trim().equals("GASTO"))
+        if(item.getTipoMovimiento().trim().equals(Constantes.TIPO_MOVIMIENTO_GASTO))
             ivIconMov.setImageResource(R.drawable.minus);
-        if(item.getTipoMovimiento().trim().equals("INGRESO"))
+        if(item.getTipoMovimiento().trim().equals(Constantes.TIPO_MOVIMIENTO_INGRESO))
             ivIconMov.setImageResource(R.drawable.plus);
 
         return rowView;

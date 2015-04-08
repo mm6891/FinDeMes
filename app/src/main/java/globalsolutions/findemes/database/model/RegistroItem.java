@@ -3,7 +3,15 @@ package globalsolutions.findemes.database.model;
 /**
  * Created by manuel.molero on 08/04/2015.
  */
-public class Registro {
+public class RegistroItem {
+
+    public int get_id() {
+        return _id;
+    }
+
+    public void set_id(int _id) {
+        this._id = _id;
+    }
 
     int _id;
     String descripcion;
@@ -22,14 +30,6 @@ public class Registro {
 
     Integer activo;
     String fecha;
-
-    public int get_id() {
-        return _id;
-    }
-
-    public void set_id(int _id) {
-        this._id = _id;
-    }
 
     public String getDescripcion() {
         return descripcion;

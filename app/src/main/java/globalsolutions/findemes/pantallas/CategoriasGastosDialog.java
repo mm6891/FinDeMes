@@ -22,7 +22,6 @@ import java.util.List;
 
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.GrupoGastoDAO;
-import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
 import globalsolutions.findemes.database.util.Constantes;
 
 /**
@@ -37,7 +36,7 @@ public class CategoriasGastosDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View view = inflater.inflate(R.layout.activity_categoria_gasto_dialog, container, false);
+        final View view = inflater.inflate(R.layout.categoria_gasto_dialog, container, false);
 
         List<String> list = new ArrayList<String>();
         GrupoGastoDAO grupoGastoDAO = new GrupoGastoDAO(view.getContext());

@@ -26,4 +26,24 @@
             android:layout_marginLeft="10dp"
             android:textStyle="bold" />
     </LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/lyLinear0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lyBackButton">
+        <Button
+            android:id="@+id/btnNuevoRegistro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/NUEVO_REGISTRO"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+    </LinearLayout>
+    <ListView
+        android:id="@+id/listViewReg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lyLinear0"
+        android:layout_weight="1" />
 </RelativeLayout>

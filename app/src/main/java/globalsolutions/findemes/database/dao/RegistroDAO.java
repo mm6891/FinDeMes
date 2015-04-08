@@ -5,7 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+
 import globalsolutions.findemes.database.model.Registro;
+import globalsolutions.findemes.database.model.RegistroItem;
 import globalsolutions.findemes.database.util.MyDatabaseHelper;
 
 /**
@@ -66,7 +69,7 @@ public class RegistroDAO {
             nuevoRegistro.setTipo(mCursor.getString(2));
             nuevoRegistro.setValor(mCursor.getString(3));
             nuevoRegistro.setGrupo(mCursor.getString(4));
-            nuevoRegistro.setActivo(mCursor.getString(5));
+            nuevoRegistro.setActivo(Integer.valueOf(mCursor.getInt(5)));
             nuevoRegistro.setFecha(mCursor.getString(6));
 
             ret[i] = nuevoRegistro;
@@ -76,16 +79,40 @@ public class RegistroDAO {
         return ret; // iterate to get each value.
     }
 
-    public boolean deleteRegistro(String descripcion, String periodicidad, String fecha){
+    public ArrayList<RegistroItem> selectRegistrosItems() {
+        ArrayList<RegistroItem> ret;
+        String[] cols = new String[] {REGISTROS_ID,REGISTROS_DESC, REGISTROS_PERIOD, REGISTROS_TIPO,REGISTROS_VALOR,REGISTROS_GRUPO,REGISTROS_ACTIVO,REGISTROS_FECHA};
+        Cursor mCursor = database.query(true, REGISTROS_TABLA,cols,null
+                , null, null, null, null, null);
+        ret = new ArrayList<RegistroItem>(mCursor.getCount());
+        int i = 0;
+        mCursor.moveToFirst();
+        while (mCursor.isAfterLast() == false) {
+            RegistroItem nuevoRegistro = new RegistroItem();
+            nuevoRegistro.set_id(mCursor.getInt(0));
+            nuevoRegistro.setDescripcion(mCursor.getString(1));
+            nuevoRegistro.setPeriodicidad(mCursor.getString(2));
+            nuevoRegistro.setTipo(mCursor.getString(3));
+            nuevoRegistro.setValor(mCursor.getString(4));
+            nuevoRegistro.setGrupo(mCursor.getString(5));
+            nuevoRegistro.setActivo(Integer.valueOf(mCursor.getInt(6)));
+            nuevoRegistro.setFecha(mCursor.getString(7));
+
+            ret.add(nuevoRegistro);
+            i++;
+            mCursor.moveToNext();
+        }
+        return ret; // iterate to get each value.
+    }
+
+    public boolean deleteRegistro(int _id){
 
         return  database.delete(REGISTROS_TABLA,
-                REGISTROS_DESC + "='" + descripcion +"' AND " + REGISTROS_PERIOD + "='" + periodicidad+ "' AND " +
-                        REGISTROS_FECHA + "='" + fecha + "'", null) > 0;
+                REGISTROS_ID + "=" + _id , null) > 0;
     }
 
     public boolean updateRegistro(Registro antiguo, Registro nuevo){
-        String[] cols = new String[] {REGISTROS_DESC, REGISTROS_PERIOD, REGISTROS_TIPO,REGISTROS_VALOR,REGISTROS_GRUPO,REGISTROS_ACTIVO,REGISTROS_FECHA};
-        String[] args = new String[] {antiguo.getDescripcion(),antiguo.getPeriodicidad(),antiguo.getTipo(),antiguo.getValor(),antiguo.getGrupo(),antiguo.getActivo(),antiguo.getFecha()};
+        String[] args = new String[] {String.valueOf(antiguo.get_id())};
 
         //Establecemos los campos-valores a actualizar
         ContentValues valores = new ContentValues();
@@ -97,7 +124,7 @@ public class RegistroDAO {
         valores.put(REGISTROS_ACTIVO,nuevo.getActivo());
         valores.put(REGISTROS_FECHA,nuevo.getFecha());
 
-        int rows = database.update(REGISTROS_TABLA,valores,REGISTROS_DESC + "=? AND " + REGISTROS_PERIOD+"=? AND " + REGISTROS_TIPO + "=? AND " + REGISTROS_VALOR + "=? AND " + REGISTROS_GRUPO + "=? AND " + REGISTROS_ACTIVO + "=? AND " + REGISTROS_FECHA + "=?",args);
+        int rows = database.update(REGISTROS_TABLA,valores,REGISTROS_ID + "=?",args);
         return rows > 0;
     }
 }

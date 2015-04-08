@@ -47,7 +47,7 @@ public class IngresoDAO {
 
     public Ingreso[] selectIngresos() {
         Ingreso[] ret;
-        String[] cols = new String[] {INGRESOS_GRUPO, INGRESOS_DESC, INGRESOS_VALOR,INGRESOS_FECHA};
+        String[] cols = new String[] {INGRESOS_ID,INGRESOS_GRUPO, INGRESOS_DESC, INGRESOS_VALOR,INGRESOS_FECHA};
         Cursor mCursor = database.query(true, INGRESOS_TABLA,cols,null
                 , null, null, null, null, null);
         ret = new Ingreso[mCursor.getCount()];
@@ -55,12 +55,13 @@ public class IngresoDAO {
         mCursor.moveToFirst();
         while (mCursor.isAfterLast() == false) {
             Ingreso nuevoIngreso = new Ingreso();
+            nuevoIngreso.set_id(mCursor.getInt(0));
             GrupoIngreso categoria = new GrupoIngreso();
-            categoria.setGrupo(mCursor.getString(0));
+            categoria.setGrupo(mCursor.getString(1));
             nuevoIngreso.setGrupoIngreso(categoria);
-            nuevoIngreso.setDescripcion(mCursor.getString(1));
-            nuevoIngreso.setValor(mCursor.getString(2));
-            nuevoIngreso.setFecha(mCursor.getString(3));
+            nuevoIngreso.setDescripcion(mCursor.getString(2));
+            nuevoIngreso.setValor(mCursor.getString(3));
+            nuevoIngreso.setFecha(mCursor.getString(4));
 
             ret[i] = nuevoIngreso;
             i++;
@@ -69,30 +70,14 @@ public class IngresoDAO {
         return ret; // iterate to get each value.
     }
 
-    public boolean deleteIngreso(String descripcion, String valor, String fecha){
+    public boolean deleteIngreso(int _id){
 
         return  database.delete(INGRESOS_TABLA,
-                INGRESOS_DESC + "='" + descripcion +"' AND " + INGRESOS_VALOR + "='" + valor+ "' AND " +
-                        INGRESOS_FECHA + "='" + fecha + "'", null) > 0;
-    }
-
-    public boolean existeIngreso(Ingreso ing){
-        boolean ret = false;
-        String[] cols = new String[] {INGRESOS_GRUPO, INGRESOS_DESC, INGRESOS_VALOR,INGRESOS_FECHA};
-        String[] args = new String[] {ing.getGrupoIngreso().getGrupo(),ing.getDescripcion(),ing.getValor(),ing.getFecha()};
-
-        Cursor mCursor = database.query(true, INGRESOS_TABLA,cols,
-                INGRESOS_GRUPO + "=? AND " + INGRESOS_DESC+"=? AND " + INGRESOS_VALOR + "=? AND " + INGRESOS_FECHA + "=?"
-                , args, null, null, null, null);
-
-        if(mCursor.getCount() > 0)
-            ret = true;
-        return ret;
+                INGRESOS_ID + "=" + _id, null) > 0;
     }
 
     public boolean updateIngreso(Ingreso antiguo, Ingreso nuevo){
-        String[] cols = new String[] {INGRESOS_GRUPO, INGRESOS_DESC, INGRESOS_VALOR,INGRESOS_FECHA};
-        String[] args = new String[] {antiguo.getGrupoIngreso().getGrupo(),antiguo.getDescripcion(),antiguo.getValor(),antiguo.getFecha()};
+        String[] args = new String[] {String.valueOf(antiguo.get_id())};
 
         //Establecemos los campos-valores a actualizar
         ContentValues valores = new ContentValues();
@@ -101,7 +86,7 @@ public class IngresoDAO {
         valores.put(INGRESOS_VALOR,nuevo.getValor());
         valores.put(INGRESOS_FECHA,nuevo.getFecha());
 
-        int rows = database.update(INGRESOS_TABLA,valores,INGRESOS_GRUPO + "=? AND " + INGRESOS_DESC+"=? AND " + INGRESOS_VALOR + "=? AND " + INGRESOS_FECHA + "=?",args);
+        int rows = database.update(INGRESOS_TABLA,valores,INGRESOS_ID + "=?",args);
         return rows > 0;
     }
 }
