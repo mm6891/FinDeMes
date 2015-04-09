@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,6 +38,9 @@ public class EditRegistroDialog extends DialogFragment {
     public interface OnEditRegistroDialogListener {
         public void OnEditRegistroDialogSubmit(String result);
     }
+
+    private Spinner tipoMovimiento;
+    private Spinner categoriaSp;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,7 +76,7 @@ public class EditRegistroDialog extends DialogFragment {
         periodicidadSp.setSelection(dataAdapter.getPosition(periodicidad));
 
         //cargamos el combo tipo (gasto o ingreso)
-        Spinner tipoMovimiento = (Spinner) view.findViewById(R.id.spTipo);
+        tipoMovimiento = (Spinner) view.findViewById(R.id.spTipo);
         List<String> listTipos = new ArrayList<String>();
         listTipos.add(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO));
         listTipos.add(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO));
@@ -83,16 +87,16 @@ public class EditRegistroDialog extends DialogFragment {
         tipoMovimiento.setSelection(dataAdapterTM.getPosition(tipo));
 
         //cargamos el combo de categorias
-        Spinner categoriaSp = (Spinner) view.findViewById(R.id.spCategoria);
+        categoriaSp = (Spinner) view.findViewById(R.id.spCategoria);
         categoriaSp.setEnabled(false);
         List<String> listCategorias = new ArrayList<String>();
         if(((String)(tipoMovimiento.getSelectedItem())).equals(getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
-            GrupoGastoDAO grupoGastoDAO = new GrupoGastoDAO(getView().getContext());
+            GrupoGastoDAO grupoGastoDAO = new GrupoGastoDAO(view.getContext());
             String[] categoriasGastos = grupoGastoDAO.selectGrupos();
             listCategorias = Arrays.asList(categoriasGastos);
         }
         else {
-            GrupoIngresoDAO grupoIngresoDAO = new GrupoIngresoDAO(getView().getContext());
+            GrupoIngresoDAO grupoIngresoDAO = new GrupoIngresoDAO(view.getContext());
             String[] categoriasIngresos = grupoIngresoDAO.selectGrupos();
             listCategorias = Arrays.asList(categoriasIngresos);
         }
@@ -121,7 +125,7 @@ public class EditRegistroDialog extends DialogFragment {
                 //nombre , valor
                 String valor = (String) ((EditText) view.findViewById(R.id.txtValor)).getText().toString();
                 if (valor == null || valor.isEmpty()) {
-                    ((EditText) v.findViewById(R.id.txtValor)).setError("Debe incluir la cantidad del registro");
+                    ((EditText) view.findViewById(R.id.txtValor)).setError("Debe incluir la cantidad del registro");
                     return;
                 }
                 String descripcion = (String) ((EditText) view.findViewById(R.id.txtRegistro)).getText().toString();
@@ -132,7 +136,7 @@ public class EditRegistroDialog extends DialogFragment {
 
                 //periodicidad
                 String periodicidad = (String) ((Spinner) view.findViewById(R.id.spPeriodicidad)).getSelectedItem();
-                String tipoMovimiento = (String) ((Spinner) view.findViewById(R.id.spPeriodicidad)).getSelectedItem();
+                String tipoMovimiento = (String) ((Spinner) view.findViewById(R.id.spTipo)).getSelectedItem();
                 String categoria = (String) ((Spinner) view.findViewById(R.id.spCategoria)).getSelectedItem();
 
                 if (categoria != null && !categoria.isEmpty()) {
@@ -177,5 +181,37 @@ public class EditRegistroDialog extends DialogFragment {
 
     public void showToast(Context c, String message){
         Toast.makeText(c, message, Toast.LENGTH_SHORT).show();
+    }
+
+    private class tipoMovimientoOnClickListener implements AdapterView.OnItemSelectedListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View v, int pos,
+                                   long id) {
+
+            parent.getItemAtPosition(pos);
+            categoriaSp.setEnabled(true);
+            List<String> list = new ArrayList<String>();
+
+            if(((String)(tipoMovimiento.getSelectedItem())).equals(getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
+                GrupoGastoDAO grupoGastoDAO = new GrupoGastoDAO(getView().getContext());
+                String[] categoriasGastos = grupoGastoDAO.selectGrupos();
+                list = Arrays.asList(categoriasGastos);
+            }
+            else {
+                GrupoIngresoDAO grupoIngresoDAO = new GrupoIngresoDAO(getView().getContext());
+                String[] categoriasIngresos = grupoIngresoDAO.selectGrupos();
+                list = Arrays.asList(categoriasIngresos);
+            }
+
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getView().getContext(),
+                    android.R.layout.simple_spinner_item, list);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            categoriaSp.setAdapter(dataAdapter);
+        }
+        @Override
+        public void onNothingSelected(AdapterView<?> arg0) {
+
+        }
     }
 }

@@ -49,7 +49,6 @@ public class RegistroDAO {
         values.put(REGISTROS_VALOR, registro.getValor());
         values.put(REGISTROS_GRUPO, registro.getGrupo());
         values.put(REGISTROS_ACTIVO, registro.getActivo());
-        values.put(REGISTROS_FECHA, registro.getFecha());
 
         return database.insert(REGISTROS_TABLA, null, values);
     }
@@ -122,7 +121,6 @@ public class RegistroDAO {
         valores.put(REGISTROS_VALOR,nuevo.getValor());
         valores.put(REGISTROS_GRUPO,nuevo.getGrupo());
         valores.put(REGISTROS_ACTIVO,nuevo.getActivo());
-        valores.put(REGISTROS_FECHA,nuevo.getFecha());
 
         int rows = database.update(REGISTROS_TABLA,valores,REGISTROS_ID + "=?",args);
         return rows > 0;

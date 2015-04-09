@@ -85,7 +85,7 @@ public class NuevoRegistroDialog extends DialogFragment {
                 //nombre , valor
                 String valor = (String)((EditText) view.findViewById(R.id.txtValor)).getText().toString();
                 if(valor == null || valor.isEmpty()) {
-                    ((EditText) v.findViewById(R.id.txtValor)).setError("Debe incluir la cantidad del registro");
+                    ((EditText) view.findViewById(R.id.txtValor)).setError("Debe incluir la cantidad del registro");
                     return;
                 }
                 String descripcion = (String)((EditText) view.findViewById(R.id.txtRegistro)).getText().toString();
@@ -96,7 +96,7 @@ public class NuevoRegistroDialog extends DialogFragment {
 
                 //periodicidad
                 String periodicidad = (String)((Spinner) view.findViewById(R.id.spPeriodicidad)).getSelectedItem();
-                String tipoMovimiento = (String)((Spinner) view.findViewById(R.id.spPeriodicidad)).getSelectedItem();
+                String tipoMovimiento = (String)((Spinner) view.findViewById(R.id.spTipo)).getSelectedItem();
                 String categoria = (String)((Spinner) view.findViewById(R.id.spCategoria)).getSelectedItem();
 
                 if(categoria != null && !categoria.isEmpty()) {

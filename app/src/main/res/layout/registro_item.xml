@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:text="@string/REGISTRO"
             android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:layout_weight="1"/>
         <TextView
@@ -22,6 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:layout_weight="1"/>
     </LinearLayout>
@@ -36,14 +38,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/Periodicidad"
-            android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:layout_weight="1"/>
         <TextView
             android:id="@+id/tvPeriodicidadItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:layout_weight="1"/>
     </LinearLayout>
@@ -58,14 +60,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/Tipo"
-            android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:layout_weight="1"/>
         <TextView
             android:id="@+id/tvTipoItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:layout_weight="1"/>
     </LinearLayout>
@@ -80,15 +82,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/Categoria"
-            android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:layout_weight="1"/>
         <TextView
             android:id="@+id/tvCategoriaItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
             android:textSize="18sp"
+            android:textColor="@android:color/black"
             android:layout_weight="1"/>
     </LinearLayout>
 
@@ -102,14 +104,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/Valor"
-            android:textStyle="bold"
             android:textSize="18sp"
+            android:textColor="@android:color/black"
             android:layout_weight="1"/>
         <TextView
             android:id="@+id/tvValorItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:layout_weight="1"/>
     </LinearLayout>
@@ -124,14 +126,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/Activo"
-            android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:layout_weight="1"/>
         <TextView
             android:id="@+id/tvActivoItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:layout_weight="1"/>
     </LinearLayout>
