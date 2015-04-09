@@ -13,6 +13,8 @@ import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
 import globalsolutions.findemes.R;
@@ -188,6 +190,7 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
         //tipoPeriodo:  MENSUAL, TRIMESTRAL, QUINCENAL
         private ArrayList<InformeItem> calculaInformes(String tipoMovimiento, String tipoPeriodo){
             ArrayList<InformeItem> result = new ArrayList<InformeItem>(informes.size());
+            Collections.sort((java.util.List<Comparable>) informes);
             for(Integer integer : informes.keySet()){
                 ArrayList<MovimientoItem> movsMes = informes.get(integer);
 
