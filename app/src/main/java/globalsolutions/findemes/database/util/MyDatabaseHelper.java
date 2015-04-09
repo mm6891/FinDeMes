@@ -48,16 +48,16 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                     "periodicidad text not null," +
                     "tipo text not null," +
                     "valor text not null," +
-                    "grupo text not null)," +
-                    "activo integer not null)," +
-                    "fecha TIMESTAMP NOT NULL DEFAULT current_timestamp;";
+                    "grupo text not null," +
+                    "activo integer not null," +
+                    "fecha TIMESTAMP NOT NULL DEFAULT current_timestamp);";
 
     private static final String CREATE_TABLE_PASSWORD =
             "create table Password( _id integer primary key," +
                     "password text not null," +
                     "mail text not null," +
-                    "activo integer not null)," +
-                    "fecha TIMESTAMP NOT NULL DEFAULT current_timestamp;";
+                    "activo integer not null," +
+                    "fecha TIMESTAMP NOT NULL DEFAULT current_timestamp);";
 
     public MyDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

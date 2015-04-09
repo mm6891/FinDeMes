@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,8 +17,11 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import globalsolutions.findemes.R;
+import globalsolutions.findemes.database.dao.GrupoGastoDAO;
+import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
 import globalsolutions.findemes.database.dao.RegistroDAO;
 import globalsolutions.findemes.database.model.Registro;
 import globalsolutions.findemes.database.util.Constantes;
@@ -32,6 +36,9 @@ public class NuevoRegistroDialog extends DialogFragment {
     public interface ONuevoRegistroDialogListener {
         public void ONuevoRegistroDialogSubmit(String result);
     }
+
+    private Spinner categoria;
+    private Spinner tipoMovimiento;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,7 +63,7 @@ public class NuevoRegistroDialog extends DialogFragment {
         periodicidad.setAdapter(dataAdapter);
 
         //cargamos el combo tipo (gasto o ingreso)
-        final Spinner tipoMovimiento = (Spinner) view.findViewById(R.id.spTipo);
+        tipoMovimiento = (Spinner) view.findViewById(R.id.spTipo);
         List<String> listTipos = new ArrayList<String>();
         listTipos.add(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO));
         listTipos.add(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO));
@@ -64,9 +71,10 @@ public class NuevoRegistroDialog extends DialogFragment {
                 android.R.layout.simple_spinner_item, listTipos);
         dataAdapterTM.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tipoMovimiento.setAdapter(dataAdapterTM);
+        tipoMovimiento.setOnItemSelectedListener(new tipoMovimientoOnClickListener());
 
         //cargamos el combo de categorias
-        Spinner categoria = (Spinner) view.findViewById(R.id.spCategoria);
+        categoria = (Spinner) view.findViewById(R.id.spCategoria);
         categoria.setEnabled(false);
 
         Button btnNuevoRegistro = (Button) view.findViewById(R.id.btnCrearRegistro);
@@ -135,5 +143,37 @@ public class NuevoRegistroDialog extends DialogFragment {
 
     public void showToast(Context c, String message){
         Toast.makeText(c, message, Toast.LENGTH_SHORT).show();
+    }
+
+    private class tipoMovimientoOnClickListener implements AdapterView.OnItemSelectedListener {
+
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View v, int pos,
+                                   long id) {
+
+            parent.getItemAtPosition(pos);
+            categoria.setEnabled(true);
+            List<String> list = new ArrayList<String>();
+
+            if(((String)(tipoMovimiento.getSelectedItem())).equals(getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
+                GrupoGastoDAO grupoGastoDAO = new GrupoGastoDAO(getView().getContext());
+                String[] categoriasGastos = grupoGastoDAO.selectGrupos();
+                list = Arrays.asList(categoriasGastos);
+            }
+            else {
+                GrupoIngresoDAO grupoIngresoDAO = new GrupoIngresoDAO(getView().getContext());
+                String[] categoriasIngresos = grupoIngresoDAO.selectGrupos();
+                list = Arrays.asList(categoriasIngresos);
+            }
+
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getView().getContext(),
+                    android.R.layout.simple_spinner_item, list);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            categoria.setAdapter(dataAdapter);
+        }
+        @Override
+        public void onNothingSelected(AdapterView<?> arg0) {
+
+        }
     }
 }

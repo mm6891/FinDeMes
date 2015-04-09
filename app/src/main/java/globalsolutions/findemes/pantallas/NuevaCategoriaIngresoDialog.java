@@ -20,7 +20,7 @@ import globalsolutions.findemes.database.model.GrupoIngreso;
 /**
  * Created by manuel.molero on 16/02/2015.
  */
-public class NewCategoriaIngresoDialog extends DialogFragment {
+public class NuevaCategoriaIngresoDialog extends DialogFragment {
 
     private Button btnNewCatIng;
 

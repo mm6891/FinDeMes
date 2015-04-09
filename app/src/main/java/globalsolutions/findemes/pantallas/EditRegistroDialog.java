@@ -17,9 +17,12 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import globalsolutions.findemes.R;
+import globalsolutions.findemes.database.dao.GrupoGastoDAO;
+import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
 import globalsolutions.findemes.database.dao.RegistroDAO;
 import globalsolutions.findemes.database.model.Registro;
 import globalsolutions.findemes.database.util.Constantes;
@@ -83,7 +86,17 @@ public class EditRegistroDialog extends DialogFragment {
         Spinner categoriaSp = (Spinner) view.findViewById(R.id.spCategoria);
         categoriaSp.setEnabled(false);
         List<String> listCategorias = new ArrayList<String>();
-        listCategorias.add(categoria);
+        if(((String)(tipoMovimiento.getSelectedItem())).equals(getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
+            GrupoGastoDAO grupoGastoDAO = new GrupoGastoDAO(getView().getContext());
+            String[] categoriasGastos = grupoGastoDAO.selectGrupos();
+            listCategorias = Arrays.asList(categoriasGastos);
+        }
+        else {
+            GrupoIngresoDAO grupoIngresoDAO = new GrupoIngresoDAO(getView().getContext());
+            String[] categoriasIngresos = grupoIngresoDAO.selectGrupos();
+            listCategorias = Arrays.asList(categoriasIngresos);
+        }
+
         ArrayAdapter<String> dataAdapterCat = new ArrayAdapter<String>(view.getContext(),
                 android.R.layout.simple_spinner_item, listCategorias);
         dataAdapterCat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

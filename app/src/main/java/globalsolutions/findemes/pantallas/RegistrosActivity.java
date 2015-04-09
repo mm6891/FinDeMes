@@ -20,7 +20,7 @@ import globalsolutions.findemes.database.dao.RegistroDAO;
 import globalsolutions.findemes.database.model.RegistroItem;
 import globalsolutions.findemes.database.util.Constantes;
 
-public class RegistrosActivity extends FragmentActivity implements NuevoRegistroDialog.ONuevoRegistroDialogListener {
+public class RegistrosActivity extends FragmentActivity implements NuevoRegistroDialog.ONuevoRegistroDialogListener, EditRegistroDialog.OnEditRegistroDialogListener {
 
 
     private ListView listViewReg;
@@ -129,6 +129,12 @@ public class RegistrosActivity extends FragmentActivity implements NuevoRegistro
 
     @Override
     public void ONuevoRegistroDialogSubmit(String result) {
+        if(result.equals(String.valueOf(Activity.RESULT_OK)))
+            ((RegistroAdapter)listViewReg.getAdapter()).updateReceiptsList(new RegistroDAO(getApplicationContext()).selectRegistrosItems());
+    }
+
+    @Override
+    public void OnEditRegistroDialogSubmit(String result) {
         if(result.equals(String.valueOf(Activity.RESULT_OK)))
             ((RegistroAdapter)listViewReg.getAdapter()).updateReceiptsList(new RegistroDAO(getApplicationContext()).selectRegistrosItems());
     }

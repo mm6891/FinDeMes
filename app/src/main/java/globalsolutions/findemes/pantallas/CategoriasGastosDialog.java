@@ -118,7 +118,7 @@ public class CategoriasGastosDialog extends DialogFragment {
     }
 
     public void showNewGastoDialog() {
-        DialogFragment newFragment = new NewCategoriaGastoDialog();
+        DialogFragment newFragment = new NuevaCategoriaGastoDialog();
         newFragment.setTargetFragment(this,1);
         newFragment.show(getFragmentManager(),"NEWGASTO");
     }

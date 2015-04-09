@@ -107,7 +107,7 @@ public class CategoriasIngresosDialog extends DialogFragment {
     }
 
     public void showNewIngresoDialog() {
-        DialogFragment newFragment = new NewCategoriaIngresoDialog();
+        DialogFragment newFragment = new NuevaCategoriaIngresoDialog();
         newFragment.setTargetFragment(this,1);
         newFragment.show(getFragmentManager(),"CREACION");
     }

@@ -20,7 +20,7 @@ import globalsolutions.findemes.database.model.GrupoGasto;
 /**
  * Created by manuel.molero on 16/02/2015.
  */
-public class NewCategoriaGastoDialog extends DialogFragment {
+public class NuevaCategoriaGastoDialog extends DialogFragment {
 
     private Button btnNewCatGas;
 
