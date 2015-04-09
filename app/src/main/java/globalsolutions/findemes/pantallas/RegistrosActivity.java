@@ -49,7 +49,7 @@ public class RegistrosActivity extends FragmentActivity implements NuevoRegistro
         });
 
         //recuperamos registros
-        ArrayList<RegistroItem> regs = new ArrayList(Arrays.asList(new RegistroDAO(getApplicationContext()).selectRegistrosItems()));
+        ArrayList<RegistroItem> regs = new ArrayList(new RegistroDAO(getApplicationContext()).selectRegistrosItems());
         listViewReg = (ListView) findViewById(R.id.listViewReg);
         listViewReg.setAdapter(new RegistroAdapter(getApplicationContext(), regs));
 

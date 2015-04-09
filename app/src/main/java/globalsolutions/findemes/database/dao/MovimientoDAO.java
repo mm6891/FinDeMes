@@ -32,6 +32,7 @@ public class MovimientoDAO {
         movsArray = new MovimientoItem[gastos.length + ingresos.length];
         for(int i = 0 ; i < gastos.length ; i++){
             MovimientoItem m = new MovimientoItem();
+            m.set_id(gastos[i].get_id());
             m.setValor(gastos[i].getValor());
             m.setDescripcion(gastos[i].getDescripcion());
             m.setFecha(gastos[i].getFecha());
@@ -41,6 +42,7 @@ public class MovimientoDAO {
         }
         for(int j = 0 ; j < ingresos.length ; j++){
             MovimientoItem m = new MovimientoItem();
+            m.set_id(ingresos[j].get_id());
             m.setValor(ingresos[j].getValor());
             m.setDescripcion(ingresos[j].getDescripcion());
             m.setFecha(ingresos[j].getFecha());
@@ -79,6 +81,7 @@ public class MovimientoDAO {
                     //hay que desglosar el registro en 12 movimientos mensuales
                     for(int j = 1 ; j < 13 ; j++) {
                         MovimientoItem m = new MovimientoItem();
+                        m.set_id(registros[i].get_id());
                         m.setValor(registros[i].getValor());
                         m.setDescripcion(registros[i].getDescripcion());
                         //tratamos el caso especial de la fecha
@@ -91,6 +94,7 @@ public class MovimientoDAO {
                 else if (registros[i].getPeriodicidad().equals(context.getResources().getString(R.string.PERIODICIDAD_REGISTRO_ANUAL))){
                     //anyadimos solo un movimiento anual
                     MovimientoItem m = new MovimientoItem();
+                    m.set_id(registros[i].get_id());
                     m.setValor(registros[i].getValor());
                     m.setDescripcion(registros[i].getDescripcion());
                     //tratamos el caso especial de la fecha
