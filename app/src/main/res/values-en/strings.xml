@@ -38,5 +38,11 @@
     <string name="NUEVO_REGISTRO">Nuevo Registro</string>
     <string name="Periodicidad">Periodicidad:</string>
     <string name="Tipo">Tipo:</string>
-    <string name="Valor">Valor:</string>
+    <string name="Valor">Value:</string>
+    <string name="Activo">Enable:</string>
+    <string name="TIPO_MOVIMIENTO_GASTO">GASTO</string>
+    <string name="TIPO_MOVIMIENTO_INGRESO">INGRESO</string>
+    <string name="AFIRMACION">YES</string>
+    <string name="NEGACION">NO</string>
+    <string name="OPCION_CONTRASENYA">Password</string>
     </resources>

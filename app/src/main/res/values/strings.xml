@@ -47,4 +47,5 @@
     <string name="TIPO_MOVIMIENTO_INGRESO">INGRESO</string>
     <string name="AFIRMACION">SI</string>
     <string name="NEGACION">NO</string>
+    <string name="OPCION_CONTRASENYA">Contraseña</string>
     </resources>
