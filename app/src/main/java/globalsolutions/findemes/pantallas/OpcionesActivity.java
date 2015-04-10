@@ -67,6 +67,9 @@ public class OpcionesActivity extends FragmentActivity {
                     case 1:
                         showCategoriasGastosDialog();
                         break;
+                    case 5:
+                        showPasswordActivity();
+                        break;
                     default:
                         break;
                 }
@@ -98,6 +101,12 @@ public class OpcionesActivity extends FragmentActivity {
     public void showCategoriasGastosDialog() {
         DialogFragment newFragment = new CategoriasGastosDialog();
         newFragment.show(getFragmentManager(),"INGRESOS");
+    }
+
+    public void showPasswordActivity(){
+        Intent intent = new Intent(OpcionesActivity.this, OptionActivityPassword.class);
+        startActivity(intent);
+        finish();
     }
 
     public String[] creaOpciones(){

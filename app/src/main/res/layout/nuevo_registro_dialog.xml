@@ -114,12 +114,22 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@+id/lyLinear5">
-        <RadioButton
-            android:id="@+id/rbActivo"
+        <RadioGroup
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Activo"
-            />
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/rbActivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/Activo"
+                />
+            <RadioButton
+                android:id="@+id/rbInActivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/InActivo"
+                />
+        </RadioGroup>
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -42,10 +42,13 @@
     <string name="Periodicidad">Periodicidad:</string>
     <string name="Tipo">Tipo:</string>
     <string name="Valor">Valor:</string>
-    <string name="Activo">Activo:</string>
+    <string name="Activo">Activo</string>
+    <string name="InActivo">No Activo</string>
     <string name="TIPO_MOVIMIENTO_GASTO">GASTO</string>
     <string name="TIPO_MOVIMIENTO_INGRESO">INGRESO</string>
     <string name="AFIRMACION">SI</string>
     <string name="NEGACION">NO</string>
     <string name="OPCION_CONTRASENYA">Contraseña</string>
+    <string name="AYUDA_CONTRASENYA">Se establecerá la contraseña y se enviará al correo indicado</string>
+    <string name="MAIL">Correo</string>
     </resources>

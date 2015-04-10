@@ -39,10 +39,12 @@
     <string name="Periodicidad">Periodicidad:</string>
     <string name="Tipo">Tipo:</string>
     <string name="Valor">Value:</string>
-    <string name="Activo">Enable:</string>
+    <string name="Activo">Enable</string>
+    <string name="InActivo">Disable</string>
     <string name="TIPO_MOVIMIENTO_GASTO">GASTO</string>
     <string name="TIPO_MOVIMIENTO_INGRESO">INGRESO</string>
     <string name="AFIRMACION">YES</string>
     <string name="NEGACION">NO</string>
     <string name="OPCION_CONTRASENYA">Password</string>
+    <string name="MAIL">E-Mail</string>
     </resources>
