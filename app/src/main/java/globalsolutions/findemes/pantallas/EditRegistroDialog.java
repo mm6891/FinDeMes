@@ -109,7 +109,7 @@ public class EditRegistroDialog extends DialogFragment {
 
         ((EditText) view.findViewById(R.id.txtValor)).setText(valor);
         ((EditText) view.findViewById(R.id.txtRegistro)).setText(nombre);
-        if(activo.equals(Constantes.REGISTRO_ACTIVO))
+        if(activo.equals(Constantes.REGISTRO_ACTIVO.toString()))
             ((RadioButton)view.findViewById(R.id.rbActivo)).setChecked(true);
         else
             ((RadioButton)view.findViewById(R.id.rbActivo)).setChecked(false);

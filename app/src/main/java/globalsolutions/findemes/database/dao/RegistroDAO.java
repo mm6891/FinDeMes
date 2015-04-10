@@ -55,7 +55,7 @@ public class RegistroDAO {
 
     public Registro[] selectRegistros() {
         Registro[] ret;
-        String[] cols = new String[] {REGISTROS_DESC, REGISTROS_PERIOD, REGISTROS_TIPO,REGISTROS_VALOR,REGISTROS_GRUPO,REGISTROS_ACTIVO,REGISTROS_FECHA};
+        String[] cols = new String[] {REGISTROS_ID,REGISTROS_DESC, REGISTROS_PERIOD, REGISTROS_TIPO,REGISTROS_VALOR,REGISTROS_GRUPO,REGISTROS_ACTIVO,REGISTROS_FECHA};
         Cursor mCursor = database.query(true, REGISTROS_TABLA,cols,null
                 , null, null, null, null, null);
         ret = new Registro[mCursor.getCount()];
@@ -63,13 +63,14 @@ public class RegistroDAO {
         mCursor.moveToFirst();
         while (mCursor.isAfterLast() == false) {
             Registro nuevoRegistro = new Registro();
-            nuevoRegistro.setDescripcion(mCursor.getString(0));
-            nuevoRegistro.setPeriodicidad(mCursor.getString(1));
-            nuevoRegistro.setTipo(mCursor.getString(2));
-            nuevoRegistro.setValor(mCursor.getString(3));
-            nuevoRegistro.setGrupo(mCursor.getString(4));
-            nuevoRegistro.setActivo(Integer.valueOf(mCursor.getInt(5)));
-            nuevoRegistro.setFecha(mCursor.getString(6));
+            nuevoRegistro.set_id(mCursor.getInt(0));
+            nuevoRegistro.setDescripcion(mCursor.getString(1));
+            nuevoRegistro.setPeriodicidad(mCursor.getString(2));
+            nuevoRegistro.setTipo(mCursor.getString(3));
+            nuevoRegistro.setValor(mCursor.getString(4));
+            nuevoRegistro.setGrupo(mCursor.getString(5));
+            nuevoRegistro.setActivo(Integer.valueOf(mCursor.getInt(6)));
+            nuevoRegistro.setFecha(mCursor.getString(7));
 
             ret[i] = nuevoRegistro;
             i++;
