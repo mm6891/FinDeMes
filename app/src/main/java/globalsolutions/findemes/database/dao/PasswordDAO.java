@@ -80,7 +80,6 @@ public class PasswordDAO {
         valores.put(PASSWORD_PASSWORD,nuevo.getPassword());
         valores.put(PASSWORD_MAIL,nuevo.getMail());
         valores.put(PASSWORD_ACTIVO,nuevo.getActivo());
-        valores.put(PASSWORD_FECHA,nuevo.getFecha());
 
         int rows = database.update(PASSWORD_TABLA,valores,PASSWORD_ID + "=?",args);
         return rows > 0;

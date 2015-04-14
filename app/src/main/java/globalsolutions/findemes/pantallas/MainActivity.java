@@ -221,7 +221,10 @@ public class MainActivity extends Activity {
                 .setPositiveButton("SI", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface arg0, int arg1) {
-                        MainActivity.super.onBackPressed();
+                        Intent intent = new Intent(MainActivity.this, Password.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("EXIT", true);
+                        startActivity(intent);
                     }
                 }).create().show();
     }

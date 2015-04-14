@@ -16,6 +16,8 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.MovimientoDAO;
@@ -190,8 +192,8 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
         //tipoPeriodo:  MENSUAL, TRIMESTRAL, QUINCENAL
         private ArrayList<InformeItem> calculaInformes(String tipoMovimiento, String tipoPeriodo){
             ArrayList<InformeItem> result = new ArrayList<InformeItem>(informes.size());
-            Collections.sort((java.util.List<Comparable>) informes);
-            for(Integer integer : informes.keySet()){
+            Map<Integer,ArrayList<MovimientoItem>> treeMap = new TreeMap<Integer,ArrayList<MovimientoItem>>(informes);
+            for(Integer integer : treeMap.keySet()){
                 ArrayList<MovimientoItem> movsMes = informes.get(integer);
 
                 Double ingresos = new Double(0.00);

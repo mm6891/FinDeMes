@@ -51,4 +51,5 @@
     <string name="OPCION_CONTRASENYA">Contraseña</string>
     <string name="AYUDA_CONTRASENYA">Se establecerá la contraseña y se enviará al correo indicado</string>
     <string name="MAIL">Correo</string>
+    <string name="CONTRASENYA_AYUDA">Introduce tu contraseña de 4 dígitos</string>
     </resources>

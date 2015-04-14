@@ -38,11 +38,12 @@ public class OptionActivityPassword extends Activity {
     private EditText txtMail;
     private Button guardar;
     private RadioButton rbPassActivo;
+    private RadioButton rbPassInActivo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_options);
+        setContentView(R.layout.option_activity_password);
 
         //boton retroceder
         ImageButton btnReturn = (ImageButton) findViewById(R.id.btnBackButton);
@@ -55,6 +56,17 @@ public class OptionActivityPassword extends Activity {
         txtPassword = (EditText) findViewById(R.id.txtContrasena);
         txtMail = (EditText) findViewById(R.id.txtMail);
         rbPassActivo = (RadioButton) findViewById(R.id.rbPassActivo);
+        rbPassInActivo = (RadioButton) findViewById(R.id.rbPassInActivo);
+
+        PasswordDAO passwordDAO = new PasswordDAO(getApplicationContext());
+        final globalsolutions.findemes.database.model.Password password = passwordDAO.selectPassword();
+        final String pass = password.getPassword();
+        if (pass != null && !pass.isEmpty()) {
+            txtPassword.setText(pass);
+            txtMail.setText(password.getMail());
+            rbPassActivo.setChecked(password.getActivo().equals(Constantes.REGISTRO_ACTIVO.toString()));
+            rbPassInActivo.setChecked(password.getActivo().equals(Constantes.REGISTRO_INACTIVO.toString()));
+        }
 
         guardar = (Button) findViewById(R.id.btnGuardarPass);
         guardar.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +83,19 @@ public class OptionActivityPassword extends Activity {
                             String.valueOf(Constantes.REGISTRO_INACTIVO.toString());
                     nuevaPass.setActivo(valueActivo);
 
-                    Intent i = new Intent(Intent.ACTION_SEND);
+                    PasswordDAO passwordDAO = new PasswordDAO(getApplicationContext());
+                    if (pass != null && !pass.isEmpty()) {
+                        boolean actualizado = passwordDAO.updatePassword(password,nuevaPass);
+                        if(actualizado)
+                            showToast("¡Password modificada!");
+                    }
+                    else {
+                        boolean insertada = passwordDAO.createRecords(nuevaPass) > 0;
+                        if(insertada)
+                            showToast("¡Password creada!");
+                    }
+
+                   /* Intent i = new Intent(Intent.ACTION_SEND);
                     i.setType("text/plain");
                     i.putExtra(Intent.EXTRA_EMAIL, new String[]{txtMail.getText().toString()});
                     i.putExtra(Intent.EXTRA_SUBJECT, "Contraseña app Fin de Mes");
@@ -80,13 +104,7 @@ public class OptionActivityPassword extends Activity {
                         startActivity(Intent.createChooser(i, "Enviando correo"));
                     } catch (android.content.ActivityNotFoundException ex) {
                         Toast.makeText(OptionActivityPassword.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
-                    }
-
-                    //validar antes envio de correo
-                    PasswordDAO passwordDAO = new PasswordDAO(getApplicationContext());
-                    boolean actualizado = passwordDAO.createRecords(nuevaPass) > 0;
-                    if(actualizado)
-                        showToast("¡Password creada!");
+                    }*/
                 }
             }
         });

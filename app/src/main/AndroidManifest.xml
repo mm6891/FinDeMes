@@ -8,13 +8,16 @@
         android:label="@string/titulo"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".pantallas.MainActivity"
-            android:label="@string/titulo" >
+            android:name=".pantallas.Password">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".pantallas.MainActivity"
+            android:label="@string/titulo" >
         </activity>
         <activity
             android:name=".pantallas.GastoActivity"
@@ -39,6 +42,10 @@
         <activity
             android:name=".pantallas.RegistrosActivity"
             android:label="@string/MENU_REGISTROS" >
+        </activity>
+        <activity
+            android:name=".pantallas.OptionActivityPassword"
+            android:label="@string/OPCIONES_CONTRASENYA" >
         </activity>
     </application>
 
