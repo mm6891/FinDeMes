@@ -165,7 +165,11 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
                     }
                     //quincenal
                     else if(periodo.equals(Constantes.TIPO_FILTRO_INFORME_QUINCENAL)){
-                        periodoMovimiento = (cal.get(Calendar.DAY_OF_YEAR) / 14) + 1;
+                        int dia = cal.get(Calendar.DATE);
+                        int mes = cal.get(Calendar.MONTH);
+                        mes = (mes + 1) * 2;
+                        periodoMovimiento = (dia < 16) ? mes - 1 : mes;
+                        //periodoMovimiento = (cal.get(Calendar.DAY_OF_YEAR) / 14) + 1;
                     }
 
                     boolean existePeriodoInforme = existePeriodoInforme(periodoMovimiento);

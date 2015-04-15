@@ -12,10 +12,10 @@ import android.util.Log;
  */
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "DBFinDeMes";
+    public static final String DATABASE_NAME = "DBFinDeMes";
 
     private static final int DATABASE_VERSION = 2;
-    private static String DB_PATH = "";
+    public static String DB_PATH = "";
 
     // Database creation sql statement
     private static final String CREATE_TABLE_GASTOS =

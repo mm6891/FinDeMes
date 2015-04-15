@@ -47,6 +47,10 @@
             android:name=".pantallas.OptionActivityPassword"
             android:label="@string/OPCIONES_CONTRASENYA" >
         </activity>
+        <activity
+            android:name=".pantallas.OptionActivityDatabase"
+            android:label="@string/OPCIONES_BASEDATOS" >
+        </activity>
     </application>
 
 </manifest>

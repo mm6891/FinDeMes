@@ -45,6 +45,5 @@
     <string name="TIPO_MOVIMIENTO_INGRESO">INGRESO</string>
     <string name="AFIRMACION">YES</string>
     <string name="NEGACION">NO</string>
-    <string name="OPCION_CONTRASENYA">Password</string>
     <string name="MAIL">E-Mail</string>
     </resources>

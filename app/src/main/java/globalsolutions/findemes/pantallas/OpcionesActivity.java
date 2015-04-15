@@ -67,6 +67,9 @@ public class OpcionesActivity extends FragmentActivity {
                     case 1:
                         showCategoriasGastosDialog();
                         break;
+                    case 4:
+                        showDatabaseActivity();
+                        break;
                     case 5:
                         showPasswordActivity();
                         break;
@@ -105,6 +108,12 @@ public class OpcionesActivity extends FragmentActivity {
 
     public void showPasswordActivity(){
         Intent intent = new Intent(OpcionesActivity.this, OptionActivityPassword.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void showDatabaseActivity(){
+        Intent intent = new Intent(OpcionesActivity.this, OptionActivityDatabase.class);
         startActivity(intent);
         finish();
     }

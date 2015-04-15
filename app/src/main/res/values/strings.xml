@@ -48,8 +48,8 @@
     <string name="TIPO_MOVIMIENTO_INGRESO">INGRESO</string>
     <string name="AFIRMACION">SI</string>
     <string name="NEGACION">NO</string>
-    <string name="OPCION_CONTRASENYA">Contraseña</string>
     <string name="AYUDA_CONTRASENYA">Se establecerá la contraseña y se enviará al correo indicado</string>
     <string name="MAIL">Correo</string>
     <string name="CONTRASENYA_AYUDA">Introduce tu contraseña de 4 dígitos</string>
+    <string name="AYUDA_BASEDATOS">Realiza un backup de tu base de datos, se guardará en "Storage Card/findemes/DBFinDeMes.db"</string>
     </resources>

@@ -151,6 +151,8 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(MovimientosActivity.this);
                     builder.setTitle("OPCIONES");
+                    builder.setIcon(R.drawable.delete);
+                    //builder.setIcon(R.drawable.edit);
                     builder.setItems(items, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int item) {
                                     //Eliminar Movimiento
