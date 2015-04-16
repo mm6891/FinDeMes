@@ -41,13 +41,12 @@
             android:text="@string/Ingreso"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:inputType="number"
             android:layout_weight="1"/>
         <EditText
             android:id="@+id/txtIngreso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:textStyle="bold"
             android:textSize="18sp"
             android:layout_weight="1"/>

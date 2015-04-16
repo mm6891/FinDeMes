@@ -25,6 +25,7 @@ import globalsolutions.findemes.database.dao.GastoDAO;
 import globalsolutions.findemes.database.dao.GrupoGastoDAO;
 import globalsolutions.findemes.database.model.Gasto;
 import globalsolutions.findemes.database.model.GrupoGasto;
+import globalsolutions.findemes.pantallas.util.MoneyValueFilter;
 
 /**
  * Created by manuel.molero on 16/02/2015.
@@ -48,6 +49,9 @@ public class GastoDialog extends DialogFragment {
         }
 
         final View view = inflater.inflate(R.layout.edit_gasto_dialog, container, false);
+
+        //establecemos listener de limitador de digitos
+        ((EditText) view.findViewById(R.id.txtGasto)).setKeyListener(new MoneyValueFilter());
 
         //cargamos el combo de categorias
         Spinner categoria = (Spinner) view.findViewById(R.id.spCategoriaGasto);

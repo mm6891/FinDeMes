@@ -118,7 +118,7 @@ public class InformesActivity extends Activity {
         });
 
         //spinner movimiento
-        ArrayList<String> tiposMovimientos = new ArrayList<String>();
+        final ArrayList<String> tiposMovimientos = new ArrayList<String>();
         tiposMovimientos.add(Constantes.TIPO_FILTRO_RESETEO.toString());
         tiposMovimientos.add(Constantes.TIPO_MOVIMIENTO_INGRESO.toString());
         tiposMovimientos.add(Constantes.TIPO_MOVIMIENTO_GASTO.toString());
@@ -147,17 +147,47 @@ public class InformesActivity extends Activity {
                         Double gastos = new Double(0.00);
                         Double saldo = new Double(0.00);
 
-                        for(InformeItem inf : informes){
-                            ingresos += Double.valueOf(inf.getIngresoValor());
-                            gastos += Double.valueOf(inf.getGastoValor());
-                        }
-                        saldo = ingresos - gastos;
                         // This code will always run on the UI thread, therefore is safe to modify UI elements.
-                        ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos));
-                        TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);
-                        tvGastosTotal.setText(String.valueOf(gastos));
-                        TextView tvSaldoTotal = (TextView) findViewById(R.id.tvSaldoInformesValor);
-                        tvSaldoTotal.setText(String.valueOf(saldo));
+                        //todos
+                        if(((String)spTipoMovimiento.getSelectedItem()).equals(Constantes.TIPO_FILTRO_RESETEO.toString())){
+                            for(InformeItem inf : informes){
+                                ingresos += Double.valueOf(inf.getIngresoValor());
+                                gastos += Double.valueOf(inf.getGastoValor());
+                            }
+                            saldo = ingresos - gastos;
+
+                            ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos));
+                            TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);
+                            tvGastosTotal.setText(String.valueOf(gastos));
+                            TextView tvSaldoTotal = (TextView) findViewById(R.id.tvSaldoInformesValor);
+                            tvSaldoTotal.setText(String.valueOf(saldo));
+                        }
+                        //tipo gasto
+                        else if(((String)spTipoMovimiento.getSelectedItem()).equals(Constantes.TIPO_MOVIMIENTO_GASTO.toString())){
+                            for(InformeItem inf : informes){
+                                gastos += Double.valueOf(inf.getGastoValor());
+                            }
+                            saldo = ingresos - gastos;
+
+                            ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos));
+                            TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);
+                            tvGastosTotal.setText(String.valueOf(gastos));
+                            TextView tvSaldoTotal = (TextView) findViewById(R.id.tvSaldoInformesValor);
+                            tvSaldoTotal.setText(String.valueOf(saldo));
+                        }
+                        //tipo ingreso
+                        else {
+                            for(InformeItem inf : informes){
+                                ingresos += Double.valueOf(inf.getIngresoValor());
+                            }
+                            saldo = ingresos - gastos;
+
+                            ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos));
+                            TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);
+                            tvGastosTotal.setText(String.valueOf(gastos));
+                            TextView tvSaldoTotal = (TextView) findViewById(R.id.tvSaldoInformesValor);
+                            tvSaldoTotal.setText(String.valueOf(saldo));
+                        }
                     }
                 });
             }

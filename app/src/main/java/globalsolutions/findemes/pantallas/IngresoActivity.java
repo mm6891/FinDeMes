@@ -28,6 +28,7 @@ import globalsolutions.findemes.database.dao.IngresoDAO;
 import globalsolutions.findemes.database.model.GrupoIngreso;
 import globalsolutions.findemes.database.model.Ingreso;
 import globalsolutions.findemes.database.util.Constantes;
+import globalsolutions.findemes.pantallas.util.MoneyValueFilter;
 
 public class IngresoActivity extends FragmentActivity implements DatePickerDialog.OnDateSetListener {
 
@@ -43,6 +44,9 @@ public class IngresoActivity extends FragmentActivity implements DatePickerDialo
                 backActivity();
             }
         });
+
+        //establecemos listener de limitador de digitos
+        ((EditText) findViewById(R.id.txtIngreso)).setKeyListener(new MoneyValueFilter());
 
         //cargamos el combo de categorias
         Spinner categoria = (Spinner) findViewById(R.id.spCategoriaIngreso);

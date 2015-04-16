@@ -25,6 +25,7 @@ import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
 import globalsolutions.findemes.database.dao.IngresoDAO;
 import globalsolutions.findemes.database.model.GrupoIngreso;
 import globalsolutions.findemes.database.model.Ingreso;
+import globalsolutions.findemes.pantallas.util.MoneyValueFilter;
 
 /**
  * Created by manuel.molero on 16/02/2015.
@@ -48,6 +49,10 @@ public class IngresoDialog extends DialogFragment {
         }
 
         final View view = inflater.inflate(R.layout.edit_ingreso_dialog, container, false);
+
+        //establecemos listener de limitador de digitos
+        ((EditText) view.findViewById(R.id.txtIngreso)).setKeyListener(new MoneyValueFilter());
+
         //cargamos el combo de categorias
         Spinner categoria = (Spinner) view.findViewById(R.id.spCategoriaIngreso);
 
