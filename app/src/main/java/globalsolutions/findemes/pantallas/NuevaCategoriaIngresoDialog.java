@@ -16,6 +16,7 @@ import android.widget.Toast;
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
 import globalsolutions.findemes.database.model.GrupoIngreso;
+import globalsolutions.findemes.pantallas.util.Util;
 
 /**
  * Created by manuel.molero on 16/02/2015.
@@ -37,7 +38,7 @@ public class NuevaCategoriaIngresoDialog extends DialogFragment {
             public void onClick(View v) {
                 String descripcion = (String)((EditText) view.findViewById(R.id.txtNuevaCatIng)).getText().toString();
                 if(descripcion == null || descripcion.isEmpty()) {
-                    ((EditText) view.findViewById(R.id.txtNuevaCatIng)).setError("Debe incluir el nombre de la nueva categoría");
+                    ((EditText) view.findViewById(R.id.txtNuevaCatIng)).setError(getResources().getString(R.string.Validacion_Nombre));
                     return;
                 }
 
@@ -48,12 +49,12 @@ public class NuevaCategoriaIngresoDialog extends DialogFragment {
                 boolean actualizado = grupoDAO.createRecords(nuevoGrupo) > 0;
 
                 if(actualizado){
-                    showToast(view.getContext(),"¡Categoria de Grupo creada!");
+                    Util.showToast(view.getContext(), getResources().getString(R.string.Creado));
                     ((CategoriasIngresosDialog)getTargetFragment()).OnCategoriaIngresoDialogSubmit(String.valueOf(Activity.RESULT_OK));
                     dismiss();
                 }
                 else
-                    showToast(view.getContext(),"¡No se ha podido crear!");
+                    Util.showToast(view.getContext(), getResources().getString(R.string.No_Creado));
             }
         });
 
@@ -67,9 +68,5 @@ public class NuevaCategoriaIngresoDialog extends DialogFragment {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         return dialog;
-    }
-
-    public void showToast(Context c, String message){
-        Toast.makeText(c, message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -58,7 +58,7 @@ public class OpcionesActivity extends FragmentActivity {
         listViewOptions.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position,long id) {
-                OptionItem optSelected = (OptionItem) listViewOptions.getItemAtPosition(position);
+                //OptionItem optSelected = (OptionItem) listViewOptions.getItemAtPosition(position);
 
                 switch (position){
                     case 0:
@@ -80,10 +80,6 @@ public class OpcionesActivity extends FragmentActivity {
         });
     }
 
-    public void showToast(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
     @Override
     public void onBackPressed() {
         backActivity();
@@ -103,7 +99,7 @@ public class OpcionesActivity extends FragmentActivity {
 
     public void showCategoriasGastosDialog() {
         DialogFragment newFragment = new CategoriasGastosDialog();
-        newFragment.show(getFragmentManager(),"INGRESOS");
+        newFragment.show(getFragmentManager(),"GASTOS");
     }
 
     public void showPasswordActivity(){

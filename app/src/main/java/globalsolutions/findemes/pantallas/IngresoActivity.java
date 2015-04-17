@@ -29,6 +29,7 @@ import globalsolutions.findemes.database.model.GrupoIngreso;
 import globalsolutions.findemes.database.model.Ingreso;
 import globalsolutions.findemes.database.util.Constantes;
 import globalsolutions.findemes.pantallas.util.MoneyValueFilter;
+import globalsolutions.findemes.pantallas.util.Util;
 
 public class IngresoActivity extends FragmentActivity implements DatePickerDialog.OnDateSetListener {
 
@@ -85,7 +86,7 @@ public class IngresoActivity extends FragmentActivity implements DatePickerDialo
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("movimiento", Constantes.TIPO_MOVIMIENTO_INGRESO.toString());
+        bundle.putString("movimiento", getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO));
         newFragment.setArguments(bundle);
         newFragment.show(getFragmentManager(),"Fecha");
     }
@@ -94,12 +95,12 @@ public class IngresoActivity extends FragmentActivity implements DatePickerDialo
         //descripcion , valor , fecha
         String valor = (String)((EditText) findViewById(R.id.txtIngreso)).getText().toString();
         if(valor == null || valor.isEmpty()) {
-            ((EditText) findViewById(R.id.txtIngreso)).setError("Debe incluir la cantidad del movimiento");
+            ((EditText) findViewById(R.id.txtIngreso)).setError(getResources().getString(R.string.Validacion_Cantidad));
             return;
         }
         String descripcion = (String)((EditText) findViewById(R.id.txtDecripcion)).getText().toString();
         if(descripcion == null || descripcion.isEmpty()) {
-            ((EditText) findViewById(R.id.txtDecripcion)).setError("Debe incluir una breve descripción del movimiento");
+            ((EditText) findViewById(R.id.txtDecripcion)).setError(getResources().getString(R.string.Validacion_Descripcion));
             return;
         }
         //obtenemos categoria de ingreso
@@ -117,10 +118,10 @@ public class IngresoActivity extends FragmentActivity implements DatePickerDialo
             nuevoIngreso.setGrupoIngreso(grupo);
             IngresoDAO ingresoDAO = new IngresoDAO(getApplicationContext());
             ingresoDAO.createRecords(nuevoIngreso);
-            showToast("¡Ingreso guardado!");
+            Util.showToast(view.getContext(), getResources().getString(R.string.Creado));
         }
         else{
-            showToast("Debe seleccionar una categoría");
+            Util.showToast(view.getContext(), getResources().getString(R.string.Selecciona_categoria));
             return;
         }
     }
@@ -138,10 +139,6 @@ public class IngresoActivity extends FragmentActivity implements DatePickerDialo
 
         ((TextView) findViewById(R.id.tvDia)).setText(mTimeText);
         ((TextView) findViewById(R.id.tvHora)).setText(mTimeHora);
-    }
-
-    public void showToast(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

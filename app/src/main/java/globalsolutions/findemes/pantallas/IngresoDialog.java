@@ -26,6 +26,7 @@ import globalsolutions.findemes.database.dao.IngresoDAO;
 import globalsolutions.findemes.database.model.GrupoIngreso;
 import globalsolutions.findemes.database.model.Ingreso;
 import globalsolutions.findemes.pantallas.util.MoneyValueFilter;
+import globalsolutions.findemes.pantallas.util.Util;
 
 /**
  * Created by manuel.molero on 16/02/2015.
@@ -91,12 +92,12 @@ public class IngresoDialog extends DialogFragment {
                 //descripcion , valor , fecha
                 String valor = (String)((EditText) view.findViewById(R.id.txtIngreso)).getText().toString();
                 if(valor == null || valor.isEmpty()) {
-                    ((EditText) view.findViewById(R.id.txtIngreso)).setError("Debe incluir la cantidad del movimiento");
+                    ((EditText) view.findViewById(R.id.txtIngreso)).setError(getResources().getString(R.string.Validacion_Cantidad));
                     return;
                 }
                 String descripcion = (String)((EditText) view.findViewById(R.id.txtDecripcion)).getText().toString();
                 if(descripcion == null || descripcion.isEmpty()) {
-                    ((EditText) view.findViewById(R.id.txtDecripcion)).setError("Debe incluir una breve descripción del movimiento");
+                    ((EditText) view.findViewById(R.id.txtDecripcion)).setError(getResources().getString(R.string.Validacion_Descripcion));
                     return;
                 }
                 //obtenemos categoria de ingreso
@@ -115,16 +116,16 @@ public class IngresoDialog extends DialogFragment {
                     IngresoDAO ingresoDAO = new IngresoDAO(view.getContext());
                     boolean actualizado = ingresoDAO.updateIngreso(aMod, nuevoIngreso);
                     if(actualizado) {
-                        showToast(view.getContext(), "¡Ingreso actualizado!");
+                        Util.showToast(view.getContext(), getResources().getString(R.string.Actualizado));
                         callback.onIngresoDialogSubmit(String.valueOf(Activity.RESULT_OK));
                         dismiss();
                     }
 
                     else
-                        showToast(view.getContext(),"¡No se ha podido actualizar!");
+                        Util.showToast(view.getContext(), getResources().getString(R.string.No_Actualizado));
                 }
                 else{
-                    showToast(view.getContext(),"Debe seleccionar una categoría");
+                    Util.showToast(view.getContext(), getResources().getString(R.string.Selecciona_categoria));
                     return;
                 }
             }});
@@ -141,9 +142,5 @@ public class IngresoDialog extends DialogFragment {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         return dialog;
-    }
-
-    public void showToast(Context c, String message){
-        Toast.makeText(c, message, Toast.LENGTH_SHORT).show();
     }
 }

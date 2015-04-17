@@ -11,6 +11,7 @@ import android.widget.Toast;
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.PasswordDAO;
 import globalsolutions.findemes.database.util.Constantes;
+import globalsolutions.findemes.pantallas.util.Util;
 
 /**
  * Created by Manuel on 11/04/2015.
@@ -52,17 +53,13 @@ public class Password extends Activity implements View.OnClickListener {
                 StartMain();
             }
             else{
-                showToast("Contraseña errónea");
+                Util.showToast(getApplicationContext(), getResources().getString(R.string.Validacion_Contrasenya));
                 finish();
             }
         }
         else{
             StartMain();
         }
-    }
-
-    public void showToast(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     public void StartMain()

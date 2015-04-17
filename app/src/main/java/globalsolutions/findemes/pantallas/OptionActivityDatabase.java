@@ -22,6 +22,7 @@ import globalsolutions.findemes.database.dao.PasswordDAO;
 import globalsolutions.findemes.database.model.Password;
 import globalsolutions.findemes.database.util.Constantes;
 import globalsolutions.findemes.database.util.MyDatabaseHelper;
+import globalsolutions.findemes.pantallas.util.Util;
 
 
 /**
@@ -71,17 +72,13 @@ public class OptionActivityDatabase extends Activity {
                     output.flush();
                     output.close();
                     fis.close();
-                    showToast("¡Backup realizado con éxito!");
+                    Util.showToast(getApplicationContext(), getResources().getString(R.string.Creado));
                 }catch (IOException ex){
-                    showToast("¡Error al realizar el backup de la BBDD!");
+                    Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Creado));
                 }
             }
         });
 
-    }
-
-    public void showToast(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -150,10 +150,10 @@ public class MainActivity extends Activity {
             }
             int mesMovimiento = cal.get(Calendar.MONTH);
             int anyoMovimiento = cal.get(Calendar.YEAR);
-            if (mov.getTipoMovimiento().equals(Constantes.TIPO_MOVIMIENTO_GASTO)
+            if (mov.getTipoMovimiento().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))
                     && mesMovimiento == mesActual && anyoActal == anyoMovimiento)
                 gastos += Double.valueOf(mov.getValor());
-            else if (mov.getTipoMovimiento().equals(Constantes.TIPO_MOVIMIENTO_INGRESO)
+            else if (mov.getTipoMovimiento().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO))
                     && mesMovimiento == mesActual && anyoActal == anyoMovimiento)
                 ingresos += Double.valueOf(mov.getValor());
         }

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
 import globalsolutions.findemes.database.model.GrupoIngreso;
+import globalsolutions.findemes.pantallas.util.Util;
 
 /**
  * Created by manuel.molero on 16/02/2015.
@@ -44,7 +45,7 @@ public class EditCategoriaIngresoDialog extends DialogFragment {
             public void onClick(View v) {
                 String descripcion = (String)((EditText) view.findViewById(R.id.txtDecripcionCatIng)).getText().toString();
                 if(descripcion == null || descripcion.isEmpty()) {
-                    ((EditText) view.findViewById(R.id.txtDecripcionCatIng)).setError("Debe incluir el nombre de la categoría");
+                    ((EditText) view.findViewById(R.id.txtDecripcionCatIng)).setError(getResources().getString(R.string.Validacion_Nombre));
                     return;
                 }
 
@@ -54,12 +55,12 @@ public class EditCategoriaIngresoDialog extends DialogFragment {
                 GrupoIngresoDAO grupoDAO = new GrupoIngresoDAO(v.getContext());
                 boolean actualizado = grupoDAO.updateGrupoIngreso(aMod,nuevoGrupo);
                 if(actualizado){
-                    showToast(view.getContext(),"¡Categoria de Grupo actualizada!");
+                    Util.showToast(view.getContext(), getResources().getString(R.string.Actualizado));
                     ((CategoriasIngresosDialog)getTargetFragment()).OnCategoriaIngresoDialogSubmit(String.valueOf(Activity.RESULT_OK));
                     dismiss();
                 }
                 else
-                    showToast(view.getContext(),"¡No se ha podido actualizar!");
+                    Util.showToast(view.getContext(), getResources().getString(R.string.No_Actualizado));
             }
         });
 
@@ -73,9 +74,5 @@ public class EditCategoriaIngresoDialog extends DialogFragment {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         return dialog;
-    }
-
-    public void showToast(Context c, String message){
-        Toast.makeText(c, message, Toast.LENGTH_SHORT).show();
     }
 }

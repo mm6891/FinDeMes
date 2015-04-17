@@ -37,7 +37,7 @@ public class MovimientoDAO {
             m.setDescripcion(gastos[i].getDescripcion());
             m.setFecha(gastos[i].getFecha());
             m.setCategoria(gastos[i].getGrupoGasto().getGrupo());
-            m.setTipoMovimiento((String) Constantes.TIPO_MOVIMIENTO_GASTO);
+            m.setTipoMovimiento(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO));
             movsArray[i] = m;
         }
         for(int j = 0 ; j < ingresos.length ; j++){
@@ -47,7 +47,7 @@ public class MovimientoDAO {
             m.setDescripcion(ingresos[j].getDescripcion());
             m.setFecha(ingresos[j].getFecha());
             m.setCategoria(ingresos[j].getGrupoIngreso().getGrupo());
-            m.setTipoMovimiento((String) Constantes.TIPO_MOVIMIENTO_INGRESO);
+            m.setTipoMovimiento(context.getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO));
             movsArray[gastos.length + j] = m;
         }
 

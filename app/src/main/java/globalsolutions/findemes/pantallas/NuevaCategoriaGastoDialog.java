@@ -16,6 +16,7 @@ import android.widget.Toast;
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.GrupoGastoDAO;
 import globalsolutions.findemes.database.model.GrupoGasto;
+import globalsolutions.findemes.pantallas.util.Util;
 
 /**
  * Created by manuel.molero on 16/02/2015.
@@ -37,7 +38,7 @@ public class NuevaCategoriaGastoDialog extends DialogFragment {
             public void onClick(View v) {
                 String descripcion = (String)((EditText)view.findViewById(R.id.txtNuevaCatGas)).getText().toString();
                 if(descripcion == null || descripcion.isEmpty()) {
-                    ((EditText) view.findViewById(R.id.txtNuevaCatGas)).setError("Debe incluir el nombre de la nueva categoría");
+                    ((EditText) view.findViewById(R.id.txtNuevaCatGas)).setError(getResources().getString(R.string.Validacion_Nombre));
                     return;
                 }
 
@@ -48,12 +49,12 @@ public class NuevaCategoriaGastoDialog extends DialogFragment {
                 boolean actualizado = grupoDAO.createRecords(nuevoGrupo) > 0;
 
                 if(actualizado){
-                    showToast(view.getContext(),"¡Categoria de Grupo creada!");
+                    Util.showToast(view.getContext(), getResources().getString(R.string.Creado));
                     ((CategoriasGastosDialog)getTargetFragment()).OnCategoriaGastoDialogSubmit(String.valueOf(Activity.RESULT_OK));
                     dismiss();
                 }
                 else
-                    showToast(view.getContext(),"¡No se ha podido crear!");
+                    Util.showToast(view.getContext(), getResources().getString(R.string.No_Creado));
             }
         });
 
@@ -67,9 +68,5 @@ public class NuevaCategoriaGastoDialog extends DialogFragment {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         return dialog;
-    }
-
-    public void showToast(Context c, String message){
-        Toast.makeText(c, message, Toast.LENGTH_SHORT).show();
     }
 }

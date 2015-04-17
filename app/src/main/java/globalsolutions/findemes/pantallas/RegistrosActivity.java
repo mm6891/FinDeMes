@@ -19,6 +19,7 @@ import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.RegistroDAO;
 import globalsolutions.findemes.database.model.RegistroItem;
 import globalsolutions.findemes.database.util.Constantes;
+import globalsolutions.findemes.pantallas.util.Util;
 
 public class RegistrosActivity extends FragmentActivity implements NuevoRegistroDialog.ONuevoRegistroDialogListener, EditRegistroDialog.OnEditRegistroDialogListener {
 
@@ -61,7 +62,7 @@ public class RegistrosActivity extends FragmentActivity implements NuevoRegistro
                 final CharSequence[] items = {Constantes.ACCION_MODIFICAR, Constantes.ACCION_ELIMINAR};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(RegistrosActivity.this);
-                builder.setTitle("OPCIONES");
+                builder.setTitle(getResources().getString(R.string.MENU_OPCIONES));
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int item) {
                                 //Eliminar Registro
@@ -72,10 +73,10 @@ public class RegistrosActivity extends FragmentActivity implements NuevoRegistro
                                     RegistroDAO registroDAO = new RegistroDAO(RegistrosActivity.this);
                                     realizado = registroDAO.deleteRegistro(registroItem.get_id());
                                     if (realizado) {
-                                        showToast("¡Registro eliminado!");
+                                        Util.showToast(getApplicationContext(), getResources().getString(R.string.Eliminado));
                                         ((RegistroAdapter)listViewReg.getAdapter()).updateReceiptsList(new RegistroDAO(getApplicationContext()).selectRegistrosItems());
                                     } else
-                                        showToast("No se ha podido eliminar el registro");
+                                        Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Eliminado));
                                 }
                                 if (accion.equals(Constantes.ACCION_MODIFICAR)) {
                                     Bundle bundle = new Bundle();
@@ -96,10 +97,6 @@ public class RegistrosActivity extends FragmentActivity implements NuevoRegistro
                 ).show();
             }
         });
-    }
-
-    public void showToast(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

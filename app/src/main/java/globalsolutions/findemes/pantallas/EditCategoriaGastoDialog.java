@@ -16,6 +16,7 @@ import android.widget.Toast;
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.GrupoGastoDAO;
 import globalsolutions.findemes.database.model.GrupoGasto;
+import globalsolutions.findemes.pantallas.util.Util;
 
 /**
  * Created by manuel.molero on 16/02/2015.
@@ -45,7 +46,7 @@ public class EditCategoriaGastoDialog extends DialogFragment {
             public void onClick(View v) {
                 String descripcion = (String)((EditText) view.findViewById(R.id.txtDecripcionCatGas)).getText().toString();
                 if(descripcion == null || descripcion.isEmpty()) {
-                    ((EditText) view.findViewById(R.id.txtDecripcionCatGas)).setError("Debe incluir el nombre de la categoría");
+                    ((EditText) view.findViewById(R.id.txtDecripcionCatGas)).setError(getResources().getString(R.string.Validacion_Nombre));
                     return;
                 }
 
@@ -55,12 +56,12 @@ public class EditCategoriaGastoDialog extends DialogFragment {
                 GrupoGastoDAO grupoDAO = new GrupoGastoDAO(v.getContext());
                 boolean actualizado = grupoDAO.updateGrupoGasto(aMod,nuevoGrupo);
                 if(actualizado){
-                    showToast(view.getContext(),"¡Categoria de Grupo actualizada!");
+                    Util.showToast(view.getContext(), getResources().getString(R.string.Actualizado));
                     ((CategoriasGastosDialog)getTargetFragment()).OnCategoriaGastoDialogSubmit(String.valueOf(Activity.RESULT_OK));
                     dismiss();
                 }
                 else
-                    showToast(view.getContext(),"¡No se ha podido actualizar!");
+                    Util.showToast(view.getContext(), getResources().getString(R.string.No_Actualizado));
             }
         });
 
@@ -74,9 +75,5 @@ public class EditCategoriaGastoDialog extends DialogFragment {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         return dialog;
-    }
-
-    public void showToast(Context c, String message){
-        Toast.makeText(c, message, Toast.LENGTH_SHORT).show();
     }
 }

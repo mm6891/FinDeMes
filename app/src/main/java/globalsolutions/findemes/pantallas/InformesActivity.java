@@ -20,6 +20,7 @@ import globalsolutions.findemes.database.dao.MovimientoDAO;
 import globalsolutions.findemes.database.model.InformeItem;
 import globalsolutions.findemes.database.model.MovimientoItem;
 import globalsolutions.findemes.database.util.Constantes;
+import globalsolutions.findemes.pantallas.util.Util;
 
 import static android.app.PendingIntent.getActivity;
 
@@ -84,7 +85,7 @@ public class InformesActivity extends Activity {
         //cargamos anyos
         ArrayList<String> anyos = new ArrayList<String>();
         if(movs.size() <= 0 )
-            showToast("NO HAY INFORMES ACTUALMENTE");
+            Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Informes));
 
         for(MovimientoItem mov : movs){
             String fecha = mov.getFecha();
@@ -119,9 +120,9 @@ public class InformesActivity extends Activity {
 
         //spinner movimiento
         final ArrayList<String> tiposMovimientos = new ArrayList<String>();
-        tiposMovimientos.add(Constantes.TIPO_FILTRO_RESETEO.toString());
-        tiposMovimientos.add(Constantes.TIPO_MOVIMIENTO_INGRESO.toString());
-        tiposMovimientos.add(Constantes.TIPO_MOVIMIENTO_GASTO.toString());
+        tiposMovimientos.add(getResources().getString(R.string.TIPO_FILTRO_RESETEO));
+        tiposMovimientos.add(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO));
+        tiposMovimientos.add(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO));
         spTipoMovimiento = (Spinner) findViewById(R.id.spTipoMovimiento);
         spTipoMovimiento.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, tiposMovimientos));
         spTipoMovimiento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -149,7 +150,7 @@ public class InformesActivity extends Activity {
 
                         // This code will always run on the UI thread, therefore is safe to modify UI elements.
                         //todos
-                        if(((String)spTipoMovimiento.getSelectedItem()).equals(Constantes.TIPO_FILTRO_RESETEO.toString())){
+                        if(((String)spTipoMovimiento.getSelectedItem()).equals(getResources().getString(R.string.TIPO_FILTRO_RESETEO))){
                             for(InformeItem inf : informes){
                                 ingresos += Double.valueOf(inf.getIngresoValor());
                                 gastos += Double.valueOf(inf.getGastoValor());
@@ -163,7 +164,7 @@ public class InformesActivity extends Activity {
                             tvSaldoTotal.setText(String.valueOf(saldo));
                         }
                         //tipo gasto
-                        else if(((String)spTipoMovimiento.getSelectedItem()).equals(Constantes.TIPO_MOVIMIENTO_GASTO.toString())){
+                        else if(((String)spTipoMovimiento.getSelectedItem()).equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))){
                             for(InformeItem inf : informes){
                                 gastos += Double.valueOf(inf.getGastoValor());
                             }
@@ -197,10 +198,6 @@ public class InformesActivity extends Activity {
     public void filtraInforme(View v, String tipoMovimiento, String periodo, String periodoFiltro){
         String filtro = tipoMovimiento + ";" + periodo + ";" + periodoFiltro;
         ((InformeAdapter)listViewMovsInforme.getAdapter()).getFilter().filter(filtro);
-    }
-
-    public void showToast(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

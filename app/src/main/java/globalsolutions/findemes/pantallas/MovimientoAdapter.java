@@ -92,9 +92,9 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
         tvvalor.setText(item.getValor());
         tvgrupo.setText(item.getCategoria());
         tvfecha.setText(item.getFecha());
-        if(item.getTipoMovimiento().trim().equals(Constantes.TIPO_MOVIMIENTO_GASTO))
+        if(item.getTipoMovimiento().trim().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO)))
             ivIconMov.setImageResource(R.drawable.minus);
-        if(item.getTipoMovimiento().trim().equals(Constantes.TIPO_MOVIMIENTO_INGRESO))
+        if(item.getTipoMovimiento().trim().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO)))
             ivIconMov.setImageResource(R.drawable.plus);
 
         return rowView;
@@ -126,7 +126,7 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
 
                 final ArrayList<MovimientoItem> list = items;
 
-                if(constraint.toString().equals(Constantes.TIPO_FILTRO_RESETEO)){
+                if(constraint.toString().equals(context.getResources().getString(R.string.TIPO_FILTRO_RESETEO))){
                     //filtro por mes y anyo, que son filtros permanentes
                     int count = items.size();
                     final ArrayList<MovimientoItem> nlist = new ArrayList<MovimientoItem>(count);

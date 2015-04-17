@@ -14,8 +14,8 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
+import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,6 +26,7 @@ import globalsolutions.findemes.database.dao.IngresoDAO;
 import globalsolutions.findemes.database.dao.MovimientoDAO;
 import globalsolutions.findemes.database.model.MovimientoItem;
 import globalsolutions.findemes.database.util.Constantes;
+import globalsolutions.findemes.pantallas.util.Util;
 
 public class MovimientosActivity extends FragmentActivity implements GastoDialog.OnGastoDialogListener, IngresoDialog.OnIngresoDialogListener{
 
@@ -45,18 +46,18 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
             ((MovimientoAdapter)listViewMovs.getAdapter()).setAnyoSeleccionado(new Integer((String) spFitroAnyo.getSelectedItem()).intValue());
 
             if(!((CheckBox) findViewById(R.id.cbIconMinus)).isChecked() && ((CheckBox) findViewById(R.id.cbIconPlus)).isChecked())
-                ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_MOVIMIENTO_INGRESO);
+                ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO));
             if(((CheckBox) findViewById(R.id.cbIconMinus)).isChecked() && !((CheckBox) findViewById(R.id.cbIconPlus)).isChecked())
-                ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_MOVIMIENTO_GASTO);
+                ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO));
             else
-                ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_FILTRO_RESETEO);
+                ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_FILTRO_RESETEO));
         }
     }
 
-    public enum Meses {
+   /* public enum Meses {
         ENERO, FEBRERO, MARZO, ABRIL,
         MAYO, JUNIO, JULIO, AGOSTO, SEPTIEMBRE, OCTUBRE, NOVIEMBRE, DICIEMBRE
-    }
+    }*/
 
     private ListView listViewMovs;
     private Spinner spFiltroMes;
@@ -88,7 +89,7 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         //cargamos anyos
         ArrayList<String> anyos = new ArrayList<String>();
         if(movs.size() <= 0 )
-            showToast("NO HAY MOVIMIENTOS ACTUALMENTE");
+            Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Movimientos));
         /*else{*/
             for(MovimientoItem mov : movs){
                 String fecha = mov.getFecha();
@@ -126,7 +127,7 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
             listViewMovs.setAdapter(new MovimientoAdapter(getApplicationContext(), movs));
             //cargamos meses
             spFiltroMes = (Spinner) findViewById(R.id.spMeses);
-            spFiltroMes.setAdapter(new ArrayAdapter<Meses>(this, android.R.layout.simple_spinner_dropdown_item, Meses.values()));
+            spFiltroMes.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, creaMeses()));
 
             spFiltroMes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -150,8 +151,8 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                     final CharSequence[] items = {Constantes.ACCION_MODIFICAR, Constantes.ACCION_ELIMINAR};
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(MovimientosActivity.this);
-                    builder.setTitle("OPCIONES");
-                    builder.setIcon(R.drawable.delete);
+                    builder.setTitle(getResources().getString(R.string.MENU_OPCIONES));
+                    //builder.setIcon(R.drawable.delete);
                     //builder.setIcon(R.drawable.edit);
                     builder.setItems(items, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int item) {
@@ -160,25 +161,25 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                                     boolean realizado;
 
                                     if (accion.equals(Constantes.ACCION_ELIMINAR)) {
-                                        if (movSeleccionado.getTipoMovimiento().trim().equals(Constantes.TIPO_MOVIMIENTO_GASTO)) {
+                                        if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
                                             GastoDAO gastoDAO = new GastoDAO(MovimientosActivity.this);
                                             realizado = gastoDAO.deleteGasto(movSeleccionado.get_id());
                                             if (realizado) {
-                                                showToast("¡Gasto eliminado!");
+                                                Util.showToast(getApplicationContext(), getResources().getString(R.string.Eliminado));
                                                 ArrayList<MovimientoItem> newList = new MovimientoDAO().cargaMovimientos(getApplicationContext());
                                                 ((MovimientoAdapter) listViewMovs.getAdapter()).updateReceiptsList(newList);
                                             } else
-                                                showToast("No se ha podido eliminar el gasto");
+                                                Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Eliminado));
                                         }
-                                        if (movSeleccionado.getTipoMovimiento().trim().equals(Constantes.TIPO_MOVIMIENTO_INGRESO)) {
+                                        if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO))) {
                                             IngresoDAO ingresoDAO = new IngresoDAO(MovimientosActivity.this);
                                             realizado = ingresoDAO.deleteIngreso(movSeleccionado.get_id());
                                             if (realizado) {
-                                                showToast("¡Ingreso eliminado!");
+                                                Util.showToast(getApplicationContext(), getResources().getString(R.string.Eliminado));
                                                 ArrayList<MovimientoItem> newList = new MovimientoDAO().cargaMovimientos(getApplicationContext());
                                                 ((MovimientoAdapter) listViewMovs.getAdapter()).updateReceiptsList(newList);
                                             } else
-                                                showToast("No se ha podido eliminar el ingreso");
+                                                Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Eliminado));
                                         }
                                     }
                                     if (accion.equals(Constantes.ACCION_MODIFICAR)) {
@@ -189,11 +190,11 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                                         bundle.putString("categoria", movSeleccionado.getCategoria());
                                         bundle.putString("fecha", movSeleccionado.getFecha());
 
-                                        if (movSeleccionado.getTipoMovimiento().trim().equals(Constantes.TIPO_MOVIMIENTO_GASTO)){
+                                        if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))){
                                             // Create an instance of the dialog fragment and show it*/
                                             showGastoDialog(view, bundle);
                                         }
-                                        else if (movSeleccionado.getTipoMovimiento().trim().equals(Constantes.TIPO_MOVIMIENTO_INGRESO)) {
+                                        else if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO))) {
                                             // Create an instance of the dialog fragment and show it*/
                                             showIngresoDialog(view, bundle);
                                         }
@@ -204,10 +205,6 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                 }
             });
         //}
-    }
-
-    public void showToast(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     public void showGastoDialog(View v, Bundle bundle) {
@@ -231,9 +228,9 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
 
         ((CheckBox) findViewById(R.id.cbIconPlus)).setChecked(false);
         if(!((CheckBox) findViewById(R.id.cbIconMinus)).isChecked())
-            ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_FILTRO_RESETEO);
+            ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_FILTRO_RESETEO));
         else
-            ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_MOVIMIENTO_GASTO);
+            ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO));
     }
     public void filtraIngreso(View v){
          int mes = spFiltroMes != null ? spFiltroMes.getSelectedItemPosition() : -1;
@@ -243,9 +240,9 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
 
         ((CheckBox) findViewById(R.id.cbIconMinus)).setChecked(false);
         if(!((CheckBox) findViewById(R.id.cbIconPlus)).isChecked())
-            ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_FILTRO_RESETEO);
+            ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_FILTRO_RESETEO));
         else
-            ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_MOVIMIENTO_INGRESO);
+            ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO));
     }
 
     public void filtraMesAnyo(View v, int mes, int anyo){
@@ -253,11 +250,19 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         ((MovimientoAdapter)listViewMovs.getAdapter()).setAnyoSeleccionado(anyo);
 
         if(!((CheckBox) findViewById(R.id.cbIconMinus)).isChecked() && ((CheckBox) findViewById(R.id.cbIconPlus)).isChecked())
-            ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_MOVIMIENTO_INGRESO);
+            ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO));
         if(((CheckBox) findViewById(R.id.cbIconMinus)).isChecked() && !((CheckBox) findViewById(R.id.cbIconPlus)).isChecked())
-            ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_MOVIMIENTO_GASTO);
+            ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO));
         else
-            ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(Constantes.TIPO_FILTRO_RESETEO);
+            ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_FILTRO_RESETEO));
+    }
+
+    public String[] creaMeses(){
+        String[] meses = new String[11];
+        for(int i = 0 ; i < 12 ; i++){
+            meses[i] = new DateFormatSymbols().getMonths()[i].toUpperCase();
+        }
+        return meses;
     }
 
     @Override

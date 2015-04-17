@@ -71,7 +71,7 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
 
         //establer el item segun el tipo de movimiento
         InformeItem item = this.itemsFiltrado.get(position);
-        if(item.getTipoInforme().equals(Constantes.TIPO_FILTRO_RESETEO)){
+        if(item.getTipoInforme().equals(context.getResources().getString(R.string.TIPO_FILTRO_RESETEO))){
             rowView = inflater.inflate(R.layout.informe_item, parent, false);
             // Set data into the view.
             TextView tvPeriodo = (TextView) rowView.findViewById(R.id.tvPeriodoInforme);
@@ -84,7 +84,7 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
             tvGastoValor.setText(item.getGastoValor());
             tvTotalValor.setText(item.getTotalValor());
         }
-        else if(item.getTipoInforme().equals(Constantes.TIPO_MOVIMIENTO_GASTO)){
+        else if(item.getTipoInforme().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))){
             rowView = inflater.inflate(R.layout.informe_item_gasto, parent, false);
             // Set data into the view.
             TextView tvPeriodo = (TextView) rowView.findViewById(R.id.tvPeriodoInforme);
@@ -93,7 +93,7 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
             tvPeriodo.setText(item.getPeriodoDesc());
             tvGastoValor.setText(item.getGastoValor());
         }
-        if(item.getTipoInforme().equals(Constantes.TIPO_MOVIMIENTO_INGRESO)){
+        if(item.getTipoInforme().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO))){
             rowView = inflater.inflate(R.layout.informe_item_ingreso, parent, false);
             // Set data into the view.
             TextView tvPeriodo = (TextView) rowView.findViewById(R.id.tvPeriodoInforme);
@@ -156,15 +156,15 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
 
                 if (anyoMovimiento == anyoActual) {
                     int periodoMovimiento = Integer.MIN_VALUE;
-                    if(periodo.equals(Constantes.TIPO_FILTRO_INFORME_MENSUAL)) {
+                    if(periodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_MENSUAL))) {
                         periodoMovimiento = cal.get(Calendar.MONTH);
                     }
                     //trimestral
-                    if(periodo.equals(Constantes.TIPO_FILTRO_INFORME_TRIMESTRAL)){
+                    if(periodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_TRIMESTRAL))){
                         periodoMovimiento = (cal.get(Calendar.MONTH) / 3) + 1;
                     }
                     //quincenal
-                    else if(periodo.equals(Constantes.TIPO_FILTRO_INFORME_QUINCENAL)){
+                    else if(periodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_QUINCENAL))){
                         int dia = cal.get(Calendar.DATE);
                         int mes = cal.get(Calendar.MONTH);
                         mes = (mes + 1) * 2;
@@ -205,17 +205,17 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
                 Double saldo = new Double(0.00);
 
                 for(MovimientoItem mov : movsMes){
-                    if (mov.getTipoMovimiento().equals(Constantes.TIPO_MOVIMIENTO_GASTO))
+                    if (mov.getTipoMovimiento().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO)))
                         gastos += Double.valueOf(mov.getValor());
-                    else if (mov.getTipoMovimiento().equals(Constantes.TIPO_MOVIMIENTO_INGRESO))
+                    else if (mov.getTipoMovimiento().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO)))
                         ingresos += Double.valueOf(mov.getValor());
                 }
 
                 //si es un gasto o ingreso sin valor, no se incluye en la lista
-                if(tipoMovimiento.equals(Constantes.TIPO_MOVIMIENTO_GASTO) &&
+                if(tipoMovimiento.equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO)) &&
                         gastos == (new Double(0.00)))
                     continue;
-                if(tipoMovimiento.equals(Constantes.TIPO_MOVIMIENTO_INGRESO) &&
+                if(tipoMovimiento.equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO)) &&
                         ingresos == (new Double(0.00)))
                     continue;
 
@@ -227,101 +227,159 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
                 saldo = ingresos - gastos;
                 nuevoInforme.setTotalValor(String.valueOf(saldo));
 
-                if(tipoPeriodo.equals(Constantes.TIPO_FILTRO_INFORME_MENSUAL)) {
+                if(tipoPeriodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_MENSUAL))) {
                     nuevoInforme.setPeriodoDesc(new DateFormatSymbols().getMonths()[integer.intValue()].toUpperCase());
                 }
-                else if(tipoPeriodo.equals(Constantes.TIPO_FILTRO_INFORME_TRIMESTRAL)) {
+                else if(tipoPeriodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_TRIMESTRAL))) {
+                    String periodoTrimestral;
                     //trimestres
                     switch (integer.intValue()){
                         case 1:
-                            nuevoInforme.setPeriodoDesc("1 Ene - 31 Mar");
+                            periodoTrimestral = "1 " + new DateFormatSymbols().getMonths()[0] + "-"
+                                    + "31 " + new DateFormatSymbols().getMonths()[2];
+                            nuevoInforme.setPeriodoDesc(periodoTrimestral);
                             break;
                         case 2:
-                            nuevoInforme.setPeriodoDesc("1 Abr - 30 Jun");
+                            periodoTrimestral = "1 " + new DateFormatSymbols().getMonths()[3] + "-"
+                                    + "30 " + new DateFormatSymbols().getMonths()[5];
+                            nuevoInforme.setPeriodoDesc(periodoTrimestral);
                             break;
                         case 3:
-                            nuevoInforme.setPeriodoDesc("1 Jul - 30 Sep");
+                            periodoTrimestral = "1 " + new DateFormatSymbols().getMonths()[6] + "-"
+                                    + "31 " + new DateFormatSymbols().getMonths()[8];
+                            nuevoInforme.setPeriodoDesc(periodoTrimestral);
                             break;
                         case 4:
-                            nuevoInforme.setPeriodoDesc("1 Oct - 31 Dic");
+                            periodoTrimestral = "1 " + new DateFormatSymbols().getMonths()[9] + "-"
+                                    + "31 " + new DateFormatSymbols().getMonths()[11];
+                            nuevoInforme.setPeriodoDesc(periodoTrimestral);
                             break;
                     }
                 }
 
-                else if(tipoPeriodo.equals(Constantes.TIPO_FILTRO_INFORME_QUINCENAL)) {
-                    //trimestres
+                else if(tipoPeriodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_QUINCENAL))) {
+                    String periodoQuincenal;
+                    //quincenas
                     switch (integer.intValue()){
                         case 1:
-                            nuevoInforme.setPeriodoDesc("1 Ene - 15 Ene");
+                            periodoQuincenal = "1 " + new DateFormatSymbols().getMonths()[0] + "-"
+                                    + "15 " + new DateFormatSymbols().getMonths()[0];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 2:
-                            nuevoInforme.setPeriodoDesc("16 Ene - 31 Ene");
+                            periodoQuincenal = "16 " + new DateFormatSymbols().getMonths()[0] + "-"
+                                    + "31 " + new DateFormatSymbols().getMonths()[0];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 3:
-                            nuevoInforme.setPeriodoDesc("1 Feb - 15 Feb");
+                            periodoQuincenal = "1 " + new DateFormatSymbols().getMonths()[1] + "-"
+                                    + "15 " + new DateFormatSymbols().getMonths()[1];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 4:
-                            nuevoInforme.setPeriodoDesc("16 Feb - 28 Feb");
+                            periodoQuincenal = "16 " + new DateFormatSymbols().getMonths()[1] + "-"
+                                    + "28 " + new DateFormatSymbols().getMonths()[1];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 5:
-                            nuevoInforme.setPeriodoDesc("01 Mar - 15 Mar");
+                            periodoQuincenal = "1 " + new DateFormatSymbols().getMonths()[2] + "-"
+                                    + "15 " + new DateFormatSymbols().getMonths()[2];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 6:
-                            nuevoInforme.setPeriodoDesc("16 Mar - 31 Mar");
+                            periodoQuincenal = "16 " + new DateFormatSymbols().getMonths()[2] + "-"
+                                    + "31 " + new DateFormatSymbols().getMonths()[2];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 7:
-                            nuevoInforme.setPeriodoDesc("01 Abr - 15 Abr");
+                            periodoQuincenal = "1 " + new DateFormatSymbols().getMonths()[3] + "-"
+                                    + "15 " + new DateFormatSymbols().getMonths()[3];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 8:
-                            nuevoInforme.setPeriodoDesc("16 Abr - 30 Abr");
+                            periodoQuincenal = "16 " + new DateFormatSymbols().getMonths()[3] + "-"
+                                    + "30 " + new DateFormatSymbols().getMonths()[3];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 9:
-                            nuevoInforme.setPeriodoDesc("01 May - 15 May");
+                            periodoQuincenal = "1 " + new DateFormatSymbols().getMonths()[4] + "-"
+                                    + "15 " + new DateFormatSymbols().getMonths()[4];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 10:
-                            nuevoInforme.setPeriodoDesc("16 May - 31 May");
+                            periodoQuincenal = "16 " + new DateFormatSymbols().getMonths()[4] + "-"
+                                    + "31 " + new DateFormatSymbols().getMonths()[4];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 11:
-                            nuevoInforme.setPeriodoDesc("01 Jun - 15 Jun");
+                            periodoQuincenal = "1 " + new DateFormatSymbols().getMonths()[5] + "-"
+                                    + "15 " + new DateFormatSymbols().getMonths()[5];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 12:
-                            nuevoInforme.setPeriodoDesc("16 Jun - 30 Jun");
+                            periodoQuincenal = "16 " + new DateFormatSymbols().getMonths()[5] + "-"
+                                    + "30 " + new DateFormatSymbols().getMonths()[5];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 13:
-                            nuevoInforme.setPeriodoDesc("01 Jul - 15 Jul");
+                            periodoQuincenal = "1 " + new DateFormatSymbols().getMonths()[6] + "-"
+                                    + "15 " + new DateFormatSymbols().getMonths()[6];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 14:
-                            nuevoInforme.setPeriodoDesc("16 Jul - 31 Jul");
+                            periodoQuincenal = "16 " + new DateFormatSymbols().getMonths()[6] + "-"
+                                    + "31 " + new DateFormatSymbols().getMonths()[6];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 15:
-                            nuevoInforme.setPeriodoDesc("01 Ago - 15 Ago");
+                            periodoQuincenal = "1 " + new DateFormatSymbols().getMonths()[7] + "-"
+                                    + "15 " + new DateFormatSymbols().getMonths()[7];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 16:
-                            nuevoInforme.setPeriodoDesc("16 Ago - 31 Ago");
+                            periodoQuincenal = "16 " + new DateFormatSymbols().getMonths()[7] + "-"
+                                    + "31 " + new DateFormatSymbols().getMonths()[7];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 17:
-                            nuevoInforme.setPeriodoDesc("01 Sep - 15 Sep");
+                            periodoQuincenal = "1 " + new DateFormatSymbols().getMonths()[8] + "-"
+                                    + "15 " + new DateFormatSymbols().getMonths()[8];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 18:
-                            nuevoInforme.setPeriodoDesc("16 Sep - 30 Sep");
+                            periodoQuincenal = "16 " + new DateFormatSymbols().getMonths()[8] + "-"
+                                    + "30 " + new DateFormatSymbols().getMonths()[8];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 19:
-                            nuevoInforme.setPeriodoDesc("01 Oct - 15 Oct");
+                            periodoQuincenal = "1 " + new DateFormatSymbols().getMonths()[9] + "-"
+                                    + "15 " + new DateFormatSymbols().getMonths()[9];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 20:
-                            nuevoInforme.setPeriodoDesc("16 Oct - 31 Oct");
+                            periodoQuincenal = "16 " + new DateFormatSymbols().getMonths()[9] + "-"
+                                    + "31 " + new DateFormatSymbols().getMonths()[9];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 21:
-                            nuevoInforme.setPeriodoDesc("01 Nov - 15 Nov");
+                            periodoQuincenal = "1 " + new DateFormatSymbols().getMonths()[10] + "-"
+                                    + "15 " + new DateFormatSymbols().getMonths()[10];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 22:
-                            nuevoInforme.setPeriodoDesc("16 Nov - 30 Nov");
+                            periodoQuincenal = "16 " + new DateFormatSymbols().getMonths()[10] + "-"
+                                    + "30 " + new DateFormatSymbols().getMonths()[10];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 23:
-                            nuevoInforme.setPeriodoDesc("01 Dic - 15 Dic");
+                            periodoQuincenal = "1 " + new DateFormatSymbols().getMonths()[11] + "-"
+                                    + "15 " + new DateFormatSymbols().getMonths()[11];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                         case 24:
-                            nuevoInforme.setPeriodoDesc("16 Dic - 31 Dic");
+                            periodoQuincenal = "16 " + new DateFormatSymbols().getMonths()[11] + "-"
+                                    + "31 " + new DateFormatSymbols().getMonths()[11];
+                            nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                     }
                 }

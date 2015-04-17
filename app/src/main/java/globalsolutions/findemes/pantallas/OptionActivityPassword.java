@@ -25,6 +25,7 @@ import globalsolutions.findemes.database.model.GrupoGasto;
 import globalsolutions.findemes.database.model.OptionItem;
 import globalsolutions.findemes.database.model.Password;
 import globalsolutions.findemes.database.util.Constantes;
+import globalsolutions.findemes.pantallas.util.Util;
 
 
 /**
@@ -87,12 +88,12 @@ public class OptionActivityPassword extends Activity {
                     if (pass != null && !pass.isEmpty()) {
                         boolean actualizado = passwordDAO.updatePassword(password,nuevaPass);
                         if(actualizado)
-                            showToast("¡Password modificada!");
+                            Util.showToast(getApplicationContext(), getResources().getString(R.string.Modificado));
                     }
                     else {
                         boolean insertada = passwordDAO.createRecords(nuevaPass) > 0;
                         if(insertada)
-                            showToast("¡Password creada!");
+                            Util.showToast(getApplicationContext(), getResources().getString(R.string.Creado));
                     }
 
                    /* Intent i = new Intent(Intent.ACTION_SEND);
@@ -115,20 +116,16 @@ public class OptionActivityPassword extends Activity {
         //obtenemos password y mail
         String pass = txtPassword.getText().toString();
         if(pass == null || pass.isEmpty()) {
-            ((EditText) findViewById(R.id.txtContrasena)).setError("Debe especificar un PIN de 4 digitos");
+            ((EditText) findViewById(R.id.txtContrasena)).setError(getResources().getString(R.string.Validacion_PIN));
             return false;
         }
-        String mail = txtMail.getText().toString();
+        /*String mail = txtMail.getText().toString();
         if(mail == null || mail.isEmpty()) {
             ((EditText) findViewById(R.id.txtMail)).setError("Debe incluir un correo electronico para enviarle su contraseña");
             return false;
-        }
+        }*/
 
         return true;
-    }
-
-    public void showToast(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

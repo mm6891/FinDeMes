@@ -25,6 +25,7 @@ import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
 import globalsolutions.findemes.database.dao.RegistroDAO;
 import globalsolutions.findemes.database.model.Registro;
 import globalsolutions.findemes.database.util.Constantes;
+import globalsolutions.findemes.pantallas.util.Util;
 
 /**
  * Created by manuel.molero on 16/02/2015.
@@ -85,12 +86,12 @@ public class NuevoRegistroDialog extends DialogFragment {
                 //nombre , valor
                 String valor = (String)((EditText) view.findViewById(R.id.txtValor)).getText().toString();
                 if(valor == null || valor.isEmpty()) {
-                    ((EditText) view.findViewById(R.id.txtValor)).setError("Debe incluir la cantidad del registro");
+                    ((EditText) view.findViewById(R.id.txtValor)).setError(getResources().getString(R.string.Validacion_Cantidad));
                     return;
                 }
                 String descripcion = (String)((EditText) view.findViewById(R.id.txtRegistro)).getText().toString();
                 if(descripcion == null || descripcion.isEmpty()) {
-                    ((EditText) view.findViewById(R.id.txtRegistro)).setError("Debe incluir un nombre");
+                    ((EditText) view.findViewById(R.id.txtRegistro)).setError(getResources().getString(R.string.Validacion_Nombre));
                     return;
                 }
 
@@ -114,15 +115,15 @@ public class NuevoRegistroDialog extends DialogFragment {
                     RegistroDAO registroDAO = new RegistroDAO(view.getContext());
                     boolean actualizado = registroDAO.createRecords(nuevoRegistro) > 0;
                     if(actualizado){
-                        showToast(view.getContext(),"¡Registro creado!");
+                        Util.showToast(view.getContext(), getResources().getString(R.string.Creado));
                         callback.ONuevoRegistroDialogSubmit(String.valueOf(Activity.RESULT_OK));
                         dismiss();
                     }
                     else
-                        showToast(view.getContext(),"¡No se ha podido crear!");
+                        Util.showToast(view.getContext(), getResources().getString(R.string.No_Creado));
                 }
                 else{
-                    showToast(view.getContext(),"Debe seleccionar una categoría");
+                    Util.showToast(view.getContext(), getResources().getString(R.string.Selecciona_categoria));
                     return;
                 }
             }
@@ -139,10 +140,6 @@ public class NuevoRegistroDialog extends DialogFragment {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         return dialog;
-    }
-
-    public void showToast(Context c, String message){
-        Toast.makeText(c, message, Toast.LENGTH_SHORT).show();
     }
 
     private class tipoMovimientoOnClickListener implements AdapterView.OnItemSelectedListener {

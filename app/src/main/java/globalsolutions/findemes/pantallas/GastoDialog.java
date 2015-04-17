@@ -26,6 +26,7 @@ import globalsolutions.findemes.database.dao.GrupoGastoDAO;
 import globalsolutions.findemes.database.model.Gasto;
 import globalsolutions.findemes.database.model.GrupoGasto;
 import globalsolutions.findemes.pantallas.util.MoneyValueFilter;
+import globalsolutions.findemes.pantallas.util.Util;
 
 /**
  * Created by manuel.molero on 16/02/2015.
@@ -91,12 +92,12 @@ public class GastoDialog extends DialogFragment {
                 //descripcion , valor , fecha
                 String valor = (String)((EditText) view.findViewById(R.id.txtGasto)).getText().toString();
                 if(valor == null || valor.isEmpty()) {
-                    ((EditText) v.findViewById(R.id.txtGasto)).setError("Debe incluir la cantidad del movimiento");
+                    ((EditText) v.findViewById(R.id.txtGasto)).setError(getResources().getString(R.string.Validacion_Cantidad));
                     return;
                 }
                 String descripcion = (String)((EditText) view.findViewById(R.id.txtDecripcion)).getText().toString();
                 if(descripcion == null || descripcion.isEmpty()) {
-                    ((EditText) view.findViewById(R.id.txtDecripcion)).setError("Debe incluir una breve descripción del movimiento");
+                    ((EditText) view.findViewById(R.id.txtDecripcion)).setError(getResources().getString(R.string.Validacion_Descripcion));
                     return;
                 }
                 //obtenemos categoria de gasto
@@ -115,15 +116,15 @@ public class GastoDialog extends DialogFragment {
                     GastoDAO gastoDAO = new GastoDAO(view.getContext());
                     boolean actualizado = gastoDAO.updateGasto(aMod, nuevoGasto);
                     if(actualizado){
-                        showToast(view.getContext(),"¡Gasto actualizado!");
+                        Util.showToast(view.getContext(), getResources().getString(R.string.Actualizado));
                         callback.onGastoDialogSubmit(String.valueOf(Activity.RESULT_OK));
                         dismiss();
                     }
                     else
-                        showToast(view.getContext(),"¡No se ha podido actualizar!");
+                        Util.showToast(view.getContext(), getResources().getString(R.string.No_Actualizado));
                 }
                 else{
-                    showToast(view.getContext(),"Debe seleccionar una categoría");
+                    Util.showToast(view.getContext(), getResources().getString(R.string.Selecciona_categoria));
                     return;
                 }
             }
@@ -140,9 +141,5 @@ public class GastoDialog extends DialogFragment {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         return dialog;
-    }
-
-    public void showToast(Context c, String message){
-        Toast.makeText(c, message, Toast.LENGTH_SHORT).show();
     }
 }

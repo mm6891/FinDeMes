@@ -23,6 +23,7 @@ import java.util.List;
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
 import globalsolutions.findemes.database.util.Constantes;
+import globalsolutions.findemes.pantallas.util.Util;
 
 /**
  * Created by manuel.molero on 16/02/2015.
@@ -54,7 +55,7 @@ public class CategoriasIngresosDialog extends DialogFragment {
                 final CharSequence[] items = {Constantes.ACCION_MODIFICAR, Constantes.ACCION_ELIMINAR};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("OPCIONES");
+                builder.setTitle(getResources().getString(R.string.MENU_OPCIONES));
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int item) {
                                 //Eliminar Movimiento
@@ -66,12 +67,12 @@ public class CategoriasIngresosDialog extends DialogFragment {
                                     GrupoIngresoDAO grupoIngresoDAO = new GrupoIngresoDAO(getActivity());
                                     realizado = grupoIngresoDAO.deleteRecords(categoriaIngreso);
                                     if (realizado) {
-                                        showToast(view.getContext(),"¡Grupo eliminado!");
+                                        Util.showToast(view.getContext(), getResources().getString(R.string.Eliminado));
                                        String[] newList = grupoIngresoDAO.selectGrupos();
                                         ((CategoriaAdapter) listViewCategoriasIngresos.getAdapter()).updateReceiptsList(
                                                 new ArrayList<String>(Arrays.asList(newList)));
                                     } else
-                                        showToast(view.getContext(),"No se ha podido eliminar el grupo");
+                                        Util.showToast(view.getContext(), getResources().getString(R.string.No_Eliminado));
                                 }
                                 if (accion.equals(Constantes.ACCION_MODIFICAR)) {
                                     Bundle bundle = new Bundle();
@@ -110,10 +111,6 @@ public class CategoriasIngresosDialog extends DialogFragment {
         DialogFragment newFragment = new NuevaCategoriaIngresoDialog();
         newFragment.setTargetFragment(this,1);
         newFragment.show(getFragmentManager(),"CREACION");
-    }
-
-    public void showToast(Context c, String message){
-        Toast.makeText(c, message, Toast.LENGTH_SHORT).show();
     }
 
     public void showEditIngresoDialog(View v, Bundle bundle) {

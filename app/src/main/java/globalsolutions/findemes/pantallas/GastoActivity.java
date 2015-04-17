@@ -29,6 +29,7 @@ import globalsolutions.findemes.database.model.Gasto;
 import globalsolutions.findemes.database.model.GrupoGasto;
 import globalsolutions.findemes.database.util.Constantes;
 import globalsolutions.findemes.pantallas.util.MoneyValueFilter;
+import globalsolutions.findemes.pantallas.util.Util;
 
 public class GastoActivity extends FragmentActivity implements DatePickerDialog.OnDateSetListener {
 
@@ -85,7 +86,7 @@ public class GastoActivity extends FragmentActivity implements DatePickerDialog.
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("movimiento", Constantes.TIPO_MOVIMIENTO_GASTO.toString());
+        bundle.putString("movimiento", getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO));
         newFragment.setArguments(bundle);
         newFragment.show(getFragmentManager(),"Fecha");
     }
@@ -95,12 +96,12 @@ public class GastoActivity extends FragmentActivity implements DatePickerDialog.
         //descripcion , valor , fecha
         String valor = (String)((EditText) findViewById(R.id.txtGasto)).getText().toString();
         if(valor == null || valor.isEmpty()) {
-            ((EditText) findViewById(R.id.txtGasto)).setError("Debe incluir la cantidad del movimiento");
+            ((EditText) findViewById(R.id.txtGasto)).setError(getResources().getString(R.string.Validacion_Cantidad));
             return;
         }
         String descripcion = (String)((EditText) findViewById(R.id.txtDecripcion)).getText().toString();
         if(descripcion == null || descripcion.isEmpty()) {
-            ((EditText) findViewById(R.id.txtDecripcion)).setError("Debe incluir una breve descripción del movimiento");
+            ((EditText) findViewById(R.id.txtDecripcion)).setError(getResources().getString(R.string.Validacion_Descripcion));
             return;
         }
         //obtenemos categoria de gasto
@@ -118,10 +119,10 @@ public class GastoActivity extends FragmentActivity implements DatePickerDialog.
             nuevoGasto.setGrupoGasto(grupo);
             GastoDAO gastoDAO = new GastoDAO(getApplicationContext());
             gastoDAO.createRecords(nuevoGasto);
-            showToast("¡Gasto guardado!");
+            Util.showToast(view.getContext(),getResources().getString(R.string.Creado));
         }
         else{
-            return;
+            Util.showToast(view.getContext(),getResources().getString(R.string.Selecciona_categoria));
         }
     }
 
@@ -138,10 +139,6 @@ public class GastoActivity extends FragmentActivity implements DatePickerDialog.
 
         ((TextView) findViewById(R.id.tvDia)).setText(mTimeText);
         ((TextView) findViewById(R.id.tvHora)).setText(mTimeHora);
-    }
-
-    public void showToast(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

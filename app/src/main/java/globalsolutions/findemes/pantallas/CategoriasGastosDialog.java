@@ -23,6 +23,7 @@ import java.util.List;
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.GrupoGastoDAO;
 import globalsolutions.findemes.database.util.Constantes;
+import globalsolutions.findemes.pantallas.util.Util;
 
 /**
  * Created by manuel.molero on 16/02/2015.
@@ -54,7 +55,7 @@ public class CategoriasGastosDialog extends DialogFragment {
                 final CharSequence[] items = {Constantes.ACCION_MODIFICAR, Constantes.ACCION_ELIMINAR};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("OPCIONES");
+                builder.setTitle(getResources().getString(R.string.MENU_OPCIONES));
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int item) {
                                 //Eliminar Movimiento
@@ -66,12 +67,12 @@ public class CategoriasGastosDialog extends DialogFragment {
                                     GrupoGastoDAO grupoGastoDAO = new GrupoGastoDAO(getActivity());
                                     realizado = grupoGastoDAO.deleteRecords(categoriaGasto);
                                     if (realizado) {
-                                        showToast(view.getContext(),"¡Grupo eliminado!");
+                                        Util.showToast(view.getContext(),getResources().getString(R.string.Eliminado));
                                        String[] newList = grupoGastoDAO.selectGrupos();
                                         ((CategoriaAdapter) listViewCategoriasGastos.getAdapter()).updateReceiptsList(
                                                 new ArrayList<String>(Arrays.asList(newList)));
                                     } else
-                                        showToast(view.getContext(),"No se ha podido eliminar el grupo");
+                                        Util.showToast(view.getContext(),getResources().getString(R.string.No_Eliminado));
                                 }
                                 if (accion.equals(Constantes.ACCION_MODIFICAR)) {
                                     Bundle bundle = new Bundle();
@@ -104,10 +105,6 @@ public class CategoriasGastosDialog extends DialogFragment {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         return dialog;
-    }
-
-    public void showToast(Context c, String message){
-        Toast.makeText(c, message, Toast.LENGTH_SHORT).show();
     }
 
     public void showEditGastoDialog(View v, Bundle bundle) {

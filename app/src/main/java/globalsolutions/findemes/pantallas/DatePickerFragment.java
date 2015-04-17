@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import java.util.Calendar;
 
+import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.util.Constantes;
 
 /**
@@ -22,7 +23,7 @@ public class DatePickerFragment extends DialogFragment {
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
-        if(getArguments().getString("movimiento").equals(Constantes.TIPO_MOVIMIENTO_GASTO.toString()))
+        if(getArguments().getString("movimiento").equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO)))
             return new DatePickerDialog(getActivity(), (GastoActivity)getActivity(), year, month, day);
         else
             return new DatePickerDialog(getActivity(), (IngresoActivity)getActivity(), year, month, day);
