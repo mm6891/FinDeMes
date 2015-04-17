@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import java.util.List;
 
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.GrupoGastoDAO;
+import globalsolutions.findemes.database.util.ArrayAdapterWithIcon;
 import globalsolutions.findemes.database.util.Constantes;
 import globalsolutions.findemes.pantallas.util.Util;
 
@@ -52,37 +54,38 @@ public class CategoriasGastosDialog extends DialogFragment {
             public void onItemClick(AdapterView<?> parent, final View view, int position,
                                     long id) {
                 final String categoriaGasto = (String) listViewCategoriasGastos.getItemAtPosition(position);
-                final CharSequence[] items = {Constantes.ACCION_MODIFICAR, Constantes.ACCION_ELIMINAR};
+                final String[] items = {getResources().getString(R.string.Modificar), getResources().getString(R.string.Eliminar)};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle(getResources().getString(R.string.MENU_OPCIONES));
-                builder.setItems(items, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int item) {
-                                //Eliminar Movimiento
-                                String accion = (String) items[item];
-                                boolean realizado;
+                ListAdapter adapter = new ArrayAdapterWithIcon(view.getContext(), items, Util.prgmImagesOption);
+                builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int item) {
+                                    //Eliminar Movimiento
+                                    String accion = (String) items[item];
+                                    boolean realizado;
 
-                                if (accion.equals(Constantes.ACCION_ELIMINAR)) {
+                                    if (accion.equals(getResources().getString(R.string.Eliminar))) {
 
-                                    GrupoGastoDAO grupoGastoDAO = new GrupoGastoDAO(getActivity());
-                                    realizado = grupoGastoDAO.deleteRecords(categoriaGasto);
-                                    if (realizado) {
-                                        Util.showToast(view.getContext(),getResources().getString(R.string.Eliminado));
-                                       String[] newList = grupoGastoDAO.selectGrupos();
-                                        ((CategoriaAdapter) listViewCategoriasGastos.getAdapter()).updateReceiptsList(
-                                                new ArrayList<String>(Arrays.asList(newList)));
-                                    } else
-                                        Util.showToast(view.getContext(),getResources().getString(R.string.No_Eliminado));
-                                }
-                                if (accion.equals(Constantes.ACCION_MODIFICAR)) {
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("nameCategory", categoriaGasto);
-                                    // Create an instance of the dialog fragment and show it*//*
-                                    showEditGastoDialog(view, bundle);
+                                        GrupoGastoDAO grupoGastoDAO = new GrupoGastoDAO(getActivity());
+                                        realizado = grupoGastoDAO.deleteRecords(categoriaGasto);
+                                        if (realizado) {
+                                            Util.showToast(view.getContext(), getResources().getString(R.string.Eliminado));
+                                            String[] newList = grupoGastoDAO.selectGrupos();
+                                            ((CategoriaAdapter) listViewCategoriasGastos.getAdapter()).updateReceiptsList(
+                                                    new ArrayList<String>(Arrays.asList(newList)));
+                                        } else
+                                            Util.showToast(view.getContext(), getResources().getString(R.string.No_Eliminado));
+                                    }
+                                    if (accion.equals(getResources().getString(R.string.Modificar))) {
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("nameCategory", categoriaGasto);
+                                        // Create an instance of the dialog fragment and show it*//*
+                                        showEditGastoDialog(view, bundle);
+                                    }
                                 }
                             }
-                        }
-                ).show();
+                    ).show();
             }
         });
 

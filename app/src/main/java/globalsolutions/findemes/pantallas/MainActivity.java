@@ -215,10 +215,10 @@ public class MainActivity extends Activity {
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
-                .setTitle("¿Salir?")
-                .setMessage("¿Esta seguro de abandonar la aplicación?")
-                .setNegativeButton("NO", null)
-                .setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                .setTitle(getResources().getString(R.string.Salir))
+                .setMessage(getResources().getString(R.string.Abandonar))
+                .setNegativeButton(getResources().getString(R.string.NEGACION), null)
+                .setPositiveButton(getResources().getString(R.string.AFIRMACION), new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface arg0, int arg1) {
                         Intent intent = new Intent(MainActivity.this, Password.class);

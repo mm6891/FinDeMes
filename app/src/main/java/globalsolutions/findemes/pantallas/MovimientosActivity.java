@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -25,6 +26,8 @@ import globalsolutions.findemes.database.dao.GastoDAO;
 import globalsolutions.findemes.database.dao.IngresoDAO;
 import globalsolutions.findemes.database.dao.MovimientoDAO;
 import globalsolutions.findemes.database.model.MovimientoItem;
+import globalsolutions.findemes.database.model.OptionItem;
+import globalsolutions.findemes.database.util.ArrayAdapterWithIcon;
 import globalsolutions.findemes.database.util.Constantes;
 import globalsolutions.findemes.pantallas.util.Util;
 
@@ -148,19 +151,19 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                                         long id) {
 
                     final MovimientoItem movSeleccionado = (MovimientoItem) listViewMovs.getItemAtPosition(position);
-                    final CharSequence[] items = {Constantes.ACCION_MODIFICAR, Constantes.ACCION_ELIMINAR};
+                    final String[] items = {getResources().getString(R.string.Modificar), getResources().getString(R.string.Eliminar)};
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(MovimientosActivity.this);
                     builder.setTitle(getResources().getString(R.string.MENU_OPCIONES));
-                    //builder.setIcon(R.drawable.delete);
-                    //builder.setIcon(R.drawable.edit);
-                    builder.setItems(items, new DialogInterface.OnClickListener() {
+
+                    ListAdapter adapter = new ArrayAdapterWithIcon(getApplicationContext(), items, Util.prgmImagesOption);
+                    builder.setAdapter(adapter,new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int item) {
                                     //Eliminar Movimiento
                                     String accion = (String) items[item];
                                     boolean realizado;
 
-                                    if (accion.equals(Constantes.ACCION_ELIMINAR)) {
+                                    if (accion.equals(getResources().getString(R.string.Eliminar))) {
                                         if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
                                             GastoDAO gastoDAO = new GastoDAO(MovimientosActivity.this);
                                             realizado = gastoDAO.deleteGasto(movSeleccionado.get_id());
@@ -182,7 +185,7 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                                                 Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Eliminado));
                                         }
                                     }
-                                    if (accion.equals(Constantes.ACCION_MODIFICAR)) {
+                                    if (accion.equals(getResources().getString(R.string.Modificar))) {
                                         Bundle bundle = new Bundle();
                                         bundle.putString("_id", String.valueOf(movSeleccionado.get_id()));
                                         bundle.putString("valor", movSeleccionado.getValor());

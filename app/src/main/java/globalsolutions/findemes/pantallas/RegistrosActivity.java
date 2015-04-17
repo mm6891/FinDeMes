@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.Arrays;
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.RegistroDAO;
 import globalsolutions.findemes.database.model.RegistroItem;
+import globalsolutions.findemes.database.util.ArrayAdapterWithIcon;
 import globalsolutions.findemes.database.util.Constantes;
 import globalsolutions.findemes.pantallas.util.Util;
 
@@ -59,26 +61,27 @@ public class RegistrosActivity extends FragmentActivity implements NuevoRegistro
             public void onItemClick(AdapterView<?> parent, final View view, int position,
                                     long id) {
                 final RegistroItem registroItem = (RegistroItem) listViewReg.getItemAtPosition(position);
-                final CharSequence[] items = {Constantes.ACCION_MODIFICAR, Constantes.ACCION_ELIMINAR};
+                final String[] items = {getResources().getString(R.string.Modificar), getResources().getString(R.string.Eliminar)};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(RegistrosActivity.this);
                 builder.setTitle(getResources().getString(R.string.MENU_OPCIONES));
-                builder.setItems(items, new DialogInterface.OnClickListener() {
+                ListAdapter adapter = new ArrayAdapterWithIcon(view.getContext(), items, Util.prgmImagesOption);
+                builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int item) {
                                 //Eliminar Registro
                                 String accion = (String) items[item];
                                 boolean realizado;
 
-                                if (accion.equals(Constantes.ACCION_ELIMINAR)) {
+                                if (accion.equals(getResources().getString(R.string.Modificar))) {
                                     RegistroDAO registroDAO = new RegistroDAO(RegistrosActivity.this);
                                     realizado = registroDAO.deleteRegistro(registroItem.get_id());
                                     if (realizado) {
                                         Util.showToast(getApplicationContext(), getResources().getString(R.string.Eliminado));
-                                        ((RegistroAdapter)listViewReg.getAdapter()).updateReceiptsList(new RegistroDAO(getApplicationContext()).selectRegistrosItems());
+                                        ((RegistroAdapter) listViewReg.getAdapter()).updateReceiptsList(new RegistroDAO(getApplicationContext()).selectRegistrosItems());
                                     } else
                                         Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Eliminado));
                                 }
-                                if (accion.equals(Constantes.ACCION_MODIFICAR)) {
+                                if (accion.equals(getResources().getString(R.string.Eliminar))) {
                                     Bundle bundle = new Bundle();
                                     bundle.putString("_id", String.valueOf(registroItem.get_id()));
                                     bundle.putString("nombre", registroItem.getDescripcion());

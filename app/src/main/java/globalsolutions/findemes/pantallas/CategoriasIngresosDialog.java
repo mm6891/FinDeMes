@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import java.util.List;
 
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
+import globalsolutions.findemes.database.util.ArrayAdapterWithIcon;
 import globalsolutions.findemes.database.util.Constantes;
 import globalsolutions.findemes.pantallas.util.Util;
 
@@ -52,29 +54,31 @@ public class CategoriasIngresosDialog extends DialogFragment {
             public void onItemClick(AdapterView<?> parent, final View view, int position,
                                     long id) {
                 final String categoriaIngreso = (String) listViewCategoriasIngresos.getItemAtPosition(position);
-                final CharSequence[] items = {Constantes.ACCION_MODIFICAR, Constantes.ACCION_ELIMINAR};
+                final String[] items = {getResources().getString(R.string.Modificar), getResources().getString(R.string.Eliminar)};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle(getResources().getString(R.string.MENU_OPCIONES));
-                builder.setItems(items, new DialogInterface.OnClickListener() {
+
+                ListAdapter adapter = new ArrayAdapterWithIcon(view.getContext(), items, Util.prgmImagesOption);
+                builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int item) {
                                 //Eliminar Movimiento
                                 String accion = (String) items[item];
                                 boolean realizado;
 
-                                if (accion.equals(Constantes.ACCION_ELIMINAR)) {
+                                if (accion.equals(getResources().getString(R.string.Eliminar))) {
 
                                     GrupoIngresoDAO grupoIngresoDAO = new GrupoIngresoDAO(getActivity());
                                     realizado = grupoIngresoDAO.deleteRecords(categoriaIngreso);
                                     if (realizado) {
                                         Util.showToast(view.getContext(), getResources().getString(R.string.Eliminado));
-                                       String[] newList = grupoIngresoDAO.selectGrupos();
+                                        String[] newList = grupoIngresoDAO.selectGrupos();
                                         ((CategoriaAdapter) listViewCategoriasIngresos.getAdapter()).updateReceiptsList(
                                                 new ArrayList<String>(Arrays.asList(newList)));
                                     } else
                                         Util.showToast(view.getContext(), getResources().getString(R.string.No_Eliminado));
                                 }
-                                if (accion.equals(Constantes.ACCION_MODIFICAR)) {
+                                if (accion.equals(getResources().getString(R.string.Modificar))) {
                                     Bundle bundle = new Bundle();
                                     bundle.putString("nameCategory", categoriaIngreso);
                                     // Create an instance of the dialog fragment and show it*//*

@@ -10,6 +10,7 @@
     <string name="Ingresos">Ingresos:</string>
     <string name="Guardar">Guardar</string>
     <string name="Modificar">Modificar</string>
+    <string name="Eliminar">Eliminar</string>
     <string name="Cerrar">Cerrar</string>
     <string name="MENU_GASTOS">Gasto</string>
     <string name="MENU_INGRESOS">Ingreso</string>
@@ -57,6 +58,8 @@
     <string name="MAIL">Correo</string>
     <string name="CONTRASENYA_AYUDA">Introduce tu contraseña de 4 dígitos</string>
     <string name="AYUDA_BASEDATOS">Realiza un backup de tu base de datos, se guardará en "Storage Card/findemes/DBFinDeMes.db"</string>
+    <string name="Abandonar">¿Esta seguro de abandonar la aplicación?</string>
+    <string name="Salir">¿Salir?</string>
     <!-- MENSAJES TOAST -->
     <string name="Eliminado">¡Eliminado!</string>
     <string name="No_Eliminado">No se ha podido eliminar</string>

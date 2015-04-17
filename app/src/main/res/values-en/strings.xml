@@ -10,6 +10,7 @@
     <string name="Ingresos">Ingresos:</string>
     <string name="Guardar">Guardar</string>
     <string name="Modificar">Modificar</string>
+    <string name="Eliminar">Eliminar</string>
     <string name="Cerrar">Cerrar</string>
     <string name="MENU_GASTOS">Gasto</string>
     <string name="MENU_INGRESOS">Ingreso</string>
