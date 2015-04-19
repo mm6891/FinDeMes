@@ -1,4 +1,4 @@
-package globalsolutions.findemes.pantallas;
+package globalsolutions.findemes.pantallas.activity;
 
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -27,7 +26,7 @@ import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
 import globalsolutions.findemes.database.dao.IngresoDAO;
 import globalsolutions.findemes.database.model.GrupoIngreso;
 import globalsolutions.findemes.database.model.Ingreso;
-import globalsolutions.findemes.database.util.Constantes;
+import globalsolutions.findemes.pantallas.fragment.DatePickerFragment;
 import globalsolutions.findemes.pantallas.util.MoneyValueFilter;
 import globalsolutions.findemes.pantallas.util.Util;
 

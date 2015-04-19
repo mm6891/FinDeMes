@@ -1,4 +1,4 @@
-package globalsolutions.findemes.pantallas;
+package globalsolutions.findemes.pantallas.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -21,22 +21,22 @@ import java.util.Arrays;
 import java.util.List;
 
 import globalsolutions.findemes.R;
-import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
-import globalsolutions.findemes.database.dao.IngresoDAO;
-import globalsolutions.findemes.database.model.GrupoIngreso;
-import globalsolutions.findemes.database.model.Ingreso;
+import globalsolutions.findemes.database.dao.GastoDAO;
+import globalsolutions.findemes.database.dao.GrupoGastoDAO;
+import globalsolutions.findemes.database.model.Gasto;
+import globalsolutions.findemes.database.model.GrupoGasto;
 import globalsolutions.findemes.pantallas.util.MoneyValueFilter;
 import globalsolutions.findemes.pantallas.util.Util;
 
 /**
  * Created by manuel.molero on 16/02/2015.
  */
-public class IngresoDialog extends DialogFragment {
+public class GastoDialog extends DialogFragment {
 
-    private OnIngresoDialogListener callback;
+    private OnGastoDialogListener callback;
 
-    public interface OnIngresoDialogListener {
-        public void onIngresoDialogSubmit(String result);
+    public interface OnGastoDialogListener {
+        public void onGastoDialogSubmit(String result);
     }
 
     @Override
@@ -44,23 +44,23 @@ public class IngresoDialog extends DialogFragment {
                              Bundle savedInstanceState) {
 
         try {
-            callback = (OnIngresoDialogListener) getActivity();
+            callback = (OnGastoDialogListener) getActivity();
         } catch (ClassCastException e) {
             throw new ClassCastException("Calling Fragment must implement OnGastoDialogListener");
         }
 
-        final View view = inflater.inflate(R.layout.edit_ingreso_dialog, container, false);
+        final View view = inflater.inflate(R.layout.edit_gasto_dialog, container, false);
 
         //establecemos listener de limitador de digitos
-        ((EditText) view.findViewById(R.id.txtIngreso)).setKeyListener(new MoneyValueFilter());
+        ((EditText) view.findViewById(R.id.txtGasto)).setKeyListener(new MoneyValueFilter());
 
         //cargamos el combo de categorias
-        Spinner categoria = (Spinner) view.findViewById(R.id.spCategoriaIngreso);
+        Spinner categoria = (Spinner) view.findViewById(R.id.spCategoriaGasto);
 
         List<String> list = new ArrayList<String>();
-        GrupoIngresoDAO grupoIngresoDAO = new GrupoIngresoDAO(view.getContext());
-        String[] categoriasIngresos = grupoIngresoDAO.selectGrupos();
-        list = Arrays.asList(categoriasIngresos);
+        GrupoGastoDAO grupoGastoDAO = new GrupoGastoDAO(view.getContext());
+        String[] categoriasGastos = grupoGastoDAO.selectGrupos();
+        list = Arrays.asList(categoriasGastos);
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(view.getContext(),
                 android.R.layout.simple_spinner_item, list);
@@ -74,25 +74,25 @@ public class IngresoDialog extends DialogFragment {
         String fecha = getArguments().getString("fecha");
         String _id = getArguments().getString("_id");
 
-        ((EditText) view.findViewById(R.id.txtIngreso)).setText(getArguments().getString("valor"));
-        ((EditText) view.findViewById(R.id.txtDecripcion)).setText(getArguments().getString("descripcion"));
-        int spinnerPostion = dataAdapter.getPosition(getArguments().getString("categoria"));
+        ((EditText) view.findViewById(R.id.txtGasto)).setText(valor);
+        ((EditText) view.findViewById(R.id.txtDecripcion)).setText(descripcion);
+         int spinnerPostion = dataAdapter.getPosition(categoriaStr);
         categoria.setSelection(spinnerPostion);
-        ((TextView) view.findViewById(R.id.tvDia)).setText(getArguments().getString("fecha").split(" ")[0]);
-        ((TextView) view.findViewById(R.id.tvHora)).setText(getArguments().getString("fecha").split(" ")[1]);
+        ((TextView) view.findViewById(R.id.tvDia)).setText(fecha.split(" ")[0]);
+        ((TextView) view.findViewById(R.id.tvHora)).setText(fecha.split(" ")[1]);
 
-        final Ingreso aMod = new Ingreso();
+        final Gasto aMod = new Gasto();
         aMod.set_id(Integer.valueOf(_id).intValue());
 
-        Button btnModificar = (Button) view.findViewById(R.id.btnGuardarIngreso);
+        Button btnModificar = (Button) view.findViewById(R.id.btnGuardarGasto);
 
         btnModificar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //descripcion , valor , fecha
-                String valor = (String)((EditText) view.findViewById(R.id.txtIngreso)).getText().toString();
+                String valor = (String)((EditText) view.findViewById(R.id.txtGasto)).getText().toString();
                 if(valor == null || valor.isEmpty()) {
-                    ((EditText) view.findViewById(R.id.txtIngreso)).setError(getResources().getString(R.string.Validacion_Cantidad));
+                    ((EditText) v.findViewById(R.id.txtGasto)).setError(getResources().getString(R.string.Validacion_Cantidad));
                     return;
                 }
                 String descripcion = (String)((EditText) view.findViewById(R.id.txtDecripcion)).getText().toString();
@@ -100,27 +100,26 @@ public class IngresoDialog extends DialogFragment {
                     ((EditText) view.findViewById(R.id.txtDecripcion)).setError(getResources().getString(R.string.Validacion_Descripcion));
                     return;
                 }
-                //obtenemos categoria de ingreso
-                String categoriaIngreso = (String)((Spinner) view.findViewById(R.id.spCategoriaIngreso)).getSelectedItem();
-                if(categoriaIngreso != null && !categoriaIngreso.isEmpty()) {
-                    Ingreso nuevoIngreso = new Ingreso();
-                    nuevoIngreso.setDescripcion(descripcion);
-                    nuevoIngreso.setValor(valor);
+                //obtenemos categoria de gasto
+                String categoriaGasto = (String)((Spinner) view.findViewById(R.id.spCategoriaGasto)).getSelectedItem();
+                if(categoriaGasto != null && !categoriaGasto.isEmpty()) {
+                    Gasto nuevoGasto = new Gasto();
+                    nuevoGasto.setDescripcion(descripcion);
+                    nuevoGasto.setValor(valor);
                     String fecha = (String) ((TextView) view.findViewById(R.id.tvDia)).getText();
                     String hora = (String) ((TextView) view.findViewById(R.id.tvHora)).getText();
-                    nuevoIngreso.setFecha(fecha + " " + hora);
+                    nuevoGasto.setFecha(fecha + " " + hora);
 
-                    GrupoIngreso grupo = new GrupoIngreso();
-                    grupo.setGrupo(categoriaIngreso);
-                    nuevoIngreso.setGrupoIngreso(grupo);
-                    IngresoDAO ingresoDAO = new IngresoDAO(view.getContext());
-                    boolean actualizado = ingresoDAO.updateIngreso(aMod, nuevoIngreso);
-                    if(actualizado) {
+                    GrupoGasto grupo = new GrupoGasto();
+                    grupo.setGrupo(categoriaGasto);
+                    nuevoGasto.setGrupoGasto(grupo);
+                    GastoDAO gastoDAO = new GastoDAO(view.getContext());
+                    boolean actualizado = gastoDAO.updateGasto(aMod, nuevoGasto);
+                    if(actualizado){
                         Util.showToast(view.getContext(), getResources().getString(R.string.Actualizado));
-                        callback.onIngresoDialogSubmit(String.valueOf(Activity.RESULT_OK));
+                        callback.onGastoDialogSubmit(String.valueOf(Activity.RESULT_OK));
                         dismiss();
                     }
-
                     else
                         Util.showToast(view.getContext(), getResources().getString(R.string.No_Actualizado));
                 }
@@ -128,10 +127,10 @@ public class IngresoDialog extends DialogFragment {
                     Util.showToast(view.getContext(), getResources().getString(R.string.Selecciona_categoria));
                     return;
                 }
-            }});
+            }
+        });
 
-
-            // Inflate the layout to use as dialog or embedded fragment
+        // Inflate the layout to use as dialog or embedded fragment
         return view;
     }
 

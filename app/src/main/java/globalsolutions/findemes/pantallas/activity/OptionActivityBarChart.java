@@ -1,4 +1,4 @@
-package globalsolutions.findemes.pantallas;
+package globalsolutions.findemes.pantallas.activity;
 
 import android.app.Activity;
 import android.content.Intent;

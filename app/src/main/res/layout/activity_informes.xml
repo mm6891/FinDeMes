@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/white"
     tools:context=".InformesActivity">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/lyBackButton"
@@ -59,11 +60,23 @@
         android:layout_below="@+id/lyLinearFiltroMov"
         android:layout_weight="1"
         android:layout_above="@+id/glResumenInformes" />
+    <Button
+        android:id="@+id/btnGraficar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:drawableTop="@drawable/report"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_below="@+id/listViewMovInforme"
+        />
     <GridLayout
         android:id="@+id/glResumenInformes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
+        android:layout_marginTop="10dp"
         android:columnCount="3"
         android:rowCount="3"
         android:orientation="horizontal"

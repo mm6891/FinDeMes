@@ -1,10 +1,9 @@
-package globalsolutions.findemes.pantallas;
+package globalsolutions.findemes.pantallas.dialog;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +22,7 @@ import java.util.List;
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
 import globalsolutions.findemes.database.util.ArrayAdapterWithIcon;
-import globalsolutions.findemes.database.util.Constantes;
+import globalsolutions.findemes.pantallas.adapter.CategoriaAdapter;
 import globalsolutions.findemes.pantallas.util.Util;
 
 /**
@@ -114,7 +112,7 @@ public class CategoriasIngresosDialog extends DialogFragment {
     public void showNewIngresoDialog() {
         DialogFragment newFragment = new NuevaCategoriaIngresoDialog();
         newFragment.setTargetFragment(this,1);
-        newFragment.show(getFragmentManager(),"CREACION");
+        newFragment.show(getFragmentManager(), "CREACION");
     }
 
     public void showEditIngresoDialog(View v, Bundle bundle) {

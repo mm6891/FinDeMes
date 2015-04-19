@@ -1,4 +1,4 @@
-package globalsolutions.findemes.pantallas;
+package globalsolutions.findemes.pantallas.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -68,6 +68,9 @@ public class RegistroAdapter extends BaseAdapter {
         tvValorItem.setText(item.getValor());
         tvActivoItem.setText(item.getActivo().equals(Integer.valueOf(Constantes.REGISTRO_ACTIVO.toString()))
                 ? context.getResources().getString(R.string.AFIRMACION) : context.getResources().getString(R.string.NEGACION));
+
+        if(position % 2 == 0)
+            rowView.setBackgroundColor(context.getResources().getColor(R.color.button_material_light));
 
         return rowView;
     }

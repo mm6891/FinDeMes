@@ -1,6 +1,5 @@
-package globalsolutions.findemes.pantallas;
+package globalsolutions.findemes.pantallas.activity;
 
-import android.app.Activity;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,14 +8,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import globalsolutions.findemes.R;
-import globalsolutions.findemes.database.dao.GrupoGastoDAO;
-import globalsolutions.findemes.database.model.GrupoGasto;
 import globalsolutions.findemes.database.model.OptionItem;
+import globalsolutions.findemes.pantallas.adapter.OptionAdapter;
+import globalsolutions.findemes.pantallas.dialog.CategoriasGastosDialog;
+import globalsolutions.findemes.pantallas.dialog.CategoriasIngresosDialog;
 
 
 /**

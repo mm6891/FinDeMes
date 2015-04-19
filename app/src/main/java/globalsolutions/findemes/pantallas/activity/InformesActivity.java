@@ -1,16 +1,18 @@
-package globalsolutions.findemes.pantallas;
+package globalsolutions.findemes.pantallas.activity;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,7 +21,8 @@ import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.MovimientoDAO;
 import globalsolutions.findemes.database.model.InformeItem;
 import globalsolutions.findemes.database.model.MovimientoItem;
-import globalsolutions.findemes.database.util.Constantes;
+import globalsolutions.findemes.pantallas.adapter.InformeAdapter;
+import globalsolutions.findemes.pantallas.dialog.InformeDialog;
 import globalsolutions.findemes.pantallas.util.Util;
 
 import static android.app.PendingIntent.getActivity;
@@ -29,15 +32,17 @@ import static android.app.PendingIntent.getActivity;
  */
 public class InformesActivity extends Activity {
 
-    public enum Periodos{
+    /*public enum Periodos{
         MENSUAL, TRIMESTRAL, QUINCENAL
-    }
+    }*/
+
 
     private Spinner spTipoMovimiento;
     private Spinner spPeriodo;
     private Spinner spPeriodoFiltro;
 
     private ListView listViewMovsInforme;
+    private Button btnGraficar;
 
     //this counts how many Spinner's are on the UI
     private int mSpinnerCount=0;
@@ -58,9 +63,12 @@ public class InformesActivity extends Activity {
             }
         });
 
+        String[] periodos = new String[]{getResources().getString(R.string.TIPO_FILTRO_INFORME_MENSUAL),
+                getResources().getString(R.string.TIPO_FILTRO_INFORME_TRIMESTRAL),getResources().getString(R.string.TIPO_FILTRO_INFORME_QUINCENAL)};
+
         //spinner periodo
         spPeriodo = (Spinner) findViewById(R.id.spPeriodo);
-        spPeriodo.setAdapter(new ArrayAdapter<Periodos>(this, android.R.layout.simple_spinner_dropdown_item, Periodos.values()));
+        spPeriodo.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, periodos));
 
         mSpinnerCount++;
         spPeriodo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -71,7 +79,7 @@ public class InformesActivity extends Activity {
                 }
                 else {
                     String periodoFiltro = spPeriodoFiltro.getSelectedItem() != null ? (String) spPeriodoFiltro.getSelectedItem() : "-1";
-                    filtraInforme(view, (String) spTipoMovimiento.getSelectedItem(), ((Periodos) spPeriodo.getSelectedItem()).toString(), periodoFiltro);
+                    filtraInforme(view, (String) spTipoMovimiento.getSelectedItem(), (String) spPeriodo.getSelectedItem(), periodoFiltro);
                 }
             }
             public void onNothingSelected(AdapterView<?> parent) {
@@ -111,7 +119,7 @@ public class InformesActivity extends Activity {
                 }
                 else {
                     String periodoFiltro = spPeriodoFiltro.getSelectedItem() != null ? (String) spPeriodoFiltro.getSelectedItem() : "-1";
-                    filtraInforme(view, (String) spTipoMovimiento.getSelectedItem(), ((Periodos) spPeriodo.getSelectedItem()).toString(), periodoFiltro);
+                    filtraInforme(view, (String) spTipoMovimiento.getSelectedItem(), (String) spPeriodo.getSelectedItem(), periodoFiltro);
                 }
             }
             public void onNothingSelected(AdapterView<?> parent) {
@@ -128,7 +136,7 @@ public class InformesActivity extends Activity {
         spTipoMovimiento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String periodoFiltro = spPeriodoFiltro.getSelectedItem() != null ? (String) spPeriodoFiltro.getSelectedItem() : "-1";
-                filtraInforme(view, (String)spTipoMovimiento.getSelectedItem(), ((Periodos) spPeriodo.getSelectedItem()).toString(), periodoFiltro);
+                filtraInforme(view, (String)spTipoMovimiento.getSelectedItem(), (String) spPeriodo.getSelectedItem(), periodoFiltro);
             }
             public void onNothingSelected(AdapterView<?> parent) {
             }
@@ -136,7 +144,32 @@ public class InformesActivity extends Activity {
 
         //cargamos adaptador de informes
         listViewMovsInforme = (ListView) findViewById(R.id.listViewMovInforme);
-        listViewMovsInforme.setAdapter(new InformeAdapter(getApplicationContext(), new ArrayList<InformeItem>()));
+        listViewMovsInforme.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, final View view, int position,
+                                        long id) {
+                    final InformeItem itemSeleccionado = (InformeItem) listViewMovsInforme.getItemAtPosition(position);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("periodo", itemSeleccionado.getPeriodoDesc());
+                    bundle.putString("tipo", itemSeleccionado.getTipoInforme());
+                    bundle.putString("ingresos", itemSeleccionado.getIngresoValor());
+                    bundle.putString("gastos", itemSeleccionado.getGastoValor());
+                    bundle.putString("total", itemSeleccionado.getTotalValor());
+
+                    showInformeDialog(bundle);
+                }
+            });
+        btnGraficar = (Button) findViewById(R.id.btnGraficar);
+        btnGraficar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(InformesActivity.this, OptionActivityBarChart.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+          listViewMovsInforme.setAdapter(new InformeAdapter(getApplicationContext(), new ArrayList<InformeItem>()));
         ((InformeAdapter)listViewMovsInforme.getAdapter()).setOnDataChangeListener(new InformeAdapter.OnDataChangeListener() {
             @Override
             public void onDataChanged(final ArrayList<InformeItem> informes) {
@@ -210,6 +243,12 @@ public class InformesActivity extends Activity {
         startActivity(in);
         setResult(RESULT_OK);
         finish();
+    }
+
+    public void showInformeDialog(Bundle bundle) {
+        DialogFragment newFragment = new InformeDialog();
+        newFragment.setArguments(bundle);
+        newFragment.show(getFragmentManager(),"INFORME");
     }
 
 }

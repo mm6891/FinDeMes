@@ -3,6 +3,7 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".EditCategoriaGastoDialog">
 
@@ -40,11 +41,12 @@
         android:id="@+id/lyLinear5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal"
         android:layout_below="@+id/lyLinear4">
         <Button
             android:id="@+id/btnModCatGas"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="modificarCategoriaGasto"
             android:text="@string/Modificar"

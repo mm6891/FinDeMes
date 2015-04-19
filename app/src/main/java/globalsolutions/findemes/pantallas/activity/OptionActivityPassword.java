@@ -1,28 +1,16 @@
-package globalsolutions.findemes.pantallas;
+package globalsolutions.findemes.pantallas.activity;
 
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.PasswordDAO;
-import globalsolutions.findemes.database.model.Gasto;
-import globalsolutions.findemes.database.model.GrupoGasto;
-import globalsolutions.findemes.database.model.OptionItem;
 import globalsolutions.findemes.database.model.Password;
 import globalsolutions.findemes.database.util.Constantes;
 import globalsolutions.findemes.pantallas.util.Util;

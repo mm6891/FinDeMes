@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".EditRegistroDialog">
+    >
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/lyLinear1"
@@ -15,16 +14,17 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/EDITAR_REGISTRO"
+            android:text="@string/Periodo"
             android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:layout_weight="1"/>
-        <EditText
-            android:id="@+id/txtRegistro"
+        <TextView
+            android:id="@+id/tvDetalleInformePeriodo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLength="20"
             android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:layout_weight="1"/>
     </LinearLayout>
@@ -33,18 +33,22 @@
         android:id="@+id/lyLinear2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/button_material_light"
         android:orientation="horizontal"
         android:layout_below="@+id/lyLinear1">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Periodicidad"
-            android:textStyle="bold"
+            android:text="@string/TipoInforme"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:layout_weight="1"/>
-        <Spinner android:id="@+id/spPeriodicidad"
+        <TextView
+            android:id="@+id/tvDetalleTipoInforme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
             android:layout_weight="1"/>
     </LinearLayout>
 
@@ -57,13 +61,16 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Tipo"
-            android:textStyle="bold"
+            android:text="@string/Ingresos"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:layout_weight="1"/>
-        <Spinner android:id="@+id/spTipo"
+        <TextView
+            android:id="@+id/tvDetalleIngresosInforme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
             android:layout_weight="1"/>
     </LinearLayout>
 
@@ -72,17 +79,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="@color/button_material_light"
         android:layout_below="@+id/lyLinear3">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Categoria"
-            android:textStyle="bold"
+            android:text="@string/Gastos"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:layout_weight="1"/>
-        <Spinner android:id="@+id/spCategoria"
+        <TextView
+            android:id="@+id/tvDetalleGastosInforme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
             android:layout_weight="1"/>
     </LinearLayout>
 
@@ -95,57 +106,16 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/Valor"
-            android:textStyle="bold"
+            android:text="@string/TotalInforme"
             android:textSize="18sp"
+            android:textColor="@android:color/black"
             android:layout_weight="1"/>
-        <EditText
-            android:id="@+id/txtValor"
+        <TextView
+            android:id="@+id/tvDetalleTotalInforme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:textStyle="bold"
+            android:textColor="@android:color/black"
             android:textSize="18sp"
             android:layout_weight="1"/>
-    </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/lyLinear6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/lyLinear5">
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <RadioButton
-                android:id="@+id/rbActivo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/Activo"
-                />
-            <RadioButton
-                android:id="@+id/rbInActivo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/InActivo"
-                />
-        </RadioGroup>
-    </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/lyLinear7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_below="@+id/lyLinear6">
-        <Button
-            android:id="@+id/btnModificarRegistro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/MODIFICAR_REGISTRO"
-            android:textStyle="bold"
-            android:textSize="18sp" />
     </LinearLayout>
 </RelativeLayout>

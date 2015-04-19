@@ -1,40 +1,38 @@
-package globalsolutions.findemes.pantallas;
+package globalsolutions.findemes.pantallas.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
 import globalsolutions.findemes.R;
-import globalsolutions.findemes.database.model.OptionItem;
 
 /**
  * Created by manuel.molero on 04/02/2015.
  */
 
-public class OptionAdapter extends BaseAdapter{
+public class CategoriaAdapter extends BaseAdapter{
 
     private Context context;
-    private ArrayList<OptionItem> items;
-    int [] imageId;
+    private ArrayList<String> items;
+    private ArrayList<String> itemsFiltrado;
 
-    public OptionAdapter(Context context, ArrayList<OptionItem> items, int[] prgmImages) {
+    public CategoriaAdapter(Context context, ArrayList<String> items) {
         this.context = context;
         this.items = items;
-        this.imageId = prgmImages;
+        this.itemsFiltrado = items;
     }
 
     @Override
     public int getCount() {
-        return this.items.size();
+        return this.itemsFiltrado.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return this.items.get(position);
+        return this.itemsFiltrado.get(position);
     }
 
     @Override
@@ -51,19 +49,22 @@ public class OptionAdapter extends BaseAdapter{
             // Create a new view into the list.
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            rowView = inflater.inflate(R.layout.option_item, parent, false);
+            rowView = inflater.inflate(R.layout.category_item, parent, false);
         }
 
         // Set data into the view.
+        TextView tvDescr = (TextView) rowView.findViewById(R.id.tvCategoria);
+        tvDescr.setText(itemsFiltrado.get(position));
 
-        TextView tvDescr = (TextView) rowView.findViewById(R.id.tvOption);
-
-        OptionItem item = this.items.get(position);
-        tvDescr.setText(item.getDescripcion());
-
-        ImageView ivOption = (ImageView) rowView.findViewById(R.id.ivOption);
-        ivOption.setImageResource(imageId[position]);
+        if(position % 2 == 0)
+            rowView.setBackgroundColor(context.getResources().getColor(R.color.button_material_light));
 
         return rowView;
+    }
+
+    public void updateReceiptsList(ArrayList<String> newlist) {
+        itemsFiltrado.clear();
+        itemsFiltrado.addAll(newlist);
+        this.notifyDataSetChanged();
     }
 }

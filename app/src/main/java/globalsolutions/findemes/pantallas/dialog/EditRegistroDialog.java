@@ -1,4 +1,4 @@
-package globalsolutions.findemes.pantallas;
+package globalsolutions.findemes.pantallas.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;

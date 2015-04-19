@@ -1,4 +1,4 @@
-package globalsolutions.findemes.pantallas;
+package globalsolutions.findemes.pantallas.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -8,7 +8,8 @@ import android.os.Bundle;
 import java.util.Calendar;
 
 import globalsolutions.findemes.R;
-import globalsolutions.findemes.database.util.Constantes;
+import globalsolutions.findemes.pantallas.activity.GastoActivity;
+import globalsolutions.findemes.pantallas.activity.IngresoActivity;
 
 /**
  * Created by manuel.molero on 10/02/2015.

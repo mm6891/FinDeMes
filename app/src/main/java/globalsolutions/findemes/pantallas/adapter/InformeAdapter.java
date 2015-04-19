@@ -1,5 +1,6 @@
-package globalsolutions.findemes.pantallas;
+package globalsolutions.findemes.pantallas.adapter;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +72,7 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
 
         //establer el item segun el tipo de movimiento
         InformeItem item = this.itemsFiltrado.get(position);
+
         if(item.getTipoInforme().equals(context.getResources().getString(R.string.TIPO_FILTRO_RESETEO))){
             rowView = inflater.inflate(R.layout.informe_item, parent, false);
             // Set data into the view.
@@ -102,6 +104,9 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
             tvPeriodo.setText(item.getPeriodoDesc());
             tvIngresoValor.setText(item.getIngresoValor());
         }
+
+        if(position % 2 == 0)
+            rowView.setBackgroundColor(context.getResources().getColor(R.color.button_material_light));
 
         return rowView;
     }

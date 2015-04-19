@@ -151,7 +151,7 @@
         <Button
                 android:id="@+id/imgBtn00"
                 android:textColor="@android:color/black"
-                android:background="@android:color/white"
+                android:background="@drawable/round_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/gasto"
@@ -164,7 +164,7 @@
         <Button
             android:id="@+id/imgBtn01"
             android:textColor="@android:color/black"
-            android:background="@android:color/white"
+            android:background="@drawable/round_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/ingreso"
@@ -177,7 +177,7 @@
         <Button
             android:id="@+id/imgBtn02"
             android:textColor="@android:color/black"
-            android:background="@android:color/white"
+            android:background="@drawable/round_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/movimiento"
@@ -190,7 +190,7 @@
         <Button
             android:id="@+id/imgBtn10"
             android:textColor="@android:color/black"
-            android:background="@android:color/white"
+            android:background="@drawable/round_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/report"
@@ -203,7 +203,7 @@
         <Button
             android:id="@+id/imgBtn11"
             android:textColor="@android:color/black"
-            android:background="@android:color/white"
+            android:background="@drawable/round_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/transaction"
@@ -216,7 +216,7 @@
         <Button
             android:id="@+id/imgBtn12"
             android:textColor="@android:color/black"
-            android:background="@android:color/white"
+            android:background="@drawable/round_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/options"

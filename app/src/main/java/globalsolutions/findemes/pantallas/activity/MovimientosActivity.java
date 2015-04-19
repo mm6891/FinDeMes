@@ -1,8 +1,9 @@
-package globalsolutions.findemes.pantallas;
+package globalsolutions.findemes.pantallas.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,9 +27,10 @@ import globalsolutions.findemes.database.dao.GastoDAO;
 import globalsolutions.findemes.database.dao.IngresoDAO;
 import globalsolutions.findemes.database.dao.MovimientoDAO;
 import globalsolutions.findemes.database.model.MovimientoItem;
-import globalsolutions.findemes.database.model.OptionItem;
 import globalsolutions.findemes.database.util.ArrayAdapterWithIcon;
-import globalsolutions.findemes.database.util.Constantes;
+import globalsolutions.findemes.pantallas.adapter.MovimientoAdapter;
+import globalsolutions.findemes.pantallas.dialog.GastoDialog;
+import globalsolutions.findemes.pantallas.dialog.IngresoDialog;
 import globalsolutions.findemes.pantallas.util.Util;
 
 public class MovimientosActivity extends FragmentActivity implements GastoDialog.OnGastoDialogListener, IngresoDialog.OnIngresoDialogListener{
@@ -261,7 +263,7 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
     }
 
     public String[] creaMeses(){
-        String[] meses = new String[11];
+        String[] meses = new String[12];
         for(int i = 0 ; i < 12 ; i++){
             meses[i] = new DateFormatSymbols().getMonths()[i].toUpperCase();
         }

@@ -2,6 +2,7 @@ package globalsolutions.findemes.database.dao;
 
 import android.content.Context;
 
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -85,9 +86,14 @@ public class MovimientoDAO {
                         m.setValor(registros[i].getValor());
                         m.setDescripcion(registros[i].getDescripcion());
                         //tratamos el caso especial de la fecha
-                        m.setFecha("01/" + String.format("%02d", new Integer(j)) + "/" + String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+                        Date date = new Date(System.currentTimeMillis());
+                        SimpleDateFormat sdfHora = new SimpleDateFormat("kk:mm");
+                        String mTimeHora = sdfHora.format(date);
+                        m.setFecha("01/" + String.format("%02d", new Integer(j)) + "/"
+                                + String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) + " " + mTimeHora);
                         m.setCategoria(registros[i].getGrupo());
                         m.setTipoMovimiento(registros[i].getTipo());
+                        m.setEsFrecuente(true);
                         ret.add(m);
                     }
                 }
@@ -98,9 +104,14 @@ public class MovimientoDAO {
                     m.setValor(registros[i].getValor());
                     m.setDescripcion(registros[i].getDescripcion());
                     //tratamos el caso especial de la fecha
-                    m.setFecha("01/01/" + String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+                    Date date = new Date(System.currentTimeMillis());
+                    SimpleDateFormat sdfHora = new SimpleDateFormat("kk:mm");
+                    String mTimeHora = sdfHora.format(date);
+                    m.setFecha("01/01/" + String.valueOf(Calendar.getInstance().get(Calendar.YEAR))
+                            + " " + mTimeHora);
                     m.setCategoria(registros[i].getGrupo());
                     m.setTipoMovimiento(registros[i].getTipo());
+                    m.setEsFrecuente(true);
                     ret.add(m);
                 }
             }

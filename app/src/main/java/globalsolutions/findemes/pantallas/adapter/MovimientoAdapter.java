@@ -1,5 +1,6 @@
-package globalsolutions.findemes.pantallas;
+package globalsolutions.findemes.pantallas.adapter;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,6 +98,9 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
         if(item.getTipoMovimiento().trim().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO)))
             ivIconMov.setImageResource(R.drawable.plus);
 
+        if(position % 2 == 0)
+            rowView.setBackgroundColor(context.getResources().getColor(R.color.button_material_light));
+
         return rowView;
     }
 
@@ -182,6 +186,7 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                     results.values = nlist;
                     results.count = nlist.size();
                 }
+
                 return results;
             }
 

@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="globalsolutions.findemes" >
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/titulo"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".pantallas.Password">
+            android:name=".pantallas.activity.Password">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -16,41 +15,45 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".pantallas.MainActivity"
+            android:name=".pantallas.activity.MainActivity"
             android:label="@string/titulo" >
         </activity>
         <activity
-            android:name=".pantallas.GastoActivity"
+            android:name=".pantallas.activity.GastoActivity"
             android:label="@string/MENU_GASTOS" >
         </activity>
         <activity
-            android:name=".pantallas.IngresoActivity"
+            android:name=".pantallas.activity.IngresoActivity"
             android:label="@string/MENU_INGRESOS" >
         </activity>
         <activity
-            android:name=".pantallas.MovimientosActivity"
+            android:name=".pantallas.activity.MovimientosActivity"
             android:label="@string/MENU_MOVIMIENTOS" >
         </activity>
         <activity
-            android:name=".pantallas.InformesActivity"
+            android:name=".pantallas.activity.InformesActivity"
             android:label="@string/MENU_INFORMES" >
         </activity>
         <activity
-            android:name=".pantallas.OpcionesActivity"
+            android:name=".pantallas.activity.OpcionesActivity"
             android:label="@string/MENU_OPCIONES" >
         </activity>
         <activity
-            android:name=".pantallas.RegistrosActivity"
+            android:name=".pantallas.activity.RegistrosActivity"
             android:label="@string/MENU_REGISTROS" >
         </activity>
         <activity
-            android:name=".pantallas.OptionActivityPassword"
+            android:name=".pantallas.activity.OptionActivityPassword"
             android:label="@string/OPCIONES_CONTRASENYA" >
         </activity>
         <activity
-            android:name=".pantallas.OptionActivityDatabase"
+            android:name=".pantallas.activity.OptionActivityDatabase"
+            android:label="@string/OPCIONES_BASEDATOS" >
+        </activity>
+        <activity
+            android:name=".pantallas.activity.OptionActivityBarChart"
             android:label="@string/OPCIONES_BASEDATOS" >
         </activity>
     </application>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 </manifest>

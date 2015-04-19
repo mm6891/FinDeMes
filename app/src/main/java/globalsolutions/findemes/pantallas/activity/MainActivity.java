@@ -1,4 +1,4 @@
-package globalsolutions.findemes.pantallas;
+package globalsolutions.findemes.pantallas.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -25,7 +25,6 @@ import globalsolutions.findemes.database.dao.MovimientoDAO;
 import globalsolutions.findemes.database.model.GrupoGasto;
 import globalsolutions.findemes.database.model.GrupoIngreso;
 import globalsolutions.findemes.database.model.MovimientoItem;
-import globalsolutions.findemes.database.util.Constantes;
 import globalsolutions.findemes.database.util.MyDatabaseHelper;
 
 
@@ -123,8 +122,11 @@ public class MainActivity extends Activity {
         gv = (GridLayout) findViewById(R.id.glMenu);
         int anchoBoton = (width/2)  - (px*3);
 
+        final float scale = getApplicationContext().getResources().getDisplayMetrics().density;
+
         for (int i = 0; i < gv.getChildCount(); i++)
         {
+            //anchura
             Button row = (Button)gv.getChildAt(i);
             row.setWidth(anchoBoton);
         }
@@ -175,36 +177,45 @@ public class MainActivity extends Activity {
             MyDatabaseHelper dbHelper = new MyDatabaseHelper(getApplicationContext());
             //GASTOS Y CATEGORIAS DE GASTOS
             GrupoGasto facturas = new GrupoGasto();
-            facturas.setGrupo("Facturas");
+            facturas.setGrupo(getResources().getString(R.string.Grupo_facturas));
             GrupoGasto alimentacion = new GrupoGasto();
-            alimentacion.setGrupo("Alimentacion");
-            GrupoGasto inmueble = new GrupoGasto();
-            inmueble.setGrupo("Inmuebles");
+            alimentacion.setGrupo(getResources().getString(R.string.Grupo_alimentacion));
+            GrupoGasto hipoteca = new GrupoGasto();
+            hipoteca.setGrupo(getResources().getString(R.string.Grupo_hipoteca));
+            GrupoGasto alquiler = new GrupoGasto();
+            alquiler.setGrupo(getResources().getString(R.string.Grupo_alquiler));
             GrupoGasto automocion = new GrupoGasto();
-            automocion.setGrupo("Automoción");
+            automocion.setGrupo(getResources().getString(R.string.Grupo_automocion));
+            GrupoGasto vacaciones = new GrupoGasto();
+            vacaciones.setGrupo(getResources().getString(R.string.Grupo_vacaciones));
             GrupoGasto familia = new GrupoGasto();
-            familia.setGrupo("Familia");
+            familia.setGrupo(getResources().getString(R.string.Grupo_familia));
             GrupoGasto extra = new GrupoGasto();
-            extra.setGrupo("Extra");
+            extra.setGrupo(getResources().getString(R.string.Grupo_extra));
 
             GrupoGastoDAO grupoGastoDAO = new GrupoGastoDAO(getApplicationContext());
             grupoGastoDAO.createRecords(facturas);
             grupoGastoDAO.createRecords(alimentacion);
-            grupoGastoDAO.createRecords(inmueble);
+            grupoGastoDAO.createRecords(hipoteca);
+            grupoGastoDAO.createRecords(alquiler);
             grupoGastoDAO.createRecords(automocion);
+            grupoGastoDAO.createRecords(vacaciones);
             grupoGastoDAO.createRecords(familia);
             grupoGastoDAO.createRecords(extra);
 
             //INGRESOS Y CATEGORIAS DE INGRESOS
             GrupoIngreso nomina = new GrupoIngreso();
-            nomina.setGrupo("Nómina");
+            nomina.setGrupo(getResources().getString(R.string.Grupo_nomina));
             GrupoIngreso prestamo = new GrupoIngreso();
-            prestamo.setGrupo("Prestamo");
+            prestamo.setGrupo(getResources().getString(R.string.Grupo_prestamo));
+            GrupoIngreso ventas = new GrupoIngreso();
+            ventas.setGrupo(getResources().getString(R.string.Grupo_ventas));
             GrupoIngreso iextra = new GrupoIngreso();
-            iextra.setGrupo("Extra");
+            iextra.setGrupo(getResources().getString(R.string.Grupo_extra));
             GrupoIngresoDAO grupoIngresoDAO = new GrupoIngresoDAO(getApplicationContext());
             grupoIngresoDAO.createRecords(nomina);
             grupoIngresoDAO.createRecords(prestamo);
+            grupoIngresoDAO.createRecords(ventas);
             grupoIngresoDAO.createRecords(iextra);
 
             // Don't forget to close database connection

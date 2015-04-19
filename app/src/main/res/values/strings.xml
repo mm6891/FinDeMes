@@ -16,7 +16,7 @@
     <string name="MENU_INGRESOS">Ingreso</string>
     <string name="MENU_MOVIMIENTOS">Movimientos</string>
     <string name="MENU_INFORMES">Informes</string>
-    <string name="MENU_REGISTROS">Movimientos frecuentes</string>
+    <string name="MENU_REGISTROS">Registros</string>
     <string name="MENU_OPCIONES">Opciones</string>
     <string name="titulo">Fin de Mes</string>
     <string name="tituloCategoriaIngresos">Categorías de ingresos</string>
@@ -60,6 +60,9 @@
     <string name="AYUDA_BASEDATOS">Realiza un backup de tu base de datos, se guardará en "Storage Card/findemes/DBFinDeMes.db"</string>
     <string name="Abandonar">¿Esta seguro de abandonar la aplicación?</string>
     <string name="Salir">¿Salir?</string>
+    <string name="Periodo">Periodo</string>
+    <string name="TipoInforme">Tipo Informe:</string>
+    <string name="TotalInforme">Total Informe:</string>
     <!-- MENSAJES TOAST -->
     <string name="Eliminado">¡Eliminado!</string>
     <string name="No_Eliminado">No se ha podido eliminar</string>
@@ -72,10 +75,24 @@
     <string name="No_Creado">No se ha podido crear</string>
     <string name="No_Informes">NO HAY INFORMES ACTUALMENTE</string>
     <string name="No_Movimientos">NO HAY MOVIMIENTOS ACTUALMENTE</string>
+    <string name="No_Registros">NO HAY REGISTROS ACTUALMENTE</string>
+    <string name="Loading">Cargando ...</string>
     <!-- VALIDACIONES XML -->
     <string name="Validacion_Contrasenya">Contraseña errónea</string>
     <string name="Validacion_Nombre">Debe incluir el nombre</string>
     <string name="Validacion_Cantidad">Debe incluir la cantidad</string>
     <string name="Validacion_Descripcion">Debe incluir una breve descripción</string>
     <string name="Validacion_PIN">Debe especificar un PIN de 4 digitos</string>
+    <!-- grupos de gastos -->
+    <string name="Grupo_facturas">Facturas</string>
+    <string name="Grupo_alimentacion">Alimentación</string>
+    <string name="Grupo_hipoteca">Hipoteca</string>
+    <string name="Grupo_alquiler">Alquiler</string>
+    <string name="Grupo_automocion">Automoción</string>
+    <string name="Grupo_vacaciones">Vacaciones</string>
+    <string name="Grupo_familia">Familia</string>
+    <string name="Grupo_nomina">Nómina</string>
+    <string name="Grupo_prestamo">Préstamo</string>
+    <string name="Grupo_ventas">Ventas</string>
+    <string name="Grupo_extra">Extra</string>
     </resources>

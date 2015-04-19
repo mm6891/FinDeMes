@@ -8,6 +8,16 @@ public class MovimientoItem {
     String tipoMovimiento;
     String descripcion;
 
+    public boolean isEsFrecuente() {
+        return esFrecuente;
+    }
+
+    public void setEsFrecuente(boolean esFrecuente) {
+        this.esFrecuente = esFrecuente;
+    }
+
+    boolean esFrecuente;
+
     public int get_id() {
         return _id;
     }
