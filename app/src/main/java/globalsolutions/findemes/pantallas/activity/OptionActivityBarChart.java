@@ -92,7 +92,7 @@ public class OptionActivityBarChart extends Activity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }*/
 
-    /*@Override
+    @Override
     public void onBackPressed() {
         backActivity();
     }
@@ -102,5 +102,5 @@ public class OptionActivityBarChart extends Activity {
         startActivity(in);
         setResult(RESULT_OK);
         finish();
-    }*/
+    }
 }
