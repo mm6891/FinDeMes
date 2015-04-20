@@ -7,6 +7,13 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import globalsolutions.findemes.pantallas.util.Util;
+
 /**
  * Created by manuel.molero on 03/02/2015.
  */
@@ -121,5 +128,26 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             return  false;
         }
         return count > 0;
+    }
+
+    /**
+     * Copies the database file at the specified location over the current
+     * internal application database.
+     * */
+    public boolean importDatabase(String dbPath) throws IOException {
+
+        // Close the SQLiteOpenHelper so it will commit the created empty
+        // database to internal storage.
+        close();
+        File newDb = new File(dbPath);
+        File oldDb = new File(DB_PATH + DATABASE_NAME);
+        if (newDb.exists()) {
+            Util.copyFile(new FileInputStream(newDb), new FileOutputStream(oldDb));
+            // Access the copied database so SQLiteHelper will cache it and mark
+            // it as created.
+            getWritableDatabase().close();
+            return true;
+        }
+        return false;
     }
 }

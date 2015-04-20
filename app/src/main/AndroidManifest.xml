@@ -53,7 +53,8 @@
         </activity>
         <activity
             android:name=".pantallas.activity.OptionActivityBarChart"
-            android:label="@string/OPCIONES_BASEDATOS" >
+            android:label="@string/OPCIONES_BASEDATOS"
+            android:screenOrientation="landscape" >
         </activity>
     </application>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />

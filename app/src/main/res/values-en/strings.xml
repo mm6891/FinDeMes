@@ -95,4 +95,6 @@
     <string name="TotalInforme">Result Report:</string>
     <string name="No_Registros">NO RECORDS</string>
     <string name="Loading">Loading ...</string>
+    <string name="AYUDA_BASEDATOS_IMPORTACION">Importar Base de datos, se sustituirá la actual por la seleccionada</string>
+    <string name="Importar">Importar</string>
 </resources>

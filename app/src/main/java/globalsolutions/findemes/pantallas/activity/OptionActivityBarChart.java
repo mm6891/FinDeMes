@@ -39,14 +39,6 @@ public class OptionActivityBarChart extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chartexample);
 
-        //boton retroceder
-       /* ImageButton btnReturn = (ImageButton) findViewById(R.id.btnBackButton);
-        btnReturn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                backActivity();
-            }
-        });*/
-
         webView =(WebView) findViewById(R.id.chart);
         webView.getSettings().setJavaScriptEnabled(true);
 
@@ -88,11 +80,7 @@ public class OptionActivityBarChart extends Activity {
         webView.loadUrl(url);
     }
 
-    /*public void showToast(String message){
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }*/
-
-    /*@Override
+    @Override
     public void onBackPressed() {
         backActivity();
     }
@@ -102,5 +90,5 @@ public class OptionActivityBarChart extends Activity {
         startActivity(in);
         setResult(RESULT_OK);
         finish();
-    }*/
+    }
 }
