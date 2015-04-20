@@ -63,7 +63,7 @@ public class MovimientoDAO {
             @Override
             public int compare(MovimientoItem o1, MovimientoItem o2) {
                 try {
-                    return f.parse(o1.getFecha()).compareTo(f.parse(o2.getFecha()));
+                    return f.parse(o2.getFecha()).compareTo(f.parse(o1.getFecha()));
                 } catch (ParseException e) {
                     throw new IllegalArgumentException(e);
                 }

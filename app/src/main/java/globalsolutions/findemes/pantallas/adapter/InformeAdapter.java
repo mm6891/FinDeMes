@@ -218,14 +218,15 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
 
                 //si es un gasto o ingreso sin valor, no se incluye en la lista
                 if(tipoMovimiento.equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO)) &&
-                        gastos == (new Double(0.00)))
+                        gastos.equals(new Double(0.00)))
                     continue;
                 if(tipoMovimiento.equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO)) &&
-                        ingresos == (new Double(0.00)))
+                        ingresos.equals(new Double(0.00)))
                     continue;
 
                 InformeItem nuevoInforme = new InformeItem();
                 nuevoInforme.setTipoInforme(tipoMovimiento);
+                nuevoInforme.setMovimientos(movsMes);
 
                 nuevoInforme.setGastoValor(String.valueOf(gastos));
                 nuevoInforme.setIngresoValor(String.valueOf(ingresos));

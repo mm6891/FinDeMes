@@ -58,7 +58,7 @@
     <string name="MAIL">E-Mail</string>
     <string name="CONTRASENYA_AYUDA">Enter your 4-digit password</string>
     <string name="AYUDA_BASEDATOS">Make a backup of your database are stored in "Storage Card/findemes/DBFinDeMes.db"</string>
-    <string name="Abandonar">Exit?</string>
+    <string name="Abandonar">Are you sure?</string>
     <string name="Salir">Exit?</string>
     <!-- MENSAJES TOAST -->
     <string name="Eliminado">Removed!</string>

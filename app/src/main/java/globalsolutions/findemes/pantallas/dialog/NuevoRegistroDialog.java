@@ -25,6 +25,7 @@ import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
 import globalsolutions.findemes.database.dao.RegistroDAO;
 import globalsolutions.findemes.database.model.Registro;
 import globalsolutions.findemes.database.util.Constantes;
+import globalsolutions.findemes.pantallas.util.MoneyValueFilter;
 import globalsolutions.findemes.pantallas.util.Util;
 
 /**
@@ -52,6 +53,9 @@ public class NuevoRegistroDialog extends DialogFragment {
         }
 
         final View view = inflater.inflate(R.layout.nuevo_registro_dialog, container, false);
+
+        //establecemos listener de limitador de digitos
+        ((EditText) view.findViewById(R.id.txtValor)).setKeyListener(new MoneyValueFilter());
 
         //cargamos el combo de periodicidad
         Spinner periodicidad = (Spinner) view.findViewById(R.id.spPeriodicidad);

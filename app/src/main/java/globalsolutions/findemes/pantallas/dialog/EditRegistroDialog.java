@@ -27,6 +27,7 @@ import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
 import globalsolutions.findemes.database.dao.RegistroDAO;
 import globalsolutions.findemes.database.model.Registro;
 import globalsolutions.findemes.database.util.Constantes;
+import globalsolutions.findemes.pantallas.util.MoneyValueFilter;
 import globalsolutions.findemes.pantallas.util.Util;
 
 /**
@@ -54,6 +55,9 @@ public class EditRegistroDialog extends DialogFragment {
         }
 
         final View view = inflater.inflate(R.layout.edit_registro_dialog, container, false);
+
+        //establecemos listener de limitador de digitos
+        ((EditText) view.findViewById(R.id.txtValor)).setKeyListener(new MoneyValueFilter());
 
         //se cargan las propiedades del item seleccionado
         String _id = getArguments().getString("_id");

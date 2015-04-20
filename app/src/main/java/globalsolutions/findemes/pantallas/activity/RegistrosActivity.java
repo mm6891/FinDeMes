@@ -69,7 +69,7 @@ public class RegistrosActivity extends FragmentActivity implements NuevoRegistro
                 final String[] items = {getResources().getString(R.string.Modificar), getResources().getString(R.string.Eliminar)};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(RegistrosActivity.this);
-                builder.setTitle(getResources().getString(R.string.MENU_OPCIONES));
+                //builder.setTitle(getResources().getString(R.string.MENU_OPCIONES));
                 ListAdapter adapter = new ArrayAdapterWithIcon(view.getContext(), items, Util.prgmImagesOption);
                 builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int item) {
@@ -77,7 +77,7 @@ public class RegistrosActivity extends FragmentActivity implements NuevoRegistro
                                 String accion = (String) items[item];
                                 boolean realizado;
 
-                                if (accion.equals(getResources().getString(R.string.Modificar))) {
+                                if (accion.equals(getResources().getString(R.string.Eliminar))) {
                                     RegistroDAO registroDAO = new RegistroDAO(RegistrosActivity.this);
                                     realizado = registroDAO.deleteRegistro(registroItem.get_id());
                                     if (realizado) {
@@ -86,7 +86,7 @@ public class RegistrosActivity extends FragmentActivity implements NuevoRegistro
                                     } else
                                         Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Eliminado));
                                 }
-                                if (accion.equals(getResources().getString(R.string.Eliminar))) {
+                                if (accion.equals(getResources().getString(R.string.Modificar))) {
                                     Bundle bundle = new Bundle();
                                     bundle.putString("_id", String.valueOf(registroItem.get_id()));
                                     bundle.putString("nombre", registroItem.getDescripcion());

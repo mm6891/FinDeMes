@@ -119,10 +119,16 @@ public class GastoActivity extends FragmentActivity implements DatePickerDialog.
             GastoDAO gastoDAO = new GastoDAO(getApplicationContext());
             gastoDAO.createRecords(nuevoGasto);
             Util.showToast(view.getContext(),getResources().getString(R.string.Creado));
+            clear();
         }
         else{
             Util.showToast(view.getContext(),getResources().getString(R.string.Selecciona_categoria));
         }
+    }
+
+    private void clear() {
+        ((EditText) findViewById(R.id.txtGasto)).setText("");
+        ((EditText) findViewById(R.id.txtDecripcion)).setText("");
     }
 
     @Override

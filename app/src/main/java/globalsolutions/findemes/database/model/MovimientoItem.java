@@ -1,5 +1,8 @@
 package globalsolutions.findemes.database.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by manuel.molero on 06/02/2015.
  */
@@ -72,6 +75,4 @@ public class MovimientoItem {
 
     String valor;
     String fecha;
-
-
 }

@@ -55,7 +55,7 @@ public class CategoriasIngresosDialog extends DialogFragment {
                 final String[] items = {getResources().getString(R.string.Modificar), getResources().getString(R.string.Eliminar)};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle(getResources().getString(R.string.MENU_OPCIONES));
+                //builder.setTitle(getResources().getString(R.string.MENU_OPCIONES));
 
                 ListAdapter adapter = new ArrayAdapterWithIcon(view.getContext(), items, Util.prgmImagesOption);
                 builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
