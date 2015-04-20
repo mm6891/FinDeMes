@@ -87,7 +87,7 @@ public class OptionActivityDatabase extends Activity {
             public void onClick(View v) {
                 File mPath = new File(Environment.getExternalStorageDirectory() + "//DIR//");
                 fileDialog = new FileDialog(OptionActivityDatabase.this, mPath);
-                fileDialog.setFileEndsWith(".db");
+                fileDialog.setFileEndsWith(MyDatabaseHelper.DATABASE_NAME);
                 fileDialog.addFileListener(new FileDialog.FileSelectedListener() {
                     public void fileSelected(File file) {
                         MyDatabaseHelper dbHelper = new MyDatabaseHelper(getApplicationContext());

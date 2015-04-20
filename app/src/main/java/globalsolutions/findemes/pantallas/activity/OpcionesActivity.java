@@ -66,11 +66,23 @@ public class OpcionesActivity extends FragmentActivity {
                     case 1:
                         showCategoriasGastosDialog();
                         break;
-                    case 4:
+                    case 2:
                         showDatabaseActivity();
                         break;
-                    case 5:
+                    case 3:
                         showPasswordActivity();
+                        break;
+                    case 4:
+
+                        break;
+                    case 5:
+
+                        break;
+                    case 6:
+
+                        break;
+                    case 7:
+
                         break;
                     default:
                         break;
@@ -117,13 +129,13 @@ public class OpcionesActivity extends FragmentActivity {
         String[] options = {
         getResources().getString(R.string.tituloCategoriaIngresos),
         getResources().getString(R.string.tituloCategoriaGastos),
-        getResources().getString(R.string.OPCIONES_FORMATO_MONEDA),
-        getResources().getString(R.string.OPCIONES_FORMATO_FECHA),
+        //getResources().getString(R.string.OPCIONES_FORMATO_MONEDA),
+        //getResources().getString(R.string.OPCIONES_FORMATO_FECHA),
         getResources().getString(R.string.OPCIONES_BASEDATOS),
         getResources().getString(R.string.OPCIONES_CONTRASENYA),
         getResources().getString(R.string.OPCIONES_CALIFICAR),
         getResources().getString(R.string.OPCIONES_ACERCA_APLICACION),
-        getResources().getString(R.string.OPCIONES_FUNCIONES_PRO),
+        //getResources().getString(R.string.OPCIONES_FUNCIONES_PRO),
         getResources().getString(R.string.OPCIONES_DESARROLLO_CONTACTO),
         getResources().getString(R.string.OPCIONES_AYUDA)};
         return options;
