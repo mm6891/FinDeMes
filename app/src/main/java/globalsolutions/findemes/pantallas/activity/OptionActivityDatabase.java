@@ -102,9 +102,9 @@ public class OptionActivityDatabase extends Activity {
                         }
                     }
                 });
+                fileDialog.showDialog();
             }
         });
-        fileDialog.showDialog();
     }
 
     @Override
