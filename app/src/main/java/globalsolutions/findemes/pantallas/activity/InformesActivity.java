@@ -160,6 +160,12 @@ public class InformesActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(InformesActivity.this, OptionActivityBarChart.class);
+                intent.putExtra("periodo" , (String)spPeriodoFiltro.getSelectedItem());
+                //array de ingresos por trimestre
+                //array de gastos por trimestre
+                //valor maximo, se sacaria de cada array
+
+                //intent.putExtra("ingresos" , );
                 startActivity(intent);
                 finish();
             }
