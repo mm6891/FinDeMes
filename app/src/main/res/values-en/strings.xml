@@ -54,8 +54,7 @@
     <string name="TIPO_FILTRO_RESETEO">ALL</string>
     <string name="AFIRMACION">YES</string>
     <string name="NEGACION">NO</string>
-    <string name="AYUDA_CONTRASENYA">Se establecerá la contraseña y se enviará al correo indicado</string>
-    <string name="MAIL">E-Mail</string>
+    <string name="AYUDA_CONTRASENYA">Se establecerá la contraseña y se enviará al correo indicado mediante tu correo de GMail</string>
     <string name="CONTRASENYA_AYUDA">Enter your 4-digit password</string>
     <string name="AYUDA_BASEDATOS">Make a backup of your database are stored in "Storage Card/findemes/DBFinDeMes.db"</string>
     <string name="Abandonar">Are you sure?</string>
@@ -97,4 +96,14 @@
     <string name="Loading">Loading ...</string>
     <string name="AYUDA_BASEDATOS_IMPORTACION">Importar Base de datos, se sustituirá la actual por la seleccionada</string>
     <string name="Importar">Importar</string>
+    <string name="Usuario">User</string>
+    <string name="Asunto">Password app FinDeMes</string>
+    <string name="Cuerpo">Esta es tu contraseña para acceder a la app FinDeMes:</string>
+    <string name="MAILFROM">E-Mail From</string>
+    <string name="MAILTO">E-Mail To</string>
+    <string name="Validacion_Correo">Correo usuario requerido</string>
+    <string name="Validacion_Correo_destino">Correo destino requerido</string>
+    <string name="Validacion_Correo_password">Password requerido</string>
+    <string name="Validacion_Correo_usuario">Usuario requerido</string>
+    <string name="Validacion_Correo_envio">Envio de correo no valido, revise su configuracion</string>
 </resources>

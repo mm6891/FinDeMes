@@ -23,8 +23,9 @@ import globalsolutions.findemes.pantallas.dialog.CategoriasIngresosDialog;
  */
 public class OpcionesActivity extends FragmentActivity {
 
-    public static int [] prgmImages={R.drawable.plusoption,R.drawable.minusoption,R.drawable.dollaroption,
-            R.drawable.calendaroption,R.drawable.databaseoption,R.drawable.padlockicon,R.drawable.staroption,
+    public static int [] prgmImages={R.drawable.plusoption,R.drawable.minusoption,
+            /*R.drawable.dollaroption,R.drawable.calendaroption,*/
+            R.drawable.databaseoption,R.drawable.padlockicon,R.drawable.staroption,
             R.drawable.appoption,R.drawable.prooption,R.drawable.developeroption,R.drawable.interrogationoption};
 
     private ListView listViewOptions;
@@ -84,6 +85,9 @@ public class OpcionesActivity extends FragmentActivity {
                     case 7:
 
                         break;
+                    case 8:
+
+                        break;
                     default:
                         break;
                 }
@@ -135,7 +139,7 @@ public class OpcionesActivity extends FragmentActivity {
         getResources().getString(R.string.OPCIONES_CONTRASENYA),
         getResources().getString(R.string.OPCIONES_CALIFICAR),
         getResources().getString(R.string.OPCIONES_ACERCA_APLICACION),
-        //getResources().getString(R.string.OPCIONES_FUNCIONES_PRO),
+        getResources().getString(R.string.OPCIONES_FUNCIONES_PRO),
         getResources().getString(R.string.OPCIONES_DESARROLLO_CONTACTO),
         getResources().getString(R.string.OPCIONES_AYUDA)};
         return options;
