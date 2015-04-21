@@ -3,9 +3,11 @@ package globalsolutions.findemes.pantallas.util;
 /**
  * Created by manuel.molero on 21/04/2015.
  */
+import android.content.Context;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
@@ -18,7 +20,9 @@ import java.io.OutputStream;
 import java.security.Security;
 import java.util.Properties;
 
-public class GMailSender extends javax.mail.Authenticator {
+import globalsolutions.findemes.R;
+
+public class GMailSender extends javax.mail.Authenticator{
     private String mailhost = "smtp.gmail.com";
     private String user;
     private String password;
@@ -50,9 +54,10 @@ public class GMailSender extends javax.mail.Authenticator {
         return new PasswordAuthentication(user, password);
     }
 
-    public synchronized void sendMail(String subject, String body, String sender, String recipients) throws Exception {
+    public synchronized void sendMail(String subject, String body, String sender, String recipients, Context context) throws Exception {
+        final MimeMessage message = new MimeMessage(session);
+        final Context cntx = context;
         try{
-            MimeMessage message = new MimeMessage(session);
             DataHandler handler = new DataHandler(new ByteArrayDataSource(body.getBytes(), "text/plain"));
             message.setSender(new InternetAddress(sender));
             message.setSubject(subject);
@@ -61,9 +66,19 @@ public class GMailSender extends javax.mail.Authenticator {
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));
             else
                 message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipients));
-            Transport.send(message);
+            //Transport.send(message);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Transport.send(message);
+                    } catch (MessagingException e) {
+                        return;
+                    }
+                }
+            }).start();
         }catch(Exception e){
-
+            Util.showToast(context , context.getResources().getString(R.string.Validacion_Correo_envio));
         }
     }
 

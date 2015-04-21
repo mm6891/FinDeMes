@@ -32,6 +32,7 @@ public class OptionActivityPassword extends Activity {
     private RadioButton rbPassInActivo;
 
     private Button guardar;
+    private Button enviar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,19 +68,7 @@ public class OptionActivityPassword extends Activity {
             @Override
             public void onClick(View v) {
 
-                if(validaCampos()) {
-                    //Envio de correo
-                    try {
-                        GMailSender sender = new GMailSender(txtUserFom.getText().toString(), txtPasswordFrom.getText().toString());
-                        sender.sendMail(getResources().getString(R.string.Asunto),
-                                getResources().getString(R.string.Asunto) + " " + txtPassword.getText().toString(),
-                                txtUserFom.getText().toString(),
-                                txtMailTo.getText().toString());
-                    } catch (Exception e) {
-                        Util.showToast(getApplicationContext(), getResources().getString(R.string.Validacion_Correo_envio));
-                        return;
-                    }
-
+                if(validaCamposPasswordLocal()) {
                     //objeto password
                     Password nuevaPass = new Password();
                     nuevaPass.setPassword(txtPassword.getText().toString());
@@ -91,28 +80,51 @@ public class OptionActivityPassword extends Activity {
 
                     PasswordDAO passwordDAO = new PasswordDAO(getApplicationContext());
                     if (pass != null && !pass.isEmpty()) {
-                        boolean actualizado = passwordDAO.updatePassword(password,nuevaPass);
-                        if(actualizado)
+                        boolean actualizado = passwordDAO.updatePassword(password, nuevaPass);
+                        if (actualizado)
                             Util.showToast(getApplicationContext(), getResources().getString(R.string.Modificado));
-                    }
-                    else {
+                    } else {
                         boolean insertada = passwordDAO.createRecords(nuevaPass) > 0;
-                        if(insertada)
+                        if (insertada)
                             Util.showToast(getApplicationContext(), getResources().getString(R.string.Creado));
                     }
                 }
             }
         });
 
+        enviar = (Button) findViewById(R.id.btnEnviarCorreo);
+        enviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(validaCamposPasswordLocal() && validaCamposEnvioCorreo()) {
+                    //Envio de correo
+                    try {
+                        GMailSender sender = new GMailSender(txtUserFom.getText().toString(), txtPasswordFrom.getText().toString());
+                        sender.sendMail(getResources().getString(R.string.Asunto),
+                                getResources().getString(R.string.Cuerpo) + " " + txtPassword.getText().toString(),
+                                txtUserFom.getText().toString(),
+                                txtMailTo.getText().toString(), getApplicationContext());
+                    } catch (Exception e) {
+                        Util.showToast(getApplicationContext(), getResources().getString(R.string.Validacion_Correo_envio));
+                        return;
+                    }
+                }
+            }
+        });
     }
 
-    public boolean validaCampos(){
-        //obtenemos password y mail
+    public boolean validaCamposPasswordLocal(){
+        //password
         String pass = txtPassword.getText().toString();
         if(pass == null || pass.isEmpty()) {
             ((EditText) findViewById(R.id.txtContrasena)).setError(getResources().getString(R.string.Validacion_PIN));
             return false;
         }
+
+        return true;
+    }
+
+    public boolean validaCamposEnvioCorreo(){
         String userFrom = txtUserFom.getText().toString();
         if(userFrom == null || userFrom.isEmpty() || !userFrom.contains("@")) {
             ((EditText) findViewById(R.id.txtUserFrom)).setError(getResources().getString(R.string.Validacion_Correo_usuario));

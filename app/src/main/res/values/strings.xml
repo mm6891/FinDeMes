@@ -55,7 +55,7 @@
     <string name="TIPO_FILTRO_RESETEO">TODO</string>
     <string name="AFIRMACION">SI</string>
     <string name="NEGACION">NO</string>
-    <string name="AYUDA_CONTRASENYA">Se establecerá la contraseña y se enviará al correo indicado mediante tu correo de GMail</string>
+    <string name="AYUDA_CONTRASENYA">Opcionalmente puedes enviar la contraseña a un correo indicado mediante tu correo de GMail</string>
     <string name="MAILFROM">Correo de</string>
     <string name="MAILTO">Correo para</string>
     <string name="CONTRASENYA_AYUDA">Introduce tu contraseña de 4 dígitos</string>
@@ -69,6 +69,7 @@
     <string name="Usuario">Usuario</string>
     <string name="Asunto">Contraseña app FinDeMes</string>
     <string name="Cuerpo">Esta es tu contraseña para acceder a la app FinDeMes:</string>
+    <string name="Enviar">Enviar</string>
     <!-- MENSAJES TOAST -->
     <string name="Eliminado">¡Eliminado!</string>
     <string name="No_Eliminado">No se ha podido eliminar</string>

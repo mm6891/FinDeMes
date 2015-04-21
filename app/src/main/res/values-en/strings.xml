@@ -54,7 +54,7 @@
     <string name="TIPO_FILTRO_RESETEO">ALL</string>
     <string name="AFIRMACION">YES</string>
     <string name="NEGACION">NO</string>
-    <string name="AYUDA_CONTRASENYA">Se establecerá la contraseña y se enviará al correo indicado mediante tu correo de GMail</string>
+    <string name="AYUDA_CONTRASENYA">Opcionalmente puedes enviar la contraseña a un correo indicado mediante tu correo de GMail</string>
     <string name="CONTRASENYA_AYUDA">Enter your 4-digit password</string>
     <string name="AYUDA_BASEDATOS">Make a backup of your database are stored in "Storage Card/findemes/DBFinDeMes.db"</string>
     <string name="Abandonar">Are you sure?</string>
