@@ -28,94 +28,10 @@
             android:textSize="18sp"
             android:layout_weight="1"/>
     </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/lyLinear2"
+    <ListView
+        android:id="@+id/listViewMovInforme"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/button_material_light"
-        android:orientation="horizontal"
-        android:layout_below="@+id/lyLinear1">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/TipoInforme"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/tvDetalleTipoInforme"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:layout_weight="1"/>
-    </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/lyLinear3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/lyLinear2">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Ingresos"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/tvDetalleIngresosInforme"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:layout_weight="1"/>
-    </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/lyLinear4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/button_material_light"
-        android:layout_below="@+id/lyLinear3">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Gastos"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/tvDetalleGastosInforme"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@android:color/black"
-            android:layout_weight="1"/>
-    </LinearLayout>
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/lyLinear5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/lyLinear4">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/TotalInforme"
-            android:textSize="18sp"
-            android:textColor="@android:color/black"
-            android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/tvDetalleTotalInforme"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:layout_weight="1"/>
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/lyLinear1"
+       />
 </RelativeLayout>

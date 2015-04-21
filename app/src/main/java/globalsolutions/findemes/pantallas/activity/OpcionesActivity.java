@@ -23,8 +23,9 @@ import globalsolutions.findemes.pantallas.dialog.CategoriasIngresosDialog;
  */
 public class OpcionesActivity extends FragmentActivity {
 
-    public static int [] prgmImages={R.drawable.plusoption,R.drawable.minusoption,R.drawable.dollaroption,
-            R.drawable.calendaroption,R.drawable.databaseoption,R.drawable.padlockicon,R.drawable.staroption,
+    public static int [] prgmImages={R.drawable.plusoption,R.drawable.minusoption,
+            /*R.drawable.dollaroption,R.drawable.calendaroption,*/
+            R.drawable.databaseoption,R.drawable.padlockicon,R.drawable.staroption,
             R.drawable.appoption,R.drawable.prooption,R.drawable.developeroption,R.drawable.interrogationoption};
 
     private ListView listViewOptions;
@@ -66,11 +67,26 @@ public class OpcionesActivity extends FragmentActivity {
                     case 1:
                         showCategoriasGastosDialog();
                         break;
-                    case 4:
+                    case 2:
                         showDatabaseActivity();
                         break;
-                    case 5:
+                    case 3:
                         showPasswordActivity();
+                        break;
+                    case 4:
+
+                        break;
+                    case 5:
+
+                        break;
+                    case 6:
+
+                        break;
+                    case 7:
+
+                        break;
+                    case 8:
+
                         break;
                     default:
                         break;
@@ -117,8 +133,8 @@ public class OpcionesActivity extends FragmentActivity {
         String[] options = {
         getResources().getString(R.string.tituloCategoriaIngresos),
         getResources().getString(R.string.tituloCategoriaGastos),
-        getResources().getString(R.string.OPCIONES_FORMATO_MONEDA),
-        getResources().getString(R.string.OPCIONES_FORMATO_FECHA),
+        //getResources().getString(R.string.OPCIONES_FORMATO_MONEDA),
+        //getResources().getString(R.string.OPCIONES_FORMATO_FECHA),
         getResources().getString(R.string.OPCIONES_BASEDATOS),
         getResources().getString(R.string.OPCIONES_CONTRASENYA),
         getResources().getString(R.string.OPCIONES_CALIFICAR),

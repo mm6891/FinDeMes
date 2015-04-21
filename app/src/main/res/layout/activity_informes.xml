@@ -60,13 +60,13 @@
         android:layout_below="@+id/lyLinearFiltroMov"
         android:layout_weight="1"
         android:layout_above="@+id/glResumenInformes" />
-    <Button
+    <ImageButton
         android:id="@+id/btnGraficar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
-        android:drawableTop="@drawable/report"
+        android:src="@drawable/report"
         android:textStyle="bold"
         android:textSize="18sp"
         android:layout_below="@+id/listViewMovInforme"

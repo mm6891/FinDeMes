@@ -1,13 +1,28 @@
 package globalsolutions.findemes.database.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
+
 /**
  * Created by manuel.molero on 06/02/2015.
  */
-public class InformeItem {
+public class InformeItem implements Parcelable{
 
     String periodoDesc;
     String ingresoValor;
     String gastoValor;
+
+    public ArrayList<MovimientoItem> getMovimientos() {
+        return movimientos;
+    }
+
+    public void setMovimientos(ArrayList<MovimientoItem> movimientos) {
+        this.movimientos = movimientos;
+    }
+
+    ArrayList<MovimientoItem> movimientos;
 
     public String getTipoInforme() {
         return tipoInforme;
@@ -53,4 +68,17 @@ public class InformeItem {
 
     String totalValor;
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(getPeriodoDesc());
+        dest.writeString(getIngresoValor());
+        dest.writeString(getGastoValor());
+        dest.writeString(getTotalValor());
+        dest.writeArray(this.getMovimientos().toArray());
+    }
 }

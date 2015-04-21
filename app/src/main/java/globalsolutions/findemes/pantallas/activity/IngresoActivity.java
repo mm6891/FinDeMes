@@ -118,11 +118,17 @@ public class IngresoActivity extends FragmentActivity implements DatePickerDialo
             IngresoDAO ingresoDAO = new IngresoDAO(getApplicationContext());
             ingresoDAO.createRecords(nuevoIngreso);
             Util.showToast(view.getContext(), getResources().getString(R.string.Creado));
+            clear();
         }
         else{
             Util.showToast(view.getContext(), getResources().getString(R.string.Selecciona_categoria));
             return;
         }
+    }
+
+    private void clear() {
+        ((EditText) findViewById(R.id.txtIngreso)).setText("");
+        ((EditText) findViewById(R.id.txtDecripcion)).setText("");
     }
 
     @Override

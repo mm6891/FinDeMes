@@ -150,11 +150,7 @@ public class InformesActivity extends Activity {
                                         long id) {
                     final InformeItem itemSeleccionado = (InformeItem) listViewMovsInforme.getItemAtPosition(position);
                     Bundle bundle = new Bundle();
-                    bundle.putString("periodo", itemSeleccionado.getPeriodoDesc());
-                    bundle.putString("tipo", itemSeleccionado.getTipoInforme());
-                    bundle.putString("ingresos", itemSeleccionado.getIngresoValor());
-                    bundle.putString("gastos", itemSeleccionado.getGastoValor());
-                    bundle.putString("total", itemSeleccionado.getTotalValor());
+                    bundle.putParcelable("informe", (android.os.Parcelable) itemSeleccionado);
 
                     showInformeDialog(bundle);
                 }
@@ -164,6 +160,12 @@ public class InformesActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(InformesActivity.this, OptionActivityBarChart.class);
+                intent.putExtra("periodo" , (String)spPeriodoFiltro.getSelectedItem());
+                //array de ingresos por trimestre
+                //array de gastos por trimestre
+                //valor maximo, se sacaria de cada array
+
+                //intent.putExtra("ingresos" , );
                 startActivity(intent);
                 finish();
             }

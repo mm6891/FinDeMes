@@ -18,12 +18,12 @@ import globalsolutions.findemes.pantallas.util.Util;
 public class Password extends Activity implements View.OnClickListener {
 
     public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         if (getIntent().getBooleanExtra("EXIT", false))
         {
             finish();
             return;
         }
-        super.onCreate(savedInstanceState);
         PasswordDAO passwordDAO = new PasswordDAO(getApplicationContext());
         globalsolutions.findemes.database.model.Password password = passwordDAO.selectPassword();
         String pass = password.getPassword();

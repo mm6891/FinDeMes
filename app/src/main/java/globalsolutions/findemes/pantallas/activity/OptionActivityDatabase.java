@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -16,6 +17,7 @@ import java.nio.channels.FileChannel;
 
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.util.MyDatabaseHelper;
+import globalsolutions.findemes.pantallas.util.FileDialog;
 import globalsolutions.findemes.pantallas.util.Util;
 
 
@@ -28,6 +30,8 @@ public class OptionActivityDatabase extends Activity {
 
 
     private Button guardar;
+    private Button importar;
+    private FileDialog fileDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +64,7 @@ public class OptionActivityDatabase extends Activity {
                                 backupDB.getParentFile().mkdirs();
 
                             if (currentDB.exists()) {
-                                FileChannel src = new FileInputStream(currentDB).getChannel();
-                                FileChannel dst = new FileOutputStream(backupDB).getChannel();
-                                dst.transferFrom(src, 0, src.size());
-                                src.close();
-                                dst.close();
+                                Util.copyFile(new FileInputStream(currentDB), new FileOutputStream(backupDB));
                                 Util.showToast(getApplicationContext(), getResources().getString(R.string.Creado));
                             }
                         }
@@ -81,6 +81,30 @@ public class OptionActivityDatabase extends Activity {
             }
         });
 
+        importar = (Button) findViewById(R.id.btnImportarDB);
+        importar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File mPath = new File(Environment.getExternalStorageDirectory() + "//DIR//");
+                fileDialog = new FileDialog(OptionActivityDatabase.this, mPath);
+                fileDialog.setFileEndsWith(MyDatabaseHelper.DATABASE_NAME);
+                fileDialog.addFileListener(new FileDialog.FileSelectedListener() {
+                    public void fileSelected(File file) {
+                        MyDatabaseHelper dbHelper = new MyDatabaseHelper(getApplicationContext());
+                        try {
+                            boolean realizado = dbHelper.importDatabase(file.getPath());
+                            if(realizado)
+                                Util.showToast(getApplicationContext(), getResources().getString(R.string.Creado));
+                            else
+                                Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Creado));
+                        } catch (IOException e) {
+                            Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Creado));
+                        }
+                    }
+                });
+                fileDialog.showDialog();
+            }
+        });
     }
 
     @Override

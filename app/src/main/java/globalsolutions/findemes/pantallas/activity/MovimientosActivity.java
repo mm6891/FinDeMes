@@ -156,7 +156,7 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                     final String[] items = {getResources().getString(R.string.Modificar), getResources().getString(R.string.Eliminar)};
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(MovimientosActivity.this);
-                    builder.setTitle(getResources().getString(R.string.MENU_OPCIONES));
+                    //builder.setTitle(getResources().getString(R.string.MENU_OPCIONES));
 
                     ListAdapter adapter = new ArrayAdapterWithIcon(getApplicationContext(), items, Util.prgmImagesOption);
                     builder.setAdapter(adapter,new DialogInterface.OnClickListener() {

@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:textSize="18sp"
-            android:layout_weight="1"
+            android:layout_weight="0.7"
             />
         <ImageView
             android:src="@drawable/plus"
