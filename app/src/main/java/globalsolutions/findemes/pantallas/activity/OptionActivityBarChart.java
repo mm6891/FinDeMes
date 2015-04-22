@@ -21,6 +21,12 @@ import com.googlecode.charts4j.LinearGradientFill;
 import com.googlecode.charts4j.Plots;
 import com.googlecode.charts4j.Color;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
 import globalsolutions.findemes.R;
 
 
@@ -42,34 +48,47 @@ public class OptionActivityBarChart extends Activity {
         webView =(WebView) findViewById(R.id.chart);
         webView.getSettings().setJavaScriptEnabled(true);
 
-        //ejemplo
-        // EXAMPLE CODE START
+        double[] ingresos = getIntent().getExtras().getDoubleArray("ingresos");
+        double[] gastos = getIntent().getExtras().getDoubleArray("gastos");
+        String[] ejeX = getIntent().getExtras().getStringArray("ejeX");
+
+        double max = 0.00;
+        for(int i = 0 ; i < ingresos.length; i++){
+            if(ingresos[i] > max){
+                max = ingresos[i];
+            }
+        }
+        for(int i = 0 ; i < gastos.length; i++){
+            if(gastos[i] > max){
+                max = gastos[i];
+            }
+        }
+
         // Defining data plots.
-        BarChartPlot team1 = Plots.newBarChartPlot(Data.newData(25, 43, 12, 30), Color.BLUEVIOLET, "Team A");
-        BarChartPlot team2 = Plots.newBarChartPlot(Data.newData(8, 35, 11, 5), Color.ORANGERED, "Team B");
-        BarChartPlot team3 = Plots.newBarChartPlot(Data.newData(10, 20, 30, 30), Color.LIMEGREEN, "Team C");
+        BarChartPlot barraIngreso = Plots.newBarChartPlot(Data.newData(ingresos), Color.BLUEVIOLET, "Ingreso");
+        BarChartPlot barraGasto = Plots.newBarChartPlot(Data.newData(gastos), Color.ORANGERED, "Gasto");
 
         // Instantiating chart.
-        BarChart chart = GCharts.newBarChart(team1, team2, team3);
+        BarChart chart = GCharts.newBarChart(barraIngreso,barraGasto);
 
         // Defining axis info and styles
         AxisStyle axisStyle = AxisStyle.newAxisStyle(Color.BLACK, 13, AxisTextAlignment.CENTER);
-        AxisLabels score = AxisLabelsFactory.newAxisLabels("Score", 50.0);
-        score.setAxisStyle(axisStyle);
-        AxisLabels year = AxisLabelsFactory.newAxisLabels("Year", 50.0);
+        AxisLabels money = AxisLabelsFactory.newAxisLabels("Efectivo", 50.0);
+        money.setAxisStyle(axisStyle);
+        AxisLabels year = AxisLabelsFactory.newAxisLabels(getIntent().getExtras().getString("anyo"), 50.0);
         year.setAxisStyle(axisStyle);
 
         // Adding axis info to chart.
-        chart.addXAxisLabels(AxisLabelsFactory.newAxisLabels("2002", "2003", "2004", "2005"));
-        chart.addYAxisLabels(AxisLabelsFactory.newNumericRangeAxisLabels(0, 100));
-        chart.addYAxisLabels(score);
+        chart.addXAxisLabels(AxisLabelsFactory.newAxisLabels(ejeX));
+        chart.addYAxisLabels(AxisLabelsFactory.newNumericRangeAxisLabels(0, max));
+        chart.addYAxisLabels(money);
         chart.addXAxisLabels(year);
 
         chart.setSize(600, 450);
         chart.setBarWidth(100);
         chart.setSpaceWithinGroupsOfBars(20);
         chart.setDataStacked(true);
-        chart.setTitle("Team Scores", Color.BLACK, 16);
+        chart.setTitle("Grafico de Informes", Color.BLACK, 16);
         chart.setGrid(100, 10, 3, 2);
         chart.setBackgroundFill(Fills.newSolidFill(Color.ALICEBLUE));
         LinearGradientFill fill = Fills.newLinearGradientFill(0, Color.LAVENDER, 100);

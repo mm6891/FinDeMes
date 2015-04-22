@@ -51,6 +51,10 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
         return this.itemsFiltrado.size();
     }
 
+    public ArrayList<InformeItem> getItemsActuales(){
+        return this.itemsFiltrado;
+    }
+
     @Override
     public Object getItem(int position) {
         return this.itemsFiltrado.get(position);

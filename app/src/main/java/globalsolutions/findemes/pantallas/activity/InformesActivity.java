@@ -160,12 +160,21 @@ public class InformesActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(InformesActivity.this, OptionActivityBarChart.class);
-                intent.putExtra("periodo" , (String)spPeriodoFiltro.getSelectedItem());
-                //array de ingresos por trimestre
-                //array de gastos por trimestre
-                //valor maximo, se sacaria de cada array
+                intent.putExtra("anyo" , (String)spPeriodoFiltro.getSelectedItem());
 
-                //intent.putExtra("ingresos" , );
+                ArrayList<InformeItem> informes = ((InformeAdapter)listViewMovsInforme.getAdapter()).getItemsActuales();
+                double[] valoresIngresos = new double[informes.size()];
+                double[] valoresGastos = new double[informes.size()];
+                String[] ejeX = new String[informes.size()];
+                for(int i = 0 ; i < informes.size() ; i++){
+                    valoresIngresos[i] = Double.valueOf(informes.get(i).getIngresoValor());
+                    valoresGastos[i] = Double.valueOf(informes.get(i).getGastoValor());
+                    ejeX[i] = informes.get(i).getPeriodoDesc();
+                }
+
+                intent.putExtra("ingresos" , valoresIngresos);
+                intent.putExtra("gastos" , valoresGastos);
+                intent.putExtra("ejeX" , ejeX);
                 startActivity(intent);
                 finish();
             }
