@@ -153,60 +153,61 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                                         long id) {
 
                     final MovimientoItem movSeleccionado = (MovimientoItem) listViewMovs.getItemAtPosition(position);
-                    final String[] items = {getResources().getString(R.string.Modificar), getResources().getString(R.string.Eliminar)};
+                    if (!movSeleccionado.isEsFrecuente()) {
+                        final String[] items = {getResources().getString(R.string.Modificar), getResources().getString(R.string.Eliminar)};
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MovimientosActivity.this);
-                    //builder.setTitle(getResources().getString(R.string.MENU_OPCIONES));
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MovimientosActivity.this);
+                        //builder.setTitle(getResources().getString(R.string.MENU_OPCIONES));
 
-                    ListAdapter adapter = new ArrayAdapterWithIcon(getApplicationContext(), items, Util.prgmImagesOption);
-                    builder.setAdapter(adapter,new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int item) {
-                                    //Eliminar Movimiento
-                                    String accion = (String) items[item];
-                                    boolean realizado;
+                        ListAdapter adapter = new ArrayAdapterWithIcon(getApplicationContext(), items, Util.prgmImagesOption);
+                        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int item) {
+                                        //Eliminar Movimiento
+                                        String accion = (String) items[item];
+                                        boolean realizado;
 
-                                    if (accion.equals(getResources().getString(R.string.Eliminar))) {
-                                        if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
-                                            GastoDAO gastoDAO = new GastoDAO(MovimientosActivity.this);
-                                            realizado = gastoDAO.deleteGasto(movSeleccionado.get_id());
-                                            if (realizado) {
-                                                Util.showToast(getApplicationContext(), getResources().getString(R.string.Eliminado));
-                                                ArrayList<MovimientoItem> newList = new MovimientoDAO().cargaMovimientos(getApplicationContext());
-                                                ((MovimientoAdapter) listViewMovs.getAdapter()).updateReceiptsList(newList);
-                                            } else
-                                                Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Eliminado));
+                                        if (accion.equals(getResources().getString(R.string.Eliminar))) {
+                                            if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
+                                                GastoDAO gastoDAO = new GastoDAO(MovimientosActivity.this);
+                                                realizado = gastoDAO.deleteGasto(movSeleccionado.get_id());
+                                                if (realizado) {
+                                                    Util.showToast(getApplicationContext(), getResources().getString(R.string.Eliminado));
+                                                    actualizarFiltro(String.valueOf(Activity.RESULT_OK));
+                                                } else
+                                                    Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Eliminado));
+                                            }
+                                            if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO))) {
+                                                IngresoDAO ingresoDAO = new IngresoDAO(MovimientosActivity.this);
+                                                realizado = ingresoDAO.deleteIngreso(movSeleccionado.get_id());
+                                                if (realizado) {
+                                                    Util.showToast(getApplicationContext(), getResources().getString(R.string.Eliminado));
+                                                    actualizarFiltro(String.valueOf(Activity.RESULT_OK));
+                                                } else
+                                                    Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Eliminado));
+                                            }
                                         }
-                                        if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO))) {
-                                            IngresoDAO ingresoDAO = new IngresoDAO(MovimientosActivity.this);
-                                            realizado = ingresoDAO.deleteIngreso(movSeleccionado.get_id());
-                                            if (realizado) {
-                                                Util.showToast(getApplicationContext(), getResources().getString(R.string.Eliminado));
-                                                ArrayList<MovimientoItem> newList = new MovimientoDAO().cargaMovimientos(getApplicationContext());
-                                                ((MovimientoAdapter) listViewMovs.getAdapter()).updateReceiptsList(newList);
-                                            } else
-                                                Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Eliminado));
-                                        }
-                                    }
-                                    if (accion.equals(getResources().getString(R.string.Modificar))) {
-                                        Bundle bundle = new Bundle();
-                                        bundle.putString("_id", String.valueOf(movSeleccionado.get_id()));
-                                        bundle.putString("valor", movSeleccionado.getValor());
-                                        bundle.putString("descripcion", movSeleccionado.getDescripcion());
-                                        bundle.putString("categoria", movSeleccionado.getCategoria());
-                                        bundle.putString("fecha", movSeleccionado.getFecha());
+                                        if (accion.equals(getResources().getString(R.string.Modificar))) {
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("_id", String.valueOf(movSeleccionado.get_id()));
+                                            bundle.putString("valor", movSeleccionado.getValor());
+                                            bundle.putString("descripcion", movSeleccionado.getDescripcion());
+                                            bundle.putString("categoria", movSeleccionado.getCategoria());
+                                            bundle.putString("fecha", movSeleccionado.getFecha());
 
-                                        if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))){
-                                            // Create an instance of the dialog fragment and show it*/
-                                            showGastoDialog(view, bundle);
-                                        }
-                                        else if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO))) {
-                                            // Create an instance of the dialog fragment and show it*/
-                                            showIngresoDialog(view, bundle);
+                                            if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
+                                                // Create an instance of the dialog fragment and show it*/
+                                                showGastoDialog(view, bundle);
+                                            } else if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO))) {
+                                                // Create an instance of the dialog fragment and show it*/
+                                                showIngresoDialog(view, bundle);
+                                            }
                                         }
                                     }
                                 }
-                            }
-                    ).show();
+                        ).show();
+                    }
+                    else
+                        Util.showToast(getApplicationContext(), getResources().getString(R.string.MovimientoFrecuente));
                 }
             });
         //}

@@ -70,6 +70,7 @@
     <string name="Asunto">Contraseña app FinDeMes</string>
     <string name="Cuerpo">Esta es tu contraseña para acceder a la app FinDeMes:</string>
     <string name="Enviar">Enviar</string>
+    <string name="MovimientoFrecuente">Los movimientos frecuentes no se pueden editar desde Movimientos</string>
     <!-- MENSAJES TOAST -->
     <string name="Eliminado">¡Eliminado!</string>
     <string name="No_Eliminado">No se ha podido eliminar</string>

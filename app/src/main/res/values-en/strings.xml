@@ -106,4 +106,6 @@
     <string name="Validacion_Correo_password">Password requerido</string>
     <string name="Validacion_Correo_usuario">Usuario requerido</string>
     <string name="Validacion_Correo_envio">Envio de correo no valido, revise su configuracion</string>
+    <string name="Enviar">Send</string>
+    <string name="MovimientoFrecuente">Los movimientos frecuentes no se pueden editar desde Movimientos</string>
 </resources>

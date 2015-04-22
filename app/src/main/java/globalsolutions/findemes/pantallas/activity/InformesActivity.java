@@ -42,7 +42,7 @@ public class InformesActivity extends Activity {
     private Spinner spPeriodoFiltro;
 
     private ListView listViewMovsInforme;
-    private Button btnGraficar;
+    private ImageButton btnGraficar;
 
     //this counts how many Spinner's are on the UI
     private int mSpinnerCount=0;
@@ -155,7 +155,7 @@ public class InformesActivity extends Activity {
                     showInformeDialog(bundle);
                 }
             });
-        btnGraficar = (Button) findViewById(R.id.btnGraficar);
+        btnGraficar = (ImageButton) findViewById(R.id.btnGraficar);
         btnGraficar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

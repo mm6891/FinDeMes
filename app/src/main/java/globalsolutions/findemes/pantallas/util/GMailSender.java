@@ -74,6 +74,7 @@ public class GMailSender extends javax.mail.Authenticator{
                         Transport.send(message);
                     } catch (MessagingException e) {
                         return;
+                        //Util.showToast(cntx , cntx.getResources().getString(R.string.Validacion_Correo_envio));
                     }
                 }
             }).start();
