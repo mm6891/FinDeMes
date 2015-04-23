@@ -55,7 +55,7 @@
     <string name="TIPO_FILTRO_RESETEO">TODO</string>
     <string name="AFIRMACION">SI</string>
     <string name="NEGACION">NO</string>
-    <string name="AYUDA_CONTRASENYA">Opcionalmente puedes enviar la contraseña a un correo indicado mediante tu correo de GMail</string>
+    <string name="AYUDA_CONTRASENYA">Opcionalmente puedes enviarte la contraseña al correo electrónico</string>
     <string name="MAILFROM">Correo de</string>
     <string name="MAILTO">Correo para</string>
     <string name="CONTRASENYA_AYUDA">Introduce tu contraseña de 4 dígitos</string>
@@ -95,7 +95,8 @@
     <string name="Validacion_Correo_usuario">Usuario requerido</string>
     <string name="Validacion_Correo_password">Password requerido</string>
     <string name="Validacion_Correo_destino">Correo destino requerido</string>
-    <string name="Validacion_Correo_envio">Envio de correo no valido, revise su configuracion</string>
+    <string name="Validacion_Correo_envio">Envio de correo no válido, revise su configuracion</string>
+    <string name="Validacion_Correo_ok">Envio de correo válido</string>
     <!-- grupos de gastos -->
     <string name="Grupo_facturas">Facturas</string>
     <string name="Grupo_alimentacion">Alimentación</string>
@@ -108,4 +109,7 @@
     <string name="Grupo_prestamo">Préstamo</string>
     <string name="Grupo_ventas">Ventas</string>
     <string name="Grupo_extra">Extra</string>
+    <!-- graficas -->
+    <string name="Grafica_titulo">Gráfico de Informes</string>
+    <string name="Grafica_ejex">Efectivo</string>
     </resources>

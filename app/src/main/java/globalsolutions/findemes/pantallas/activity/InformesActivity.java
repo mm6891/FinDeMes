@@ -156,6 +156,8 @@ public class InformesActivity extends Activity {
                 }
             });
         btnGraficar = (ImageButton) findViewById(R.id.btnGraficar);
+        btnGraficar.setEnabled(false);
+
         btnGraficar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,51 +189,60 @@ public class InformesActivity extends Activity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        //load resumen
-                        Double ingresos = new Double(0.00);
-                        Double gastos = new Double(0.00);
-                        Double saldo = new Double(0.00);
+                        //antes de cargar el resumen comprobamos boton informes
+                        if(informes.size() > 0) {
+                            if (((String) spPeriodo.getSelectedItem()).equals(getResources().getString(R.string.TIPO_FILTRO_INFORME_TRIMESTRAL))
+                                    && ((String) spTipoMovimiento.getSelectedItem()).equals(getResources().getString(R.string.TIPO_FILTRO_RESETEO))) {
+                                btnGraficar.setEnabled(true);
+                            } else
+                                btnGraficar.setEnabled(false);
 
-                        // This code will always run on the UI thread, therefore is safe to modify UI elements.
-                        //todos
-                        if(((String)spTipoMovimiento.getSelectedItem()).equals(getResources().getString(R.string.TIPO_FILTRO_RESETEO))){
-                            for(InformeItem inf : informes){
-                                ingresos += Double.valueOf(inf.getIngresoValor());
-                                gastos += Double.valueOf(inf.getGastoValor());
+                            //load resumen
+                            Double ingresos = new Double(0.00);
+                            Double gastos = new Double(0.00);
+                            Double saldo = new Double(0.00);
+
+                            // This code will always run on the UI thread, therefore is safe to modify UI elements.
+                            //todos
+                            if (((String) spTipoMovimiento.getSelectedItem()).equals(getResources().getString(R.string.TIPO_FILTRO_RESETEO))) {
+                                for (InformeItem inf : informes) {
+                                    ingresos += Double.valueOf(inf.getIngresoValor());
+                                    gastos += Double.valueOf(inf.getGastoValor());
+                                }
+                                saldo = ingresos - gastos;
+
+                                ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos));
+                                TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);
+                                tvGastosTotal.setText(String.valueOf(gastos));
+                                TextView tvSaldoTotal = (TextView) findViewById(R.id.tvSaldoInformesValor);
+                                tvSaldoTotal.setText(String.valueOf(saldo));
                             }
-                            saldo = ingresos - gastos;
+                            //tipo gasto
+                            else if (((String) spTipoMovimiento.getSelectedItem()).equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
+                                for (InformeItem inf : informes) {
+                                    gastos += Double.valueOf(inf.getGastoValor());
+                                }
+                                saldo = ingresos - gastos;
 
-                            ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos));
-                            TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);
-                            tvGastosTotal.setText(String.valueOf(gastos));
-                            TextView tvSaldoTotal = (TextView) findViewById(R.id.tvSaldoInformesValor);
-                            tvSaldoTotal.setText(String.valueOf(saldo));
-                        }
-                        //tipo gasto
-                        else if(((String)spTipoMovimiento.getSelectedItem()).equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))){
-                            for(InformeItem inf : informes){
-                                gastos += Double.valueOf(inf.getGastoValor());
+                                ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos));
+                                TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);
+                                tvGastosTotal.setText(String.valueOf(gastos));
+                                TextView tvSaldoTotal = (TextView) findViewById(R.id.tvSaldoInformesValor);
+                                tvSaldoTotal.setText(String.valueOf(saldo));
                             }
-                            saldo = ingresos - gastos;
+                            //tipo ingreso
+                            else {
+                                for (InformeItem inf : informes) {
+                                    ingresos += Double.valueOf(inf.getIngresoValor());
+                                }
+                                saldo = ingresos - gastos;
 
-                            ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos));
-                            TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);
-                            tvGastosTotal.setText(String.valueOf(gastos));
-                            TextView tvSaldoTotal = (TextView) findViewById(R.id.tvSaldoInformesValor);
-                            tvSaldoTotal.setText(String.valueOf(saldo));
-                        }
-                        //tipo ingreso
-                        else {
-                            for(InformeItem inf : informes){
-                                ingresos += Double.valueOf(inf.getIngresoValor());
+                                ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos));
+                                TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);
+                                tvGastosTotal.setText(String.valueOf(gastos));
+                                TextView tvSaldoTotal = (TextView) findViewById(R.id.tvSaldoInformesValor);
+                                tvSaldoTotal.setText(String.valueOf(saldo));
                             }
-                            saldo = ingresos - gastos;
-
-                            ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos));
-                            TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);
-                            tvGastosTotal.setText(String.valueOf(gastos));
-                            TextView tvSaldoTotal = (TextView) findViewById(R.id.tvSaldoInformesValor);
-                            tvSaldoTotal.setText(String.valueOf(saldo));
                         }
                     }
                 });

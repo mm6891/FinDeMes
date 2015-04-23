@@ -3,7 +3,6 @@ package globalsolutions.findemes.pantallas.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -58,11 +57,6 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                 ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_FILTRO_RESETEO));
         }
     }
-
-   /* public enum Meses {
-        ENERO, FEBRERO, MARZO, ABRIL,
-        MAYO, JUNIO, JULIO, AGOSTO, SEPTIEMBRE, OCTUBRE, NOVIEMBRE, DICIEMBRE
-    }*/
 
     private ListView listViewMovs;
     private Spinner spFiltroMes;
@@ -129,15 +123,21 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
             });
 
             listViewMovs = (ListView) findViewById(R.id.listViewMov);
-            listViewMovs.setAdapter(new MovimientoAdapter(getApplicationContext(), new ArrayList<MovimientoItem>()));
+            listViewMovs.setAdapter(new MovimientoAdapter(getApplicationContext(), movs));
             //cargamos meses
             spFiltroMes = (Spinner) findViewById(R.id.spMeses);
             spFiltroMes.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, creaMeses()));
-
+            mSpinnerCount++;
             spFiltroMes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    int anyoSpinner = spFitroAnyo.getSelectedItem() != null ? new Integer((String) spFitroAnyo.getSelectedItem()).intValue() : -1;
-                    filtraMesAnyo(view, position, anyoSpinner);
+                    if (mSpinnerInitializedCount < mSpinnerCount)
+                    {
+                        mSpinnerInitializedCount++;
+                    }
+                    else {
+                        int anyoSpinner = spFitroAnyo.getSelectedItem() != null ? new Integer((String) spFitroAnyo.getSelectedItem()).intValue() : -1;
+                        filtraMesAnyo(view, position, anyoSpinner);
+                    }
                 }
                 public void onNothingSelected(AdapterView<?> parent) {
                     int month = Calendar.getInstance().get(Calendar.MONTH);

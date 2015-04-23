@@ -4,6 +4,8 @@ package globalsolutions.findemes.pantallas.util;
  * Created by manuel.molero on 21/04/2015.
  */
 import android.content.Context;
+import android.os.Handler;
+
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.mail.Message;
@@ -13,6 +15,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +25,7 @@ import java.util.Properties;
 
 import globalsolutions.findemes.R;
 
-public class GMailSender extends javax.mail.Authenticator{
+public class GMailSender extends javax.mail.Authenticator {
     private String mailhost = "smtp.gmail.com";
     private String user;
     private String password;
@@ -66,15 +69,21 @@ public class GMailSender extends javax.mail.Authenticator{
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipients));
             else
                 message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipients));
-            //Transport.send(message);
+
+            final Handler mHandler = new Handler();
+            final Runnable mUpdateResults = new Runnable() {
+                public void run() {
+                    Util.showToast(cntx, cntx.getResources().getString(R.string.Validacion_Correo_envio));
+                }
+            };
+
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         Transport.send(message);
                     } catch (MessagingException e) {
-                        return;
-                        //Util.showToast(cntx , cntx.getResources().getString(R.string.Validacion_Correo_envio));
+                        mHandler.post(mUpdateResults);
                     }
                 }
             }).start();

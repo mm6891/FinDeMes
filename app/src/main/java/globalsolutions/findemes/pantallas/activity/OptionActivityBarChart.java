@@ -3,10 +3,7 @@ package globalsolutions.findemes.pantallas.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.webkit.WebView;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.googlecode.charts4j.AxisLabels;
 import com.googlecode.charts4j.AxisLabelsFactory;
@@ -15,17 +12,14 @@ import com.googlecode.charts4j.AxisTextAlignment;
 import com.googlecode.charts4j.BarChart;
 import com.googlecode.charts4j.BarChartPlot;
 import com.googlecode.charts4j.Data;
+import com.googlecode.charts4j.DataUtil;
 import com.googlecode.charts4j.Fills;
 import com.googlecode.charts4j.GCharts;
 import com.googlecode.charts4j.LinearGradientFill;
 import com.googlecode.charts4j.Plots;
 import com.googlecode.charts4j.Color;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 import globalsolutions.findemes.R;
 
@@ -43,7 +37,7 @@ public class OptionActivityBarChart extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.chartexample);
+        setContentView(R.layout.chart_bar);
 
         webView =(WebView) findViewById(R.id.chart);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -64,38 +58,45 @@ public class OptionActivityBarChart extends Activity {
             }
         }
 
-        // Defining data plots.
-        BarChartPlot barraIngreso = Plots.newBarChartPlot(Data.newData(ingresos), Color.BLUEVIOLET, "Ingreso");
-        BarChartPlot barraGasto = Plots.newBarChartPlot(Data.newData(gastos), Color.ORANGERED, "Gasto");
-
-        // Instantiating chart.
-        BarChart chart = GCharts.newBarChart(barraIngreso,barraGasto);
+        // Defining data series.
+        final double MAX_VALUE = max;
+        Data ingresosData= DataUtil.scaleWithinRange(0, MAX_VALUE, ingresos);
+        Data gastosData= DataUtil.scaleWithinRange(0, MAX_VALUE, gastos);
+        BarChartPlot ingresosPlot = Plots.newBarChartPlot(ingresosData, Color.GREEN, getResources().getString(R.string.MENU_INGRESOS));
+        BarChartPlot gastosPlot = Plots.newBarChartPlot(gastosData, Color.RED, getResources().getString(R.string.MENU_GASTOS));
+        BarChart chart = GCharts.newBarChart(ingresosPlot, gastosPlot);
 
         // Defining axis info and styles
         AxisStyle axisStyle = AxisStyle.newAxisStyle(Color.BLACK, 13, AxisTextAlignment.CENTER);
-        AxisLabels money = AxisLabelsFactory.newAxisLabels("Efectivo", 50.0);
-        money.setAxisStyle(axisStyle);
-        AxisLabels year = AxisLabelsFactory.newAxisLabels(getIntent().getExtras().getString("anyo"), 50.0);
-        year.setAxisStyle(axisStyle);
+        AxisLabels periodo = AxisLabelsFactory.newAxisLabels(getIntent().getExtras().getString("anyo"), 50.0);
+        periodo.setAxisStyle(axisStyle);
+        AxisLabels periodos = AxisLabelsFactory.newAxisLabels(ejeX);
+        periodos.setAxisStyle(axisStyle);
+        AxisLabels efectivo = AxisLabelsFactory.newAxisLabels(getResources().getString(R.string.Grafica_ejex), 50.0);
+        efectivo.setAxisStyle(axisStyle);
+        AxisLabels valueCount = AxisLabelsFactory.newNumericRangeAxisLabels(0, MAX_VALUE);
+        valueCount.setAxisStyle(axisStyle);
+
 
         // Adding axis info to chart.
-        chart.addXAxisLabels(AxisLabelsFactory.newAxisLabels(ejeX));
-        chart.addYAxisLabels(AxisLabelsFactory.newNumericRangeAxisLabels(0, max));
-        chart.addYAxisLabels(money);
-        chart.addXAxisLabels(year);
+        chart.addXAxisLabels(valueCount);
+        chart.addXAxisLabels(efectivo);
+        chart.addYAxisLabels(periodos);
+        chart.addYAxisLabels(periodo);
+        chart.addTopAxisLabels(valueCount);
+        chart.setHorizontal(true);
+        chart.setSize(450, 650);
+        chart.setSpaceBetweenGroupsOfBars(30);
 
-        chart.setSize(600, 450);
-        chart.setBarWidth(100);
-        chart.setSpaceWithinGroupsOfBars(20);
-        chart.setDataStacked(true);
-        chart.setTitle("Grafico de Informes", Color.BLACK, 16);
-        chart.setGrid(100, 10, 3, 2);
-        chart.setBackgroundFill(Fills.newSolidFill(Color.ALICEBLUE));
-        LinearGradientFill fill = Fills.newLinearGradientFill(0, Color.LAVENDER, 100);
+        chart.setTitle(getResources().getString(R.string.Grafica_titulo), Color.BLACK, 16);
+
+        chart.setGrid((50.0/MAX_VALUE)*20, 600, 3, 2);
+        chart.setBackgroundFill(Fills.newSolidFill(Color.LIGHTGREY));
+        LinearGradientFill fill = Fills.newLinearGradientFill(0, Color.newColor("E37600"), 100);
         fill.addColorAndOffset(Color.WHITE, 0);
         chart.setAreaFill(fill);
         String url = chart.toURLString();
-        //ejemplo
+
         webView.loadUrl(url);
     }
 

@@ -2,8 +2,8 @@
 <resources>
     <!-- COMUN -->
     <string name="Categoria">Category:</string>
-    <string name="Gasto">Expenditure:</string>
-    <string name="Gastos">Expenses:</string>
+    <string name="Gasto">Expense:</string>
+    <string name="Gastos">Expense:</string>
     <string name="Saldo">Balance:</string>
     <string name="Decripcion">Description:</string>
     <string name="Ingreso">Income:</string>
@@ -12,7 +12,7 @@
     <string name="Modificar">Update</string>
     <string name="Eliminar">Remove</string>
     <string name="Cerrar">Close</string>
-    <string name="MENU_GASTOS">Expenditure</string>
+    <string name="MENU_GASTOS">Expense</string>
     <string name="MENU_INGRESOS">Income</string>
     <string name="MENU_MOVIMIENTOS">Dealings</string>
     <string name="MENU_INFORMES">Reports</string>
@@ -21,9 +21,9 @@
     <string name="titulo">Fin de Mes</string>
     <string name="tituloCategoriaIngresos">Income Categories</string>
     <string name="tituloCategoriaGastos">Expense Categories</string>
-    <string name="edicionCategoriaGastos">Edit Expenditure Category</string>
+    <string name="edicionCategoriaGastos">Edit Expense Category</string>
     <string name="edicionCategoriaIngresos">Edit Income Category</string>
-    <string name="nuevaCategoriaGastos">New Expenditure Category</string>
+    <string name="nuevaCategoriaGastos">New Expense Category</string>
     <string name="nuevaCategoriaIngresos">New Income Category</string>
     <string name="CrearCategoria">New Category</string>
     <string name="OPCIONES_FORMATO_MONEDA">Currency Format</string>
@@ -49,12 +49,12 @@
     <string name="Valor">Result:</string>
     <string name="Activo">Enable</string>
     <string name="InActivo">Disabled</string>
-    <string name="TIPO_MOVIMIENTO_GASTO">EXPENDITURE</string>
+    <string name="TIPO_MOVIMIENTO_GASTO">EXPENSE</string>
     <string name="TIPO_MOVIMIENTO_INGRESO">INCOME</string>
     <string name="TIPO_FILTRO_RESETEO">ALL</string>
     <string name="AFIRMACION">YES</string>
     <string name="NEGACION">NO</string>
-    <string name="AYUDA_CONTRASENYA">Opcionalmente puedes enviar la contraseña a un correo indicado mediante tu correo de GMail</string>
+    <string name="AYUDA_CONTRASENYA">Opcionalmente puedes enviarte la contraseña al correo electrónico</string>
     <string name="CONTRASENYA_AYUDA">Enter your 4-digit password</string>
     <string name="AYUDA_BASEDATOS">Make a backup of your database are stored in "Storage Card/findemes/DBFinDeMes.db"</string>
     <string name="Abandonar">Are you sure?</string>
@@ -108,4 +108,7 @@
     <string name="Validacion_Correo_envio">Envio de correo no valido, revise su configuracion</string>
     <string name="Enviar">Send</string>
     <string name="MovimientoFrecuente">Los movimientos frecuentes no se pueden editar desde Movimientos</string>
+    <string name="Grafica_ejex">Cash</string>
+    <string name="Grafica_titulo">Gráfico de Informes</string>
+    <string name="Validacion_Correo_ok">Envio de correo válido</string>
 </resources>

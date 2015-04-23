@@ -25,8 +25,6 @@ public class OptionActivityPassword extends Activity {
 
 
     private EditText txtPassword;
-    private EditText txtUserFom;
-    private EditText txtPasswordFrom;
     private EditText txtMailTo;
     private RadioButton rbPassActivo;
     private RadioButton rbPassInActivo;
@@ -48,8 +46,6 @@ public class OptionActivityPassword extends Activity {
 
         txtPassword = (EditText) findViewById(R.id.txtContrasena);
         txtMailTo = (EditText) findViewById(R.id.txtMailTo);
-        txtUserFom = (EditText) findViewById(R.id.txtUserFrom);
-        txtPasswordFrom = (EditText) findViewById(R.id.txtPasswordFrom);
         rbPassActivo = (RadioButton) findViewById(R.id.rbPassActivo);
         rbPassInActivo = (RadioButton) findViewById(R.id.rbPassInActivo);
 
@@ -58,7 +54,7 @@ public class OptionActivityPassword extends Activity {
         final String pass = password.getPassword();
         if (pass != null && !pass.isEmpty()) {
             txtPassword.setText(pass);
-            txtUserFom.setText(password.getMail());
+            txtMailTo.setText(password.getMail());
             rbPassActivo.setChecked(password.getActivo().equals(Constantes.REGISTRO_ACTIVO.toString()));
             rbPassInActivo.setChecked(password.getActivo().equals(Constantes.REGISTRO_INACTIVO.toString()));
         }
@@ -72,7 +68,7 @@ public class OptionActivityPassword extends Activity {
                     //objeto password
                     Password nuevaPass = new Password();
                     nuevaPass.setPassword(txtPassword.getText().toString());
-                    nuevaPass.setMail(txtUserFom.getText().toString());
+                    nuevaPass.setMail(txtMailTo.getText().toString());
                     String valueActivo = ((RadioButton) findViewById(R.id.rbPassActivo)).isChecked()
                             ? String.valueOf(Constantes.REGISTRO_ACTIVO.toString()) :
                             String.valueOf(Constantes.REGISTRO_INACTIVO.toString());
@@ -99,11 +95,12 @@ public class OptionActivityPassword extends Activity {
                 if(validaCamposPasswordLocal() && validaCamposEnvioCorreo()) {
                     //Envio de correo
                     try {
-                        GMailSender sender = new GMailSender(txtUserFom.getText().toString(), txtPasswordFrom.getText().toString());
+                        GMailSender sender = new GMailSender("findemesapp@gmail.com", "esta50es");
                         sender.sendMail(getResources().getString(R.string.Asunto),
                                 getResources().getString(R.string.Cuerpo) + " " + txtPassword.getText().toString(),
-                                txtUserFom.getText().toString(),
+                                "findemesapp@gmail.com",
                                 txtMailTo.getText().toString(), getApplicationContext());
+                        Util.showToast(getApplicationContext(), getResources().getString(R.string.Validacion_Correo_ok));
                     } catch (Exception e) {
                         Util.showToast(getApplicationContext(), getResources().getString(R.string.Validacion_Correo_envio));
                         return;
@@ -125,16 +122,6 @@ public class OptionActivityPassword extends Activity {
     }
 
     public boolean validaCamposEnvioCorreo(){
-        String userFrom = txtUserFom.getText().toString();
-        if(userFrom == null || userFrom.isEmpty() || !userFrom.contains("@")) {
-            ((EditText) findViewById(R.id.txtUserFrom)).setError(getResources().getString(R.string.Validacion_Correo_usuario));
-            return false;
-        }
-        String passwordUserFrom = txtPasswordFrom.getText().toString();
-        if(passwordUserFrom == null || passwordUserFrom.isEmpty()) {
-            ((EditText) findViewById(R.id.txtPasswordFrom)).setError(getResources().getString(R.string.Validacion_Correo_password));
-            return false;
-        }
         String mailTo = txtMailTo.getText().toString();
         if(mailTo == null || mailTo.isEmpty() || !mailTo.contains("@")) {
             ((EditText) findViewById(R.id.txtMailTo)).setError(getResources().getString(R.string.Validacion_Correo_destino));
