@@ -71,7 +71,7 @@ public class Util {
     }*/
 
     //devuelve positivo si f2 es mayor a f1
-    public int compare(String f1, String f2) {
+    public static int compare(String f1, String f2) {
         SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
         try {
             return f.parse(f2).compareTo(f.parse(f1));
@@ -89,6 +89,13 @@ public class Util {
             e.printStackTrace();
         }
         c.add(Calendar.DATE, numDias); // Adding numDias days
+        String output = sdf.format(c.getTime());
+        return output;
+    }
+
+    public static String fechaActual(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar c = Calendar.getInstance();
         String output = sdf.format(c.getTime());
         return output;
     }
