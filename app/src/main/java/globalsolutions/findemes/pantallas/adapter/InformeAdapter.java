@@ -178,7 +178,6 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
                         int mes = cal.get(Calendar.MONTH);
                         mes = (mes + 1) * 2;
                         periodoMovimiento = (dia < 16) ? mes - 1 : mes;
-                        //periodoMovimiento = (cal.get(Calendar.DAY_OF_YEAR) / 14) + 1;
                     }
 
                     boolean existePeriodoInforme = existePeriodoInforme(periodoMovimiento);

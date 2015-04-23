@@ -111,4 +111,6 @@
     <string name="Grafica_ejex">Cash</string>
     <string name="Grafica_titulo">Gráfico de Informes</string>
     <string name="Validacion_Correo_ok">Envio de correo válido</string>
+    <string name="FechaActivacion">Fecha de Activación:</string>
+    <string name="PERIODICIDAD_REGISTRO_SEMANAL">Weekly</string>
 </resources>

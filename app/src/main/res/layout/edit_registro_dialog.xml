@@ -132,14 +132,58 @@
                 />
         </RadioGroup>
     </LinearLayout>
-
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/lyLinear7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:orientation="horizontal"
         android:layout_below="@+id/lyLinear6">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/FechaActivacion"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/lyLinear8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lyLinear7">
+        <TextView
+            android:id="@+id/tvDia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="0.4"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/tvHora"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="0.4"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+        <ImageButton android:id="@+id/myDatePickerButton"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="0.6"
+            android:src="@drawable/calendar"
+            android:background="@android:color/white" />
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/lyLinear9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_below="@+id/lyLinear8">
         <Button
             android:id="@+id/btnModificarRegistro"
             android:layout_width="wrap_content"

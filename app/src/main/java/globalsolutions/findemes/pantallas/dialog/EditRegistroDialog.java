@@ -1,6 +1,7 @@
 package globalsolutions.findemes.pantallas.dialog;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -12,13 +13,19 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import globalsolutions.findemes.R;
@@ -27,13 +34,14 @@ import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
 import globalsolutions.findemes.database.dao.RegistroDAO;
 import globalsolutions.findemes.database.model.Registro;
 import globalsolutions.findemes.database.util.Constantes;
+import globalsolutions.findemes.pantallas.fragment.DatePickerFragment;
 import globalsolutions.findemes.pantallas.util.MoneyValueFilter;
 import globalsolutions.findemes.pantallas.util.Util;
 
 /**
  * Created by manuel.molero on 16/02/2015.
  */
-public class EditRegistroDialog extends DialogFragment {
+public class EditRegistroDialog extends DialogFragment implements DatePickerDialog.OnDateSetListener{
 
     private OnEditRegistroDialogListener callback;
 
@@ -72,6 +80,7 @@ public class EditRegistroDialog extends DialogFragment {
         //cargamos el combo de periodicidad
         Spinner periodicidadSp = (Spinner) view.findViewById(R.id.spPeriodicidad);
         List<String> listPeriod = new ArrayList<String>();
+        listPeriod.add(getResources().getString(R.string.PERIODICIDAD_REGISTRO_SEMANAL));
         listPeriod.add(getResources().getString(R.string.PERIODICIDAD_REGISTRO_MENSUAL));
         listPeriod.add(getResources().getString(R.string.PERIODICIDAD_REGISTRO_ANUAL));
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(view.getContext(),
@@ -117,6 +126,25 @@ public class EditRegistroDialog extends DialogFragment {
         ((RadioButton)view.findViewById(R.id.rbActivo)).setChecked(activo.equals(Constantes.REGISTRO_ACTIVO.toString()));
         ((RadioButton)view.findViewById(R.id.rbInActivo)).setChecked(activo.equals(Constantes.REGISTRO_INACTIVO.toString()));
 
+        //cargamos el modal para seleccionar fecha
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat sdfDia = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdfHora = new SimpleDateFormat("kk:mm");
+        String mTimeText = sdfDia.format(date);
+        String mTimeHora = sdfHora.format(date);
+
+        ((TextView) view.findViewById(R.id.tvDia)).setText(mTimeText);
+        ((TextView) view.findViewById(R.id.tvHora)).setText(mTimeHora);
+
+        ImageButton datePicker = (ImageButton) view.findViewById(R.id.myDatePickerButton);
+
+        datePicker.setOnClickListener(new AdapterView.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(v);
+            }
+        });
+
         final Registro aMod = new Registro();
         aMod.set_id(Integer.valueOf(_id).intValue());
 
@@ -153,6 +181,9 @@ public class EditRegistroDialog extends DialogFragment {
                             Integer.valueOf(Constantes.REGISTRO_INACTIVO.toString());
                     nuevoRegistro.setActivo(valueActivo);
                     nuevoRegistro.setValor(valor);
+                    String fecha = (String) ((TextView) view.findViewById(R.id.tvDia)).getText();
+                    String hora = (String) ((TextView) view.findViewById(R.id.tvHora)).getText();
+                    nuevoRegistro.setFecha(fecha + " " + hora);
 
                     RegistroDAO registroDAO = new RegistroDAO(view.getContext());
                     boolean actualizado = registroDAO.updateRegistro(aMod,nuevoRegistro);
@@ -171,6 +202,30 @@ public class EditRegistroDialog extends DialogFragment {
 
         // Inflate the layout to use as dialog or embedded fragment
         return view;
+    }
+
+    //dialogos
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("movimiento", getResources().getString(R.string.EDITAR_REGISTRO));
+        newFragment.setArguments(bundle);
+        newFragment.show(getFragmentManager(),"Fecha");
+    }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+        final Calendar c = Calendar.getInstance();
+        c.set(year,month,day);
+
+        Date date = new Date(c.getTimeInMillis());
+        SimpleDateFormat sdfDia = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdfHora = new SimpleDateFormat("kk:mm");
+        String mTimeText = sdfDia.format(date);
+        String mTimeHora = sdfHora.format(date);
+
+        ((TextView) view.findViewById(R.id.tvDia)).setText(mTimeText);
+        ((TextView) view.findViewById(R.id.tvHora)).setText(mTimeHora);
     }
 
     /** The system calls this only when creating the layout in a dialog. */

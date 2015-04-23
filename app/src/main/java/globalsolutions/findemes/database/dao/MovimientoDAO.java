@@ -18,6 +18,7 @@ import globalsolutions.findemes.database.model.Ingreso;
 import globalsolutions.findemes.database.model.MovimientoItem;
 import globalsolutions.findemes.database.model.Registro;
 import globalsolutions.findemes.database.util.Constantes;
+import globalsolutions.findemes.pantallas.util.Util;
 
 /**
  * Created by manuel.molero on 13/02/2015.
@@ -78,8 +79,35 @@ public class MovimientoDAO {
 
         for(int i = 0 ; i < registros.length ; i++) {
             if (registros[i].getActivo().equals(Integer.valueOf(Constantes.REGISTRO_ACTIVO.toString()))) {
+                String fechaActivacion = registros[i].getFecha();
+               /* long numDias = Util.dias(fechaActivacion);
+                if(numDias <= 0) {
+                    //la fecha del registro  no esta activa, se continua al siguiente registro
+                    continue;
+                }*/
+                if (registros[i].getPeriodicidad().equals(context.getResources().getString(R.string.PERIODICIDAD_REGISTRO_SEMANAL))){
+                    //hay que desglosar el registro en 1 movimiento semanal a partir de la fecha de activacion del registro
+                    //int numMovimientosAAnyadir = Math.round(numDias/7);
+                    int numMovimientosAAnyadir = 0;
+                    for(int j = 1 ; j < numMovimientosAAnyadir ; j++) {
+                        MovimientoItem m = new MovimientoItem();
+                        m.set_id(registros[i].get_id());
+                        m.setValor(registros[i].getValor());
+                        m.setDescripcion(registros[i].getDescripcion());
+                        //tratamos el caso especial de la fecha
+                        Date date = new Date(System.currentTimeMillis());
+                        SimpleDateFormat sdfHora = new SimpleDateFormat("kk:mm");
+                        String mTimeHora = sdfHora.format(date);
+                        m.setFecha("01/" + String.format("%02d", new Integer(j)) + "/"
+                                + String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) + " " + mTimeHora);
+                        m.setCategoria(registros[i].getGrupo());
+                        m.setTipoMovimiento(registros[i].getTipo());
+                        m.setEsFrecuente(true);
+                        ret.add(m);
+                    }
+                }
                 if (registros[i].getPeriodicidad().equals(context.getResources().getString(R.string.PERIODICIDAD_REGISTRO_MENSUAL))){
-                    //hay que desglosar el registro en 12 movimientos mensuales
+                    //hay que desglosar el registro en 1 movimiento mensual a partir de la fecha de activacion del registro
                     for(int j = 1 ; j < 13 ; j++) {
                         MovimientoItem m = new MovimientoItem();
                         m.set_id(registros[i].get_id());
@@ -98,7 +126,7 @@ public class MovimientoDAO {
                     }
                 }
                 else if (registros[i].getPeriodicidad().equals(context.getResources().getString(R.string.PERIODICIDAD_REGISTRO_ANUAL))){
-                    //anyadimos solo un movimiento anual
+                    //hay que desglosar el registro en 1 movimiento anual a partir de la fecha de activacion del registro
                     MovimientoItem m = new MovimientoItem();
                     m.set_id(registros[i].get_id());
                     m.setValor(registros[i].getValor());

@@ -10,6 +10,9 @@ import java.util.Calendar;
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.pantallas.activity.GastoActivity;
 import globalsolutions.findemes.pantallas.activity.IngresoActivity;
+import globalsolutions.findemes.pantallas.activity.RegistrosActivity;
+import globalsolutions.findemes.pantallas.dialog.EditRegistroDialog;
+import globalsolutions.findemes.pantallas.dialog.NuevoRegistroDialog;
 
 /**
  * Created by manuel.molero on 10/02/2015.
@@ -26,8 +29,13 @@ public class DatePickerFragment extends DialogFragment {
 
         if(getArguments().getString("movimiento").equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO)))
             return new DatePickerDialog(getActivity(), (GastoActivity)getActivity(), year, month, day);
-        else
+        else if(getArguments().getString("movimiento").equals(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO)))
             return new DatePickerDialog(getActivity(), (IngresoActivity)getActivity(), year, month, day);
+        else if(getArguments().getString("movimiento").equals(getResources().getString(R.string.NUEVO_REGISTRO)))
+            return new DatePickerDialog(getActivity(), (NuevoRegistroDialog) getTargetFragment(), year, month, day);
+        //editar registro
+        else
+            return new DatePickerDialog(getActivity(), (EditRegistroDialog) getTargetFragment(), year, month, day);
     }
 
 }

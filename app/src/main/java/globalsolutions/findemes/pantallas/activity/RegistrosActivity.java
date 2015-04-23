@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-
 import java.util.ArrayList;
 
 import globalsolutions.findemes.R;
@@ -25,7 +24,8 @@ import globalsolutions.findemes.pantallas.dialog.EditRegistroDialog;
 import globalsolutions.findemes.pantallas.dialog.NuevoRegistroDialog;
 import globalsolutions.findemes.pantallas.util.Util;
 
-public class RegistrosActivity extends FragmentActivity implements NuevoRegistroDialog.ONuevoRegistroDialogListener, EditRegistroDialog.OnEditRegistroDialogListener {
+public class RegistrosActivity extends FragmentActivity implements NuevoRegistroDialog.ONuevoRegistroDialogListener,
+        EditRegistroDialog.OnEditRegistroDialogListener {
 
 
     private ListView listViewReg;
@@ -56,7 +56,7 @@ public class RegistrosActivity extends FragmentActivity implements NuevoRegistro
         //recuperamos registros
         ArrayList<RegistroItem> regs = new ArrayList(new RegistroDAO(getApplicationContext()).selectRegistrosItems());
         if(regs.size() <= 0 )
-            Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Movimientos));
+            Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Registros));
 
         listViewReg = (ListView) findViewById(R.id.listViewReg);
         listViewReg.setAdapter(new RegistroAdapter(getApplicationContext(), regs));
