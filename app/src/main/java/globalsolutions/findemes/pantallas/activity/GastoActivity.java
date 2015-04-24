@@ -71,7 +71,7 @@ public class GastoActivity extends FragmentActivity implements DatePickerDialog.
         ((TextView) findViewById(R.id.tvDia)).setText(mTimeText);
         ((TextView) findViewById(R.id.tvHora)).setText(mTimeHora);
 
-        ImageButton datePicker = (ImageButton) findViewById(R.id.myDatePickerButton);
+        ImageButton datePicker = (ImageButton) findViewById(R.id.myDatePickerButtonAG);
 
         datePicker.setOnClickListener(new AdapterView.OnClickListener() {
             @Override

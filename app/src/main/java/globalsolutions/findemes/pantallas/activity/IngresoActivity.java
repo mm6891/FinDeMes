@@ -71,7 +71,7 @@ public class IngresoActivity extends FragmentActivity implements DatePickerDialo
         ((TextView) findViewById(R.id.tvDia)).setText(mTimeText);
         ((TextView) findViewById(R.id.tvHora)).setText(mTimeHora);
 
-        ImageButton datePicker = (ImageButton) findViewById(R.id.myDatePickerButton);
+        ImageButton datePicker = (ImageButton) findViewById(R.id.myDatePickerButtonAI);
 
         datePicker.setOnClickListener(new AdapterView.OnClickListener() {
             @Override

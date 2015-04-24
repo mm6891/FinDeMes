@@ -168,7 +168,7 @@
             android:layout_weight="0.4"
             android:textStyle="bold"
             android:textSize="18sp" />
-        <ImageButton android:id="@+id/myDatePickerButton"
+        <ImageButton android:id="@+id/myDatePickerButtonER"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_weight="0.6"

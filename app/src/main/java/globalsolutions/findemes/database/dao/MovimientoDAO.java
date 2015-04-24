@@ -82,7 +82,7 @@ public class MovimientoDAO {
                 String fechaActivacion = registros[i].getFecha();
                 String fechaActual = Util.fechaActual();
                 if (registros[i].getPeriodicidad().equals(context.getResources().getString(R.string.PERIODICIDAD_REGISTRO_SEMANAL))){
-                    //hay que desglosar el registro en 1 movimiento semanal a partir de la fecha de activacion del registro
+                    //1 movimiento semanal a partir de la fecha de activacion del registro
                     //mientras que la fecha actual sea mayor que la fecha de activacion
                     while(Util.compare(fechaActivacion,fechaActual) > 0){
                         MovimientoItem m = new MovimientoItem();
@@ -95,32 +95,18 @@ public class MovimientoDAO {
                         String mTimeHora = sdfHora.format(date);
                        /* m.setFecha("01/" + String.format("%02d", new Integer(j)) + "/"
                                 + String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) + " " + mTimeHora);*/
+                        m.setFecha(fechaActivacion + " " + mTimeHora);
                         m.setCategoria(registros[i].getGrupo());
                         m.setTipoMovimiento(registros[i].getTipo());
                         m.setEsFrecuente(true);
                         ret.add(m);
+                        //actualizamos fecha de activacion
+                        fechaActivacion = Util.sumaDias(fechaActivacion,7);
                     }
-                    /*int numMovimientosAAnyadir = 0;
-                    for(int j = 1 ; j < numMovimientosAAnyadir ; j++) {
-                        MovimientoItem m = new MovimientoItem();
-                        m.set_id(registros[i].get_id());
-                        m.setValor(registros[i].getValor());
-                        m.setDescripcion(registros[i].getDescripcion());
-                        //tratamos el caso especial de la fecha
-                        Date date = new Date(System.currentTimeMillis());
-                        SimpleDateFormat sdfHora = new SimpleDateFormat("kk:mm");
-                        String mTimeHora = sdfHora.format(date);
-                        m.setFecha("01/" + String.format("%02d", new Integer(j)) + "/"
-                                + String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) + " " + mTimeHora);
-                        m.setCategoria(registros[i].getGrupo());
-                        m.setTipoMovimiento(registros[i].getTipo());
-                        m.setEsFrecuente(true);
-                        ret.add(m);
-                    }*/
                 }
                 if (registros[i].getPeriodicidad().equals(context.getResources().getString(R.string.PERIODICIDAD_REGISTRO_MENSUAL))){
-                    //hay que desglosar el registro en 1 movimiento mensual a partir de la fecha de activacion del registro
-                    for(int j = 1 ; j < 13 ; j++) {
+                    //1 movimiento mensual a partir de la fecha de activacion del registro
+                    while(Util.compare(fechaActivacion,fechaActual) > 0){
                         MovimientoItem m = new MovimientoItem();
                         m.set_id(registros[i].get_id());
                         m.setValor(registros[i].getValor());
@@ -129,30 +115,38 @@ public class MovimientoDAO {
                         Date date = new Date(System.currentTimeMillis());
                         SimpleDateFormat sdfHora = new SimpleDateFormat("kk:mm");
                         String mTimeHora = sdfHora.format(date);
-                        m.setFecha("01/" + String.format("%02d", new Integer(j)) + "/"
-                                + String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) + " " + mTimeHora);
+                       /* m.setFecha("01/" + String.format("%02d", new Integer(j)) + "/"
+                                + String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) + " " + mTimeHora);*/
+                        m.setFecha(fechaActivacion + " " + mTimeHora);
                         m.setCategoria(registros[i].getGrupo());
                         m.setTipoMovimiento(registros[i].getTipo());
                         m.setEsFrecuente(true);
                         ret.add(m);
+                        //actualizamos fecha de activacion
+                        fechaActivacion = Util.sumaDias(fechaActivacion,30);
                     }
                 }
                 else if (registros[i].getPeriodicidad().equals(context.getResources().getString(R.string.PERIODICIDAD_REGISTRO_ANUAL))){
-                    //hay que desglosar el registro en 1 movimiento anual a partir de la fecha de activacion del registro
-                    MovimientoItem m = new MovimientoItem();
-                    m.set_id(registros[i].get_id());
-                    m.setValor(registros[i].getValor());
-                    m.setDescripcion(registros[i].getDescripcion());
-                    //tratamos el caso especial de la fecha
-                    Date date = new Date(System.currentTimeMillis());
-                    SimpleDateFormat sdfHora = new SimpleDateFormat("kk:mm");
-                    String mTimeHora = sdfHora.format(date);
-                    m.setFecha("01/01/" + String.valueOf(Calendar.getInstance().get(Calendar.YEAR))
-                            + " " + mTimeHora);
-                    m.setCategoria(registros[i].getGrupo());
-                    m.setTipoMovimiento(registros[i].getTipo());
-                    m.setEsFrecuente(true);
-                    ret.add(m);
+                    //1 movimiento anual a partir de la fecha de activacion del registro
+                    while(Util.compare(fechaActivacion,fechaActual) > 0){
+                        MovimientoItem m = new MovimientoItem();
+                        m.set_id(registros[i].get_id());
+                        m.setValor(registros[i].getValor());
+                        m.setDescripcion(registros[i].getDescripcion());
+                        //tratamos el caso especial de la fecha
+                        Date date = new Date(System.currentTimeMillis());
+                        SimpleDateFormat sdfHora = new SimpleDateFormat("kk:mm");
+                        String mTimeHora = sdfHora.format(date);
+                       /* m.setFecha("01/" + String.format("%02d", new Integer(j)) + "/"
+                                + String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) + " " + mTimeHora);*/
+                        m.setFecha(fechaActivacion + " " + mTimeHora);
+                        m.setCategoria(registros[i].getGrupo());
+                        m.setTipoMovimiento(registros[i].getTipo());
+                        m.setEsFrecuente(true);
+                        ret.add(m);
+                        //actualizamos fecha de activacion
+                        fechaActivacion = Util.sumaDias(fechaActivacion,365);
+                    }
                 }
             }
         }

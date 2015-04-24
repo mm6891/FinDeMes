@@ -136,7 +136,7 @@ public class EditRegistroDialog extends DialogFragment implements DatePickerDial
         ((TextView) view.findViewById(R.id.tvDia)).setText(mTimeText);
         ((TextView) view.findViewById(R.id.tvHora)).setText(mTimeHora);
 
-        ImageButton datePicker = (ImageButton) view.findViewById(R.id.myDatePickerButton);
+        ImageButton datePicker = (ImageButton) view.findViewById(R.id.myDatePickerButtonER);
 
         datePicker.setOnClickListener(new AdapterView.OnClickListener() {
             @Override

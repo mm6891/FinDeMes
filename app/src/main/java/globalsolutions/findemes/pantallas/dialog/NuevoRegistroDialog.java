@@ -102,7 +102,7 @@ public class NuevoRegistroDialog extends DialogFragment implements DatePickerDia
         ((TextView) view.findViewById(R.id.tvDia)).setText(mTimeText);
         ((TextView) view.findViewById(R.id.tvHora)).setText(mTimeHora);
 
-        ImageButton datePicker = (ImageButton) view.findViewById(R.id.myDatePickerButton);
+        ImageButton datePicker = (ImageButton) view.findViewById(R.id.myDatePickerButtonNR);
 
         datePicker.setOnClickListener(new AdapterView.OnClickListener() {
             @Override

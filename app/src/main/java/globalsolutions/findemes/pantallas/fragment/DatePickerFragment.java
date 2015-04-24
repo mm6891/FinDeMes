@@ -27,15 +27,17 @@ public class DatePickerFragment extends DialogFragment {
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
+        DatePickerDialog datePickerDialog = null;
         if(getArguments().getString("movimiento").equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO)))
-            return new DatePickerDialog(getActivity(), (GastoActivity)getActivity(), year, month, day);
+            datePickerDialog = new DatePickerDialog(getActivity(), (GastoActivity)getActivity(), year, month, day);
         else if(getArguments().getString("movimiento").equals(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO)))
-            return new DatePickerDialog(getActivity(), (IngresoActivity)getActivity(), year, month, day);
+            datePickerDialog = new DatePickerDialog(getActivity(), (IngresoActivity)getActivity(), year, month, day);
         else if(getArguments().getString("movimiento").equals(getResources().getString(R.string.NUEVO_REGISTRO)))
-            return new DatePickerDialog(getActivity(), (NuevoRegistroDialog) getTargetFragment(), year, month, day);
-        //editar registro
-        else
-            return new DatePickerDialog(getActivity(), (EditRegistroDialog) getTargetFragment(), year, month, day);
+            datePickerDialog = new DatePickerDialog(getActivity(),(NuevoRegistroDialog) getTargetFragment() , year, month, day);
+        else if(getArguments().getString("movimiento").equals(getResources().getString(R.string.EDITAR_REGISTRO)))
+            datePickerDialog = new DatePickerDialog(getActivity(), (EditRegistroDialog) getTargetFragment(), year, month, day);
+
+        return datePickerDialog;
     }
 
 }
