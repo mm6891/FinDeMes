@@ -153,7 +153,7 @@
         android:orientation="horizontal"
         android:layout_below="@+id/lyLinear7">
         <TextView
-            android:id="@+id/tvDia"
+            android:id="@+id/tvDiaER"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -161,7 +161,7 @@
             android:textStyle="bold"
             android:textSize="18sp" />
         <TextView
-            android:id="@+id/tvHora"
+            android:id="@+id/tvHoraER"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

@@ -68,8 +68,8 @@ public class GastoActivity extends FragmentActivity implements DatePickerDialog.
         String mTimeText = sdfDia.format(date);
         String mTimeHora = sdfHora.format(date);
 
-        ((TextView) findViewById(R.id.tvDia)).setText(mTimeText);
-        ((TextView) findViewById(R.id.tvHora)).setText(mTimeHora);
+        ((TextView) findViewById(R.id.tvDiaAG)).setText(mTimeText);
+        ((TextView) findViewById(R.id.tvHoraAG)).setText(mTimeHora);
 
         ImageButton datePicker = (ImageButton) findViewById(R.id.myDatePickerButtonAG);
 
@@ -109,8 +109,8 @@ public class GastoActivity extends FragmentActivity implements DatePickerDialog.
             Gasto nuevoGasto = new Gasto();
             nuevoGasto.setDescripcion(descripcion);
             nuevoGasto.setValor(valor);
-            String fecha = (String) ((TextView) findViewById(R.id.tvDia)).getText();
-            String hora = (String) ((TextView) findViewById(R.id.tvHora)).getText();
+            String fecha = (String) ((TextView) findViewById(R.id.tvDiaAG)).getText();
+            String hora = (String) ((TextView) findViewById(R.id.tvHoraAG)).getText();
             nuevoGasto.setFecha(fecha + " " + hora);
 
             GrupoGasto grupo = new GrupoGasto();
@@ -142,8 +142,8 @@ public class GastoActivity extends FragmentActivity implements DatePickerDialog.
         String mTimeText = sdfDia.format(date);
         String mTimeHora = sdfHora.format(date);
 
-        ((TextView) findViewById(R.id.tvDia)).setText(mTimeText);
-        ((TextView) findViewById(R.id.tvHora)).setText(mTimeHora);
+        ((TextView) findViewById(R.id.tvDiaAG)).setText(mTimeText);
+        ((TextView) findViewById(R.id.tvHoraAG)).setText(mTimeHora);
     }
 
     @Override

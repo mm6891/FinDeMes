@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +39,7 @@ import globalsolutions.findemes.pantallas.util.Util;
 /**
  * Created by manuel.molero on 16/02/2015.
  */
-public class NuevoRegistroDialog extends DialogFragment implements DatePickerDialog.OnDateSetListener{
+public class NuevoRegistroDialog extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
     private ONuevoRegistroDialogListener callback;
 
@@ -99,8 +98,8 @@ public class NuevoRegistroDialog extends DialogFragment implements DatePickerDia
         String mTimeText = sdfDia.format(date);
         String mTimeHora = sdfHora.format(date);
 
-        ((TextView) view.findViewById(R.id.tvDia)).setText(mTimeText);
-        ((TextView) view.findViewById(R.id.tvHora)).setText(mTimeHora);
+        ((TextView) view.findViewById(R.id.tvDiaNR)).setText(mTimeText);
+        ((TextView) view.findViewById(R.id.tvHoraNR)).setText(mTimeHora);
 
         ImageButton datePicker = (ImageButton) view.findViewById(R.id.myDatePickerButtonNR);
 
@@ -144,8 +143,8 @@ public class NuevoRegistroDialog extends DialogFragment implements DatePickerDia
                             Integer.valueOf(Constantes.REGISTRO_INACTIVO.toString());
                     nuevoRegistro.setActivo(valueActivo);
                     nuevoRegistro.setValor(valor);
-                    String fecha = (String) ((TextView) view.findViewById(R.id.tvDia)).getText();
-                    String hora = (String) ((TextView) view.findViewById(R.id.tvHora)).getText();
+                    String fecha = (String) ((TextView) view.findViewById(R.id.tvDiaNR)).getText();
+                    String hora = (String) ((TextView) view.findViewById(R.id.tvHoraNR)).getText();
                     nuevoRegistro.setFecha(fecha + " " + hora);
 
                     RegistroDAO registroDAO = new RegistroDAO(view.getContext());
@@ -171,11 +170,12 @@ public class NuevoRegistroDialog extends DialogFragment implements DatePickerDia
 
     //dialogos
     public void showDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("movimiento", getResources().getString(R.string.NUEVO_REGISTRO));
-        newFragment.setArguments(bundle);
-        newFragment.show(getFragmentManager(),"Fecha");
+        // Use the current date as the default date in the picker
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        new DatePickerDialog(getActivity(), this, year, month, day).show();
     }
 
     @Override
@@ -188,9 +188,8 @@ public class NuevoRegistroDialog extends DialogFragment implements DatePickerDia
         SimpleDateFormat sdfHora = new SimpleDateFormat("kk:mm");
         String mTimeText = sdfDia.format(date);
         String mTimeHora = sdfHora.format(date);
-
-        ((TextView) view.findViewById(R.id.tvDia)).setText(mTimeText);
-        ((TextView) view.findViewById(R.id.tvHora)).setText(mTimeHora);
+        ((TextView)this.getDialog().findViewById(R.id.tvDiaNR)).setText(mTimeText);
+        ((TextView)this.getDialog().findViewById(R.id.tvHoraNR)).setText(mTimeHora);
     }
 
     /** The system calls this only when creating the layout in a dialog. */

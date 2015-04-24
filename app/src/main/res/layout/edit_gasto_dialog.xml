@@ -85,17 +85,27 @@
         android:orientation="horizontal"
         android:layout_below="@+id/lyLinear4">
         <TextView
-            android:id="@+id/tvDia"
+            android:id="@+id/tvDiaEG"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_weight="1"/>
+            android:layout_weight="0.4"
+            android:textStyle="bold"
+            android:textSize="18sp" />
         <TextView
-            android:id="@+id/tvHora"
+            android:id="@+id/tvHoraEG"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_weight="1"/>
+            android:layout_weight="0.4"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+        <ImageButton android:id="@+id/myDatePickerButtonEG"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_weight="0.6"
+            android:src="@drawable/calendar"
+            android:background="@android:color/white" />
     </LinearLayout>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/lyLinear6"

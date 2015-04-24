@@ -133,8 +133,8 @@ public class EditRegistroDialog extends DialogFragment implements DatePickerDial
         String mTimeText = sdfDia.format(date);
         String mTimeHora = sdfHora.format(date);
 
-        ((TextView) view.findViewById(R.id.tvDia)).setText(mTimeText);
-        ((TextView) view.findViewById(R.id.tvHora)).setText(mTimeHora);
+        ((TextView) view.findViewById(R.id.tvDiaER)).setText(mTimeText);
+        ((TextView) view.findViewById(R.id.tvHoraER)).setText(mTimeHora);
 
         ImageButton datePicker = (ImageButton) view.findViewById(R.id.myDatePickerButtonER);
 
@@ -181,8 +181,8 @@ public class EditRegistroDialog extends DialogFragment implements DatePickerDial
                             Integer.valueOf(Constantes.REGISTRO_INACTIVO.toString());
                     nuevoRegistro.setActivo(valueActivo);
                     nuevoRegistro.setValor(valor);
-                    String fecha = (String) ((TextView) view.findViewById(R.id.tvDia)).getText();
-                    String hora = (String) ((TextView) view.findViewById(R.id.tvHora)).getText();
+                    String fecha = (String) ((TextView) view.findViewById(R.id.tvDiaER)).getText();
+                    String hora = (String) ((TextView) view.findViewById(R.id.tvHoraER)).getText();
                     nuevoRegistro.setFecha(fecha + " " + hora);
 
                     RegistroDAO registroDAO = new RegistroDAO(view.getContext());
@@ -206,11 +206,11 @@ public class EditRegistroDialog extends DialogFragment implements DatePickerDial
 
     //dialogos
     public void showDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("movimiento", getResources().getString(R.string.EDITAR_REGISTRO));
-        newFragment.setArguments(bundle);
-        newFragment.show(getFragmentManager(),"Fecha");
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        new DatePickerDialog(getActivity(), this, year, month, day).show();
     }
 
     @Override
@@ -223,9 +223,8 @@ public class EditRegistroDialog extends DialogFragment implements DatePickerDial
         SimpleDateFormat sdfHora = new SimpleDateFormat("kk:mm");
         String mTimeText = sdfDia.format(date);
         String mTimeHora = sdfHora.format(date);
-
-        ((TextView) view.findViewById(R.id.tvDia)).setText(mTimeText);
-        ((TextView) view.findViewById(R.id.tvHora)).setText(mTimeHora);
+        ((TextView)this.getDialog().findViewById(R.id.tvDiaER)).setText(mTimeText);
+        ((TextView)this.getDialog().findViewById(R.id.tvHoraER)).setText(mTimeHora);
     }
 
     /** The system calls this only when creating the layout in a dialog. */

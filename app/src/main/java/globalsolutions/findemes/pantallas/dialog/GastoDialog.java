@@ -1,6 +1,7 @@
 package globalsolutions.findemes.pantallas.dialog;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -9,15 +10,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import globalsolutions.findemes.R;
@@ -31,9 +38,23 @@ import globalsolutions.findemes.pantallas.util.Util;
 /**
  * Created by manuel.molero on 16/02/2015.
  */
-public class GastoDialog extends DialogFragment {
+public class GastoDialog extends DialogFragment implements DatePickerDialog.OnDateSetListener{
 
     private OnGastoDialogListener callback;
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int day) {
+        final Calendar c = Calendar.getInstance();
+        c.set(year,month,day);
+
+        Date date = new Date(c.getTimeInMillis());
+        SimpleDateFormat sdfDia = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdfHora = new SimpleDateFormat("kk:mm");
+        String mTimeText = sdfDia.format(date);
+        String mTimeHora = sdfHora.format(date);
+        ((TextView)this.getDialog().findViewById(R.id.tvDiaEG)).setText(mTimeText);
+        ((TextView)this.getDialog().findViewById(R.id.tvHoraEG)).setText(mTimeHora);
+    }
 
     public interface OnGastoDialogListener {
         public void onGastoDialogSubmit(String result);
@@ -78,8 +99,17 @@ public class GastoDialog extends DialogFragment {
         ((EditText) view.findViewById(R.id.txtDecripcion)).setText(descripcion);
          int spinnerPostion = dataAdapter.getPosition(categoriaStr);
         categoria.setSelection(spinnerPostion);
-        ((TextView) view.findViewById(R.id.tvDia)).setText(fecha.split(" ")[0]);
-        ((TextView) view.findViewById(R.id.tvHora)).setText(fecha.split(" ")[1]);
+
+        ((TextView) view.findViewById(R.id.tvDiaEG)).setText(fecha.split(" ")[0]);
+        ((TextView) view.findViewById(R.id.tvHoraEG)).setText(fecha.split(" ")[1]);
+
+        ImageButton datePicker = (ImageButton) view.findViewById(R.id.myDatePickerButtonEG);
+        datePicker.setOnClickListener(new AdapterView.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(v);
+            }
+        });
 
         final Gasto aMod = new Gasto();
         aMod.set_id(Integer.valueOf(_id).intValue());
@@ -106,8 +136,8 @@ public class GastoDialog extends DialogFragment {
                     Gasto nuevoGasto = new Gasto();
                     nuevoGasto.setDescripcion(descripcion);
                     nuevoGasto.setValor(valor);
-                    String fecha = (String) ((TextView) view.findViewById(R.id.tvDia)).getText();
-                    String hora = (String) ((TextView) view.findViewById(R.id.tvHora)).getText();
+                    String fecha = (String) ((TextView) view.findViewById(R.id.tvDiaEG)).getText();
+                    String hora = (String) ((TextView) view.findViewById(R.id.tvHoraEG)).getText();
                     nuevoGasto.setFecha(fecha + " " + hora);
 
                     GrupoGasto grupo = new GrupoGasto();
@@ -132,6 +162,15 @@ public class GastoDialog extends DialogFragment {
 
         // Inflate the layout to use as dialog or embedded fragment
         return view;
+    }
+
+    public void showDatePickerDialog(View v) {
+        // Use the current date as the default date in the picker
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        new DatePickerDialog(getActivity(), this, year, month, day).show();
     }
 
     /** The system calls this only when creating the layout in a dialog. */
