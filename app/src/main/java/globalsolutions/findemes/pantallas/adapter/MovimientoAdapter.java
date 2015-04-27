@@ -139,7 +139,7 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                     String filterableString;
 
                     for (int i = 0; i < count; i++) {
-                        filterableString = list.get(i).getFecha().split(" ")[0];
+                        filterableString = list.get(i).getFecha();
                         Calendar cal  = Calendar.getInstance();
                         try {
                             cal.setTime(Util.formatoFechaActual().parse(filterableString));
@@ -166,7 +166,7 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                     String filterableString;
 
                     for (int i = 0; i < count; i++) {
-                        String fecha = list.get(i).getFecha().split(" ")[0];
+                        String fecha = list.get(i).getFecha();
                         Calendar cal  = Calendar.getInstance();
                         try {
                             cal.setTime(Util.formatoFechaActual().parse(fecha));

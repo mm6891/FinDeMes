@@ -89,10 +89,7 @@ public class MovimientoDAO {
                         m.setValor(registros[i].getValor());
                         m.setDescripcion(registros[i].getDescripcion());
                         //tratamos el caso especial de la fecha
-                        Date date = new Date(System.currentTimeMillis());
-                        SimpleDateFormat sdfHora = new SimpleDateFormat("kk:mm");
-                        String mTimeHora = sdfHora.format(date);
-                        m.setFecha(fechaActivacion + " " + mTimeHora);
+                        m.setFecha(fechaActivacion);
                         m.setCategoria(registros[i].getGrupo());
                         m.setTipoMovimiento(registros[i].getTipo());
                         m.setEsFrecuente(true);
@@ -109,10 +106,7 @@ public class MovimientoDAO {
                         m.setValor(registros[i].getValor());
                         m.setDescripcion(registros[i].getDescripcion());
                         //tratamos el caso especial de la fecha
-                        Date date = new Date(System.currentTimeMillis());
-                        SimpleDateFormat sdfHora = new SimpleDateFormat("kk:mm");
-                        String mTimeHora = sdfHora.format(date);
-                        m.setFecha(fechaActivacion + " " + mTimeHora);
+                        m.setFecha(fechaActivacion);
                         m.setCategoria(registros[i].getGrupo());
                         m.setTipoMovimiento(registros[i].getTipo());
                         m.setEsFrecuente(true);
@@ -129,10 +123,7 @@ public class MovimientoDAO {
                         m.setValor(registros[i].getValor());
                         m.setDescripcion(registros[i].getDescripcion());
                         //tratamos el caso especial de la fecha
-                        Date date = new Date(System.currentTimeMillis());
-                        SimpleDateFormat sdfHora = new SimpleDateFormat("kk:mm");
-                        String mTimeHora = sdfHora.format(date);
-                        m.setFecha(fechaActivacion + " " + mTimeHora);
+                        m.setFecha(fechaActivacion);
                         m.setCategoria(registros[i].getGrupo());
                         m.setTipoMovimiento(registros[i].getTipo());
                         m.setEsFrecuente(true);

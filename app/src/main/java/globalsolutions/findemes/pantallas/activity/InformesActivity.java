@@ -164,13 +164,15 @@ public class InformesActivity extends Activity {
                 intent.putExtra("anyo" , (String)spPeriodoFiltro.getSelectedItem());
 
                 ArrayList<InformeItem> informes = ((InformeAdapter)listViewMovsInforme.getAdapter()).getItemsActuales();
-                double[] valoresIngresos = new double[informes.size()];
-                double[] valoresGastos = new double[informes.size()];
+                int count = informes.size();
+                double[] valoresIngresos = new double[count];
+                double[] valoresGastos = new double[count];
                 String[] ejeX = new String[informes.size()];
-                for(int i = 0 ; i < informes.size() ; i++){
+                for(int i = 0 ; i < count ; i++){
                     valoresIngresos[i] = Double.valueOf(informes.get(i).getIngresoValor());
                     valoresGastos[i] = Double.valueOf(informes.get(i).getGastoValor());
-                    ejeX[i] = informes.get(i).getPeriodoDesc();
+                    int valorX = count - i;
+                    ejeX[valorX-1] = informes.get(i).getPeriodoDesc();
                 }
 
                 intent.putExtra("ingresos" , valoresIngresos);
