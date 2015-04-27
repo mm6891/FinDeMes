@@ -85,7 +85,7 @@ public class OptionActivityBarChart extends Activity {
         chart.addYAxisLabels(periodo);
         chart.addTopAxisLabels(valueCount);
         chart.setHorizontal(true);
-        chart.setSize(450, 450);
+        chart.setSize(450, 350);
         chart.setSpaceBetweenGroupsOfBars(30);
 
         chart.setTitle(getResources().getString(R.string.Grafica_titulo), Color.BLACK, 16);
