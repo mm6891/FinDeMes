@@ -2,6 +2,7 @@ package globalsolutions.findemes.pantallas.activity;
 
 import android.app.DialogFragment;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -74,7 +75,7 @@ public class OpcionesActivity extends FragmentActivity {
                         showPasswordActivity();
                         break;
                     case 4:
-
+                        linkCalificarActivity();
                         break;
                     case 5:
 
@@ -127,6 +128,15 @@ public class OpcionesActivity extends FragmentActivity {
         Intent intent = new Intent(OpcionesActivity.this, OptionActivityDatabase.class);
         startActivity(intent);
         finish();
+    }
+
+    public void linkCalificarActivity(){
+        final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+        }
     }
 
     public String[] creaOpciones(){
