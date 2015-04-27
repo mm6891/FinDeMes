@@ -59,12 +59,11 @@ public class MovimientoDAO {
 
         //ordenamos los movimientos por fecha descendente
         Collections.sort(movs, new Comparator<MovimientoItem>() {
-            DateFormat f = new SimpleDateFormat("dd/MM/yyyy");
-
             @Override
             public int compare(MovimientoItem o1, MovimientoItem o2) {
                 try {
-                    return f.parse(o2.getFecha()).compareTo(f.parse(o1.getFecha()));
+                    return Util.formatoFechaActual().parse(o2.getFecha()).compareTo
+                            (Util.formatoFechaActual().parse(o1.getFecha()));
                 } catch (ParseException e) {
                     throw new IllegalArgumentException(e);
                 }
@@ -93,8 +92,6 @@ public class MovimientoDAO {
                         Date date = new Date(System.currentTimeMillis());
                         SimpleDateFormat sdfHora = new SimpleDateFormat("kk:mm");
                         String mTimeHora = sdfHora.format(date);
-                       /* m.setFecha("01/" + String.format("%02d", new Integer(j)) + "/"
-                                + String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) + " " + mTimeHora);*/
                         m.setFecha(fechaActivacion + " " + mTimeHora);
                         m.setCategoria(registros[i].getGrupo());
                         m.setTipoMovimiento(registros[i].getTipo());
@@ -115,8 +112,6 @@ public class MovimientoDAO {
                         Date date = new Date(System.currentTimeMillis());
                         SimpleDateFormat sdfHora = new SimpleDateFormat("kk:mm");
                         String mTimeHora = sdfHora.format(date);
-                       /* m.setFecha("01/" + String.format("%02d", new Integer(j)) + "/"
-                                + String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) + " " + mTimeHora);*/
                         m.setFecha(fechaActivacion + " " + mTimeHora);
                         m.setCategoria(registros[i].getGrupo());
                         m.setTipoMovimiento(registros[i].getTipo());
@@ -137,8 +132,6 @@ public class MovimientoDAO {
                         Date date = new Date(System.currentTimeMillis());
                         SimpleDateFormat sdfHora = new SimpleDateFormat("kk:mm");
                         String mTimeHora = sdfHora.format(date);
-                       /* m.setFecha("01/" + String.format("%02d", new Integer(j)) + "/"
-                                + String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) + " " + mTimeHora);*/
                         m.setFecha(fechaActivacion + " " + mTimeHora);
                         m.setCategoria(registros[i].getGrupo());
                         m.setTipoMovimiento(registros[i].getTipo());

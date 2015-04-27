@@ -19,6 +19,7 @@ import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.MovimientoDAO;
 import globalsolutions.findemes.database.model.MovimientoItem;
 import globalsolutions.findemes.database.util.Constantes;
+import globalsolutions.findemes.pantallas.util.Util;
 
 /**
  * Created by manuel.molero on 04/02/2015.
@@ -139,11 +140,9 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
 
                     for (int i = 0; i < count; i++) {
                         filterableString = list.get(i).getFecha().split(" ")[0];
-                        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-
                         Calendar cal  = Calendar.getInstance();
                         try {
-                            cal.setTime(formato.parse(filterableString));
+                            cal.setTime(Util.formatoFechaActual().parse(filterableString));
                         } catch (java.text.ParseException e) {
                             e.printStackTrace();
                         }
@@ -168,10 +167,9 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
 
                     for (int i = 0; i < count; i++) {
                         String fecha = list.get(i).getFecha().split(" ")[0];
-                        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
                         Calendar cal  = Calendar.getInstance();
                         try {
-                            cal.setTime(formato.parse(fecha));
+                            cal.setTime(Util.formatoFechaActual().parse(fecha));
                         } catch (java.text.ParseException e) {
                             e.printStackTrace();
                         }

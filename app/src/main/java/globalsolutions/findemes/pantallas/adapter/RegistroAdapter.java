@@ -59,6 +59,7 @@ public class RegistroAdapter extends BaseAdapter {
         TextView tvCategoriaItem = (TextView) rowView.findViewById(R.id.tvCategoriaItem);
         TextView tvValorItem = (TextView) rowView.findViewById(R.id.tvValorItem);
         TextView tvActivoItem = (TextView) rowView.findViewById(R.id.tvActivoItem);
+        TextView tvFechaActivacion = (TextView) rowView.findViewById(R.id.tvFechaActivacionItem);
 
         RegistroItem item = this.items.get(position);
         tvRegistroItem.setText(item.getDescripcion());
@@ -68,6 +69,7 @@ public class RegistroAdapter extends BaseAdapter {
         tvValorItem.setText(item.getValor());
         tvActivoItem.setText(item.getActivo().equals(Integer.valueOf(Constantes.REGISTRO_ACTIVO.toString()))
                 ? context.getResources().getString(R.string.AFIRMACION) : context.getResources().getString(R.string.NEGACION));
+        tvFechaActivacion.setText(item.getFecha());
 
         if(position % 2 == 0)
             rowView.setBackgroundColor(context.getResources().getColor(R.color.button_material_light));

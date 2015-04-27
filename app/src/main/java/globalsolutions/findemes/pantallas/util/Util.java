@@ -55,48 +55,36 @@ public class Util {
         }
     }
 
-    /*public static long dias(String fechaActivacion) {
-        Calendar cal = Calendar.getInstance();
-        try {
-            cal.setTime(new SimpleDateFormat("dd/MM/yyyy").parse(fechaActivacion));
-        } catch (java.text.ParseException e) {
-            e.printStackTrace();
-        }
-
-        Calendar today = Calendar.getInstance();
-
-        long diff = today.getTimeInMillis() - cal.getTimeInMillis(); //result in millis
-        long days = diff / (24 * 60 * 60 * 1000);
-        return days;
-    }*/
-
     //devuelve positivo si f2 es mayor a f1
     public static int compare(String f1, String f2) {
-        SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
         try {
-            return f.parse(f2).compareTo(f.parse(f1));
+            return formatoFechaActual().parse(f2).compareTo(formatoFechaActual().parse(f1));
         } catch (ParseException e) {
             throw new IllegalArgumentException(e);
         }
     }
 
     public static String sumaDias (String fecha, int numDias){
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Calendar c = Calendar.getInstance();
         try {
-            c.setTime(sdf.parse(fecha));
+            c.setTime(formatoFechaActual().parse(fecha));
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        c.add(Calendar.DATE, numDias); // Adding numDias days
-        String output = sdf.format(c.getTime());
+        c.add(Calendar.DAY_OF_MONTH, numDias); // Adding numDias days
+        String output = formatoFechaActual().format(c.getTime());
         return output;
     }
 
     public static String fechaActual(){
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
         Calendar c = Calendar.getInstance();
-        String output = sdf.format(c.getTime());
+        String output = formatoFechaActual().format(c.getTime());
         return output;
+    }
+
+    public static SimpleDateFormat formatoFechaActual(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy kk:mm");
+        return sdf;
     }
 }

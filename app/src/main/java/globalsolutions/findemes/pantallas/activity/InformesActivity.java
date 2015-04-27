@@ -97,10 +97,9 @@ public class InformesActivity extends Activity {
 
         for(MovimientoItem mov : movs){
             String fecha = mov.getFecha();
-            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
             Calendar cal  = Calendar.getInstance();
             try {
-                cal.setTime(formato.parse(fecha));
+                cal.setTime(Util.formatoFechaActual().parse(fecha));
             } catch (java.text.ParseException e) {
                 e.printStackTrace();
             }

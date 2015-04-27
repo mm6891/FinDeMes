@@ -127,14 +127,8 @@ public class EditRegistroDialog extends DialogFragment implements DatePickerDial
         ((RadioButton)view.findViewById(R.id.rbInActivo)).setChecked(activo.equals(Constantes.REGISTRO_INACTIVO.toString()));
 
         //cargamos el modal para seleccionar fecha
-        Date date = new Date(System.currentTimeMillis());
-        SimpleDateFormat sdfDia = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat sdfHora = new SimpleDateFormat("kk:mm");
-        String mTimeText = sdfDia.format(date);
-        String mTimeHora = sdfHora.format(date);
-
-        ((TextView) view.findViewById(R.id.tvDiaER)).setText(mTimeText);
-        ((TextView) view.findViewById(R.id.tvHoraER)).setText(mTimeHora);
+        ((TextView) view.findViewById(R.id.tvDiaER)).setText(fecha.split(" ")[0]);
+        ((TextView) view.findViewById(R.id.tvHoraER)).setText(fecha.split(" ")[1]);
 
         ImageButton datePicker = (ImageButton) view.findViewById(R.id.myDatePickerButtonER);
 

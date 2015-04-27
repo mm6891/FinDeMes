@@ -92,10 +92,9 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         /*else{*/
             for(MovimientoItem mov : movs){
                 String fecha = mov.getFecha();
-                SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
                 Calendar cal  = Calendar.getInstance();
                 try {
-                    cal.setTime(formato.parse(fecha));
+                    cal.setTime(Util.formatoFechaActual().parse(fecha));
                 } catch (java.text.ParseException e) {
                     e.printStackTrace();
                 }
@@ -104,7 +103,7 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                     anyos.add(String.valueOf(new Integer(year)));
             }
             spFitroAnyo.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, anyos));
-            mSpinnerCount++;
+        mSpinnerCount++;
             spFitroAnyo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     if (mSpinnerInitializedCount < mSpinnerCount)
@@ -157,7 +156,6 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                         final String[] items = {getResources().getString(R.string.Modificar), getResources().getString(R.string.Eliminar)};
 
                         AlertDialog.Builder builder = new AlertDialog.Builder(MovimientosActivity.this);
-                        //builder.setTitle(getResources().getString(R.string.MENU_OPCIONES));
 
                         ListAdapter adapter = new ArrayAdapterWithIcon(getApplicationContext(), items, Util.prgmImagesOption);
                         builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
