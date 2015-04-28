@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.nfc.FormatException;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -19,14 +20,19 @@ import android.widget.Spinner;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.GastoDAO;
+import globalsolutions.findemes.database.dao.GrupoGastoDAO;
+import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
 import globalsolutions.findemes.database.dao.IngresoDAO;
 import globalsolutions.findemes.database.dao.MovimientoDAO;
 import globalsolutions.findemes.database.model.MovimientoItem;
 import globalsolutions.findemes.database.util.ArrayAdapterWithIcon;
+import globalsolutions.findemes.database.util.Constantes;
 import globalsolutions.findemes.pantallas.adapter.MovimientoAdapter;
 import globalsolutions.findemes.pantallas.dialog.GastoDialog;
 import globalsolutions.findemes.pantallas.dialog.IngresoDialog;
@@ -47,7 +53,7 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
     public void actualizarFiltro(String result) {
         if(result.equals(String.valueOf(Activity.RESULT_OK))){
             ((MovimientoAdapter)listViewMovs.getAdapter()).setMesSeleccionado(spFiltroMes.getSelectedItemPosition());
-            ((MovimientoAdapter)listViewMovs.getAdapter()).setAnyoSeleccionado(new Integer((String) spFitroAnyo.getSelectedItem()).intValue());
+            ((MovimientoAdapter)listViewMovs.getAdapter()).setAnyoSeleccionado(devuelveAnyo());
 
             if(!((CheckBox) findViewById(R.id.cbIconMinus)).isChecked() && ((CheckBox) findViewById(R.id.cbIconPlus)).isChecked())
                 ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO));
@@ -61,6 +67,7 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
     private ListView listViewMovs;
     private Spinner spFiltroMes;
     private Spinner spFitroAnyo;
+    private Spinner spFiltroCategoria;
 
     //this counts how many Spinner's are on the UI
     private int mSpinnerCount=0;
@@ -90,124 +97,129 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         if(movs.size() <= 0 )
             Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Movimientos));
         /*else{*/
-            for(MovimientoItem mov : movs){
-                String fecha = mov.getFecha();
-                Calendar cal  = Calendar.getInstance();
-                try {
-                    cal.setTime(Util.formatoFechaActual().parse(fecha));
-                } catch (java.text.ParseException e) {
-                    e.printStackTrace();
-                }
-                int year = cal.get(Calendar.YEAR);
-                if(!anyos.contains(String.valueOf(new Integer(year))))
-                    anyos.add(String.valueOf(new Integer(year)));
+        for(MovimientoItem mov : movs){
+            String fecha = mov.getFecha();
+            Calendar cal  = Calendar.getInstance();
+            try {
+                cal.setTime(Util.formatoFechaActual().parse(fecha));
+            } catch (java.text.ParseException e) {
+                e.printStackTrace();
             }
-            spFitroAnyo.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, anyos));
+            int year = cal.get(Calendar.YEAR);
+            if(!anyos.contains(String.valueOf(new Integer(year))))
+                anyos.add(String.valueOf(new Integer(year)));
+        }
+        anyos.add(getResources().getString(R.string.TIPO_FILTRO_RESETEO));
+        spFitroAnyo.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, anyos));
         mSpinnerCount++;
-            spFitroAnyo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if (mSpinnerInitializedCount < mSpinnerCount)
-                    {
-                        mSpinnerInitializedCount++;
-                    }
-                    else {
-                        int anyoSpinner = spFitroAnyo.getSelectedItem() != null ? new Integer((String) spFitroAnyo.getSelectedItem()).intValue() : -1;
-                        filtraMesAnyo(view, spFiltroMes.getSelectedItemPosition(), anyoSpinner);
-                    }
+        spFitroAnyo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (mSpinnerInitializedCount < mSpinnerCount)
+                {
+                    mSpinnerInitializedCount++;
                 }
-                public void onNothingSelected(AdapterView<?> parent) {
-                    int year = Calendar.getInstance().get(Calendar.YEAR);
-                    spFitroAnyo.setSelection(year);
+                else {
+                    filtraMesAnyo(view, spFiltroMes.getSelectedItemPosition(), devuelveAnyo());
                 }
-            });
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+                int year = Calendar.getInstance().get(Calendar.YEAR);
+                spFitroAnyo.setSelection(year);
+            }
+        });
 
-            listViewMovs = (ListView) findViewById(R.id.listViewMov);
-            listViewMovs.setAdapter(new MovimientoAdapter(getApplicationContext(), movs));
-            //cargamos meses
-            spFiltroMes = (Spinner) findViewById(R.id.spMeses);
-            spFiltroMes.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, creaMeses()));
-            mSpinnerCount++;
-            spFiltroMes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if (mSpinnerInitializedCount < mSpinnerCount)
-                    {
-                        mSpinnerInitializedCount++;
-                    }
-                    else {
-                        int anyoSpinner = spFitroAnyo.getSelectedItem() != null ? new Integer((String) spFitroAnyo.getSelectedItem()).intValue() : -1;
-                        filtraMesAnyo(view, position, anyoSpinner);
-                    }
+        listViewMovs = (ListView) findViewById(R.id.listViewMov);
+        listViewMovs.setAdapter(new MovimientoAdapter(getApplicationContext(), movs));
+        //cargamos meses
+        spFiltroMes = (Spinner) findViewById(R.id.spMeses);
+        String[] meses = creaMeses();
+        spFiltroMes.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, meses));
+        mSpinnerCount++;
+        spFiltroMes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (mSpinnerInitializedCount < mSpinnerCount)
+                {
+                    mSpinnerInitializedCount++;
                 }
-                public void onNothingSelected(AdapterView<?> parent) {
-                    int month = Calendar.getInstance().get(Calendar.MONTH);
-                    spFiltroMes.setSelection(month);
+                else {
+                    filtraMesAnyo(view, position, devuelveAnyo());
                 }
-            });
-            spFiltroMes.setSelection(Calendar.getInstance().get(Calendar.MONTH));
-            spFitroAnyo.setSelection(spFitroAnyo.getSelectedItemPosition());
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+                int month = Calendar.getInstance().get(Calendar.MONTH);
+                spFiltroMes.setSelection(month);
+            }
+        });
 
-            listViewMovs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, final View view, int position,
-                                        long id) {
+        //filtro categoria del movimiento
+        spFiltroCategoria = (Spinner) findViewById(R.id.spCategoriaMovimiento);
+        spFiltroCategoria.setEnabled(false);
 
-                    final MovimientoItem movSeleccionado = (MovimientoItem) listViewMovs.getItemAtPosition(position);
-                    if (!movSeleccionado.isEsFrecuente()) {
-                        final String[] items = {getResources().getString(R.string.Modificar), getResources().getString(R.string.Eliminar)};
+        spFiltroMes.setSelection(meses.length - 1);
+        spFitroAnyo.setSelection(anyos.size() - 1);
 
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MovimientosActivity.this);
+        listViewMovs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view, int position,
+                                    long id) {
 
-                        ListAdapter adapter = new ArrayAdapterWithIcon(getApplicationContext(), items, Util.prgmImagesOption);
-                        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int item) {
-                                        //Eliminar Movimiento
-                                        String accion = (String) items[item];
-                                        boolean realizado;
+                final MovimientoItem movSeleccionado = (MovimientoItem) listViewMovs.getItemAtPosition(position);
+                if (!movSeleccionado.isEsFrecuente()) {
+                    final String[] items = {getResources().getString(R.string.Modificar), getResources().getString(R.string.Eliminar)};
 
-                                        if (accion.equals(getResources().getString(R.string.Eliminar))) {
-                                            if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
-                                                GastoDAO gastoDAO = new GastoDAO(MovimientosActivity.this);
-                                                realizado = gastoDAO.deleteGasto(movSeleccionado.get_id());
-                                                if (realizado) {
-                                                    Util.showToast(getApplicationContext(), getResources().getString(R.string.Eliminado));
-                                                    actualizarFiltro(String.valueOf(Activity.RESULT_OK));
-                                                } else
-                                                    Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Eliminado));
-                                            }
-                                            if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO))) {
-                                                IngresoDAO ingresoDAO = new IngresoDAO(MovimientosActivity.this);
-                                                realizado = ingresoDAO.deleteIngreso(movSeleccionado.get_id());
-                                                if (realizado) {
-                                                    Util.showToast(getApplicationContext(), getResources().getString(R.string.Eliminado));
-                                                    actualizarFiltro(String.valueOf(Activity.RESULT_OK));
-                                                } else
-                                                    Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Eliminado));
-                                            }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MovimientosActivity.this);
+
+                    ListAdapter adapter = new ArrayAdapterWithIcon(getApplicationContext(), items, Util.prgmImagesOption);
+                    builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int item) {
+                                    //Eliminar Movimiento
+                                    String accion = (String) items[item];
+                                    boolean realizado;
+
+                                    if (accion.equals(getResources().getString(R.string.Eliminar))) {
+                                        if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
+                                            GastoDAO gastoDAO = new GastoDAO(MovimientosActivity.this);
+                                            realizado = gastoDAO.deleteGasto(movSeleccionado.get_id());
+                                            if (realizado) {
+                                                Util.showToast(getApplicationContext(), getResources().getString(R.string.Eliminado));
+                                                actualizarFiltro(String.valueOf(Activity.RESULT_OK));
+                                            } else
+                                                Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Eliminado));
                                         }
-                                        if (accion.equals(getResources().getString(R.string.Modificar))) {
-                                            Bundle bundle = new Bundle();
-                                            bundle.putString("_id", String.valueOf(movSeleccionado.get_id()));
-                                            bundle.putString("valor", movSeleccionado.getValor());
-                                            bundle.putString("descripcion", movSeleccionado.getDescripcion());
-                                            bundle.putString("categoria", movSeleccionado.getCategoria());
-                                            bundle.putString("fecha", movSeleccionado.getFecha());
+                                        if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO))) {
+                                            IngresoDAO ingresoDAO = new IngresoDAO(MovimientosActivity.this);
+                                            realizado = ingresoDAO.deleteIngreso(movSeleccionado.get_id());
+                                            if (realizado) {
+                                                Util.showToast(getApplicationContext(), getResources().getString(R.string.Eliminado));
+                                                actualizarFiltro(String.valueOf(Activity.RESULT_OK));
+                                            } else
+                                                Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Eliminado));
+                                        }
+                                    }
+                                    if (accion.equals(getResources().getString(R.string.Modificar))) {
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("_id", String.valueOf(movSeleccionado.get_id()));
+                                        bundle.putString("valor", movSeleccionado.getValor());
+                                        bundle.putString("descripcion", movSeleccionado.getDescripcion());
+                                        bundle.putString("categoria", movSeleccionado.getCategoria());
+                                        bundle.putString("fecha", movSeleccionado.getFecha());
 
-                                            if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
-                                                // Create an instance of the dialog fragment and show it*/
-                                                showGastoDialog(view, bundle);
-                                            } else if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO))) {
-                                                // Create an instance of the dialog fragment and show it*/
-                                                showIngresoDialog(view, bundle);
-                                            }
+                                        if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
+                                            // Create an instance of the dialog fragment and show it*/
+                                            showGastoDialog(view, bundle);
+                                        } else if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO))) {
+                                            // Create an instance of the dialog fragment and show it*/
+                                            showIngresoDialog(view, bundle);
                                         }
                                     }
                                 }
-                        ).show();
-                    }
-                    else
-                        Util.showToast(getApplicationContext(), getResources().getString(R.string.MovimientoFrecuente));
+                            }
+                    ).show();
                 }
-            });
+                else
+                    Util.showToast(getApplicationContext(), getResources().getString(R.string.MovimientoFrecuente));
+            }
+        });
         //}
     }
 
@@ -225,24 +237,63 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
 
     //eventos click filtro gasto e ingreso
     public void filtraGasto(View v){
-        int mes = spFiltroMes != null ? spFiltroMes.getSelectedItemPosition() : -1;
-        int anyo = spFitroAnyo != null && spFitroAnyo.getSelectedItem() != null ? new Integer((String) spFitroAnyo.getSelectedItem()).intValue() : -1;
+        //activamos combo categorias
+        if(!spFiltroCategoria.isEnabled()) {
+            GrupoGastoDAO grupoGastoDAO = new GrupoGastoDAO(getApplicationContext());
+            String[] categoriasGastos = grupoGastoDAO.selectGrupos();
+            List<String> listCategorias = Arrays.asList(categoriasGastos);
+            ArrayAdapter<String> dataAdapterCat = new ArrayAdapter<String>(getApplicationContext(),
+                    android.R.layout.simple_spinner_item, listCategorias);
+            dataAdapterCat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spFiltroCategoria.setAdapter(dataAdapterCat);
+            spFiltroCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    filtraCategoria((String) spFiltroCategoria.getSelectedItem());
+                }
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
+            });
+        }
+
+        int mes = spFiltroMes != null ? spFiltroMes.getSelectedItemPosition() : Constantes.NUMERO_ANYO_TODO;
+        int anyo = devuelveAnyo();
         ((MovimientoAdapter)listViewMovs.getAdapter()).setMesSeleccionado(mes);
         ((MovimientoAdapter)listViewMovs.getAdapter()).setAnyoSeleccionado(anyo);
 
         ((CheckBox) findViewById(R.id.cbIconPlus)).setChecked(false);
+        spFiltroCategoria.setEnabled(((CheckBox) findViewById(R.id.cbIconMinus)).isChecked());
         if(!((CheckBox) findViewById(R.id.cbIconMinus)).isChecked())
-            ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_FILTRO_RESETEO));
+            ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_FILTRO_RESETEO));
         else
             ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO));
     }
     public void filtraIngreso(View v){
-         int mes = spFiltroMes != null ? spFiltroMes.getSelectedItemPosition() : -1;
-         int anyo = spFitroAnyo != null && spFitroAnyo.getSelectedItem() != null ? new Integer((String) spFitroAnyo.getSelectedItem()).intValue() : -1;
+        //activamos combo categorias
+        if(!spFiltroCategoria.isEnabled()) {
+            GrupoIngresoDAO grupoIngresoDAO = new GrupoIngresoDAO(getApplicationContext());
+            String[] categoriasIngresos = grupoIngresoDAO.selectGrupos();
+            List<String> listCategorias = Arrays.asList(categoriasIngresos);
+            ArrayAdapter<String> dataAdapterCat = new ArrayAdapter<String>(getApplicationContext(),
+                    android.R.layout.simple_spinner_item, listCategorias);
+            dataAdapterCat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spFiltroCategoria.setAdapter(dataAdapterCat);
+            spFiltroCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    filtraCategoria((String) spFiltroCategoria.getSelectedItem());
+                }
+
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
+            });
+        }
+
+         int mes = spFiltroMes != null ? spFiltroMes.getSelectedItemPosition() : Constantes.NUMERO_ANYO_TODO;
+         int anyo = devuelveAnyo();
         ((MovimientoAdapter)listViewMovs.getAdapter()).setMesSeleccionado(mes);
         ((MovimientoAdapter)listViewMovs.getAdapter()).setAnyoSeleccionado(anyo);
 
         ((CheckBox) findViewById(R.id.cbIconMinus)).setChecked(false);
+        spFiltroCategoria.setEnabled(((CheckBox) findViewById(R.id.cbIconPlus)).isChecked());
         if(!((CheckBox) findViewById(R.id.cbIconPlus)).isChecked())
             ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_FILTRO_RESETEO));
         else
@@ -261,12 +312,30 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
             ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_FILTRO_RESETEO));
     }
 
+    public void filtraCategoria(String categoria){
+        ((MovimientoAdapter)listViewMovs.getAdapter()).setCategoriaSeleccionada(categoria);
+    }
+
     public String[] creaMeses(){
-        String[] meses = new String[12];
-        for(int i = 0 ; i < 12 ; i++){
+        String[] meses = new String[Constantes.NUMERO_MES_TODO + 1];
+        int indiceFinal = meses.length - 1;
+        for(int i = 0 ; i < Constantes.NUMERO_MES_TODO ; i++){
             meses[i] = new DateFormatSymbols().getMonths()[i].toUpperCase();
         }
+        meses[indiceFinal] = getResources().getString(R.string.TIPO_FILTRO_RESETEO);
         return meses;
+    }
+
+    public int devuelveAnyo(){
+        int anyoSpinner = Constantes.NUMERO_ANYO_TODO;
+        try {
+            anyoSpinner = spFitroAnyo.getSelectedItem() != null ? new Integer((String) spFitroAnyo.getSelectedItem()).intValue() : Constantes.NUMERO_ANYO_TODO;
+        }
+        catch (Exception ex){
+            //filtro all
+            anyoSpinner = Constantes.NUMERO_ANYO_TODO;
+        }
+        return anyoSpinner;
     }
 
     @Override
