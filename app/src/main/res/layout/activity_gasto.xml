@@ -6,8 +6,7 @@
     android:background="@android:color/white"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".GastoActivity">
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/lyBackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,7 +29,7 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/lyLinear1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,7 +52,7 @@
             android:layout_weight="1"/>
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/lyLinear2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,7 +71,7 @@
             android:layout_weight="1"/>
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/lyLinear3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -87,7 +86,7 @@
             android:textSize="18sp"
             android:layout_weight="1"/>
     </LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/lyLinear4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -102,7 +101,7 @@
             android:textSize="18sp"
             android:layout_below="@+id/tvDescripcion"/>
     </LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/lyLinear5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -131,7 +130,7 @@
             android:src="@drawable/calendar"
             android:background="@android:color/white" />
     </LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/lyLinear6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.nfc.FormatException;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -16,9 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
-
 import java.text.DateFormatSymbols;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -62,6 +59,13 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
             else
                 ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_FILTRO_RESETEO));
         }
+    }
+
+    public void actualizarFiltroCategoria() {
+        if(!((CheckBox) findViewById(R.id.cbIconMinus)).isChecked() && ((CheckBox) findViewById(R.id.cbIconPlus)).isChecked())
+            ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO));
+        if(((CheckBox) findViewById(R.id.cbIconMinus)).isChecked() && !((CheckBox) findViewById(R.id.cbIconPlus)).isChecked())
+            ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO));
     }
 
     private ListView listViewMovs;
@@ -238,22 +242,17 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
     //eventos click filtro gasto e ingreso
     public void filtraGasto(View v){
         //activamos combo categorias
-        if(!spFiltroCategoria.isEnabled()) {
-            GrupoGastoDAO grupoGastoDAO = new GrupoGastoDAO(getApplicationContext());
-            String[] categoriasGastos = grupoGastoDAO.selectGrupos();
-            List<String> listCategorias = Arrays.asList(categoriasGastos);
-            ArrayAdapter<String> dataAdapterCat = new ArrayAdapter<String>(getApplicationContext(),
-                    android.R.layout.simple_spinner_item, listCategorias);
-            dataAdapterCat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spFiltroCategoria.setAdapter(dataAdapterCat);
-            spFiltroCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    filtraCategoria((String) spFiltroCategoria.getSelectedItem());
-                }
-                public void onNothingSelected(AdapterView<?> parent) {
-                }
-            });
-        }
+        mSpinnerCount++;
+        spFiltroCategoria.setOnItemSelectedListener(new categoriaOnItemSelectedListener());
+        ((MovimientoAdapter) listViewMovs.getAdapter()).setCategoriaSeleccionada(null);
+        GrupoGastoDAO grupoGastoDAO = new GrupoGastoDAO(getApplicationContext());
+        String[] categoriasGastos = grupoGastoDAO.selectGruposFilter(getApplicationContext());
+        List<String> listCategorias = Arrays.asList(categoriasGastos);
+        ArrayAdapter<String> dataAdapterCat = new ArrayAdapter<String>(getApplicationContext(),
+                R.layout.spinner_item, listCategorias);
+        dataAdapterCat.setDropDownViewResource(R.layout.spinner_item);
+        spFiltroCategoria.setAdapter(dataAdapterCat);
+        spFiltroCategoria.setSelection(listCategorias.size() - 1);
 
         int mes = spFiltroMes != null ? spFiltroMes.getSelectedItemPosition() : Constantes.NUMERO_ANYO_TODO;
         int anyo = devuelveAnyo();
@@ -269,26 +268,20 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
     }
     public void filtraIngreso(View v){
         //activamos combo categorias
-        if(!spFiltroCategoria.isEnabled()) {
-            GrupoIngresoDAO grupoIngresoDAO = new GrupoIngresoDAO(getApplicationContext());
-            String[] categoriasIngresos = grupoIngresoDAO.selectGrupos();
-            List<String> listCategorias = Arrays.asList(categoriasIngresos);
-            ArrayAdapter<String> dataAdapterCat = new ArrayAdapter<String>(getApplicationContext(),
-                    android.R.layout.simple_spinner_item, listCategorias);
-            dataAdapterCat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spFiltroCategoria.setAdapter(dataAdapterCat);
-            spFiltroCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    filtraCategoria((String) spFiltroCategoria.getSelectedItem());
-                }
+        mSpinnerCount++;
+        spFiltroCategoria.setOnItemSelectedListener(new categoriaOnItemSelectedListener());
+        ((MovimientoAdapter) listViewMovs.getAdapter()).setCategoriaSeleccionada(null);
+        GrupoIngresoDAO grupoIngresoDAO = new GrupoIngresoDAO(getApplicationContext());
+        String[] categoriasIngresos = grupoIngresoDAO.selectGruposFilter(getApplicationContext());
+        List<String> listCategorias = Arrays.asList(categoriasIngresos);
+        ArrayAdapter<String> dataAdapterCat = new ArrayAdapter<String>(getApplicationContext(),
+                R.layout.spinner_item, listCategorias);
+        dataAdapterCat.setDropDownViewResource(R.layout.spinner_item);
+        spFiltroCategoria.setAdapter(dataAdapterCat);
+        spFiltroCategoria.setSelection(listCategorias.size() - 1);
 
-                public void onNothingSelected(AdapterView<?> parent) {
-                }
-            });
-        }
-
-         int mes = spFiltroMes != null ? spFiltroMes.getSelectedItemPosition() : Constantes.NUMERO_ANYO_TODO;
-         int anyo = devuelveAnyo();
+        int mes = spFiltroMes != null ? spFiltroMes.getSelectedItemPosition() : Constantes.NUMERO_ANYO_TODO;
+        int anyo = devuelveAnyo();
         ((MovimientoAdapter)listViewMovs.getAdapter()).setMesSeleccionado(mes);
         ((MovimientoAdapter)listViewMovs.getAdapter()).setAnyoSeleccionado(anyo);
 
@@ -310,10 +303,6 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
             ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO));
         else
             ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_FILTRO_RESETEO));
-    }
-
-    public void filtraCategoria(String categoria){
-        ((MovimientoAdapter)listViewMovs.getAdapter()).setCategoriaSeleccionada(categoria);
     }
 
     public String[] creaMeses(){
@@ -348,5 +337,27 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         startActivity(in);
         setResult(RESULT_OK);
         finish();
+    }
+
+    private class categoriaOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View v, int pos,
+                                   long id) {
+            if (mSpinnerInitializedCount < mSpinnerCount)
+            {
+                mSpinnerInitializedCount++;
+            }
+            else {
+                if(((String) spFiltroCategoria.getSelectedItem()).equals(getResources().getString(R.string.TIPO_FILTRO_RESETEO)))
+                    ((MovimientoAdapter) listViewMovs.getAdapter()).setCategoriaSeleccionada(null);
+                else
+                    ((MovimientoAdapter) listViewMovs.getAdapter()).setCategoriaSeleccionada((String) spFiltroCategoria.getSelectedItem());
+
+                actualizarFiltroCategoria();
+            }
+        }
+        @Override
+        public void onNothingSelected(AdapterView<?> arg0) {
+        }
     }
 }

@@ -6,7 +6,7 @@
     android:background="@android:color/white"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".CategoriasIngresosDialog">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/lyLinear1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,7 +25,7 @@
             android:layout_centerHorizontal="true" />
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/lyLinear2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             android:background="@android:color/white" />
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/lyLinear3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
    >
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/lyLinearMov"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
             android:textSize="18sp"
             android:layout_weight="1"/>
         </LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/lyLinearMov1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         android:textSize="18sp"
         android:layout_weight="0.4"/>
         </LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/lyLinearMov2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

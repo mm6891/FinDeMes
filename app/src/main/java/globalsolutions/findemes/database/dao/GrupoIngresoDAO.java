@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.model.GrupoIngreso;
 import globalsolutions.findemes.database.util.MyDatabaseHelper;
 
@@ -57,6 +58,24 @@ public class GrupoIngresoDAO {
             mCursor.moveToNext();
         }
 
+        return ret; // iterate to get each value.
+    }
+
+    public String[] selectGruposFilter(Context c) {
+        String[] ret;
+        String[] cols = new String[] {GRUPO_INGRESOS_DESC};
+        Cursor mCursor = database.query(true, GRUPO_INGRESOS_TABLA,cols,null
+                , null, null, null, null, null);
+        ret = new String[mCursor.getCount() + 1];
+        int i = 0;
+        mCursor.moveToFirst();
+        while (mCursor.isAfterLast() == false) {
+            ret[i] = mCursor.getString(0);
+            i++;
+            mCursor.moveToNext();
+        }
+
+        ret[i] = c.getResources().getString(R.string.TIPO_FILTRO_RESETEO);
         return ret; // iterate to get each value.
     }
 

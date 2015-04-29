@@ -99,10 +99,10 @@ public class EditRegistroDialog extends DialogFragment implements DatePickerDial
         dataAdapterTM.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         tipoMovimiento.setAdapter(dataAdapterTM);
         tipoMovimiento.setSelection(dataAdapterTM.getPosition(tipo));
+        tipoMovimiento.setOnItemSelectedListener(new tipoMovimientoOnClickListener());
 
         //cargamos el combo de categorias
         categoriaSp = (Spinner) view.findViewById(R.id.spCategoria);
-        categoriaSp.setEnabled(false);
         List<String> listCategorias = new ArrayList<String>();
         if(((String)(tipoMovimiento.getSelectedItem())).equals(getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
             GrupoGastoDAO grupoGastoDAO = new GrupoGastoDAO(view.getContext());
@@ -237,7 +237,6 @@ public class EditRegistroDialog extends DialogFragment implements DatePickerDial
                                    long id) {
 
             parent.getItemAtPosition(pos);
-            categoriaSp.setEnabled(true);
             List<String> list = new ArrayList<String>();
 
             if(((String)(tipoMovimiento.getSelectedItem())).equals(getString(R.string.TIPO_MOVIMIENTO_GASTO))) {

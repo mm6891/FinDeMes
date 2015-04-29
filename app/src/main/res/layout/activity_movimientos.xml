@@ -6,7 +6,7 @@
     android:background="@android:color/white"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MovimientosActivity">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/lyBackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             android:layout_marginLeft="10dp"
             android:textStyle="bold" />
     </LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/lyLinearFiltroMov0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
         </LinearLayout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/lyLinearFiltroMov"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
         <Spinner android:id="@+id/spCategoriaMovimiento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
     </LinearLayout>
     <ListView
         android:id="@+id/listViewMov"

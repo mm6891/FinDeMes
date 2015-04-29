@@ -218,7 +218,7 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                             filterableString = list.get(i).getTipoMovimiento();
                             if(getCategoriaSeleccionada() != null && !getCategoriaSeleccionada().isEmpty()) {
                                 if (filterableString.toLowerCase().trim().equals(filterString.trim())
-                                        && list.get(i).getCategoria().toLowerCase().trim().equals(getCategoriaSeleccionada()))
+                                        && list.get(i).getCategoria().toLowerCase().trim().equals(getCategoriaSeleccionada().toLowerCase()))
                                     nlist.add(list.get(i));
                             }
                             else {
@@ -245,7 +245,7 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                             filterableString = list.get(i).getTipoMovimiento();
                             if(getCategoriaSeleccionada() != null && !getCategoriaSeleccionada().isEmpty()) {
                                 if (filterableString.toLowerCase().trim().equals(filterString.trim())
-                                        && list.get(i).getCategoria().toLowerCase().trim().equals(getCategoriaSeleccionada())) {
+                                        && list.get(i).getCategoria().toLowerCase().trim().equals(getCategoriaSeleccionada().toLowerCase())) {
                                     if (anyoMov == anyoSeleccionado)
                                         nlist.add(list.get(i));
                                 }
@@ -275,7 +275,7 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                             filterableString = list.get(i).getTipoMovimiento();
                             if(getCategoriaSeleccionada() != null && !getCategoriaSeleccionada().isEmpty()) {
                                 if (filterableString.toLowerCase().trim().equals(filterString.trim())
-                                        && list.get(i).getCategoria().toLowerCase().trim().equals(getCategoriaSeleccionada())) {
+                                        && list.get(i).getCategoria().toLowerCase().trim().equals(getCategoriaSeleccionada().toLowerCase())) {
                                     if (mesMov == mesSeleccionado1)
                                         nlist.add(list.get(i));
                                 }
@@ -305,7 +305,7 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                         filterableString = list.get(i).getTipoMovimiento();
                         if(getCategoriaSeleccionada() != null && !getCategoriaSeleccionada().isEmpty()) {
                             if (filterableString.toLowerCase().trim().equals(filterString.trim())
-                                    && list.get(i).getCategoria().toLowerCase().trim().equals(getCategoriaSeleccionada())) {
+                                    && list.get(i).getCategoria().toLowerCase().trim().equals(getCategoriaSeleccionada().toLowerCase())) {
                                 if (mesMov == mesSeleccionado1 && anyoMov == anyoSeleccionado)
                                     nlist.add(list.get(i));
                             }
