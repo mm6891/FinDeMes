@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
-            android:textSize="25sp"
+            android:textSize="@dimen/text_size_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:text="@string/OPCIONES_BASEDATOS"
             android:layout_marginLeft="10dp"
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:text="@string/OPCIONES_BASEDATOS"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             />
     </LinearLayout>
     <LinearLayout
@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/AYUDA_BASEDATOS"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/lyLinear2"
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Guardar"
             android:textStyle="bold"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/lyLinear3"
@@ -83,7 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/AYUDA_BASEDATOS_IMPORTACION"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/lyLinear4"
@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Importar"
             android:textStyle="bold"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
 </RelativeLayout>
     </ScrollView>

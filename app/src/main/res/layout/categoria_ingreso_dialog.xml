@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             android:background="@android:color/black"
-            android:textSize="22sp"
+            android:textSize="@dimen/text_size_dialog_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:text="@string/tituloCategoriaIngresos"
             android:textStyle="bold"

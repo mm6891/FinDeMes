@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:text="@string/NUEVO_REGISTRO"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
         <EditText
             android:id="@+id/txtRegistro"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:maxLength="20"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
     </LinearLayout>
 
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Periodicidad"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
         <Spinner android:id="@+id/spPeriodicidad"
             android:layout_width="match_parent"
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Tipo"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
         <Spinner android:id="@+id/spTipo"
             android:layout_width="match_parent"
@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Categoria"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
         <Spinner android:id="@+id/spCategoria"
             android:layout_width="match_parent"
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Valor"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
         <EditText
             android:id="@+id/txtValor"
@@ -105,7 +105,7 @@
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
     </LinearLayout>
 
@@ -143,7 +143,7 @@
             android:layout_height="wrap_content"
             android:text="@string/FechaActivacion"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout
@@ -159,7 +159,7 @@
             android:layout_centerHorizontal="true"
             android:layout_weight="0.4"
             android:textStyle="bold"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size" />
         <TextView
             android:id="@+id/tvHoraNR"
             android:layout_width="match_parent"
@@ -167,7 +167,7 @@
             android:layout_centerHorizontal="true"
             android:layout_weight="0.4"
             android:textStyle="bold"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size" />
         <ImageButton android:id="@+id/myDatePickerButtonNR"
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -189,6 +189,6 @@
             android:layout_height="wrap_content"
             android:text="@string/NUEVO_REGISTRO"
             android:textStyle="bold"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
 </RelativeLayout>

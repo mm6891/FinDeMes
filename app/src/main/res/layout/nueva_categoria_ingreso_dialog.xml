@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:text="@string/nuevaCategoriaIngresos"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:maxLength="20"
             android:textStyle="bold"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/lyLinear3"
@@ -48,6 +48,6 @@
             android:layout_height="wrap_content"
             android:text="@string/CrearCategoria"
             android:textStyle="bold"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
 </RelativeLayout>

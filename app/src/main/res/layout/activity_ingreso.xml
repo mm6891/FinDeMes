@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
-            android:textSize="25sp"
+            android:textSize="@dimen/text_size_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:text="@string/MENU_INGRESOS"
             android:layout_marginLeft="10dp"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Ingreso"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
         <EditText
             android:id="@+id/txtIngreso"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
     </LinearLayout>
 
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Categoria"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
         <Spinner android:id="@+id/spCategoriaIngreso"
             android:layout_width="match_parent"
@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Decripcion"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout
@@ -99,7 +99,7 @@
             android:layout_height="wrap_content"
             android:maxLength="20"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_below="@+id/tvDescripcion"/>
     </LinearLayout>
     <LinearLayout
@@ -115,7 +115,7 @@
             android:layout_centerHorizontal="true"
             android:layout_weight="0.4"
             android:textStyle="bold"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size" />
         <TextView
             android:id="@+id/tvHoraAI"
             android:layout_width="match_parent"
@@ -123,7 +123,7 @@
             android:layout_centerHorizontal="true"
             android:layout_weight="0.4"
             android:textStyle="bold"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size" />
         <ImageButton android:id="@+id/myDatePickerButtonAI"
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -145,6 +145,6 @@
             android:onClick="guardarIngreso"
             android:text="@string/Guardar"
             android:textStyle="bold"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
 </RelativeLayout>

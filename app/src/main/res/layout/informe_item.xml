@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             />
         </LinearLayout>
     <LinearLayout
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Ingresos"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
         <ImageView
             android:src="@drawable/plus"
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:gravity="right"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Gastos"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
         <ImageView
             android:src="@drawable/minus"
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:gravity="right"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout
@@ -87,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
         <ImageView
             android:src="@drawable/equal"
@@ -101,7 +101,7 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:gravity="right"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
     </LinearLayout>
 </RelativeLayout>

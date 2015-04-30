@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Ingreso"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
         <EditText
             android:id="@+id/txtIngreso"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
     </LinearLayout>
 
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Categoria"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
         <Spinner android:id="@+id/spCategoriaIngreso"
             android:layout_width="match_parent"
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Decripcion"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:maxLength="20"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_below="@+id/tvDescripcion"/>
     </LinearLayout>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -90,7 +90,7 @@
             android:layout_centerHorizontal="true"
             android:layout_weight="0.4"
             android:textStyle="bold"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size" />
         <TextView
             android:id="@+id/tvHoraEI"
             android:layout_width="match_parent"
@@ -98,7 +98,7 @@
             android:layout_centerHorizontal="true"
             android:layout_weight="0.4"
             android:textStyle="bold"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size" />
         <ImageButton android:id="@+id/myDatePickerButtonEI"
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -120,6 +120,6 @@
             android:onClick="guardarIngreso"
             android:text="@string/Modificar"
             android:textStyle="bold"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
 </RelativeLayout>

@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="@string/edicionCategoriaIngresos"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_weight="1"/>
     </LinearLayout>
     <LinearLayout
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:maxLength="20"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size"
             android:layout_below="@+id/tvDescripcionCatIng"/>
     </LinearLayout>
     <LinearLayout
@@ -50,6 +50,6 @@
             android:layout_height="wrap_content"
             android:text="@string/Modificar"
             android:textStyle="bold"
-            android:textSize="18sp" />
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
 </RelativeLayout>
