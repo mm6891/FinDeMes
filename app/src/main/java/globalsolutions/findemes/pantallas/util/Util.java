@@ -1,6 +1,7 @@
 package globalsolutions.findemes.pantallas.util;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import java.io.FileInputStream;
@@ -56,35 +57,43 @@ public class Util {
     }
 
     //devuelve positivo si f2 es mayor a f1
-    public static int compare(String f1, String f2) {
+    public static int compare(String f1, String f2, Context cntx) {
         try {
-            return formatoFechaActual().parse(f2).compareTo(formatoFechaActual().parse(f1));
+            return formatoFechaActual(cntx).parse(f2).compareTo(formatoFechaActual(cntx).parse(f1));
         } catch (ParseException e) {
             throw new IllegalArgumentException(e);
         }
     }
 
-    public static String sumaDias (String fecha, int numDias){
+    public static String sumaDias (String fecha, int numDias, Context cntx){
         Calendar c = Calendar.getInstance();
         try {
-            c.setTime(formatoFechaActual().parse(fecha));
+            c.setTime(formatoFechaActual(cntx).parse(fecha));
         } catch (ParseException e) {
             e.printStackTrace();
         }
         c.add(Calendar.DAY_OF_MONTH, numDias); // Adding numDias days
-        String output = formatoFechaActual().format(c.getTime());
+        String output = formatoFechaActual(cntx).format(c.getTime());
         return output;
     }
 
-    public static String fechaActual(){
+    public static String fechaActual(Context cntx){
 
         Calendar c = Calendar.getInstance();
-        String output = formatoFechaActual().format(c.getTime());
+        String output = formatoFechaActual(cntx).format(c.getTime());
         return output;
     }
 
-    public static SimpleDateFormat formatoFechaActual(){
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy kk:mm");
+    public static SimpleDateFormat formatoFechaActual(Context context){
+        SharedPreferences prefs = context.getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+        String formatoActual = prefs.getString("formato", "");
+
+        if(formatoActual == null || formatoActual.isEmpty()) {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("formato", "dd/MM/yyyy kk:mm");
+            editor.commit();
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat(prefs.getString("formato", ""));
         return sdf;
     }
 }

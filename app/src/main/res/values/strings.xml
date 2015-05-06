@@ -73,6 +73,7 @@
     <string name="Enviar">Enviar</string>
     <string name="MovimientoFrecuente">Los movimientos frecuentes no se pueden editar desde Movimientos</string>
     <string name="FechaActivacion">Fecha de Activación:</string>
+    <string name="Formato">Selecciona el formato de fecha preferido</string>
     <!-- MENSAJES TOAST -->
     <string name="Eliminado">¡Eliminado!</string>
     <string name="No_Eliminado">No se ha podido eliminar</string>

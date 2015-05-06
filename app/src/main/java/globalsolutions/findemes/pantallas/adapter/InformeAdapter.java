@@ -157,7 +157,7 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
                 String fecha = movs.get(i).getFecha();
                 Calendar cal = Calendar.getInstance();
                 try {
-                    cal.setTime(Util.formatoFechaActual().parse(fecha));
+                    cal.setTime(Util.formatoFechaActual(context).parse(fecha));
                 } catch (java.text.ParseException e) {
                     e.printStackTrace();
                 }
