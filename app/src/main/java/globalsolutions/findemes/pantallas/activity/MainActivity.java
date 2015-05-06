@@ -2,8 +2,10 @@ package globalsolutions.findemes.pantallas.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -146,7 +148,7 @@ public class MainActivity extends Activity {
             String fecha = mov.getFecha();
             Calendar cal  = Calendar.getInstance();
             try {
-                cal.setTime(Util.formatoFechaActual().parse(fecha));
+                cal.setTime(Util.formatoFechaActual(getApplicationContext()).parse(fecha));
             } catch (java.text.ParseException e) {
                 e.printStackTrace();
             }

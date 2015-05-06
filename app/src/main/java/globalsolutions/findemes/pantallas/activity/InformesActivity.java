@@ -101,7 +101,7 @@ public class InformesActivity extends Activity {
             String fecha = mov.getFecha();
             Calendar cal  = Calendar.getInstance();
             try {
-                cal.setTime(Util.formatoFechaActual().parse(fecha));
+                cal.setTime(Util.formatoFechaActual(getApplicationContext()).parse(fecha));
             } catch (java.text.ParseException e) {
                 e.printStackTrace();
             }

@@ -17,6 +17,7 @@ import globalsolutions.findemes.database.model.OptionItem;
 import globalsolutions.findemes.pantallas.adapter.OptionAdapter;
 import globalsolutions.findemes.pantallas.dialog.CategoriasGastosDialog;
 import globalsolutions.findemes.pantallas.dialog.CategoriasIngresosDialog;
+import globalsolutions.findemes.pantallas.dialog.FormatoFechaDialog;
 
 
 /**
@@ -69,24 +70,27 @@ public class OpcionesActivity extends FragmentActivity {
                         showCategoriasGastosDialog();
                         break;
                     case 2:
-                        showDatabaseActivity();
-                        break;
-                    case 3:
-                        showPasswordActivity();
+                        showFormatoFechaDialog();
                         break;
                     case 4:
-                        linkCalificarActivity();
+                        showDatabaseActivity();
                         break;
                     case 5:
-
+                        showPasswordActivity();
                         break;
                     case 6:
-
+                        linkCalificarActivity();
                         break;
                     case 7:
 
                         break;
                     case 8:
+
+                        break;
+                    case 9:
+
+                        break;
+                    case 10:
 
                         break;
                     default:
@@ -118,6 +122,11 @@ public class OpcionesActivity extends FragmentActivity {
         newFragment.show(getFragmentManager(),"GASTOS");
     }
 
+    public void showFormatoFechaDialog() {
+        DialogFragment newFragment = new FormatoFechaDialog();
+        newFragment.show(getFragmentManager(),"FORMATO_FECHA");
+    }
+
     public void showPasswordActivity(){
         Intent intent = new Intent(OpcionesActivity.this, OptionActivityPassword.class);
         startActivity(intent);
@@ -143,8 +152,8 @@ public class OpcionesActivity extends FragmentActivity {
         String[] options = {
         getResources().getString(R.string.tituloCategoriaIngresos),
         getResources().getString(R.string.tituloCategoriaGastos),
-        //getResources().getString(R.string.OPCIONES_FORMATO_MONEDA),
-        //getResources().getString(R.string.OPCIONES_FORMATO_FECHA),
+        getResources().getString(R.string.OPCIONES_FORMATO_MONEDA),
+        getResources().getString(R.string.OPCIONES_FORMATO_FECHA),
         getResources().getString(R.string.OPCIONES_BASEDATOS),
         getResources().getString(R.string.OPCIONES_CONTRASENYA),
         getResources().getString(R.string.OPCIONES_CALIFICAR),
