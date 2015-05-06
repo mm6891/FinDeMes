@@ -14,8 +14,8 @@
         android:layout_marginLeft="10dp"
         android:orientation="horizontal">
         <ImageButton android:id="@+id/btnBackButton"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/back"
             android:background="@android:color/white"
             android:layout_weight="1" />
@@ -126,7 +126,7 @@
             android:textSize="@dimen/text_size" />
         <ImageButton android:id="@+id/myDatePickerButtonAI"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_weight="0.6"
             android:src="@drawable/calendar"
             android:background="@android:color/white" />

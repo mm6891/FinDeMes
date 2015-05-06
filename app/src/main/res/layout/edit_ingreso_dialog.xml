@@ -101,7 +101,7 @@
             android:textSize="@dimen/text_size" />
         <ImageButton android:id="@+id/myDatePickerButtonEI"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_weight="0.6"
             android:src="@drawable/calendar"
             android:background="@android:color/white" />
