@@ -42,6 +42,7 @@ public class OptionActivityBarChart extends Activity {
         webView =(WebView) findViewById(R.id.chart);
         webView.getSettings().setJavaScriptEnabled(true);
 
+        String periodo = getIntent().getExtras().getString("periodo");
         double[] ingresos = getIntent().getExtras().getDoubleArray("ingresos");
         double[] gastos = getIntent().getExtras().getDoubleArray("gastos");
         String[] ejeX = getIntent().getExtras().getStringArray("ejeX");
@@ -68,8 +69,8 @@ public class OptionActivityBarChart extends Activity {
 
         // Defining axis info and styles
         AxisStyle axisStyle = AxisStyle.newAxisStyle(Color.BLACK, 13, AxisTextAlignment.CENTER);
-        AxisLabels periodo = AxisLabelsFactory.newAxisLabels(getIntent().getExtras().getString("anyo"), 50.0);
-        periodo.setAxisStyle(axisStyle);
+        AxisLabels anyo = AxisLabelsFactory.newAxisLabels(getIntent().getExtras().getString("anyo"), 50.0);
+        anyo.setAxisStyle(axisStyle);
         AxisLabels periodos = AxisLabelsFactory.newAxisLabels(ejeX);
         periodos.setAxisStyle(axisStyle);
         AxisLabels efectivo = AxisLabelsFactory.newAxisLabels(getResources().getString(R.string.Grafica_ejex), 50.0);
@@ -82,13 +83,14 @@ public class OptionActivityBarChart extends Activity {
         chart.addXAxisLabels(valueCount);
         chart.addXAxisLabels(efectivo);
         chart.addYAxisLabels(periodos);
-        chart.addYAxisLabels(periodo);
+        chart.addYAxisLabels(anyo);
         chart.addTopAxisLabels(valueCount);
         chart.setHorizontal(true);
         chart.setSize(450, 350);
         chart.setSpaceBetweenGroupsOfBars(30);
 
-        chart.setTitle(getResources().getString(R.string.Grafica_titulo), Color.BLACK, 16);
+        //chart.setTitle(getResources().getString(R.string.Grafica_titulo), Color.BLACK, 16);
+        chart.setTitle(periodo, Color.BLACK, 16);
 
         chart.setGrid((50.0/MAX_VALUE)*20, 600, 3, 2);
         chart.setBackgroundFill(Fills.newSolidFill(Color.LIGHTGREY));

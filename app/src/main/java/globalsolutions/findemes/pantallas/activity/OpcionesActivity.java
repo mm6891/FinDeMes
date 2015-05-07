@@ -26,7 +26,7 @@ import globalsolutions.findemes.pantallas.dialog.FormatoFechaDialog;
 public class OpcionesActivity extends FragmentActivity {
 
     public static int [] prgmImages={R.drawable.plusoption,R.drawable.minusoption,
-            /*R.drawable.dollaroption,R.drawable.calendaroption,*/
+            R.drawable.dollaroption,R.drawable.calendaroption,
             R.drawable.databaseoption,R.drawable.padlockicon,R.drawable.staroption,
             R.drawable.appoption,R.drawable.prooption,R.drawable.developeroption,R.drawable.interrogationoption};
 
@@ -70,6 +70,9 @@ public class OpcionesActivity extends FragmentActivity {
                         showCategoriasGastosDialog();
                         break;
                     case 2:
+
+                        break;
+                    case 3:
                         showFormatoFechaDialog();
                         break;
                     case 4:

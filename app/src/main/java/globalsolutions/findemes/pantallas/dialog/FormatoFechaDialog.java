@@ -1,6 +1,5 @@
 package globalsolutions.findemes.pantallas.dialog;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -12,15 +11,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import globalsolutions.findemes.R;
-import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
-import globalsolutions.findemes.database.model.GrupoIngreso;
 import globalsolutions.findemes.pantallas.util.Util;
 
 /**
@@ -39,9 +35,13 @@ public class FormatoFechaDialog extends DialogFragment {
 
         spFormatoFecha = (Spinner) view.findViewById(R.id.spFormatoFecha);
         List<String> formatos = new ArrayList<String>();
-        formatos.add("dd/MM/yyyy kk:mm");
+        /*formatos.add("dd/MM/yyyy kk:mm");
         formatos.add("EEE, d MMM yyyy HH:mm");
-        formatos.add("yyyy-MM-dd HH:mm");
+        formatos.add("yyyy-MM-dd HH:mm");*/
+        formatos.add("dd/MM/yyyy");
+        formatos.add("EEE, d MMM yyyy");
+        formatos.add("yyyy-MM-dd");
+
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(view.getContext(),
                 android.R.layout.simple_spinner_item, formatos);

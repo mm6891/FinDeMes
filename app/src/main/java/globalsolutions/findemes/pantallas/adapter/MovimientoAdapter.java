@@ -157,7 +157,7 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                             filterableString = list.get(i).getFecha();
                             Calendar cal  = Calendar.getInstance();
                             try {
-                                cal.setTime(Util.formatoFechaActual(context).parse(filterableString));
+                                cal.setTime(Util.formatoFechaActual().parse(filterableString));
                             } catch (java.text.ParseException e) {
                                 e.printStackTrace();
                             }
@@ -176,7 +176,7 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                             filterableString = list.get(i).getFecha();
                             Calendar cal  = Calendar.getInstance();
                             try {
-                                cal.setTime(Util.formatoFechaActual(context).parse(filterableString));
+                                cal.setTime(Util.formatoFechaActual().parse(filterableString));
                             } catch (java.text.ParseException e) {
                                 e.printStackTrace();
                             }
@@ -194,7 +194,7 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                         filterableString = list.get(i).getFecha();
                         Calendar cal  = Calendar.getInstance();
                         try {
-                            cal.setTime(Util.formatoFechaActual(context).parse(filterableString));
+                            cal.setTime(Util.formatoFechaActual().parse(filterableString));
                         } catch (java.text.ParseException e) {
                             e.printStackTrace();
                         }
@@ -237,7 +237,7 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                             filterableString = list.get(i).getFecha();
                             Calendar cal  = Calendar.getInstance();
                             try {
-                                cal.setTime(Util.formatoFechaActual(context).parse(filterableString));
+                                cal.setTime(Util.formatoFechaActual().parse(filterableString));
                             } catch (java.text.ParseException e) {
                                 e.printStackTrace();
                             }
@@ -267,7 +267,7 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                             filterableString = list.get(i).getFecha();
                             Calendar cal  = Calendar.getInstance();
                             try {
-                                cal.setTime(Util.formatoFechaActual(context).parse(filterableString));
+                                cal.setTime(Util.formatoFechaActual().parse(filterableString));
                             } catch (java.text.ParseException e) {
                                 e.printStackTrace();
                             }
@@ -296,7 +296,7 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                         String fecha = list.get(i).getFecha();
                         Calendar cal  = Calendar.getInstance();
                         try {
-                            cal.setTime(Util.formatoFechaActual(context).parse(fecha));
+                            cal.setTime(Util.formatoFechaActual().parse(fecha));
                         } catch (java.text.ParseException e) {
                             e.printStackTrace();
                         }

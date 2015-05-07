@@ -1,14 +1,10 @@
 package globalsolutions.findemes.database.dao;
 
 import android.content.Context;
-
-import java.sql.Date;
-import java.text.DateFormat;
+import java.util.Date;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -62,8 +58,8 @@ public class MovimientoDAO {
             @Override
             public int compare(MovimientoItem o1, MovimientoItem o2) {
                 try {
-                    return Util.formatoFechaActual(context).parse(o2.getFecha()).compareTo
-                            (Util.formatoFechaActual(context).parse(o1.getFecha()));
+                    return Util.formatoFechaActual().parse(o2.getFecha()).compareTo
+                            (Util.formatoFechaActual().parse(o1.getFecha()));
                 } catch (ParseException e) {
                     throw new IllegalArgumentException(e);
                 }
@@ -79,11 +75,11 @@ public class MovimientoDAO {
         for(int i = 0 ; i < registros.length ; i++) {
             if (registros[i].getActivo().equals(Integer.valueOf(Constantes.REGISTRO_ACTIVO.toString()))) {
                 String fechaActivacion = registros[i].getFecha();
-                String fechaActual = Util.fechaActual(context);
+                String fechaActual = Util.fechaActual();
                 if (registros[i].getPeriodicidad().equals(context.getResources().getString(R.string.PERIODICIDAD_REGISTRO_SEMANAL))){
                     //1 movimiento semanal a partir de la fecha de activacion del registro
                     //mientras que la fecha actual sea mayor que la fecha de activacion
-                    while(Util.compare(fechaActivacion,fechaActual,context) > 0){
+                    while(Util.compare(fechaActivacion,fechaActual) > 0){
                         MovimientoItem m = new MovimientoItem();
                         m.set_id(registros[i].get_id());
                         m.setValor(registros[i].getValor());
@@ -100,7 +96,7 @@ public class MovimientoDAO {
                 }
                 if (registros[i].getPeriodicidad().equals(context.getResources().getString(R.string.PERIODICIDAD_REGISTRO_MENSUAL))){
                     //1 movimiento mensual a partir de la fecha de activacion del registro
-                    while(Util.compare(fechaActivacion,fechaActual,context) > 0){
+                    while(Util.compare(fechaActivacion,fechaActual) > 0){
                         MovimientoItem m = new MovimientoItem();
                         m.set_id(registros[i].get_id());
                         m.setValor(registros[i].getValor());
@@ -117,7 +113,7 @@ public class MovimientoDAO {
                 }
                 else if (registros[i].getPeriodicidad().equals(context.getResources().getString(R.string.PERIODICIDAD_REGISTRO_ANUAL))){
                     //1 movimiento anual a partir de la fecha de activacion del registro
-                    while(Util.compare(fechaActivacion,fechaActual,context) > 0){
+                    while(Util.compare(fechaActivacion,fechaActual) > 0){
                         MovimientoItem m = new MovimientoItem();
                         m.set_id(registros[i].get_id());
                         m.setValor(registros[i].getValor());

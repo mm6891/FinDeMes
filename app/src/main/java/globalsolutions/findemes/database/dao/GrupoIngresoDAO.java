@@ -70,7 +70,7 @@ public class GrupoIngresoDAO {
         int i = 0;
         mCursor.moveToFirst();
         while (mCursor.isAfterLast() == false) {
-            ret[i] = mCursor.getString(0);
+            ret[i] = mCursor.getString(0).toUpperCase();
             i++;
             mCursor.moveToNext();
         }

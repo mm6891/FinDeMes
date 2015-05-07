@@ -65,8 +65,11 @@ public class InformesActivity extends Activity {
             }
         });
 
-        String[] periodos = new String[]{getResources().getString(R.string.TIPO_FILTRO_INFORME_MENSUAL),
-                getResources().getString(R.string.TIPO_FILTRO_INFORME_TRIMESTRAL),getResources().getString(R.string.TIPO_FILTRO_INFORME_QUINCENAL)};
+        String[] periodos = new String[]{getResources().getString(R.string.TIPO_FILTRO_INFORME_DIARIO,
+                getResources().getString(R.string.TIPO_FILTRO_INFORME_SEMANAL),
+                getResources().getString(R.string.TIPO_FILTRO_INFORME_QUINCENAL),
+                getResources().getString(R.string.TIPO_FILTRO_INFORME_MENSUAL),
+                getResources().getString(R.string.TIPO_FILTRO_INFORME_TRIMESTRAL))};
 
         //spinner periodo
         spPeriodo = (Spinner) findViewById(R.id.spPeriodo);
@@ -101,7 +104,7 @@ public class InformesActivity extends Activity {
             String fecha = mov.getFecha();
             Calendar cal  = Calendar.getInstance();
             try {
-                cal.setTime(Util.formatoFechaActual(getApplicationContext()).parse(fecha));
+                cal.setTime(Util.formatoFechaActual().parse(fecha));
             } catch (java.text.ParseException e) {
                 e.printStackTrace();
             }
@@ -157,13 +160,12 @@ public class InformesActivity extends Activity {
                 }
             });
         btnGraficar = (ImageButton) findViewById(R.id.btnGraficar);
-        btnGraficar.setEnabled(false);
+        //btnGraficar.setEnabled(false);
 
         btnGraficar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(InformesActivity.this, OptionActivityBarChart.class);
-                intent.putExtra("anyo" , (String)spPeriodoFiltro.getSelectedItem());
 
                 ArrayList<InformeItem> informes = ((InformeAdapter)listViewMovsInforme.getAdapter()).getItemsActuales();
                 int count = informes.size();
@@ -177,6 +179,8 @@ public class InformesActivity extends Activity {
                     ejeX[valorX-1] = informes.get(i).getPeriodoDesc();
                 }
 
+                intent.putExtra("anyo" , (String)spPeriodoFiltro.getSelectedItem());
+                intent.putExtra("periodo" , (String) spPeriodo.getSelectedItem());
                 intent.putExtra("ingresos" , valoresIngresos);
                 intent.putExtra("gastos" , valoresGastos);
                 intent.putExtra("ejeX" , ejeX);
@@ -194,11 +198,11 @@ public class InformesActivity extends Activity {
                     public void run() {
                         //antes de cargar el resumen comprobamos boton informes
                         if(informes.size() > 0) {
-                            if (((String) spPeriodo.getSelectedItem()).equals(getResources().getString(R.string.TIPO_FILTRO_INFORME_TRIMESTRAL))
+                          /*  if (((String) spPeriodo.getSelectedItem()).equals(getResources().getString(R.string.TIPO_FILTRO_INFORME_TRIMESTRAL))
                                     && ((String) spTipoMovimiento.getSelectedItem()).equals(getResources().getString(R.string.TIPO_FILTRO_RESETEO))) {
                                 btnGraficar.setEnabled(true);
                             } else
-                                btnGraficar.setEnabled(false);
+                                btnGraficar.setEnabled(false);*/
 
                             //load resumen
                             Double ingresos = new Double(0.00);

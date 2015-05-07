@@ -11,6 +11,7 @@ import java.nio.channels.FileChannel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import globalsolutions.findemes.R;
 
@@ -57,9 +58,18 @@ public class Util {
     }
 
     //devuelve positivo si f2 es mayor a f1
-    public static int compare(String f1, String f2, Context cntx) {
+    public static int compare(String f1, String f2) {
         try {
-            return formatoFechaActual(cntx).parse(f2).compareTo(formatoFechaActual(cntx).parse(f1));
+            SimpleDateFormat sdf = Util.formatoFechaActual();
+
+            /*SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
+            Date d = sdf.parse(oldDateString);
+            sdf.applyPattern(NEW_FORMAT);
+            newDateString = sdf.format(d);*/
+
+            Date fe1 = sdf.parse(f1);
+            Date fe2 = sdf.parse(f2);
+            return formatoFechaActual().parse(f2).compareTo(formatoFechaActual().parse(f1));
         } catch (ParseException e) {
             throw new IllegalArgumentException(e);
         }
@@ -68,32 +78,47 @@ public class Util {
     public static String sumaDias (String fecha, int numDias, Context cntx){
         Calendar c = Calendar.getInstance();
         try {
-            c.setTime(formatoFechaActual(cntx).parse(fecha));
+            c.setTime(formatoFechaActual().parse(fecha));
         } catch (ParseException e) {
             e.printStackTrace();
         }
         c.add(Calendar.DAY_OF_MONTH, numDias); // Adding numDias days
-        String output = formatoFechaActual(cntx).format(c.getTime());
+        String output = formatoFechaActual().format(c.getTime());
         return output;
     }
 
-    public static String fechaActual(Context cntx){
+    public static String fechaActual(){
 
         Calendar c = Calendar.getInstance();
-        String output = formatoFechaActual(cntx).format(c.getTime());
+        String output = formatoFechaActual().format(c.getTime());
         return output;
     }
 
-    public static SimpleDateFormat formatoFechaActual(Context context){
+    public static SimpleDateFormat formatoFechaActual(){
+        return new SimpleDateFormat("dd/MM/yyyy kk:mm");
+    }
+
+    public static SimpleDateFormat formatoFechaUsuario(Context context){
+        SimpleDateFormat sdf = formatoFechaActual();
+
         SharedPreferences prefs = context.getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
         String formatoActual = prefs.getString("formato", "");
 
-        if(formatoActual == null || formatoActual.isEmpty()) {
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("formato", "dd/MM/yyyy kk:mm");
-            editor.commit();
+        if(formatoActual != null && !formatoActual.isEmpty()) {
+            sdf = new SimpleDateFormat(formatoActual + " kk:mm");
         }
-        SimpleDateFormat sdf = new SimpleDateFormat(prefs.getString("formato", ""));
+        return sdf;
+    }
+
+    public static SimpleDateFormat formatoFechaUsuarioFecha(Context context){
+        SimpleDateFormat sdf = formatoFechaActual();
+
+        SharedPreferences prefs = context.getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+        String formatoActual = prefs.getString("formato", "");
+
+        if(formatoActual != null && !formatoActual.isEmpty()) {
+            sdf = new SimpleDateFormat(formatoActual);
+        }
         return sdf;
     }
 }

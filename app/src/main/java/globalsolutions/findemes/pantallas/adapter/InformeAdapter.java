@@ -157,7 +157,7 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
                 String fecha = movs.get(i).getFecha();
                 Calendar cal = Calendar.getInstance();
                 try {
-                    cal.setTime(Util.formatoFechaActual(context).parse(fecha));
+                    cal.setTime(Util.formatoFechaActual().parse(fecha));
                 } catch (java.text.ParseException e) {
                     e.printStackTrace();
                 }
@@ -165,12 +165,13 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
 
                 if (anyoMovimiento == anyoActual) {
                     int periodoMovimiento = Integer.MIN_VALUE;
-                    if(periodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_MENSUAL))) {
-                        periodoMovimiento = cal.get(Calendar.MONTH);
+                    //diario
+                    if(periodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_DIARIO))) {
+                        periodoMovimiento = cal.get(Calendar.DAY_OF_YEAR);
                     }
-                    //trimestral
-                    if(periodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_TRIMESTRAL))){
-                        periodoMovimiento = (cal.get(Calendar.MONTH) / 3) + 1;
+                    //semanal
+                    else if(periodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_SEMANAL))) {
+                        periodoMovimiento = cal.get(Calendar.WEEK_OF_YEAR);
                     }
                     //quincenal
                     else if(periodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_QUINCENAL))){
@@ -178,6 +179,18 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
                         int mes = cal.get(Calendar.MONTH);
                         mes = (mes + 1) * 2;
                         periodoMovimiento = (dia < 16) ? mes - 1 : mes;
+                    }
+                    //mensual
+                    else if(periodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_MENSUAL))) {
+                        periodoMovimiento = cal.get(Calendar.MONTH);
+                    }
+                    //trimestral
+                    else if(periodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_TRIMESTRAL))){
+                        periodoMovimiento = (cal.get(Calendar.MONTH) / 3) + 1;
+                    }
+                    //anual
+                    else if(periodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_ANUAL))) {
+                        periodoMovimiento = anyoMovimiento;
                     }
 
                     boolean existePeriodoInforme = existePeriodoInforme(periodoMovimiento);
@@ -236,36 +249,12 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
                 saldo = ingresos - gastos;
                 nuevoInforme.setTotalValor(String.valueOf(saldo));
 
-                if(tipoPeriodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_MENSUAL))) {
-                    nuevoInforme.setPeriodoDesc(new DateFormatSymbols().getMonths()[integer.intValue()].toUpperCase());
+                if(tipoPeriodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_DIARIO))) {
+                    nuevoInforme.setPeriodoDesc(movsMes.get(0).getFecha());
                 }
-                else if(tipoPeriodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_TRIMESTRAL))) {
-                    String periodoTrimestral;
-                    //trimestres
-                    switch (integer.intValue()){
-                        case 1:
-                            periodoTrimestral = "1 " + new DateFormatSymbols().getMonths()[0] + "-"
-                                    + "31 " + new DateFormatSymbols().getMonths()[2];
-                            nuevoInforme.setPeriodoDesc(periodoTrimestral);
-                            break;
-                        case 2:
-                            periodoTrimestral = "1 " + new DateFormatSymbols().getMonths()[3] + "-"
-                                    + "30 " + new DateFormatSymbols().getMonths()[5];
-                            nuevoInforme.setPeriodoDesc(periodoTrimestral);
-                            break;
-                        case 3:
-                            periodoTrimestral = "1 " + new DateFormatSymbols().getMonths()[6] + "-"
-                                    + "31 " + new DateFormatSymbols().getMonths()[8];
-                            nuevoInforme.setPeriodoDesc(periodoTrimestral);
-                            break;
-                        case 4:
-                            periodoTrimestral = "1 " + new DateFormatSymbols().getMonths()[9] + "-"
-                                    + "31 " + new DateFormatSymbols().getMonths()[11];
-                            nuevoInforme.setPeriodoDesc(periodoTrimestral);
-                            break;
-                    }
+                if(tipoPeriodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_SEMANAL))) {
+                    nuevoInforme.setPeriodoDesc(context.getResources().getString(R.string.Numero_Semana) + " " + integer.toString());
                 }
-
                 else if(tipoPeriodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_QUINCENAL))) {
                     String periodoQuincenal;
                     //quincenas
@@ -391,6 +380,38 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
                             nuevoInforme.setPeriodoDesc(periodoQuincenal);
                             break;
                     }
+                }
+                else if(tipoPeriodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_MENSUAL))) {
+                    nuevoInforme.setPeriodoDesc(new DateFormatSymbols().getMonths()[integer.intValue()].toUpperCase());
+                }
+                else if(tipoPeriodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_TRIMESTRAL))) {
+                    String periodoTrimestral;
+                    //trimestres
+                    switch (integer.intValue()){
+                        case 1:
+                            periodoTrimestral = "1 " + new DateFormatSymbols().getMonths()[0] + "-"
+                                    + "31 " + new DateFormatSymbols().getMonths()[2];
+                            nuevoInforme.setPeriodoDesc(periodoTrimestral);
+                            break;
+                        case 2:
+                            periodoTrimestral = "1 " + new DateFormatSymbols().getMonths()[3] + "-"
+                                    + "30 " + new DateFormatSymbols().getMonths()[5];
+                            nuevoInforme.setPeriodoDesc(periodoTrimestral);
+                            break;
+                        case 3:
+                            periodoTrimestral = "1 " + new DateFormatSymbols().getMonths()[6] + "-"
+                                    + "31 " + new DateFormatSymbols().getMonths()[8];
+                            nuevoInforme.setPeriodoDesc(periodoTrimestral);
+                            break;
+                        case 4:
+                            periodoTrimestral = "1 " + new DateFormatSymbols().getMonths()[9] + "-"
+                                    + "31 " + new DateFormatSymbols().getMonths()[11];
+                            nuevoInforme.setPeriodoDesc(periodoTrimestral);
+                            break;
+                    }
+                }
+                else if(tipoPeriodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_ANUAL))) {
+                    nuevoInforme.setPeriodoDesc(integer.toString());
                 }
 
                 result.add(nuevoInforme);

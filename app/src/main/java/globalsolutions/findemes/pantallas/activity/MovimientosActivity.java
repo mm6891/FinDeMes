@@ -105,7 +105,7 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
             String fecha = mov.getFecha();
             Calendar cal  = Calendar.getInstance();
             try {
-                cal.setTime(Util.formatoFechaActual(getApplicationContext()).parse(fecha));
+                cal.setTime(Util.formatoFechaActual().parse(fecha));
             } catch (java.text.ParseException e) {
                 e.printStackTrace();
             }
