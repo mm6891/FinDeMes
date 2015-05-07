@@ -57,12 +57,12 @@ public class MovimientoDAO {
         Collections.sort(movs, new Comparator<MovimientoItem>() {
             @Override
             public int compare(MovimientoItem o1, MovimientoItem o2) {
-                try {
-                    return Util.formatoFechaActual().parse(o2.getFecha()).compareTo
-                            (Util.formatoFechaActual().parse(o1.getFecha()));
-                } catch (ParseException e) {
+                /*try {*/
+                    return Util.formateaFecha(o2.getFecha()).compareTo
+                            (Util.formateaFecha(o1.getFecha()));
+               /* } catch (ParseException e) {
                     throw new IllegalArgumentException(e);
-                }
+                }*/
             }
         });
 

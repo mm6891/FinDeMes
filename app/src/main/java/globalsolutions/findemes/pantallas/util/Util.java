@@ -105,20 +105,41 @@ public class Util {
         String formatoActual = prefs.getString("formato", "");
 
         if(formatoActual != null && !formatoActual.isEmpty()) {
-            sdf = new SimpleDateFormat(formatoActual + " kk:mm");
-        }
-        return sdf;
-    }
-
-    public static SimpleDateFormat formatoFechaUsuarioFecha(Context context){
-        SimpleDateFormat sdf = formatoFechaActual();
-
-        SharedPreferences prefs = context.getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
-        String formatoActual = prefs.getString("formato", "");
-
-        if(formatoActual != null && !formatoActual.isEmpty()) {
             sdf = new SimpleDateFormat(formatoActual);
         }
         return sdf;
     }
+
+    public static Date formateaFecha(String fecha){
+        /*SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
+            Date d = sdf.parse(oldDateString);
+            sdf.applyPattern(NEW_FORMAT);
+            newDateString = sdf.format(d);*/
+
+        //se intenta parsear formato por formato
+        SimpleDateFormat sdf;
+        Date d = new Date();
+        try{
+            sdf = new SimpleDateFormat("dd/MM/yyyy kk:mm");
+            d = sdf.parse(fecha);
+            return d;
+        }
+        catch (ParseException pe){
+            sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm");
+        }
+        try {
+            d = sdf.parse(fecha);
+            return d;
+        }
+        catch (ParseException pe){
+            sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        }
+        try {
+            d = sdf.parse(fecha);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return d;
+    }
+
 }

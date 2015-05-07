@@ -65,7 +65,7 @@ public class GastoActivity extends FragmentActivity implements DatePickerDialog.
 
         //cargamos el modal para seleccionar fecha
         Date date = new Date(System.currentTimeMillis());
-        SimpleDateFormat sdfDia = Util.formatoFechaUsuarioFecha(getApplicationContext());
+        SimpleDateFormat sdfDia = new SimpleDateFormat("dd/MM/yyyy");
         SimpleDateFormat sdfHora = new SimpleDateFormat("kk:mm");
         String mTimeText = sdfDia.format(date);
         String mTimeHora = sdfHora.format(date);

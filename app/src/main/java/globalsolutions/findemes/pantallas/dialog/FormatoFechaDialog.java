@@ -35,12 +35,12 @@ public class FormatoFechaDialog extends DialogFragment {
 
         spFormatoFecha = (Spinner) view.findViewById(R.id.spFormatoFecha);
         List<String> formatos = new ArrayList<String>();
-        /*formatos.add("dd/MM/yyyy kk:mm");
+        formatos.add("dd/MM/yyyy kk:mm");
         formatos.add("EEE, d MMM yyyy HH:mm");
-        formatos.add("yyyy-MM-dd HH:mm");*/
-        formatos.add("dd/MM/yyyy");
+        formatos.add("yyyy-MM-dd HH:mm");
+       /* formatos.add("dd/MM/yyyy");
         formatos.add("EEE, d MMM yyyy");
-        formatos.add("yyyy-MM-dd");
+        formatos.add("yyyy-MM-dd");*/
 
 
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(view.getContext(),
