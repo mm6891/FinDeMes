@@ -86,6 +86,14 @@
     <string name="AcercaDeDescripcion1">Esta es una aplicación desarrollada por Manuel Molero Busto</string>
     <string name="AcercaDeDescripcion2">Las traducciones disponibles son español (castellano) e inglés</string>
     <string name="AcercaDeDescripcion3">Si quieres ayudar con la traducción de la aplicación a otro idioma o mejorar la existente envía un correo a la siguiente dirección:</string>
+    <string name="AyudaDescripcion1">Aplicación desarrollada para permitir organizar tus gastos e ingresos. Introduce tus movimientos de ingreso o gasto por fecha y obtén tus resultados en lista de movimientos e informes.</string>
+    <string name="AyudaDescripcion2">Organizar tus movimientos hoy en día te permite mejorar el control sobre tu dinero.</string>
+    <string name="AyudaIngresos">Registra tus movimientos de ingresos y clasificalos. Puedes añadir categorías adicionales.</string>
+    <string name="AyudaGastos">Registra tus movimientos de gastos y clasificalos. Puedes añadir categorías adicionales.</string>
+    <string name="AyudaMovimientos">Lista de movimientos, gastos e ingresos con filtros adicionales para buscarlos fácilmente.</string>
+    <string name="AyudaInformes">Lista de informes, con filtros adicionales para buscarlos fácilmente, posibilidad de graficar los informes.</string>
+    <string name="AyudaRegistros">Registros periódicos, que se añaden a la lista de movimientos a partir de la fecha de activación del registro.</string>
+    <string name="AyudaOpciones">Crea categorías, ponle una contraseña a tu app o crear copias de tu base de datos entre otras opciones.</string>
     <!-- MENSAJES TOAST -->
     <string name="Eliminado">¡Eliminado!</string>
     <string name="No_Eliminado">No se ha podido eliminar</string>

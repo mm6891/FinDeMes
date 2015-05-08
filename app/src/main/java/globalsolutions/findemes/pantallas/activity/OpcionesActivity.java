@@ -30,7 +30,7 @@ public class OpcionesActivity extends FragmentActivity {
     public static int [] prgmImages={R.drawable.plusoption,R.drawable.minusoption,
             R.drawable.dollaroption,/*R.drawable.calendaroption,*/
             R.drawable.databaseoption,R.drawable.padlockicon,R.drawable.staroption,
-            R.drawable.appoption,R.drawable.prooption,R.drawable.developeroption,R.drawable.interrogationoption};
+            R.drawable.appoption,/*R.drawable.prooption,R.drawable.developeroption,*/R.drawable.interrogationoption};
 
     private ListView listViewOptions;
 
@@ -74,9 +74,6 @@ public class OpcionesActivity extends FragmentActivity {
                     case 2:
                         showFormatoMonedaDialog();
                         break;
-                  /*  case 3:
-                        showFormatoFechaDialog();
-                        break;*/
                     case 3:
                         showDatabaseActivity();
                         break;
@@ -90,13 +87,7 @@ public class OpcionesActivity extends FragmentActivity {
                         showAcercaDeDialog();
                         break;
                     case 7:
-
-                        break;
-                    case 8:
-
-                        break;
-                    case 9:
-
+                        showAyuda();
                         break;
                     default:
                         break;
@@ -159,7 +150,12 @@ public class OpcionesActivity extends FragmentActivity {
     }
 
     public void showAcercaDeDialog(){
-        Intent intent = new Intent(OpcionesActivity.this, AcercaDeDialog.class);
+        DialogFragment newFragment = new AcercaDeDialog();
+        newFragment.show(getFragmentManager(), "ACERCADE");
+    }
+
+    public void showAyuda(){
+        Intent intent = new Intent(OpcionesActivity.this, OptionActivityAyuda.class);
         startActivity(intent);
         finish();
     }
@@ -174,8 +170,8 @@ public class OpcionesActivity extends FragmentActivity {
         getResources().getString(R.string.OPCIONES_CONTRASENYA),
         getResources().getString(R.string.OPCIONES_CALIFICAR),
         getResources().getString(R.string.OPCIONES_ACERCA_APLICACION),
-        getResources().getString(R.string.OPCIONES_FUNCIONES_PRO),
-        getResources().getString(R.string.OPCIONES_DESARROLLO_CONTACTO),
+        /*getResources().getString(R.string.OPCIONES_FUNCIONES_PRO),
+        getResources().getString(R.string.OPCIONES_DESARROLLO_CONTACTO),*/
         getResources().getString(R.string.OPCIONES_AYUDA)};
         return options;
     }
