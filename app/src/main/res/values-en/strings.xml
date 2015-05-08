@@ -122,4 +122,5 @@
     <string name="TIPO_FILTRO_INFORME_SEMANAL">WEEKLY</string>
     <string name="Numero_Semana">Week nº</string>
     <string name="Formato_Moneda">Select the preferred currency format</string>
+    <string name="Version">1.0.0</string>
 </resources>

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.model.OptionItem;
 import globalsolutions.findemes.pantallas.adapter.OptionAdapter;
+import globalsolutions.findemes.pantallas.dialog.AcercaDeDialog;
 import globalsolutions.findemes.pantallas.dialog.CategoriasGastosDialog;
 import globalsolutions.findemes.pantallas.dialog.CategoriasIngresosDialog;
 import globalsolutions.findemes.pantallas.dialog.FormatoFechaDialog;
@@ -86,7 +87,7 @@ public class OpcionesActivity extends FragmentActivity {
                         linkCalificarActivity();
                         break;
                     case 6:
-
+                        showAcercaDeDialog();
                         break;
                     case 7:
 
@@ -155,6 +156,12 @@ public class OpcionesActivity extends FragmentActivity {
         } catch (android.content.ActivityNotFoundException anfe) {
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
         }
+    }
+
+    public void showAcercaDeDialog(){
+        Intent intent = new Intent(OpcionesActivity.this, AcercaDeDialog.class);
+        startActivity(intent);
+        finish();
     }
 
     public String[] creaOpciones(){

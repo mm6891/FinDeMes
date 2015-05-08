@@ -82,6 +82,10 @@
     <string name="Formato">Selecciona el formato de fecha preferido</string>
     <string name="Formato_Moneda">Selecciona el formato de moneda preferido</string>
     <string name="Numero_Semana">Semana nº</string>
+    <string name="Version">1.0.0</string>
+    <string name="AcercaDeDescripcion1">Esta es una aplicación desarrollada por Manuel Molero Busto</string>
+    <string name="AcercaDeDescripcion2">Las traducciones disponibles son español (castellano) e inglés</string>
+    <string name="AcercaDeDescripcion3">Si quieres ayudar con la traducción de la aplicación a otro idioma o mejorar la existente envía un correo a la siguiente dirección:</string>
     <!-- MENSAJES TOAST -->
     <string name="Eliminado">¡Eliminado!</string>
     <string name="No_Eliminado">No se ha podido eliminar</string>

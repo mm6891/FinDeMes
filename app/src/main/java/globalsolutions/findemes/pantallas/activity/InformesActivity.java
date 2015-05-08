@@ -222,11 +222,11 @@ public class InformesActivity extends Activity {
                                 }
                                 saldo = ingresos - gastos;
 
-                                ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos));
+                                ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos) + Util.formatoMoneda(getApplicationContext()));
                                 TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);
-                                tvGastosTotal.setText(String.valueOf(gastos));
+                                tvGastosTotal.setText(String.valueOf(gastos) + Util.formatoMoneda(getApplicationContext()));
                                 TextView tvSaldoTotal = (TextView) findViewById(R.id.tvSaldoInformesValor);
-                                tvSaldoTotal.setText(String.valueOf(saldo));
+                                tvSaldoTotal.setText(String.valueOf(saldo) + Util.formatoMoneda(getApplicationContext()));
                             }
                             //tipo gasto
                             else if (((String) spTipoMovimiento.getSelectedItem()).equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
@@ -237,9 +237,9 @@ public class InformesActivity extends Activity {
 
                                 ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos));
                                 TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);
-                                tvGastosTotal.setText(String.valueOf(gastos));
+                                tvGastosTotal.setText(String.valueOf(gastos) + Util.formatoMoneda(getApplicationContext()));
                                 TextView tvSaldoTotal = (TextView) findViewById(R.id.tvSaldoInformesValor);
-                                tvSaldoTotal.setText(String.valueOf(saldo));
+                                tvSaldoTotal.setText(String.valueOf(saldo) + Util.formatoMoneda(getApplicationContext()));
                             }
                             //tipo ingreso
                             else {
@@ -248,11 +248,11 @@ public class InformesActivity extends Activity {
                                 }
                                 saldo = ingresos - gastos;
 
-                                ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos));
+                                ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos) + Util.formatoMoneda(getApplicationContext()));
                                 TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);
-                                tvGastosTotal.setText(String.valueOf(gastos));
+                                tvGastosTotal.setText(String.valueOf(gastos) + Util.formatoMoneda(getApplicationContext()));
                                 TextView tvSaldoTotal = (TextView) findViewById(R.id.tvSaldoInformesValor);
-                                tvSaldoTotal.setText(String.valueOf(saldo));
+                                tvSaldoTotal.setText(String.valueOf(saldo) + Util.formatoMoneda(getApplicationContext()));
                             }
                         }
                     }
