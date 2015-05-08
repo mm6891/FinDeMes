@@ -87,9 +87,9 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
             TextView tvTotalValor = (TextView) rowView.findViewById(R.id.tvTotalInformeValor);
 
             tvPeriodo.setText(item.getPeriodoDesc());
-            tvIngresoValor.setText(item.getIngresoValor());
-            tvGastoValor.setText(item.getGastoValor());
-            tvTotalValor.setText(item.getTotalValor());
+            tvIngresoValor.setText(item.getIngresoValor() + Util.formatoMoneda(context));
+            tvGastoValor.setText(item.getGastoValor() + Util.formatoMoneda(context));
+            tvTotalValor.setText(item.getTotalValor() + Util.formatoMoneda(context));
         }
         else if(item.getTipoInforme().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))){
             rowView = inflater.inflate(R.layout.informe_item_gasto, parent, false);
@@ -98,7 +98,7 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
             TextView tvGastoValor = (TextView) rowView.findViewById(R.id.tvGastosInformeValor);
 
             tvPeriodo.setText(item.getPeriodoDesc());
-            tvGastoValor.setText(item.getGastoValor());
+            tvGastoValor.setText(item.getGastoValor() + Util.formatoMoneda(context));
         }
         if(item.getTipoInforme().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO))){
             rowView = inflater.inflate(R.layout.informe_item_ingreso, parent, false);
@@ -107,7 +107,7 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
             TextView tvIngresoValor = (TextView) rowView.findViewById(R.id.tvIngresosInformeValor);
 
             tvPeriodo.setText(item.getPeriodoDesc());
-            tvIngresoValor.setText(item.getIngresoValor());
+            tvIngresoValor.setText(item.getIngresoValor() + Util.formatoMoneda(context));
         }
 
         if(position % 2 == 0)

@@ -18,6 +18,7 @@ import globalsolutions.findemes.pantallas.adapter.OptionAdapter;
 import globalsolutions.findemes.pantallas.dialog.CategoriasGastosDialog;
 import globalsolutions.findemes.pantallas.dialog.CategoriasIngresosDialog;
 import globalsolutions.findemes.pantallas.dialog.FormatoFechaDialog;
+import globalsolutions.findemes.pantallas.dialog.FormatoMonedaDialog;
 
 
 /**
@@ -26,7 +27,7 @@ import globalsolutions.findemes.pantallas.dialog.FormatoFechaDialog;
 public class OpcionesActivity extends FragmentActivity {
 
     public static int [] prgmImages={R.drawable.plusoption,R.drawable.minusoption,
-            R.drawable.dollaroption,R.drawable.calendaroption,
+            R.drawable.dollaroption,/*R.drawable.calendaroption,*/
             R.drawable.databaseoption,R.drawable.padlockicon,R.drawable.staroption,
             R.drawable.appoption,R.drawable.prooption,R.drawable.developeroption,R.drawable.interrogationoption};
 
@@ -70,19 +71,22 @@ public class OpcionesActivity extends FragmentActivity {
                         showCategoriasGastosDialog();
                         break;
                     case 2:
-
+                        showFormatoMonedaDialog();
                         break;
-                    case 3:
+                  /*  case 3:
                         showFormatoFechaDialog();
-                        break;
-                    case 4:
+                        break;*/
+                    case 3:
                         showDatabaseActivity();
                         break;
-                    case 5:
+                    case 4:
                         showPasswordActivity();
                         break;
-                    case 6:
+                    case 5:
                         linkCalificarActivity();
+                        break;
+                    case 6:
+
                         break;
                     case 7:
 
@@ -91,9 +95,6 @@ public class OpcionesActivity extends FragmentActivity {
 
                         break;
                     case 9:
-
-                        break;
-                    case 10:
 
                         break;
                     default:
@@ -117,7 +118,7 @@ public class OpcionesActivity extends FragmentActivity {
 
     public void showCategoriasIngresosDialog() {
         DialogFragment newFragment = new CategoriasIngresosDialog();
-        newFragment.show(getFragmentManager(),"INGRESOS");
+        newFragment.show(getFragmentManager(), "INGRESOS");
     }
 
     public void showCategoriasGastosDialog() {
@@ -128,6 +129,11 @@ public class OpcionesActivity extends FragmentActivity {
     public void showFormatoFechaDialog() {
         DialogFragment newFragment = new FormatoFechaDialog();
         newFragment.show(getFragmentManager(),"FORMATO_FECHA");
+    }
+
+    public void showFormatoMonedaDialog() {
+        DialogFragment newFragment = new FormatoMonedaDialog();
+        newFragment.show(getFragmentManager(),"FORMATO_MONEDA");
     }
 
     public void showPasswordActivity(){
@@ -156,7 +162,7 @@ public class OpcionesActivity extends FragmentActivity {
         getResources().getString(R.string.tituloCategoriaIngresos),
         getResources().getString(R.string.tituloCategoriaGastos),
         getResources().getString(R.string.OPCIONES_FORMATO_MONEDA),
-        getResources().getString(R.string.OPCIONES_FORMATO_FECHA),
+        /**getResources().getString(R.string.OPCIONES_FORMATO_FECHA),*/
         getResources().getString(R.string.OPCIONES_BASEDATOS),
         getResources().getString(R.string.OPCIONES_CONTRASENYA),
         getResources().getString(R.string.OPCIONES_CALIFICAR),

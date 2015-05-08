@@ -160,12 +160,12 @@ public class MainActivity extends Activity {
         }
 
         tvIngresosValor = (TextView) findViewById(R.id.tvIngresosValor);
-        tvIngresosValor.setText(String.valueOf(ingresos));
+        tvIngresosValor.setText(String.valueOf(ingresos) + Util.formatoMoneda(getApplicationContext()));
         tvGastosValor = (TextView) findViewById(R.id.tvGastosValor);
-        tvGastosValor.setText(String.valueOf(gastos));
+        tvGastosValor.setText(String.valueOf(gastos) + Util.formatoMoneda(getApplicationContext()));
         saldo = ingresos - gastos;
         tvSaldo = (TextView) findViewById(R.id.tvSaldoValor);
-        tvSaldo.setText(String.valueOf(saldo));
+        tvSaldo.setText(String.valueOf(saldo) + Util.formatoMoneda(getApplicationContext()));
         tvMes = (TextView) findViewById(R.id.tvMesResumen);
         tvMes.setText(new DateFormatSymbols().getMonths()[mesActual].toUpperCase());
     }

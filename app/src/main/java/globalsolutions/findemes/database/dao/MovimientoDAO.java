@@ -57,12 +57,12 @@ public class MovimientoDAO {
         Collections.sort(movs, new Comparator<MovimientoItem>() {
             @Override
             public int compare(MovimientoItem o1, MovimientoItem o2) {
-                /*try {*/
-                    return Util.formateaFecha(o2.getFecha()).compareTo
-                            (Util.formateaFecha(o1.getFecha()));
-               /* } catch (ParseException e) {
+                try {
+                    return Util.formatoFechaActual().parse(o2.getFecha()).compareTo
+                            (Util.formatoFechaActual().parse(o1.getFecha()));
+                } catch (ParseException e) {
                     throw new IllegalArgumentException(e);
-                }*/
+                }
             }
         });
 
@@ -76,6 +76,24 @@ public class MovimientoDAO {
             if (registros[i].getActivo().equals(Integer.valueOf(Constantes.REGISTRO_ACTIVO.toString()))) {
                 String fechaActivacion = registros[i].getFecha();
                 String fechaActual = Util.fechaActual();
+                if (registros[i].getPeriodicidad().equals(context.getResources().getString(R.string.PERIODICIDAD_REGISTRO_DIARIO))){
+                    //1 movimiento diario a partir de la fecha de activacion del registro
+                    //mientras que la fecha actual sea mayor que la fecha de activacion
+                    while(Util.compare(fechaActivacion,fechaActual) > 0){
+                        MovimientoItem m = new MovimientoItem();
+                        m.set_id(registros[i].get_id());
+                        m.setValor(registros[i].getValor());
+                        m.setDescripcion(registros[i].getDescripcion());
+                        //tratamos el caso especial de la fecha
+                        m.setFecha(fechaActivacion);
+                        m.setCategoria(registros[i].getGrupo());
+                        m.setTipoMovimiento(registros[i].getTipo());
+                        m.setEsFrecuente(true);
+                        ret.add(m);
+                        //actualizamos fecha de activacion
+                        fechaActivacion = Util.sumaDias(fechaActivacion,1);
+                    }
+                }
                 if (registros[i].getPeriodicidad().equals(context.getResources().getString(R.string.PERIODICIDAD_REGISTRO_SEMANAL))){
                     //1 movimiento semanal a partir de la fecha de activacion del registro
                     //mientras que la fecha actual sea mayor que la fecha de activacion
@@ -91,7 +109,25 @@ public class MovimientoDAO {
                         m.setEsFrecuente(true);
                         ret.add(m);
                         //actualizamos fecha de activacion
-                        fechaActivacion = Util.sumaDias(fechaActivacion,7,context);
+                        fechaActivacion = Util.sumaDias(fechaActivacion,7);
+                    }
+                }
+                if (registros[i].getPeriodicidad().equals(context.getResources().getString(R.string.PERIODICIDAD_REGISTRO_QUINCENAL))){
+                    //1 movimiento semanal a partir de la fecha de activacion del registro
+                    //mientras que la fecha actual sea mayor que la fecha de activacion
+                    while(Util.compare(fechaActivacion,fechaActual) > 0){
+                        MovimientoItem m = new MovimientoItem();
+                        m.set_id(registros[i].get_id());
+                        m.setValor(registros[i].getValor());
+                        m.setDescripcion(registros[i].getDescripcion());
+                        //tratamos el caso especial de la fecha
+                        m.setFecha(fechaActivacion);
+                        m.setCategoria(registros[i].getGrupo());
+                        m.setTipoMovimiento(registros[i].getTipo());
+                        m.setEsFrecuente(true);
+                        ret.add(m);
+                        //actualizamos fecha de activacion
+                        fechaActivacion = Util.sumaDias(fechaActivacion,15);
                     }
                 }
                 if (registros[i].getPeriodicidad().equals(context.getResources().getString(R.string.PERIODICIDAD_REGISTRO_MENSUAL))){
@@ -108,7 +144,7 @@ public class MovimientoDAO {
                         m.setEsFrecuente(true);
                         ret.add(m);
                         //actualizamos fecha de activacion
-                        fechaActivacion = Util.sumaDias(fechaActivacion,30,context);
+                        fechaActivacion = Util.sumaDias(fechaActivacion,30);
                     }
                 }
                 else if (registros[i].getPeriodicidad().equals(context.getResources().getString(R.string.PERIODICIDAD_REGISTRO_ANUAL))){
@@ -125,7 +161,7 @@ public class MovimientoDAO {
                         m.setEsFrecuente(true);
                         ret.add(m);
                         //actualizamos fecha de activacion
-                        fechaActivacion = Util.sumaDias(fechaActivacion,365,context);
+                        fechaActivacion = Util.sumaDias(fechaActivacion,365);
                     }
                 }
             }

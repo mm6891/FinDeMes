@@ -80,8 +80,11 @@ public class EditRegistroDialog extends DialogFragment implements DatePickerDial
         //cargamos el combo de periodicidad
         Spinner periodicidadSp = (Spinner) view.findViewById(R.id.spPeriodicidad);
         List<String> listPeriod = new ArrayList<String>();
+        listPeriod.add(getResources().getString(R.string.PERIODICIDAD_REGISTRO_DIARIO));
         listPeriod.add(getResources().getString(R.string.PERIODICIDAD_REGISTRO_SEMANAL));
+        listPeriod.add(getResources().getString(R.string.PERIODICIDAD_REGISTRO_QUINCENAL));
         listPeriod.add(getResources().getString(R.string.PERIODICIDAD_REGISTRO_MENSUAL));
+        listPeriod.add(getResources().getString(R.string.PERIODICIDAD_REGISTRO_TRIMESTRAL));
         listPeriod.add(getResources().getString(R.string.PERIODICIDAD_REGISTRO_ANUAL));
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(view.getContext(),
                 android.R.layout.simple_spinner_item, listPeriod);

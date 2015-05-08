@@ -100,7 +100,7 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
 
         MovimientoItem item = this.itemsFiltrado.get(position);
         tvDescr.setText(item.getDescripcion());
-        tvvalor.setText(item.getValor());
+        tvvalor.setText(item.getValor() + Util.formatoMoneda(context));
         tvgrupo.setText(item.getCategoria());
         tvfecha.setText(item.getFecha());
         if(item.getTipoMovimiento().trim().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO)))

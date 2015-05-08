@@ -18,6 +18,7 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.MovimientoDAO;
@@ -65,11 +66,14 @@ public class InformesActivity extends Activity {
             }
         });
 
-        String[] periodos = new String[]{getResources().getString(R.string.TIPO_FILTRO_INFORME_DIARIO,
-                getResources().getString(R.string.TIPO_FILTRO_INFORME_SEMANAL),
-                getResources().getString(R.string.TIPO_FILTRO_INFORME_QUINCENAL),
-                getResources().getString(R.string.TIPO_FILTRO_INFORME_MENSUAL),
-                getResources().getString(R.string.TIPO_FILTRO_INFORME_TRIMESTRAL))};
+        //String[] periodos = new String[]{getResources().getString(R.string.TIPO_FILTRO_INFORME_DIARIO,getResources().getString(R.string.TIPO_FILTRO_INFORME_SEMANAL),getResources().getString(R.string.TIPO_FILTRO_INFORME_QUINCENAL),getResources().getString(R.string.TIPO_FILTRO_INFORME_MENSUAL),getResources().getString(R.string.TIPO_FILTRO_INFORME_TRIMESTRAL))};
+        List<String> periodos = new ArrayList<String>();
+        periodos.add(getResources().getString(R.string.TIPO_FILTRO_INFORME_DIARIO));
+        periodos.add(getResources().getString(R.string.TIPO_FILTRO_INFORME_SEMANAL));
+        periodos.add(getResources().getString(R.string.TIPO_FILTRO_INFORME_QUINCENAL));
+        periodos.add(getResources().getString(R.string.TIPO_FILTRO_INFORME_MENSUAL));
+        periodos.add(getResources().getString(R.string.TIPO_FILTRO_INFORME_TRIMESTRAL));
+        periodos.add(getResources().getString(R.string.TIPO_FILTRO_INFORME_ANUAL));
 
         //spinner periodo
         spPeriodo = (Spinner) findViewById(R.id.spPeriodo);

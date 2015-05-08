@@ -54,6 +54,7 @@
             android:background="@android:color/white"
             android:layout_row="0"
             android:layout_column="2"
+            android:layout_gravity="right"
             android:layout_marginLeft="10dp"
             />
         <TextView
@@ -80,6 +81,7 @@
             android:textColor="@android:color/white"
             android:layout_row="1"
             android:layout_column="2"
+            android:layout_gravity="right"
             android:layout_marginLeft="10dp"
             />
         <TextView
@@ -105,6 +107,7 @@
             android:textColor="@android:color/white"
             android:layout_row="2"
             android:layout_column="2"
+            android:layout_gravity="right"
             android:layout_marginLeft="10dp"
             />
         <TextView
@@ -130,6 +133,7 @@
             android:textColor="@android:color/white"
             android:layout_row="3"
             android:layout_column="2"
+            android:layout_gravity="right"
             android:layout_marginLeft="10dp"
             />
     </GridLayout>

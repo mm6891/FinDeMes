@@ -80,6 +80,7 @@
     <string name="MovimientoFrecuente">Los movimientos frecuentes no se pueden editar desde Movimientos</string>
     <string name="FechaActivacion">Fecha de Activación:</string>
     <string name="Formato">Selecciona el formato de fecha preferido</string>
+    <string name="Formato_Moneda">Selecciona el formato de moneda preferido</string>
     <string name="Numero_Semana">Semana nº</string>
     <!-- MENSAJES TOAST -->
     <string name="Eliminado">¡Eliminado!</string>

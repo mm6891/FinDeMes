@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.model.RegistroItem;
 import globalsolutions.findemes.database.util.Constantes;
+import globalsolutions.findemes.pantallas.util.Util;
 
 /**
  * Created by manuel.molero on 04/02/2015.
@@ -66,7 +67,7 @@ public class RegistroAdapter extends BaseAdapter {
         tvPeriodicidadItem.setText(item.getPeriodicidad());
         tvTipoItem.setText(item.getTipo());
         tvCategoriaItem.setText(item.getGrupo());
-        tvValorItem.setText(item.getValor());
+        tvValorItem.setText(item.getValor() + Util.formatoMoneda(context));
         tvActivoItem.setText(item.getActivo().equals(Integer.valueOf(Constantes.REGISTRO_ACTIVO.toString()))
                 ? context.getResources().getString(R.string.AFIRMACION) : context.getResources().getString(R.string.NEGACION));
         tvFechaActivacion.setText(item.getFecha());

@@ -11,7 +11,6 @@ import java.nio.channels.FileChannel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import globalsolutions.findemes.R;
 
@@ -60,22 +59,13 @@ public class Util {
     //devuelve positivo si f2 es mayor a f1
     public static int compare(String f1, String f2) {
         try {
-            SimpleDateFormat sdf = Util.formatoFechaActual();
-
-            /*SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
-            Date d = sdf.parse(oldDateString);
-            sdf.applyPattern(NEW_FORMAT);
-            newDateString = sdf.format(d);*/
-
-            Date fe1 = sdf.parse(f1);
-            Date fe2 = sdf.parse(f2);
             return formatoFechaActual().parse(f2).compareTo(formatoFechaActual().parse(f1));
         } catch (ParseException e) {
             throw new IllegalArgumentException(e);
         }
     }
 
-    public static String sumaDias (String fecha, int numDias, Context cntx){
+    public static String sumaDias (String fecha, int numDias){
         Calendar c = Calendar.getInstance();
         try {
             c.setTime(formatoFechaActual().parse(fecha));
@@ -98,7 +88,21 @@ public class Util {
         return new SimpleDateFormat("dd/MM/yyyy kk:mm");
     }
 
-    public static SimpleDateFormat formatoFechaUsuario(Context context){
+       public static String formatoMoneda(Context context){
+           String moneda = "";
+           SharedPreferences prefs = context.getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+           String formatoActual = prefs.getString("moneda", "");
+           if(formatoActual != null && !formatoActual.isEmpty()) {
+               moneda = formatoActual;
+           }
+           else {
+               moneda = "\u20ac";
+           }
+
+           return moneda;
+       }
+
+  /*  public static SimpleDateFormat formatoFechaUsuario(Context context){
         SimpleDateFormat sdf = formatoFechaActual();
 
         SharedPreferences prefs = context.getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
@@ -107,14 +111,15 @@ public class Util {
         if(formatoActual != null && !formatoActual.isEmpty()) {
             sdf = new SimpleDateFormat(formatoActual);
         }
-        return sdf;
-    }
 
-    public static Date formateaFecha(String fecha){
-        /*SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
+        return sdf;
+    }*/
+
+   /* public static Date formateaFecha(String fecha){
+        *//*SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
             Date d = sdf.parse(oldDateString);
             sdf.applyPattern(NEW_FORMAT);
-            newDateString = sdf.format(d);*/
+            newDateString = sdf.format(d);*//*
 
         //se intenta parsear formato por formato
         SimpleDateFormat sdf;
@@ -140,6 +145,6 @@ public class Util {
             e.printStackTrace();
         }
         return d;
-    }
+    }*/
 
 }
