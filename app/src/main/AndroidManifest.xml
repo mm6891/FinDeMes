@@ -52,6 +52,10 @@
             android:label="@string/OPCIONES_BASEDATOS" >
         </activity>
         <activity
+            android:name=".pantallas.activity.OptionActivityAyuda"
+            android:label="@string/OPCIONES_AYUDA" >
+        </activity>
+        <activity
             android:name=".pantallas.activity.OptionActivityBarChart"
             android:label="@string/OPCIONES_BASEDATOS"
             android:screenOrientation="landscape" >
