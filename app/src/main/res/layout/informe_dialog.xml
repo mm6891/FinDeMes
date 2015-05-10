@@ -11,21 +11,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/Periodo"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/text_size"
-            android:layout_weight="1"/>
-        <TextView
             android:id="@+id/tvDetalleInformePeriodo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textColor="@android:color/black"
-            android:textSize="@dimen/text_size"
-            android:layout_weight="1"/>
+            android:textSize="@dimen/text_size" />
     </LinearLayout>
     <ListView
         android:id="@+id/listViewMovInforme"
