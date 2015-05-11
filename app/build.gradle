@@ -30,4 +30,5 @@ dependencies {
     compile files('C:/Users/Manuel/AndroidstudioProjects/FinDeMes/libs/additionnal.jar')
     compile files('C:/Users/Manuel/AndroidstudioProjects/FinDeMes/libs/activation.jar')
     compile files('C:/Users/Manuel/AndroidstudioProjects/FinDeMes/libs/mail.jar')
+    compile files('C:/Users/manuel.molero/AndroidStudioProjects/FinDeMes/libs/annotations-12.0.jar')
 }

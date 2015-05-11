@@ -2,7 +2,10 @@ package globalsolutions.findemes.pantallas.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+/*
 import android.webkit.WebView;
 
 import com.googlecode.charts4j.AxisLabels;
@@ -18,6 +21,11 @@ import com.googlecode.charts4j.GCharts;
 import com.googlecode.charts4j.LinearGradientFill;
 import com.googlecode.charts4j.Plots;
 import com.googlecode.charts4j.Color;
+*/
+
+import com.echo.holographlibrary.Line;
+import com.echo.holographlibrary.LineGraph;
+import com.echo.holographlibrary.LinePoint;
 
 import java.util.Arrays;
 
@@ -32,15 +40,12 @@ public class OptionActivityBarChart extends Activity {
 
 
 
-    private WebView webView;
+    //private WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.chart_bar);
-
-        webView =(WebView) findViewById(R.id.chart);
-        webView.getSettings().setJavaScriptEnabled(true);
+        setContentView(R.layout.linegraph);
 
         String periodo = getIntent().getExtras().getString("periodo");
         double[] ingresos = getIntent().getExtras().getDoubleArray("ingresos");
@@ -48,58 +53,43 @@ public class OptionActivityBarChart extends Activity {
         String[] ejeX = getIntent().getExtras().getStringArray("ejeX");
 
         double max = 0.00;
-        for(int i = 0 ; i < ingresos.length; i++){
+        double size =  ingresos.length;
+
+        for(int i = 0 ; i < size; i++){
             if(ingresos[i] > max){
                 max = ingresos[i];
             }
-        }
-        for(int i = 0 ; i < gastos.length; i++){
             if(gastos[i] > max){
                 max = gastos[i];
             }
         }
 
-        // Defining data series.
         final double MAX_VALUE = max;
-        Data ingresosData= DataUtil.scaleWithinRange(0, MAX_VALUE, ingresos);
-        Data gastosData= DataUtil.scaleWithinRange(0, MAX_VALUE, gastos);
-        BarChartPlot ingresosPlot = Plots.newBarChartPlot(ingresosData, Color.GREEN, getResources().getString(R.string.MENU_INGRESOS));
-        BarChartPlot gastosPlot = Plots.newBarChartPlot(gastosData, Color.RED, getResources().getString(R.string.MENU_GASTOS));
-        BarChart chart = GCharts.newBarChart(ingresosPlot, gastosPlot);
+        double dist = MAX_VALUE/size;
 
-        // Defining axis info and styles
-        AxisStyle axisStyle = AxisStyle.newAxisStyle(Color.BLACK, 13, AxisTextAlignment.CENTER);
-        AxisLabels anyo = AxisLabelsFactory.newAxisLabels(getIntent().getExtras().getString("anyo"), 50.0);
-        anyo.setAxisStyle(axisStyle);
-        AxisLabels periodos = AxisLabelsFactory.newAxisLabels(ejeX);
-        periodos.setAxisStyle(axisStyle);
-        AxisLabels efectivo = AxisLabelsFactory.newAxisLabels(getResources().getString(R.string.Grafica_ejex), 50.0);
-        efectivo.setAxisStyle(axisStyle);
-        AxisLabels valueCount = AxisLabelsFactory.newNumericRangeAxisLabels(0, MAX_VALUE);
-        valueCount.setAxisStyle(axisStyle);
+        Line lingresos = new Line();
+        Line lgastos = new Line();
+        lingresos.setColor(Color.GREEN);
+        lgastos.setColor(Color.RED);
+        float distancia = 0;
+        for(int i = 0 ; i < size; i++){
+            LinePoint p = new LinePoint();
+            p.setX(distancia);
+            p.setY(new Float(ingresos[i]));
+            lingresos.addPoint(p);
 
+            LinePoint p2 = new LinePoint();
+            p2.setX(distancia);
+            p2.setY(new Float(gastos[i]));
+            lgastos.addPoint(p2);
+            distancia += dist;
+        }
 
-        // Adding axis info to chart.
-        chart.addXAxisLabels(valueCount);
-        chart.addXAxisLabels(efectivo);
-        chart.addYAxisLabels(periodos);
-        chart.addYAxisLabels(anyo);
-        chart.addTopAxisLabels(valueCount);
-        chart.setHorizontal(true);
-        chart.setSize(450, 350);
-        chart.setSpaceBetweenGroupsOfBars(30);
-
-        //chart.setTitle(getResources().getString(R.string.Grafica_titulo), Color.BLACK, 16);
-        chart.setTitle(periodo, Color.BLACK, 16);
-
-        chart.setGrid((50.0/MAX_VALUE)*20, 600, 3, 2);
-        chart.setBackgroundFill(Fills.newSolidFill(Color.LIGHTGREY));
-        LinearGradientFill fill = Fills.newLinearGradientFill(0, Color.newColor("E37600"), 100);
-        fill.addColorAndOffset(Color.WHITE, 0);
-        chart.setAreaFill(fill);
-        String url = chart.toURLString();
-
-        webView.loadUrl(url);
+        LineGraph li = (LineGraph)findViewById(R.id.linegraphid);
+        li.addLine(lgastos);
+        li.addLine(lingresos);
+        li.setRangeY(0, new Float(MAX_VALUE));
+        li.setLineToFill(0);
     }
 
     @Override
