@@ -159,8 +159,14 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         spFiltroCategoria = (Spinner) findViewById(R.id.spCategoriaMovimiento);
         spFiltroCategoria.setEnabled(false);
 
-        spFiltroMes.setSelection(meses.length - 1);
-        spFitroAnyo.setSelection(anyos.size() - 1);
+        if (savedInstanceState != null) {
+            spFiltroMes.setSelection(savedInstanceState.getInt("spFiltroMes", 0));
+            spFitroAnyo.setSelection(savedInstanceState.getInt("spFitroAnyo", 0));
+        }
+        else {
+            spFiltroMes.setSelection(meses.length - 1);
+            spFitroAnyo.setSelection(anyos.size() - 1);
+        }
 
         listViewMovs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -337,6 +343,15 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         startActivity(in);
         setResult(RESULT_OK);
         finish();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("spFiltroMes", spFiltroMes.getSelectedItemPosition());
+        outState.putInt("spFitroAnyo", spFitroAnyo.getSelectedItemPosition());
+        // do this for each or your Spinner
+        // You might consider using Bundle.putStringArray() instead
     }
 
     private class categoriaOnItemSelectedListener implements AdapterView.OnItemSelectedListener {

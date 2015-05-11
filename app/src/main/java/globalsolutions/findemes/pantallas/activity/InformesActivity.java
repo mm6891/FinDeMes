@@ -150,6 +150,12 @@ public class InformesActivity extends Activity {
             }
         });
 
+        if (savedInstanceState != null) {
+            spTipoMovimiento.setSelection(savedInstanceState.getInt("spTipoMovimiento", 0));
+            spPeriodo.setSelection(savedInstanceState.getInt("spPeriodo", 0));
+            spPeriodoFiltro.setSelection(savedInstanceState.getInt("spPeriodoFiltro", 0));
+        }
+
         //cargamos adaptador de informes
         listViewMovsInforme = (ListView) findViewById(R.id.listViewMovInforme);
         listViewMovsInforme.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -281,7 +287,16 @@ public class InformesActivity extends Activity {
     public void showInformeDialog(Bundle bundle) {
         DialogFragment newFragment = new InformeDialog();
         newFragment.setArguments(bundle);
-        newFragment.show(getFragmentManager(),"INFORME");
+        newFragment.show(getFragmentManager(), "INFORME");
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("spTipoMovimiento", spTipoMovimiento.getSelectedItemPosition());
+        outState.putInt("spPeriodo", spPeriodo.getSelectedItemPosition());
+        outState.putInt("spPeriodoFiltro", spPeriodoFiltro.getSelectedItemPosition());
+        // do this for each or your Spinner
+        // You might consider using Bundle.putStringArray() instead
+    }
 }
