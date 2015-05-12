@@ -3,8 +3,10 @@ package globalsolutions.findemes.pantallas.activity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
@@ -118,14 +120,13 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         mSpinnerCount++;
         spFitroAnyo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (mSpinnerInitializedCount < mSpinnerCount)
-                {
+                if (mSpinnerInitializedCount < mSpinnerCount) {
                     mSpinnerInitializedCount++;
-                }
-                else {
+                } else {
                     filtraMesAnyo(view, spFiltroMes.getSelectedItemPosition(), devuelveAnyo());
                 }
             }
+
             public void onNothingSelected(AdapterView<?> parent) {
                 int year = Calendar.getInstance().get(Calendar.YEAR);
                 spFitroAnyo.setSelection(year);
@@ -133,22 +134,21 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         });
 
         listViewMovs = (ListView) findViewById(R.id.listViewMov);
-        listViewMovs.setAdapter(new MovimientoAdapter(getApplicationContext(), movs));
+        listViewMovs.setAdapter(new MovimientoAdapter(getApplicationContext(), new ArrayList<MovimientoItem>()));
         //cargamos meses
         spFiltroMes = (Spinner) findViewById(R.id.spMeses);
         String[] meses = creaMeses();
         spFiltroMes.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, meses));
-        mSpinnerCount++;
+        //mSpinnerCount++;
         spFiltroMes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (mSpinnerInitializedCount < mSpinnerCount)
-                {
+               /* if (mSpinnerInitializedCount < mSpinnerCount) {
                     mSpinnerInitializedCount++;
-                }
-                else {
+                } else {*/
                     filtraMesAnyo(view, position, devuelveAnyo());
-                }
+                /*}*/
             }
+
             public void onNothingSelected(AdapterView<?> parent) {
                 int month = Calendar.getInstance().get(Calendar.MONTH);
                 spFiltroMes.setSelection(month);
@@ -162,6 +162,8 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         if (savedInstanceState != null) {
             spFiltroMes.setSelection(savedInstanceState.getInt("spFiltroMes", 0));
             spFitroAnyo.setSelection(savedInstanceState.getInt("spFitroAnyo", 0));
+            ((CheckBox) findViewById(R.id.cbIconMinus)).setChecked(savedInstanceState.getBoolean("checkGastos"));
+            ((CheckBox) findViewById(R.id.cbIconMinus)).setChecked(savedInstanceState.getBoolean("checkIngresos"));
         }
         else {
             spFiltroMes.setSelection(meses.length - 1);
@@ -338,20 +340,24 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         backActivity();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.remove("spFiltroMes");
+        outState.remove("spFitroAnyo");
+        outState.remove("checkIngresos");
+        outState.remove("checkGastos");
+        outState.putInt("spFiltroMes", spFiltroMes.getSelectedItemPosition());
+        outState.putInt("spFitroAnyo", spFitroAnyo.getSelectedItemPosition());
+        outState.putBoolean("checkIngresos", ((CheckBox) findViewById(R.id.cbIconPlus)).isChecked());
+        outState.putBoolean("checkGastos", ((CheckBox) findViewById(R.id.cbIconMinus)).isChecked());
+        super.onSaveInstanceState(outState);
+    }
+
     private void backActivity(){
         Intent in = new Intent(MovimientosActivity.this, MainActivity.class);
         startActivity(in);
         setResult(RESULT_OK);
-        finish();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt("spFiltroMes", spFiltroMes.getSelectedItemPosition());
-        outState.putInt("spFitroAnyo", spFitroAnyo.getSelectedItemPosition());
-        // do this for each or your Spinner
-        // You might consider using Bundle.putStringArray() instead
+        //finish();
     }
 
     private class categoriaOnItemSelectedListener implements AdapterView.OnItemSelectedListener {

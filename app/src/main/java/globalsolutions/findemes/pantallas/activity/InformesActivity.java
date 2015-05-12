@@ -1,16 +1,22 @@
 package globalsolutions.findemes.pantallas.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DialogFragment;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,6 +30,7 @@ import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.MovimientoDAO;
 import globalsolutions.findemes.database.model.InformeItem;
 import globalsolutions.findemes.database.model.MovimientoItem;
+import globalsolutions.findemes.database.util.ArrayAdapterWithIcon;
 import globalsolutions.findemes.pantallas.adapter.InformeAdapter;
 import globalsolutions.findemes.pantallas.dialog.InformeDialog;
 import globalsolutions.findemes.pantallas.util.Util;
@@ -175,27 +182,37 @@ public class InformesActivity extends Activity {
         btnGraficar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(InformesActivity.this, OptionActivityBarChart.class);
+                final String[] items = {getResources().getString(R.string.OpcionGrafica_Lineal), getResources().getString(R.string.OpcionGrafica_Barra)};
+                AlertDialog.Builder builder = new AlertDialog.Builder(InformesActivity.this);
 
-                ArrayList<InformeItem> informes = ((InformeAdapter)listViewMovsInforme.getAdapter()).getItemsActuales();
-                int count = informes.size();
-                double[] valoresIngresos = new double[count];
-                double[] valoresGastos = new double[count];
-                String[] ejeX = new String[informes.size()];
-                for(int i = 0 ; i < count ; i++){
-                    valoresIngresos[i] = Double.valueOf(informes.get(i).getIngresoValor());
-                    valoresGastos[i] = Double.valueOf(informes.get(i).getGastoValor());
-                    int valorX = count - i;
-                    ejeX[valorX-1] = informes.get(i).getPeriodoDesc();
-                }
+                ListAdapter adapter = new ArrayAdapterWithIcon(getApplicationContext(), items, Util.prgmImagesOption);
+                builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int item) {
+                                Intent intent = new Intent(InformesActivity.this, OptionActivityBarChart.class);
+                                String accion = (String) items[item];
 
-                intent.putExtra("anyo" , (String)spPeriodoFiltro.getSelectedItem());
-                intent.putExtra("periodo" , (String) spPeriodo.getSelectedItem());
-                intent.putExtra("ingresos" , valoresIngresos);
-                intent.putExtra("gastos" , valoresGastos);
-                intent.putExtra("ejeX" , ejeX);
-                startActivity(intent);
-                finish();
+                                ArrayList<InformeItem> informes = ((InformeAdapter)listViewMovsInforme.getAdapter()).getItemsActuales();
+                                int count = informes.size();
+                                double[] valoresIngresos = new double[count];
+                                double[] valoresGastos = new double[count];
+                                String[] ejeX = new String[informes.size()];
+                                for(int i = 0 ; i < count ; i++){
+                                    valoresIngresos[i] = Double.valueOf(informes.get(i).getIngresoValor());
+                                    valoresGastos[i] = Double.valueOf(informes.get(i).getGastoValor());
+                                    int valorX = count - i;
+                                    ejeX[valorX-1] = informes.get(i).getPeriodoDesc();
+                                }
+
+                                intent.putExtra("tipoGrafica" , accion);
+                                intent.putExtra("anyo" , (String)spPeriodoFiltro.getSelectedItem());
+                                intent.putExtra("periodo" , (String) spPeriodo.getSelectedItem());
+                                intent.putExtra("ingresos" , valoresIngresos);
+                                intent.putExtra("gastos" , valoresGastos);
+                                intent.putExtra("ejeX" , ejeX);
+                                startActivity(intent);
+                            }
+                        }
+                ).show();
             }
         });
 
@@ -281,7 +298,7 @@ public class InformesActivity extends Activity {
         Intent in = new Intent(InformesActivity.this, MainActivity.class);
         startActivity(in);
         setResult(RESULT_OK);
-        finish();
+        //finish();
     }
 
     public void showInformeDialog(Bundle bundle) {
@@ -292,11 +309,12 @@ public class InformesActivity extends Activity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+        outState.remove("spTipoMovimiento");
+        outState.remove("spPeriodo");
+        outState.remove("spPeriodoFiltro");
         outState.putInt("spTipoMovimiento", spTipoMovimiento.getSelectedItemPosition());
         outState.putInt("spPeriodo", spPeriodo.getSelectedItemPosition());
         outState.putInt("spPeriodoFiltro", spPeriodoFiltro.getSelectedItemPosition());
-        // do this for each or your Spinner
-        // You might consider using Bundle.putStringArray() instead
+        super.onSaveInstanceState(outState);
     }
 }

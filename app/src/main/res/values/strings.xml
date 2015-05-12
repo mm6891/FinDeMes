@@ -107,7 +107,8 @@
     <string name="No_Informes">NO HAY INFORMES ACTUALMENTE</string>
     <string name="No_Movimientos">NO HAY MOVIMIENTOS ACTUALMENTE</string>
     <string name="No_Registros">NO HAY REGISTROS ACTUALMENTE</string>
-    <string name="Loading">Cargando ...</string>
+    <string name="OpcionGrafica_Lineal">Gráfica Lineal</string>
+    <string name="OpcionGrafica_Barra">Gráfica de Barras</string>
     <!-- VALIDACIONES XML -->
     <string name="Validacion_Contrasenya">Contraseña errónea</string>
     <string name="Validacion_Nombre">Debe incluir el nombre</string>
