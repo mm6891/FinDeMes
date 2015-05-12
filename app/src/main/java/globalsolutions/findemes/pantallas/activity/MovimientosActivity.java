@@ -159,16 +159,17 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         spFiltroCategoria = (Spinner) findViewById(R.id.spCategoriaMovimiento);
         spFiltroCategoria.setEnabled(false);
 
-        if (savedInstanceState != null) {
-            spFiltroMes.setSelection(savedInstanceState.getInt("spFiltroMes", 0));
-            spFitroAnyo.setSelection(savedInstanceState.getInt("spFitroAnyo", 0));
-            ((CheckBox) findViewById(R.id.cbIconMinus)).setChecked(savedInstanceState.getBoolean("checkGastos"));
-            ((CheckBox) findViewById(R.id.cbIconMinus)).setChecked(savedInstanceState.getBoolean("checkIngresos"));
-        }
-        else {
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+        if (prefs.getInt("spFiltroMes",-1) >= 0)
+            spFiltroMes.setSelection(prefs.getInt("spFiltroMes", 0));
+        else
             spFiltroMes.setSelection(meses.length - 1);
+        if (prefs.getInt("spFitroAnyo",-1) >= 0)
+            spFitroAnyo.setSelection(prefs.getInt("spFitroAnyo", 0));
+        else
             spFitroAnyo.setSelection(anyos.size() - 1);
-        }
+        ((CheckBox) findViewById(R.id.cbIconMinus)).setChecked(prefs.getBoolean("checkGastos",false));
+        ((CheckBox) findViewById(R.id.cbIconPlus)).setChecked(prefs.getBoolean("checkIngresos",false));
 
         listViewMovs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -342,14 +343,17 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.remove("spFiltroMes");
-        outState.remove("spFitroAnyo");
-        outState.remove("checkIngresos");
-        outState.remove("checkGastos");
-        outState.putInt("spFiltroMes", spFiltroMes.getSelectedItemPosition());
-        outState.putInt("spFitroAnyo", spFitroAnyo.getSelectedItemPosition());
-        outState.putBoolean("checkIngresos", ((CheckBox) findViewById(R.id.cbIconPlus)).isChecked());
-        outState.putBoolean("checkGastos", ((CheckBox) findViewById(R.id.cbIconMinus)).isChecked());
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.remove("spFiltroMes");
+        edit.remove("spFitroAnyo");
+        edit.remove("checkIngresos");
+        edit.remove("checkGastos");
+        edit.putInt("spFiltroMes", spFiltroMes.getSelectedItemPosition());
+        edit.putInt("spFitroAnyo", spFitroAnyo.getSelectedItemPosition());
+        edit.putBoolean("checkIngresos", ((CheckBox) findViewById(R.id.cbIconPlus)).isChecked());
+        edit.putBoolean("checkGastos", ((CheckBox) findViewById(R.id.cbIconMinus)).isChecked());
+        edit.commit();
         super.onSaveInstanceState(outState);
     }
 

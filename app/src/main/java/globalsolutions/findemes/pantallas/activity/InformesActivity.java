@@ -157,11 +157,13 @@ public class InformesActivity extends Activity {
             }
         });
 
-        if (savedInstanceState != null) {
-            spTipoMovimiento.setSelection(savedInstanceState.getInt("spTipoMovimiento", 0));
-            spPeriodo.setSelection(savedInstanceState.getInt("spPeriodo", 0));
-            spPeriodoFiltro.setSelection(savedInstanceState.getInt("spPeriodoFiltro", 0));
-        }
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+        if (prefs.getInt("spTipoMovimiento",-1) >= 0)
+            spTipoMovimiento.setSelection(prefs.getInt("spTipoMovimiento", 0));
+        if (prefs.getInt("spPeriodo",-1) >= 0)
+            spPeriodo.setSelection(prefs.getInt("spPeriodo", 0));
+        if (prefs.getInt("spPeriodoFiltro",-1) >= 0)
+            spPeriodoFiltro.setSelection(prefs.getInt("spPeriodoFiltro", 0));
 
         //cargamos adaptador de informes
         listViewMovsInforme = (ListView) findViewById(R.id.listViewMovInforme);
@@ -309,12 +311,15 @@ public class InformesActivity extends Activity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.remove("spTipoMovimiento");
-        outState.remove("spPeriodo");
-        outState.remove("spPeriodoFiltro");
-        outState.putInt("spTipoMovimiento", spTipoMovimiento.getSelectedItemPosition());
-        outState.putInt("spPeriodo", spPeriodo.getSelectedItemPosition());
-        outState.putInt("spPeriodoFiltro", spPeriodoFiltro.getSelectedItemPosition());
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.remove("spTipoMovimiento");
+        edit.remove("spPeriodo");
+        edit.remove("spPeriodoFiltro");
+        edit.putInt("spTipoMovimiento", spTipoMovimiento.getSelectedItemPosition());
+        edit.putInt("spPeriodo", spPeriodo.getSelectedItemPosition());
+        edit.putInt("spPeriodoFiltro", spPeriodoFiltro.getSelectedItemPosition());
+        edit.commit();
         super.onSaveInstanceState(outState);
     }
 }
