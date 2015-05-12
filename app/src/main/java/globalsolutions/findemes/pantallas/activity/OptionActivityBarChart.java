@@ -2,33 +2,7 @@ package globalsolutions.findemes.pantallas.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.CalendarContract;
-/*
-import android.webkit.WebView;
-
-import com.googlecode.charts4j.AxisLabels;
-import com.googlecode.charts4j.AxisLabelsFactory;
-import com.googlecode.charts4j.AxisStyle;
-import com.googlecode.charts4j.AxisTextAlignment;
-import com.googlecode.charts4j.BarChart;
-import com.googlecode.charts4j.BarChartPlot;
-import com.googlecode.charts4j.Data;
-import com.googlecode.charts4j.DataUtil;
-import com.googlecode.charts4j.Fills;
-import com.googlecode.charts4j.GCharts;
-import com.googlecode.charts4j.LinearGradientFill;
-import com.googlecode.charts4j.Plots;
-import com.googlecode.charts4j.Color;
-*/
-
-import com.echo.holographlibrary.Line;
-import com.echo.holographlibrary.LineGraph;
-import com.echo.holographlibrary.LinePoint;
-
-import java.util.Arrays;
-
 import globalsolutions.findemes.R;
 
 
@@ -45,7 +19,7 @@ public class OptionActivityBarChart extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.linegraph);
+        setContentView(R.layout.graph);
 
         String periodo = getIntent().getExtras().getString("periodo");
         double[] ingresos = getIntent().getExtras().getDoubleArray("ingresos");
@@ -67,7 +41,7 @@ public class OptionActivityBarChart extends Activity {
         final double MAX_VALUE = max;
         double dist = MAX_VALUE/size;
 
-        Line lingresos = new Line();
+       /* Line lingresos = new Line();
         Line lgastos = new Line();
         lingresos.setColor(Color.GREEN);
         lgastos.setColor(Color.RED);
@@ -89,7 +63,7 @@ public class OptionActivityBarChart extends Activity {
         li.addLine(lgastos);
         li.addLine(lingresos);
         li.setRangeY(0, new Float(MAX_VALUE));
-        li.setLineToFill(0);
+        li.setLineToFill(0);*/
     }
 
     @Override
