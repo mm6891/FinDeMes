@@ -29,8 +29,8 @@ public class OptionActivityPassword extends Activity {
     private RadioButton rbPassActivo;
     private RadioButton rbPassInActivo;
 
-    private Button guardar;
-    private Button enviar;
+    private ImageButton guardar;
+    private ImageButton enviar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +59,7 @@ public class OptionActivityPassword extends Activity {
             rbPassInActivo.setChecked(password.getActivo().equals(Constantes.REGISTRO_INACTIVO.toString()));
         }
 
-        guardar = (Button) findViewById(R.id.btnGuardarPass);
+        guardar = (ImageButton) findViewById(R.id.btnGuardarPass);
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,7 +88,7 @@ public class OptionActivityPassword extends Activity {
             }
         });
 
-        enviar = (Button) findViewById(R.id.btnEnviarCorreo);
+        enviar = (ImageButton) findViewById(R.id.btnEnviarCorreo);
         enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

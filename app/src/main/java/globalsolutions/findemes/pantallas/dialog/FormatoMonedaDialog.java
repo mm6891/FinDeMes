@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import java.text.NumberFormat;
@@ -27,7 +28,7 @@ import globalsolutions.findemes.pantallas.util.Util;
 public class FormatoMonedaDialog extends DialogFragment {
 
     private Spinner spFormatoMoneda;
-    private Button btnFormatoMoneda;
+    private ImageButton btnFormatoMoneda;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,7 +48,7 @@ public class FormatoMonedaDialog extends DialogFragment {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spFormatoMoneda.setAdapter(dataAdapter);
 
-        btnFormatoMoneda = (Button) view.findViewById(R.id.btnFormatoMoneda);
+        btnFormatoMoneda = (ImageButton) view.findViewById(R.id.btnFormatoMoneda);
 
         btnFormatoMoneda.setOnClickListener(new View.OnClickListener() {
             @Override

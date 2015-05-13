@@ -125,4 +125,5 @@
     <string name="AyudaRegistros">Periodic registers, which are added to the list of moves from the activation date of registration.</string>
     <string name="OpcionGrafica_Barra">Bar Chart</string>
     <string name="OpcionGrafica_Lineal">Line Chart</string>
+    <string name="ConjuncionSemana">to</string>
 </resources>

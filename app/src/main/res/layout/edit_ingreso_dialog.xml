@@ -113,13 +113,13 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_below="@+id/lyLinear5">
-        <Button
+        <ImageButton
             android:id="@+id/btnGuardarIngreso"
+            android:background="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="guardarIngreso"
-            android:text="@string/Modificar"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_size" />
+            android:src="@drawable/saveas"
+            />
     </LinearLayout>
 </RelativeLayout>

@@ -64,13 +64,13 @@
         android:layout_marginTop="@dimen/margin"
         android:gravity="center"
         android:layout_below="@+id/lyLinear1">
-        <Button
+        <ImageButton
             android:id="@+id/btnGuardarDB"
+            android:background="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Guardar"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_size" />
+            android:src="@drawable/save"
+            />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/lyLinear3"
@@ -93,13 +93,13 @@
         android:layout_marginTop="@dimen/margin"
         android:gravity="center"
         android:layout_below="@+id/lyLinear3">
-        <Button
+        <ImageButton
             android:id="@+id/btnImportarDB"
+            android:background="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/Importar"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_size" />
+            android:src="@drawable/adddatabase"
+            />
     </LinearLayout>
 </RelativeLayout>
     </ScrollView>

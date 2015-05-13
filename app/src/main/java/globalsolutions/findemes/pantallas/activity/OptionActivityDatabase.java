@@ -29,8 +29,8 @@ public class OptionActivityDatabase extends Activity {
 
 
 
-    private Button guardar;
-    private Button importar;
+    private ImageButton guardar;
+    private ImageButton importar;
     private FileDialog fileDialog;
 
     @Override
@@ -46,7 +46,7 @@ public class OptionActivityDatabase extends Activity {
             }
         });
 
-        guardar = (Button) findViewById(R.id.btnGuardarDB);
+        guardar = (ImageButton) findViewById(R.id.btnGuardarDB);
         guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +81,7 @@ public class OptionActivityDatabase extends Activity {
             }
         });
 
-        importar = (Button) findViewById(R.id.btnImportarDB);
+        importar = (ImageButton) findViewById(R.id.btnImportarDB);
         importar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

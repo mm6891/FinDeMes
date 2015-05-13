@@ -114,7 +114,7 @@ public class GastoDialog extends DialogFragment implements DatePickerDialog.OnDa
         final Gasto aMod = new Gasto();
         aMod.set_id(Integer.valueOf(_id).intValue());
 
-        Button btnModificar = (Button) view.findViewById(R.id.btnGuardarGasto);
+        ImageButton btnModificar = (ImageButton) view.findViewById(R.id.btnGuardarGasto);
 
         btnModificar.setOnClickListener(new View.OnClickListener() {
             @Override

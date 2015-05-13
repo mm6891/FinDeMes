@@ -29,7 +29,7 @@ public class RegistrosActivity extends FragmentActivity implements NuevoRegistro
 
 
     private ListView listViewReg;
-    private Button btnNuevoRegistro;
+    private ImageButton btnNuevoRegistro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class RegistrosActivity extends FragmentActivity implements NuevoRegistro
         });
 
         //boton nuevo registro
-        btnNuevoRegistro = (Button) findViewById(R.id.btnNuevoRegistro);
+        btnNuevoRegistro = (ImageButton) findViewById(R.id.btnNuevoRegistro);
         btnNuevoRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

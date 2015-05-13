@@ -114,7 +114,7 @@ public class IngresoDialog extends DialogFragment implements DatePickerDialog.On
         final Ingreso aMod = new Ingreso();
         aMod.set_id(Integer.valueOf(_id).intValue());
 
-        Button btnModificar = (Button) view.findViewById(R.id.btnGuardarIngreso);
+        ImageButton btnModificar = (ImageButton) view.findViewById(R.id.btnGuardarIngreso);
 
         btnModificar.setOnClickListener(new View.OnClickListener() {
             @Override
