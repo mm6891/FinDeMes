@@ -9,7 +9,7 @@
         android:id="@+id/lyBackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="@dimen/margin"
         android:orientation="horizontal">
         <ImageButton android:id="@+id/btnBackButton"
             android:layout_width="wrap_content"
@@ -24,7 +24,7 @@
             android:textSize="@dimen/text_size_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:text="@string/MENU_OPCIONES"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/margin"
             android:textStyle="bold" />
     </LinearLayout>
     <ListView
@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/lyBackButton"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         android:textColor="@android:color/black"
         android:layout_weight="1" />
 </RelativeLayout>

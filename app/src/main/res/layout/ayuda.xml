@@ -13,7 +13,7 @@
         android:id="@+id/lyBackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="@dimen/margin"
 
         android:orientation="horizontal">
         <ImageButton android:id="@+id/btnBackButton"
@@ -28,7 +28,7 @@
             android:textColor="@android:color/black"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:text="@string/OPCIONES_AYUDA"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/margin"
             android:textStyle="bold"
             android:textSize="@dimen/text_size_title"/>
     </LinearLayout>
@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         android:layout_below="@+id/lyBackButton">
         <TextView
             android:layout_width="match_parent"
@@ -53,7 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         android:layout_below="@+id/lyLinear2">
         <TextView
             android:layout_width="match_parent"
@@ -69,14 +69,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="@dimen/margin"
     android:layout_below="@+id/lyLinear3">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/Ingresos"
         android:textStyle="bold"
-        android:textSize="@dimen/text_size_title"
+        android:textSize="@dimen/text_size"
         />
 </LinearLayout>
     <LinearLayout
@@ -84,7 +84,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         android:layout_below="@+id/lyLinear4">
         <ImageView
             android:layout_width="wrap_content"
@@ -104,14 +104,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         android:layout_below="@+id/lyLinear5">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/Gastos"
             android:textStyle="bold"
-            android:textSize="@dimen/text_size_title"
+            android:textSize="@dimen/text_size"
             />
     </LinearLayout>
     <LinearLayout
@@ -119,7 +119,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         android:layout_below="@+id/lyLinear6">
         <ImageView
             android:layout_width="wrap_content"
@@ -139,14 +139,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         android:layout_below="@+id/lyLinear7">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/MENU_MOVIMIENTOS"
             android:textStyle="bold"
-            android:textSize="@dimen/text_size_title"
+            android:textSize="@dimen/text_size"
             />
     </LinearLayout>
     <LinearLayout
@@ -154,7 +154,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         android:layout_below="@+id/lyLinear8">
         <ImageView
             android:layout_width="wrap_content"
@@ -174,14 +174,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         android:layout_below="@+id/lyLinear9">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/MENU_INFORMES"
             android:textStyle="bold"
-            android:textSize="@dimen/text_size_title"
+            android:textSize="@dimen/text_size"
             />
     </LinearLayout>
     <LinearLayout
@@ -189,7 +189,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         android:layout_below="@+id/lyLinear10">
         <ImageView
             android:layout_width="wrap_content"
@@ -209,14 +209,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         android:layout_below="@+id/lyLinear11">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/MENU_REGISTROS"
             android:textStyle="bold"
-            android:textSize="@dimen/text_size_title"
+            android:textSize="@dimen/text_size"
             />
     </LinearLayout>
     <LinearLayout
@@ -224,7 +224,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         android:layout_below="@+id/lyLinear12">
         <ImageView
             android:layout_width="wrap_content"
@@ -244,14 +244,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         android:layout_below="@+id/lyLinear13">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/MENU_OPCIONES"
             android:textStyle="bold"
-            android:textSize="@dimen/text_size_title"
+            android:textSize="@dimen/text_size"
             />
     </LinearLayout>
     <LinearLayout
@@ -259,7 +259,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         android:layout_below="@+id/lyLinear14">
         <ImageView
             android:layout_width="wrap_content"

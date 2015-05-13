@@ -10,7 +10,7 @@
         android:id="@+id/lyBackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="@dimen/margin"
         android:orientation="horizontal">
         <ImageButton android:id="@+id/btnBackButton"
             android:layout_width="wrap_content"
@@ -25,14 +25,14 @@
             android:textSize="@dimen/text_size_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:text="@string/OPCIONES_BASEDATOS"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/margin"
             android:textStyle="bold" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/lyLinear0"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         android:orientation="horizontal"
         android:layout_below="@+id/lyBackButton">
         <TextView
@@ -47,7 +47,7 @@
         android:id="@+id/lyLinear1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         android:orientation="horizontal"
         android:layout_below="@+id/lyLinear0">
         <TextView
@@ -61,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         android:gravity="center"
         android:layout_below="@+id/lyLinear1">
         <Button
@@ -77,7 +77,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         android:layout_below="@+id/lyLinear2">
         <TextView
             android:layout_width="match_parent"
@@ -90,7 +90,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/margin"
         android:gravity="center"
         android:layout_below="@+id/lyLinear3">
         <Button

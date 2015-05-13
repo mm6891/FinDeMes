@@ -30,7 +30,7 @@
         android:rowCount="4"
         android:orientation="horizontal"
         android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/margin"
         android:layout_below="@+id/lyHeader">
         <TextView
             android:id="@+id/tvMesResumen"
@@ -47,7 +47,7 @@
             android:textColor="@android:color/white"
             android:layout_row="0"
             android:layout_column="1"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/margin"
             />
         <ImageView
             android:src="@drawable/options"
@@ -55,7 +55,7 @@
             android:layout_row="0"
             android:layout_column="2"
             android:layout_gravity="right"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/margin"
             />
         <TextView
             android:id="@+id/tvIngresos"
@@ -72,7 +72,7 @@
             android:background="@android:color/white"
             android:layout_row="1"
             android:layout_column="1"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/margin"
             />
         <TextView
             android:id="@+id/tvIngresosValor"
@@ -82,7 +82,7 @@
             android:layout_row="1"
             android:layout_column="2"
             android:layout_gravity="right"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/margin"
             />
         <TextView
             android:id="@+id/tvGastos"
@@ -98,7 +98,7 @@
             android:background="@android:color/white"
             android:layout_row="2"
             android:layout_column="1"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/margin"
             />
         <TextView
             android:id="@+id/tvGastosValor"
@@ -108,7 +108,7 @@
             android:layout_row="2"
             android:layout_column="2"
             android:layout_gravity="right"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/margin"
             />
         <TextView
             android:id="@+id/tvSaldo"
@@ -124,7 +124,7 @@
             android:background="@android:color/white"
             android:layout_row="3"
             android:layout_column="1"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/margin"
             />
         <TextView
             android:id="@+id/tvSaldoValor"
@@ -134,7 +134,7 @@
             android:layout_row="3"
             android:layout_column="2"
             android:layout_gravity="right"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/margin"
             />
     </GridLayout>
 
@@ -156,7 +156,7 @@
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_expense"
                 android:layout_gravity="top|center"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/margin"
                 android:layout_row="0"
                 android:layout_column="0"
                 android:text="@string/MENU_GASTOS"
@@ -169,7 +169,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_income"
             android:layout_gravity="top|center"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/margin"
             android:layout_row="0"
             android:layout_column="1"
             android:text="@string/MENU_INGRESOS"
@@ -182,7 +182,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_movimientos"
             android:layout_gravity="top|center"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/margin"
             android:layout_row="1"
             android:layout_column="0"
             android:text="@string/MENU_MOVIMIENTOS"
@@ -195,7 +195,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_report"
             android:layout_gravity="top|center"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/margin"
             android:layout_row="1"
             android:layout_column="1"
             android:text="@string/MENU_INFORMES"
@@ -208,7 +208,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_registros"
             android:layout_gravity="top|center"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/margin"
             android:layout_row="2"
             android:layout_column="0"
             android:text="@string/MENU_REGISTROS"
@@ -221,7 +221,7 @@
             android:layout_height="wrap_content"
             android:drawableTop="@drawable/ic_options"
             android:layout_gravity="top|center"
-            android:layout_margin="10dp"
+            android:layout_margin="@dimen/margin"
             android:layout_row="2"
             android:layout_column="1"
             android:text="@string/MENU_OPCIONES"

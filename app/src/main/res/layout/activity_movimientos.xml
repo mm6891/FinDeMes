@@ -10,7 +10,7 @@
         android:id="@+id/lyBackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="@dimen/margin"
         android:orientation="horizontal">
         <ImageButton android:id="@+id/btnBackButton"
             android:layout_width="wrap_content"
@@ -25,7 +25,7 @@
             android:textSize="@dimen/text_size_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:text="@string/MENU_MOVIMIENTOS"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/margin"
             android:textStyle="bold" />
     </LinearLayout>
     <LinearLayout
@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/margin"
             android:onClick="filtraIngreso"/>
         <CheckBox
             android:id="@+id/cbIconMinus"

@@ -10,7 +10,7 @@
         android:id="@+id/lyBackButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="@dimen/margin"
 
         android:orientation="horizontal">
         <ImageButton android:id="@+id/btnBackButton"
@@ -26,7 +26,7 @@
             android:textColor="@android:color/black"
             android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:text="@string/MENU_GASTOS"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/margin"
             android:textStyle="bold"
             android:textSize="@dimen/text_size_title"/>
     </LinearLayout>
