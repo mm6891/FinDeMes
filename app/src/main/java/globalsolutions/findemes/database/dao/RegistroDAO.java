@@ -73,6 +73,7 @@ public class RegistroDAO {
             nuevoRegistro.setActivo(Integer.valueOf(mCursor.getInt(6)));
             nuevoRegistro.setFecha(mCursor.getString(7));
 
+
             ret[i] = nuevoRegistro;
             i++;
             mCursor.moveToNext();

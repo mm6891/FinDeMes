@@ -25,6 +25,7 @@ public class IngresoDAO {
     public final static String INGRESOS_VALOR="valor";  // valor del gasto
     public final static String INGRESOS_FECHA="fecha";  // fecha del gasto
     public final static String INGRESOS_GRUPO="grupoingreso";  // grupo al que pertenece el gasto, referencia
+    public final static String INGRESOS_REGISTRO_ID="_idRegistro"; // id value for registro
 
     /**
      *
@@ -41,13 +42,14 @@ public class IngresoDAO {
         values.put(INGRESOS_VALOR, ingreso.getValor());
         values.put(INGRESOS_GRUPO, ingreso.getGrupoIngreso().getGrupo());
         values.put(INGRESOS_FECHA, ingreso.getFecha());
+        values.put(INGRESOS_REGISTRO_ID, ingreso.get_idRegistro());
 
         return database.insert(INGRESOS_TABLA, null, values);
     }
 
     public Ingreso[] selectIngresos() {
         Ingreso[] ret;
-        String[] cols = new String[] {INGRESOS_ID,INGRESOS_GRUPO, INGRESOS_DESC, INGRESOS_VALOR,INGRESOS_FECHA};
+        String[] cols = new String[] {INGRESOS_ID,INGRESOS_GRUPO, INGRESOS_DESC, INGRESOS_VALOR,INGRESOS_FECHA,INGRESOS_REGISTRO_ID};
         Cursor mCursor = database.query(true, INGRESOS_TABLA,cols,null
                 , null, null, null, null, null);
         ret = new Ingreso[mCursor.getCount()];
@@ -62,6 +64,34 @@ public class IngresoDAO {
             nuevoIngreso.setDescripcion(mCursor.getString(2));
             nuevoIngreso.setValor(mCursor.getString(3));
             nuevoIngreso.setFecha(mCursor.getString(4));
+            nuevoIngreso.set_idRegistro(mCursor.getInt(5));
+
+            ret[i] = nuevoIngreso;
+            i++;
+            mCursor.moveToNext();
+        }
+        return ret; // iterate to get each value.
+    }
+
+    public Ingreso[] selectIngresosByRegistroID(int registroID) {
+        Ingreso[] ret;
+        String[] cols = new String[] {INGRESOS_ID,INGRESOS_GRUPO, INGRESOS_DESC, INGRESOS_VALOR,INGRESOS_FECHA,INGRESOS_REGISTRO_ID};
+        String[] args = new String[]{String.valueOf(registroID)};
+        Cursor mCursor = database.query(true, INGRESOS_TABLA,cols,INGRESOS_REGISTRO_ID + "=?"
+                , args, null, null, null, null);
+        ret = new Ingreso[mCursor.getCount()];
+        int i = 0;
+        mCursor.moveToFirst();
+        while (mCursor.isAfterLast() == false) {
+            Ingreso nuevoIngreso = new Ingreso();
+            nuevoIngreso.set_id(mCursor.getInt(0));
+            GrupoIngreso categoria = new GrupoIngreso();
+            categoria.setGrupo(mCursor.getString(1));
+            nuevoIngreso.setGrupoIngreso(categoria);
+            nuevoIngreso.setDescripcion(mCursor.getString(2));
+            nuevoIngreso.setValor(mCursor.getString(3));
+            nuevoIngreso.setFecha(mCursor.getString(4));
+            nuevoIngreso.set_idRegistro(mCursor.getInt(5));
 
             ret[i] = nuevoIngreso;
             i++;

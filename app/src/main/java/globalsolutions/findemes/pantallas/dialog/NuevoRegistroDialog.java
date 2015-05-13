@@ -29,6 +29,7 @@ import java.util.List;
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.GrupoGastoDAO;
 import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
+import globalsolutions.findemes.database.dao.MovimientoDAO;
 import globalsolutions.findemes.database.dao.RegistroDAO;
 import globalsolutions.findemes.database.model.Registro;
 import globalsolutions.findemes.database.util.Constantes;
@@ -151,9 +152,13 @@ public class NuevoRegistroDialog extends DialogFragment implements DatePickerDia
                     nuevoRegistro.setFecha(fecha + " " + hora);
 
                     RegistroDAO registroDAO = new RegistroDAO(view.getContext());
-                    boolean actualizado = registroDAO.createRecords(nuevoRegistro) > 0;
+                    long idNuevoRegistro = registroDAO.createRecords(nuevoRegistro);
+                    boolean actualizado = idNuevoRegistro > 0;
                     if(actualizado){
+                        nuevoRegistro.set_id(Long.valueOf(idNuevoRegistro).intValue());
                         Util.showToast(view.getContext(), getResources().getString(R.string.Creado));
+                        //actualiza movimientos segun registro frecuente creado
+                        new MovimientoDAO().creaMovimientos(nuevoRegistro,view.getContext());
                         callback.ONuevoRegistroDialogSubmit(String.valueOf(Activity.RESULT_OK));
                         dismiss();
                     }

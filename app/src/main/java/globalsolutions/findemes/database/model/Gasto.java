@@ -11,6 +11,16 @@ public class Gasto {
     String valor;
     String fecha;
 
+    public int get_idRegistro() {
+        return _idRegistro;
+    }
+
+    public void set_idRegistro(int _idRegistro) {
+        this._idRegistro = _idRegistro;
+    }
+
+    int _idRegistro;
+
     public GrupoGasto getGrupoGasto() {
         return grupoGasto;
     }

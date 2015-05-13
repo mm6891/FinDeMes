@@ -11,6 +11,8 @@ public class Registro {
     String tipo;
     String valor;
     String grupo;
+    Integer activo;
+    String fecha;
 
     public Integer getActivo() {
         return activo;
@@ -19,9 +21,6 @@ public class Registro {
     public void setActivo(Integer activo) {
         this.activo = activo;
     }
-
-    Integer activo;
-    String fecha;
 
     public int get_id() {
         return _id;
@@ -78,4 +77,26 @@ public class Registro {
     public void setFecha(String fecha) {
         this.fecha = fecha;
     }
+
+     @Override
+     public boolean equals(Object o) {
+         Registro r = (Registro)o;
+         boolean eq = true;
+         if(!descripcion.equals(r.getDescripcion()))
+             return false;
+         if(!periodicidad.equals(r.getPeriodicidad()))
+             return false;
+         if(!tipo.equals(r.getTipo()))
+             return false;
+         if(!valor.equals(r.getValor()))
+             return false;
+         if(!grupo.equals(r.getGrupo()))
+             return false;
+         if(!activo.equals(r.getActivo()))
+             return false;
+         if(!fecha.equals(r.getFecha()))
+             return false;
+
+         return eq;
+     }
 }

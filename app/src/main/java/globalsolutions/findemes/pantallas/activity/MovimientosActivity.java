@@ -102,6 +102,7 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         ArrayList<String> anyos = new ArrayList<String>();
         if(movs.size() <= 0 )
             Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Movimientos));
+
         /*else{*/
         for(MovimientoItem mov : movs){
             String fecha = mov.getFecha();
@@ -128,8 +129,6 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
-                int year = Calendar.getInstance().get(Calendar.YEAR);
-                spFitroAnyo.setSelection(year);
             }
         });
 
@@ -139,19 +138,12 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         spFiltroMes = (Spinner) findViewById(R.id.spMeses);
         String[] meses = creaMeses();
         spFiltroMes.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, meses));
-        //mSpinnerCount++;
         spFiltroMes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-               /* if (mSpinnerInitializedCount < mSpinnerCount) {
-                    mSpinnerInitializedCount++;
-                } else {*/
                     filtraMesAnyo(view, position, devuelveAnyo());
-                /*}*/
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
-                int month = Calendar.getInstance().get(Calendar.MONTH);
-                spFiltroMes.setSelection(month);
             }
         });
 
@@ -160,14 +152,12 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         spFiltroCategoria.setEnabled(false);
 
         SharedPreferences prefs = getApplicationContext().getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
-        if (prefs.getInt("spFiltroMes",-1) >= 0)
-            spFiltroMes.setSelection(prefs.getInt("spFiltroMes", 0));
+        spFiltroMes.setSelection(prefs.getInt("spFiltroMes", meses.length - 1));
+        if(anyos.size() > 1)
+            spFitroAnyo.setSelection(prefs.getInt("spFitroAnyo", anyos.size() - 1));
         else
-            spFiltroMes.setSelection(meses.length - 1);
-        if (prefs.getInt("spFitroAnyo",-1) >= 0)
-            spFitroAnyo.setSelection(prefs.getInt("spFitroAnyo", 0));
-        else
-            spFitroAnyo.setSelection(anyos.size() - 1);
+            spFitroAnyo.setSelection(0);
+
         ((CheckBox) findViewById(R.id.cbIconMinus)).setChecked(prefs.getBoolean("checkGastos",false));
         ((CheckBox) findViewById(R.id.cbIconPlus)).setChecked(prefs.getBoolean("checkIngresos",false));
 
@@ -177,7 +167,7 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                                     long id) {
 
                 final MovimientoItem movSeleccionado = (MovimientoItem) listViewMovs.getItemAtPosition(position);
-                if (!movSeleccionado.isEsFrecuente()) {
+               /* if (!movSeleccionado.isEsFrecuente()) {*/
                     final String[] items = {getResources().getString(R.string.Modificar), getResources().getString(R.string.Eliminar)};
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(MovimientosActivity.this);
@@ -228,9 +218,9 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                                 }
                             }
                     ).show();
-                }
+                /*}
                 else
-                    Util.showToast(getApplicationContext(), getResources().getString(R.string.MovimientoFrecuente));
+                    Util.showToast(getApplicationContext(), getResources().getString(R.string.MovimientoFrecuente));*/
             }
         });
         //}

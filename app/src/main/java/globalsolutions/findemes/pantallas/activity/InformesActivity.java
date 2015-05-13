@@ -158,12 +158,9 @@ public class InformesActivity extends Activity {
         });
 
         SharedPreferences prefs = getApplicationContext().getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
-        if (prefs.getInt("spTipoMovimiento",-1) >= 0)
-            spTipoMovimiento.setSelection(prefs.getInt("spTipoMovimiento", 0));
-        if (prefs.getInt("spPeriodo",-1) >= 0)
-            spPeriodo.setSelection(prefs.getInt("spPeriodo", 0));
-        if (prefs.getInt("spPeriodoFiltro",-1) >= 0)
-            spPeriodoFiltro.setSelection(prefs.getInt("spPeriodoFiltro", 0));
+        spTipoMovimiento.setSelection(prefs.getInt("spTipoMovimiento", 0));
+        spPeriodo.setSelection(prefs.getInt("spPeriodo", 0));
+        spPeriodoFiltro.setSelection(prefs.getInt("spPeriodoFiltro", 0));
 
         //cargamos adaptador de informes
         listViewMovsInforme = (ListView) findViewById(R.id.listViewMovInforme);

@@ -31,6 +31,7 @@ import java.util.List;
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.GrupoGastoDAO;
 import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
+import globalsolutions.findemes.database.dao.MovimientoDAO;
 import globalsolutions.findemes.database.dao.RegistroDAO;
 import globalsolutions.findemes.database.model.Registro;
 import globalsolutions.findemes.database.util.Constantes;
@@ -75,7 +76,16 @@ public class EditRegistroDialog extends DialogFragment implements DatePickerDial
         String fecha = getArguments().getString("fecha");
         String categoria = getArguments().getString("categoria");
         String tipo = getArguments().getString("tipo");
-        String activo = getArguments().getString("activo");
+        final String activo = getArguments().getString("activo");
+
+        final Registro regProperties = new Registro();
+        regProperties.setDescripcion(nombre);
+        regProperties.setPeriodicidad(periodicidad);
+        regProperties.setTipo(tipo);
+        regProperties.setGrupo(categoria);
+        regProperties.setActivo(new Integer(activo));
+        regProperties.setValor(valor);
+        regProperties.setFecha(fecha);
 
         //cargamos el combo de periodicidad
         Spinner periodicidadSp = (Spinner) view.findViewById(R.id.spPeriodicidad);
@@ -185,6 +195,10 @@ public class EditRegistroDialog extends DialogFragment implements DatePickerDial
                     RegistroDAO registroDAO = new RegistroDAO(view.getContext());
                     boolean actualizado = registroDAO.updateRegistro(aMod,nuevoRegistro);
                     if (actualizado) {
+                        //actualiza movimientos segun registro frecuente editado
+                        if(!regProperties.equals(nuevoRegistro))
+                            new MovimientoDAO().creaMovimientos(nuevoRegistro, view.getContext());
+
                         Util.showToast(view.getContext(), getResources().getString(R.string.Modificado));
                         callback.OnEditRegistroDialogSubmit(String.valueOf(Activity.RESULT_OK));
                         dismiss();

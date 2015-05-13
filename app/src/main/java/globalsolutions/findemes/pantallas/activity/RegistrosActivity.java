@@ -69,7 +69,6 @@ public class RegistrosActivity extends FragmentActivity implements NuevoRegistro
                 final String[] items = {getResources().getString(R.string.Modificar), getResources().getString(R.string.Eliminar)};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(RegistrosActivity.this);
-                //builder.setTitle(getResources().getString(R.string.MENU_OPCIONES));
                 ListAdapter adapter = new ArrayAdapterWithIcon(view.getContext(), items, Util.prgmImagesOption);
                 builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int item) {

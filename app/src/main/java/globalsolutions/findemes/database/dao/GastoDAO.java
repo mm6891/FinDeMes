@@ -26,6 +26,7 @@ public class GastoDAO {
     public final static String GASTOS_VALOR="valor";  // valor del gasto
     public final static String GASTOS_FECHA="fecha";  // fecha del gasto
     public final static String GASTOS_GRUPO="grupogasto";  // grupo al que pertenece el gasto, referencia
+    public final static String GASTOS_REGISTRO_ID="_idRegistro"; // id value for registro
 
     /**
      *
@@ -42,13 +43,14 @@ public class GastoDAO {
         values.put(GASTOS_VALOR, gasto.getValor());
         values.put(GASTOS_GRUPO, gasto.getGrupoGasto().getGrupo());
         values.put(GASTOS_FECHA, gasto.getFecha());
+        values.put(GASTOS_REGISTRO_ID, gasto.get_idRegistro());
 
         return database.insert(GASTOS_TABLA, null, values);
     }
 
     public Gasto[] selectGastos() {
         Gasto[] ret;
-        String[] cols = new String[] {GASTOS_ID,GASTOS_GRUPO, GASTOS_DESC, GASTOS_VALOR,GASTOS_FECHA};
+        String[] cols = new String[] {GASTOS_ID,GASTOS_GRUPO, GASTOS_DESC, GASTOS_VALOR,GASTOS_FECHA,GASTOS_REGISTRO_ID};
         Cursor mCursor = database.query(true, GASTOS_TABLA,cols,null
                 , null, null, null, null, null);
         ret = new Gasto[mCursor.getCount()];
@@ -63,6 +65,34 @@ public class GastoDAO {
             nuevoGasto.setDescripcion(mCursor.getString(2));
             nuevoGasto.setValor(mCursor.getString(3));
             nuevoGasto.setFecha(mCursor.getString(4));
+            nuevoGasto.set_idRegistro(mCursor.getInt(5));
+
+            ret[i] = nuevoGasto;
+            i++;
+            mCursor.moveToNext();
+        }
+        return ret; // iterate to get each value.
+    }
+
+    public Gasto[] selectGastosByRegistroID(int registroID) {
+        Gasto[] ret;
+        String[] cols = new String[] {GASTOS_ID,GASTOS_GRUPO, GASTOS_DESC, GASTOS_VALOR,GASTOS_FECHA,GASTOS_REGISTRO_ID};
+        String[] args = new String[]{String.valueOf(registroID)};
+        Cursor mCursor = database.query(true, GASTOS_TABLA,cols,GASTOS_REGISTRO_ID + "=?"
+                , args, null, null, null, null);
+        ret = new Gasto[mCursor.getCount()];
+        int i = 0;
+        mCursor.moveToFirst();
+        while (mCursor.isAfterLast() == false) {
+            Gasto nuevoGasto = new Gasto();
+            nuevoGasto.set_id(mCursor.getInt(0));
+            GrupoGasto categoria = new GrupoGasto();
+            categoria.setGrupo(mCursor.getString(1));
+            nuevoGasto.setGrupoGasto(categoria);
+            nuevoGasto.setDescripcion(mCursor.getString(2));
+            nuevoGasto.setValor(mCursor.getString(3));
+            nuevoGasto.setFecha(mCursor.getString(4));
+            nuevoGasto.set_idRegistro(mCursor.getInt(5));
 
             ret[i] = nuevoGasto;
             i++;
