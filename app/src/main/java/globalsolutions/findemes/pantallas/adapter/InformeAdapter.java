@@ -253,7 +253,15 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
                     nuevoInforme.setPeriodoDesc(movsMes.get(0).getFecha());
                 }
                 if(tipoPeriodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_SEMANAL))) {
-                    nuevoInforme.setPeriodoDesc(context.getResources().getString(R.string.Numero_Semana) + " " + integer.toString());
+                    SimpleDateFormat sdf = Util.formatoFechaSemanal();
+                    Calendar cal = Calendar.getInstance();
+                    cal.set(Calendar.WEEK_OF_YEAR, integer);
+                    cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+                    String f1 = sdf.format(cal.getTime());
+                    cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+                    String f2 = sdf.format(cal.getTime());
+
+                    nuevoInforme.setPeriodoDesc(f1 + " al " + f2);
                 }
                 else if(tipoPeriodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_QUINCENAL))) {
                     String periodoQuincenal;

@@ -23,6 +23,7 @@ public class Util {
     }
 
     public static int[] prgmImagesOption = {R.drawable.edit, R.drawable.delete};
+    public static int[] prgmImagesCharts = {R.drawable.linechart, R.drawable.barchart};
 
     /**
      * Creates the specified <code>toFile</code> as a byte for byte copy of the
@@ -88,19 +89,23 @@ public class Util {
         return new SimpleDateFormat("dd/MM/yyyy kk:mm");
     }
 
-       public static String formatoMoneda(Context context){
-           String moneda = "";
-           SharedPreferences prefs = context.getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
-           String formatoActual = prefs.getString("moneda", "");
-           if(formatoActual != null && !formatoActual.isEmpty()) {
-               moneda = formatoActual;
-           }
-           else {
-               moneda = "\u20ac";
-           }
+    public static SimpleDateFormat formatoFechaSemanal(){
+        return new SimpleDateFormat("dd/MM/yyyy");
+    }
 
-           return moneda;
-       }
+    public static String formatoMoneda(Context context){
+        String moneda = "";
+        SharedPreferences prefs = context.getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+        String formatoActual = prefs.getString("moneda", "");
+        if(formatoActual != null && !formatoActual.isEmpty()) {
+            moneda = formatoActual;
+        }
+        else {
+            moneda = "\u20ac";
+        }
+
+        return moneda;
+    }
 
   /*  public static SimpleDateFormat formatoFechaUsuario(Context context){
         SimpleDateFormat sdf = formatoFechaActual();

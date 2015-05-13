@@ -184,7 +184,7 @@ public class InformesActivity extends Activity {
                 final String[] items = {getResources().getString(R.string.OpcionGrafica_Lineal), getResources().getString(R.string.OpcionGrafica_Barra)};
                 AlertDialog.Builder builder = new AlertDialog.Builder(InformesActivity.this);
 
-                ListAdapter adapter = new ArrayAdapterWithIcon(getApplicationContext(), items, Util.prgmImagesOption);
+                ListAdapter adapter = new ArrayAdapterWithIcon(getApplicationContext(), items, Util.prgmImagesCharts);
                 builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int item) {
                                 Intent intent = new Intent(InformesActivity.this, OptionActivityBarChart.class);
