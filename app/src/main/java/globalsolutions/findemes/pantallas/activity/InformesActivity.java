@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -194,12 +195,11 @@ public class InformesActivity extends Activity {
                                 int count = informes.size();
                                 double[] valoresIngresos = new double[count];
                                 double[] valoresGastos = new double[count];
-                                String[] ejeX = new String[informes.size()];
+                                String[] ejeX = new String[count];
                                 for(int i = 0 ; i < count ; i++){
-                                    valoresIngresos[i] = Double.valueOf(informes.get(i).getIngresoValor());
-                                    valoresGastos[i] = Double.valueOf(informes.get(i).getGastoValor());
-                                    int valorX = count - i;
-                                    ejeX[valorX-1] = informes.get(i).getPeriodoDesc();
+                                    valoresIngresos[i] = Double.valueOf(informes.get(count-i-1).getIngresoValor());
+                                    valoresGastos[i] = Double.valueOf(informes.get(count-i-1).getGastoValor());
+                                    ejeX[i] = informes.get(count-i-1).getPeriodoDesc();
                                 }
 
                                 intent.putExtra("tipoGrafica" , accion);
@@ -224,17 +224,12 @@ public class InformesActivity extends Activity {
                     public void run() {
                         //antes de cargar el resumen comprobamos boton informes
                         if(informes.size() > 0) {
-                          /*  if (((String) spPeriodo.getSelectedItem()).equals(getResources().getString(R.string.TIPO_FILTRO_INFORME_TRIMESTRAL))
-                                    && ((String) spTipoMovimiento.getSelectedItem()).equals(getResources().getString(R.string.TIPO_FILTRO_RESETEO))) {
-                                btnGraficar.setEnabled(true);
-                            } else
-                                btnGraficar.setEnabled(false);*/
-
                             //load resumen
                             Double ingresos = new Double(0.00);
                             Double gastos = new Double(0.00);
                             Double saldo = new Double(0.00);
 
+                            DecimalFormat df = new DecimalFormat("#.00");
                             // This code will always run on the UI thread, therefore is safe to modify UI elements.
                             //todos
                             if (((String) spTipoMovimiento.getSelectedItem()).equals(getResources().getString(R.string.TIPO_FILTRO_RESETEO))) {
@@ -243,6 +238,10 @@ public class InformesActivity extends Activity {
                                     gastos += Double.valueOf(inf.getGastoValor());
                                 }
                                 saldo = ingresos - gastos;
+
+                                gastos = Double.valueOf(df.format(gastos));
+                                ingresos = Double.valueOf(df.format(ingresos));
+                                saldo = Double.valueOf(df.format(saldo));
 
                                 ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos) + Util.formatoMoneda(getApplicationContext()));
                                 TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);
@@ -257,6 +256,10 @@ public class InformesActivity extends Activity {
                                 }
                                 saldo = ingresos - gastos;
 
+                                gastos = Double.valueOf(df.format(gastos));
+                                ingresos = Double.valueOf(df.format(ingresos));
+                                saldo = Double.valueOf(df.format(saldo));
+
                                 ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos));
                                 TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);
                                 tvGastosTotal.setText(String.valueOf(gastos) + Util.formatoMoneda(getApplicationContext()));
@@ -269,6 +272,10 @@ public class InformesActivity extends Activity {
                                     ingresos += Double.valueOf(inf.getIngresoValor());
                                 }
                                 saldo = ingresos - gastos;
+
+                                gastos = Double.valueOf(df.format(gastos));
+                                ingresos = Double.valueOf(df.format(ingresos));
+                                saldo = Double.valueOf(df.format(saldo));
 
                                 ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos) + Util.formatoMoneda(getApplicationContext()));
                                 TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);

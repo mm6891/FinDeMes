@@ -184,6 +184,10 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                                             GastoDAO gastoDAO = new GastoDAO(MovimientosActivity.this);
                                             realizado = gastoDAO.deleteGasto(movSeleccionado.get_id());
                                             if (realizado) {
+                                               /* //almacenamos la fecha del movimiento en sharedPreferences
+                                                if(movSeleccionado.get_idRegistro() > 0){
+                                                    actualizaFechaPreferencias(movSeleccionado.get_idRegistro(),movSeleccionado.getFecha());
+                                                }*/
                                                 Util.showToast(getApplicationContext(), getResources().getString(R.string.Eliminado));
                                                 actualizarFiltro(String.valueOf(Activity.RESULT_OK));
                                             } else
@@ -193,6 +197,10 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                                             IngresoDAO ingresoDAO = new IngresoDAO(MovimientosActivity.this);
                                             realizado = ingresoDAO.deleteIngreso(movSeleccionado.get_id());
                                             if (realizado) {
+                                              /*  //almacenamos la fecha del movimiento en sharedPreferences
+                                                if(movSeleccionado.get_idRegistro() > 0){
+                                                    actualizaFechaPreferencias(movSeleccionado.get_idRegistro(),movSeleccionado.getFecha());
+                                                }*/
                                                 Util.showToast(getApplicationContext(), getResources().getString(R.string.Eliminado));
                                                 actualizarFiltro(String.valueOf(Activity.RESULT_OK));
                                             } else
@@ -345,6 +353,26 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         edit.putBoolean("checkGastos", ((CheckBox) findViewById(R.id.cbIconMinus)).isChecked());
         edit.commit();
         super.onSaveInstanceState(outState);
+    }
+
+    private void actualizaFechaPreferencias(int id, String fecha){
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+        String fechaActualRegistro = prefs.getString("idRegistro" + String.valueOf(id),null);
+        if(fechaActualRegistro != null){
+            //si fecha de eliminacion es mayor a fecha actual
+            if(Util.compare(fechaActualRegistro,fecha) > 0){
+                SharedPreferences.Editor edit = prefs.edit();
+                edit.remove("idRegistro" + String.valueOf(id));
+                edit.putString("idRegistro" + String.valueOf(id), fecha);
+                edit.commit();
+            }
+        }
+        else{
+            SharedPreferences.Editor edit = prefs.edit();
+            edit.remove("idRegistro" + String.valueOf(id));
+            edit.putString("idRegistro" + String.valueOf(id), fecha);
+            edit.commit();
+        }
     }
 
     private void backActivity(){

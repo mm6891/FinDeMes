@@ -155,7 +155,7 @@ public class EditRegistroDialog extends DialogFragment implements DatePickerDial
         final Registro aMod = new Registro();
         aMod.set_id(Integer.valueOf(_id).intValue());
 
-        Button btnModificarReg = (Button) view.findViewById(R.id.btnModificarRegistro);
+        ImageButton btnModificarReg = (ImageButton) view.findViewById(R.id.btnModificarRegistro);
 
         btnModificarReg.setOnClickListener(new View.OnClickListener() {
             @Override

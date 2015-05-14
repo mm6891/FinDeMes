@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.GrupoIngresoDAO;
@@ -21,7 +22,7 @@ import globalsolutions.findemes.pantallas.util.Util;
  */
 public class NuevaCategoriaIngresoDialog extends DialogFragment {
 
-    private Button btnNewCatIng;
+    private ImageButton btnNewCatIng;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,7 +30,7 @@ public class NuevaCategoriaIngresoDialog extends DialogFragment {
 
         final View view = inflater.inflate(R.layout.nueva_categoria_ingreso_dialog, container, false);
 
-        btnNewCatIng = (Button) view.findViewById(R.id.btnNewCatIng);
+        btnNewCatIng = (ImageButton) view.findViewById(R.id.btnNewCatIng);
 
         btnNewCatIng.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -11,15 +11,15 @@ public class MovimientoItem {
     String tipoMovimiento;
     String descripcion;
 
-    public boolean isEsFrecuente() {
-        return esFrecuente;
+    public int get_idRegistro() {
+        return _idRegistro;
     }
 
-    public void setEsFrecuente(boolean esFrecuente) {
-        this.esFrecuente = esFrecuente;
+    public void set_idRegistro(int _idRegistro) {
+        this._idRegistro = _idRegistro;
     }
 
-    boolean esFrecuente;
+    int _idRegistro;
 
     public int get_id() {
         return _id;

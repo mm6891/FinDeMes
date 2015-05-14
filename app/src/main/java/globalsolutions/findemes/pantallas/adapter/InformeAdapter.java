@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
@@ -203,7 +204,7 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
                 }
             }
 
-            ArrayList<InformeItem> resultado = calculaInformes(tipoMovimiento,periodo);
+            ArrayList<InformeItem> resultado = calculaInformes(tipoMovimiento,periodo,anyoActual);
             results.values = resultado;
             results.count = resultado.size();
 
@@ -215,7 +216,7 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
         }
 
         //tipoPeriodo:  MENSUAL, TRIMESTRAL, QUINCENAL
-        private ArrayList<InformeItem> calculaInformes(String tipoMovimiento, String tipoPeriodo){
+        private ArrayList<InformeItem> calculaInformes(String tipoMovimiento, String tipoPeriodo, int anyoActual){
             ArrayList<InformeItem> result = new ArrayList<InformeItem>(informes.size());
             Map<Integer,ArrayList<MovimientoItem>> treeMap = new TreeMap<Integer,ArrayList<MovimientoItem>>(informes);
             for(Integer integer : treeMap.keySet()){
@@ -254,13 +255,25 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
                 }
                 if(tipoPeriodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_SEMANAL))) {
                     SimpleDateFormat sdf = Util.formatoFechaSemanal();
-                    Calendar cal = Calendar.getInstance();
-                    cal.set(Calendar.WEEK_OF_YEAR, integer);
-                    cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-                    String f1 = sdf.format(cal.getTime());
-                    cal.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-                    String f2 = sdf.format(cal.getTime());
+                    int week = integer.intValue();
+                    int anyo = anyoActual;
 
+                    Calendar cld = Calendar.getInstance();
+                    cld.clear();
+                    cld.set(Calendar.YEAR, anyo);
+                    cld.set(Calendar.WEEK_OF_YEAR, week);
+                    cld.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+                    Date dateres = cld.getTime();
+                    String f1 = sdf.format(dateres);
+
+                    Calendar cld2 = Calendar.getInstance();
+                    cld2.clear();
+                    cld2.set(Calendar.YEAR, anyo);
+                    int week2 = week + 1;
+                    cld2.set(Calendar.WEEK_OF_YEAR, week2);
+                    cld2.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+                    Date dateres2 = cld2.getTime();
+                    String f2 = sdf.format(dateres2);
                     nuevoInforme.setPeriodoDesc(f1 + " " + context.getResources().getString(R.string.ConjuncionSemana) + " " + f2);
                 }
                 else if(tipoPeriodo.equals(context.getResources().getString(R.string.TIPO_FILTRO_INFORME_QUINCENAL))) {

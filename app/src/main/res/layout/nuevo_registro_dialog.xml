@@ -183,12 +183,12 @@
         android:layout_marginTop="@dimen/margin"
         android:gravity="center"
         android:layout_below="@+id/lyLinear8">
-        <Button
+        <ImageButton
             android:id="@+id/btnCrearRegistro"
+            android:background="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/NUEVO_REGISTRO"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_size" />
+            android:src="@drawable/save"
+            />
     </LinearLayout>
 </RelativeLayout>

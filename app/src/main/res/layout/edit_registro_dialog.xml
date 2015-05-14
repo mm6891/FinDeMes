@@ -184,12 +184,12 @@
         android:gravity="center"
         android:orientation="horizontal"
         android:layout_below="@+id/lyLinear8">
-        <Button
+        <ImageButton
             android:id="@+id/btnModificarRegistro"
+            android:background="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/MODIFICAR_REGISTRO"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_size" />
+            android:src="@drawable/saveas"
+            />
     </LinearLayout>
 </RelativeLayout>

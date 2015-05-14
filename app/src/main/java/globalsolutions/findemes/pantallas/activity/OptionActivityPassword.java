@@ -113,7 +113,7 @@ public class OptionActivityPassword extends Activity {
     public boolean validaCamposPasswordLocal(){
         //password
         String pass = txtPassword.getText().toString();
-        if(pass == null || pass.isEmpty()) {
+        if(pass == null || pass.isEmpty() || pass.trim().length() != 4) {
             ((EditText) findViewById(R.id.txtContrasena)).setError(getResources().getString(R.string.Validacion_PIN));
             return false;
         }

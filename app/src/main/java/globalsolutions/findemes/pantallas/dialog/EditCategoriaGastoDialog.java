@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.GrupoGastoDAO;
@@ -22,7 +23,7 @@ import globalsolutions.findemes.pantallas.util.Util;
 public class EditCategoriaGastoDialog extends DialogFragment {
 
     private EditText txtDecripcionCatGas;
-    private Button btnModCatGas;
+    private ImageButton btnModCatGas;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,7 +38,7 @@ public class EditCategoriaGastoDialog extends DialogFragment {
         final GrupoGasto aMod = new GrupoGasto();
         aMod.setGrupo(getArguments().getString("nameCategory"));
 
-        btnModCatGas = (Button) view.findViewById(R.id.btnModCatGas);
+        btnModCatGas = (ImageButton) view.findViewById(R.id.btnModCatGas);
 
         btnModCatGas.setOnClickListener(new View.OnClickListener() {
             @Override

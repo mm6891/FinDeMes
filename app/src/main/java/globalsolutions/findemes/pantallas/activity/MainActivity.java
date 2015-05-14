@@ -14,6 +14,7 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 
 import java.text.DateFormatSymbols;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -159,12 +160,16 @@ public class MainActivity extends Activity {
                 ingresos += Double.valueOf(mov.getValor());
         }
 
+        DecimalFormat df = new DecimalFormat("#.00");
         tvIngresosValor = (TextView) findViewById(R.id.tvIngresosValor);
+        ingresos = Double.valueOf(df.format(ingresos));
         tvIngresosValor.setText(String.valueOf(ingresos) + Util.formatoMoneda(getApplicationContext()));
         tvGastosValor = (TextView) findViewById(R.id.tvGastosValor);
+        gastos = Double.valueOf(df.format(gastos));
         tvGastosValor.setText(String.valueOf(gastos) + Util.formatoMoneda(getApplicationContext()));
         saldo = ingresos - gastos;
         tvSaldo = (TextView) findViewById(R.id.tvSaldoValor);
+        saldo = Double.valueOf(df.format(saldo));
         tvSaldo.setText(String.valueOf(saldo) + Util.formatoMoneda(getApplicationContext()));
         tvMes = (TextView) findViewById(R.id.tvMesResumen);
         tvMes.setText(new DateFormatSymbols().getMonths()[mesActual].toUpperCase());

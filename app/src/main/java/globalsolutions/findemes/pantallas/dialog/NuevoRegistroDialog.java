@@ -114,7 +114,7 @@ public class NuevoRegistroDialog extends DialogFragment implements DatePickerDia
             }
         });
 
-        Button btnNuevoRegistro = (Button) view.findViewById(R.id.btnCrearRegistro);
+        ImageButton btnNuevoRegistro = (ImageButton) view.findViewById(R.id.btnCrearRegistro);
 
         btnNuevoRegistro.setOnClickListener(new View.OnClickListener() {
             @Override

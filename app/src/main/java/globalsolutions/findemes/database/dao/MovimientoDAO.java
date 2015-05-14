@@ -1,6 +1,8 @@
 package globalsolutions.findemes.database.dao;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+
 import java.util.Date;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ public class MovimientoDAO {
             m.setFecha(gastos[i].getFecha());
             m.setCategoria(gastos[i].getGrupoGasto().getGrupo());
             m.setTipoMovimiento(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO));
+            m.set_idRegistro(gastos[i].get_idRegistro());
             movsArray[i] = m;
         }
         for(int j = 0 ; j < ingresos.length ; j++){
@@ -52,6 +55,7 @@ public class MovimientoDAO {
             m.setFecha(ingresos[j].getFecha());
             m.setCategoria(ingresos[j].getGrupoIngreso().getGrupo());
             m.setTipoMovimiento(context.getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO));
+            m.set_idRegistro(ingresos[j].get_idRegistro());
             movsArray[gastos.length + j] = m;
         }
 
@@ -119,13 +123,15 @@ public class MovimientoDAO {
     }
 
     private void tratarRegistros(Registro[] registros, Context context){
-        ArrayList<MovimientoItem> ret = new ArrayList<MovimientoItem>();
+        //ArrayList<MovimientoItem> ret = new ArrayList<MovimientoItem>();
 
         for(int i = 0 ; i < registros.length ; i++) {
             if (registros[i].getActivo().equals(Integer.valueOf(Constantes.REGISTRO_ACTIVO.toString()))) {
-                ret = cargaMovimientosByRegistro(context,registros[i].get_id());
-                if(ret.size() > 0) {
-                    String fechaActivacion = ret.get(0).getFecha();
+                //ret = cargaMovimientosByRegistro(context,registros[i].get_id());
+                SharedPreferences prefs = context.getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+                String fechaActualRegistro = prefs.getString("idRegistro" + String.valueOf(registros[i].get_id()),null);
+                if(fechaActualRegistro != null) {
+                    String fechaActivacion = fechaActualRegistro;
                     registros[i].setFecha(fechaActivacion);
                     actualizaMovimientos(registros[i], context);
                 }
@@ -137,14 +143,19 @@ public class MovimientoDAO {
         if (nuevoRegistro.getActivo().equals(Integer.valueOf(Constantes.REGISTRO_ACTIVO.toString()))) {
             String fechaActivacion = nuevoRegistro.getFecha();
             String fechaActual = Util.fechaActual();
+            String fechaActivacionUpdate = null;
             if (nuevoRegistro.getPeriodicidad().equals(context.getResources().getString(R.string.PERIODICIDAD_REGISTRO_DIARIO))){
                 //1 movimiento diario a partir de la fecha de activacion del registro
                 //mientras que la fecha actual sea mayor que la fecha de activacion
                 while(Util.compare(fechaActivacion,fechaActual) > 0){
-                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO)))
-                        new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
-                    else
-                        new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro,fechaActivacion));
+                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
+                        long records = new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
+                    else {
+                        long records = new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
                     //actualizamos fecha de activacion
                     fechaActivacion = Util.sumaDias(fechaActivacion,1);
                 }
@@ -153,10 +164,14 @@ public class MovimientoDAO {
                 //1 movimiento semanal a partir de la fecha de activacion del registro
                 //mientras que la fecha actual sea mayor que la fecha de activacion
                 while(Util.compare(fechaActivacion,fechaActual) > 0){
-                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO)))
-                        new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
-                    else
-                        new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro,fechaActivacion));
+                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
+                        long records = new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
+                    else {
+                        long records = new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
                     //actualizamos fecha de activacion
                     fechaActivacion = Util.sumaDias(fechaActivacion,7);
                 }
@@ -165,10 +180,14 @@ public class MovimientoDAO {
                 //1 movimiento semanal a partir de la fecha de activacion del registro
                 //mientras que la fecha actual sea mayor que la fecha de activacion
                 while(Util.compare(fechaActivacion,fechaActual) > 0){
-                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO)))
-                        new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
-                    else
-                        new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro,fechaActivacion));
+                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
+                        long records = new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
+                    else {
+                        long records = new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
                     //actualizamos fecha de activacion
                     fechaActivacion = Util.sumaDias(fechaActivacion,15);
                 }
@@ -176,10 +195,14 @@ public class MovimientoDAO {
             else if (nuevoRegistro.getPeriodicidad().equals(context.getResources().getString(R.string.PERIODICIDAD_REGISTRO_MENSUAL))){
                 //1 movimiento mensual a partir de la fecha de activacion del registro
                 while(Util.compare(fechaActivacion,fechaActual) > 0){
-                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO)))
-                        new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
-                    else
-                        new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro,fechaActivacion));
+                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
+                        long records = new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
+                    else {
+                        long records = new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
                     //actualizamos fecha de activacion
                     fechaActivacion = Util.sumaDias(fechaActivacion,30);
                 }
@@ -187,10 +210,14 @@ public class MovimientoDAO {
             else if (nuevoRegistro.getPeriodicidad().equals(context.getResources().getString(R.string.PERIODICIDAD_REGISTRO_TRIMESTRAL))){
                 //1 movimiento mensual a partir de la fecha de activacion del registro
                 while(Util.compare(fechaActivacion,fechaActual) > 0){
-                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO)))
-                        new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
-                    else
-                        new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro,fechaActivacion));
+                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
+                        long records = new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
+                    else {
+                        long records = new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
                     //actualizamos fecha de activacion
                     fechaActivacion = Util.sumaDias(fechaActivacion,90);
                 }
@@ -198,13 +225,25 @@ public class MovimientoDAO {
             else if (nuevoRegistro.getPeriodicidad().equals(context.getResources().getString(R.string.PERIODICIDAD_REGISTRO_ANUAL))){
                 //1 movimiento anual a partir de la fecha de activacion del registro
                 while(Util.compare(fechaActivacion,fechaActual) > 0){
-                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO)))
-                        new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
-                    else
-                        new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro,fechaActivacion));
+                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
+                        long records = new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
+                    else {
+                        long records = new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
                     //actualizamos fecha de activacion
                     fechaActivacion = Util.sumaDias(fechaActivacion,365);
                 }
+            }
+            if(fechaActivacionUpdate != null) {
+                //actualizamos ultima fecha de movimiento insertado para el registro tratado
+                SharedPreferences prefs = context.getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+                SharedPreferences.Editor edit = prefs.edit();
+                edit.remove("idRegistro" + String.valueOf(nuevoRegistro.get_id()));
+                edit.putString("idRegistro" + String.valueOf(nuevoRegistro.get_id()), fechaActivacionUpdate);
+                edit.commit();
             }
         }
     }
@@ -212,15 +251,20 @@ public class MovimientoDAO {
     public void actualizaMovimientos(Registro nuevoRegistro, Context context){
         if (nuevoRegistro.getActivo().equals(Integer.valueOf(Constantes.REGISTRO_ACTIVO.toString()))) {
             String fechaActual = Util.fechaActual();
+            String fechaActivacionUpdate = null;
             if (nuevoRegistro.getPeriodicidad().equals(context.getResources().getString(R.string.PERIODICIDAD_REGISTRO_DIARIO))){
                 String fechaActivacion = Util.sumaDias(nuevoRegistro.getFecha(),1);
                 //1 movimiento diario a partir de la fecha de activacion del registro
                 //mientras que la fecha actual sea mayor que la fecha de activacion
                 while(Util.compare(fechaActivacion,fechaActual) > 0){
-                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO)))
-                        new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
-                    else
-                        new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro,fechaActivacion));
+                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
+                        long records = new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
+                    else {
+                        long records = new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
                     //actualizamos fecha de activacion
                     fechaActivacion = Util.sumaDias(fechaActivacion,1);
                 }
@@ -230,10 +274,14 @@ public class MovimientoDAO {
                 //1 movimiento semanal a partir de la fecha de activacion del registro
                 //mientras que la fecha actual sea mayor que la fecha de activacion
                 while(Util.compare(fechaActivacion,fechaActual) > 0){
-                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO)))
-                        new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
-                    else
-                        new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro,fechaActivacion));
+                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
+                        long records = new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
+                    else {
+                        long records = new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
                     //actualizamos fecha de activacion
                     fechaActivacion = Util.sumaDias(fechaActivacion,7);
                 }
@@ -243,10 +291,14 @@ public class MovimientoDAO {
                 //1 movimiento semanal a partir de la fecha de activacion del registro
                 //mientras que la fecha actual sea mayor que la fecha de activacion
                 while(Util.compare(fechaActivacion,fechaActual) > 0){
-                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO)))
-                        new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
-                    else
-                        new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro,fechaActivacion));
+                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
+                        long records = new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
+                    else {
+                        long records = new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
                     //actualizamos fecha de activacion
                     fechaActivacion = Util.sumaDias(fechaActivacion,15);
                 }
@@ -255,10 +307,14 @@ public class MovimientoDAO {
                 String fechaActivacion = Util.sumaDias(nuevoRegistro.getFecha(),30);
                 //1 movimiento mensual a partir de la fecha de activacion del registro
                 while(Util.compare(fechaActivacion,fechaActual) > 0){
-                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO)))
-                        new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
-                    else
-                        new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro,fechaActivacion));
+                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
+                        long records = new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
+                    else {
+                        long records = new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
                     //actualizamos fecha de activacion
                     fechaActivacion = Util.sumaDias(fechaActivacion,30);
                 }
@@ -267,10 +323,14 @@ public class MovimientoDAO {
                 String fechaActivacion = Util.sumaDias(nuevoRegistro.getFecha(),90);
                 //1 movimiento mensual a partir de la fecha de activacion del registro
                 while(Util.compare(fechaActivacion,fechaActual) > 0){
-                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO)))
-                        new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
-                    else
-                        new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro,fechaActivacion));
+                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
+                        long records = new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
+                    else {
+                        long records = new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
                     //actualizamos fecha de activacion
                     fechaActivacion = Util.sumaDias(fechaActivacion,90);
                 }
@@ -279,13 +339,25 @@ public class MovimientoDAO {
                 String fechaActivacion = Util.sumaDias(nuevoRegistro.getFecha(),365);
                 //1 movimiento anual a partir de la fecha de activacion del registro
                 while(Util.compare(fechaActivacion,fechaActual) > 0){
-                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO)))
-                        new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
-                    else
-                        new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro,fechaActivacion));
+                    if (nuevoRegistro.getTipo().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
+                        long records = new GastoDAO(context).createRecords(creaGasto(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
+                    else {
+                        long records = new IngresoDAO(context).createRecords(creaIngreso(nuevoRegistro, fechaActivacion));
+                        fechaActivacionUpdate = records > 0 ? fechaActivacion : fechaActivacionUpdate;
+                    }
                     //actualizamos fecha de activacion
                     fechaActivacion = Util.sumaDias(fechaActivacion,365);
                 }
+            }
+            if(fechaActivacionUpdate != null) {
+                //actualizamos ultima fecha de movimiento insertado para el registro tratado
+                SharedPreferences prefs = context.getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+                SharedPreferences.Editor edit = prefs.edit();
+                edit.remove("idRegistro" + String.valueOf(nuevoRegistro.get_id()));
+                edit.putString("idRegistro" + String.valueOf(nuevoRegistro.get_id()), fechaActivacionUpdate);
+                edit.commit();
             }
         }
     }
