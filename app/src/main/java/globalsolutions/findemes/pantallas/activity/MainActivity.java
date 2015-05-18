@@ -13,8 +13,10 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -136,11 +138,19 @@ public class MainActivity extends Activity {
         //recuperamos movimientos
         final ArrayList<MovimientoItem> movs = new MovimientoDAO().cargaMovimientos(getApplicationContext());
 
+        DecimalFormat df = new DecimalFormat("#.00");
+        df.setMaximumFractionDigits(2);
+        df.setMinimumFractionDigits(0);
+        df.setGroupingUsed(false);
+
         int mesActual = Calendar.getInstance().get(Calendar.MONTH);
         int anyoActal = Calendar.getInstance().get(Calendar.YEAR);
-        Double ingresos = new Double(0.00);
-        Double gastos = new Double(0.00);
-        Double saldo = new Double(0.00);
+        BigDecimal ingresos = new BigDecimal(0.00);
+        ingresos = ingresos.setScale(2, BigDecimal.ROUND_DOWN);
+        BigDecimal gastos = new BigDecimal(0.00);
+        gastos = gastos.setScale(2, BigDecimal.ROUND_DOWN);
+        BigDecimal saldo = new BigDecimal(0.00);
+        saldo = saldo.setScale(2, BigDecimal.ROUND_DOWN);
 
         for(MovimientoItem mov : movs){
             String fecha = mov.getFecha();
@@ -153,24 +163,32 @@ public class MainActivity extends Activity {
             int mesMovimiento = cal.get(Calendar.MONTH);
             int anyoMovimiento = cal.get(Calendar.YEAR);
             if (mov.getTipoMovimiento().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))
-                    && mesMovimiento == mesActual && anyoActal == anyoMovimiento)
-                gastos += Double.valueOf(mov.getValor());
+                    && mesMovimiento == mesActual && anyoActal == anyoMovimiento) {
+                try {
+                    BigDecimal bdGasto = BigDecimal.valueOf((Long) df.parse(mov.getValor()));
+                    gastos = gastos.add(bdGasto);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
             else if (mov.getTipoMovimiento().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO))
-                    && mesMovimiento == mesActual && anyoActal == anyoMovimiento)
-                ingresos += Double.valueOf(mov.getValor());
+                    && mesMovimiento == mesActual && anyoActal == anyoMovimiento) {
+                try {
+                    BigDecimal bdIngreso =  BigDecimal.valueOf((Long) df.parse(mov.getValor()));
+                    ingresos = ingresos.add(bdIngreso);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
         }
 
-        DecimalFormat df = new DecimalFormat("#.00");
         tvIngresosValor = (TextView) findViewById(R.id.tvIngresosValor);
-        ingresos = Double.valueOf(df.format(ingresos));
-        tvIngresosValor.setText(String.valueOf(ingresos) + Util.formatoMoneda(getApplicationContext()));
+        tvIngresosValor.setText(df.format(ingresos) + Util.formatoMoneda(getApplicationContext()));
         tvGastosValor = (TextView) findViewById(R.id.tvGastosValor);
-        gastos = Double.valueOf(df.format(gastos));
-        tvGastosValor.setText(String.valueOf(gastos) + Util.formatoMoneda(getApplicationContext()));
-        saldo = ingresos - gastos;
+        tvGastosValor.setText(df.format(gastos) + Util.formatoMoneda(getApplicationContext()));
+        saldo = ingresos.subtract(gastos);
         tvSaldo = (TextView) findViewById(R.id.tvSaldoValor);
-        saldo = Double.valueOf(df.format(saldo));
-        tvSaldo.setText(String.valueOf(saldo) + Util.formatoMoneda(getApplicationContext()));
+        tvSaldo.setText(df.format(saldo) + Util.formatoMoneda(getApplicationContext()));
         tvMes = (TextView) findViewById(R.id.tvMesResumen);
         tvMes.setText(new DateFormatSymbols().getMonths()[mesActual].toUpperCase());
     }

@@ -21,7 +21,9 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -225,63 +227,66 @@ public class InformesActivity extends Activity {
                         //antes de cargar el resumen comprobamos boton informes
                         if(informes.size() > 0) {
                             //load resumen
-                            Double ingresos = new Double(0.00);
-                            Double gastos = new Double(0.00);
-                            Double saldo = new Double(0.00);
+                            BigDecimal ingresos = new BigDecimal(0.00);
+                            BigDecimal gastos = new BigDecimal(0.00);
+                            BigDecimal saldo = new BigDecimal(0.00);
 
                             DecimalFormat df = new DecimalFormat("#.00");
+                            df.setMaximumFractionDigits(2);
+                            df.setMinimumFractionDigits(0);
+                            df.setGroupingUsed(false);
                             // This code will always run on the UI thread, therefore is safe to modify UI elements.
                             //todos
                             if (((String) spTipoMovimiento.getSelectedItem()).equals(getResources().getString(R.string.TIPO_FILTRO_RESETEO))) {
                                 for (InformeItem inf : informes) {
-                                    ingresos += Double.valueOf(inf.getIngresoValor());
-                                    gastos += Double.valueOf(inf.getGastoValor());
+                                    try {
+                                        ingresos = ingresos.add(BigDecimal.valueOf((Long) df.parse(inf.getIngresoValor())));
+                                        gastos = gastos.add(BigDecimal.valueOf((Long) df.parse(inf.getGastoValor())));
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-                                saldo = ingresos - gastos;
+                                saldo = ingresos.subtract(gastos);
 
-                                gastos = Double.valueOf(df.format(gastos));
-                                ingresos = Double.valueOf(df.format(ingresos));
-                                saldo = Double.valueOf(df.format(saldo));
-
-                                ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos) + Util.formatoMoneda(getApplicationContext()));
+                                ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(df.format(ingresos) + Util.formatoMoneda(getApplicationContext()));
                                 TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);
-                                tvGastosTotal.setText(String.valueOf(gastos) + Util.formatoMoneda(getApplicationContext()));
+                                tvGastosTotal.setText(df.format(gastos) + Util.formatoMoneda(getApplicationContext()));
                                 TextView tvSaldoTotal = (TextView) findViewById(R.id.tvSaldoInformesValor);
-                                tvSaldoTotal.setText(String.valueOf(saldo) + Util.formatoMoneda(getApplicationContext()));
+                                tvSaldoTotal.setText(df.format(saldo) + Util.formatoMoneda(getApplicationContext()));
                             }
                             //tipo gasto
                             else if (((String) spTipoMovimiento.getSelectedItem()).equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
                                 for (InformeItem inf : informes) {
-                                    gastos += Double.valueOf(inf.getGastoValor());
+                                    try {
+                                        gastos = gastos.add(BigDecimal.valueOf((Long) df.parse(inf.getGastoValor())));
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-                                saldo = ingresos - gastos;
+                                saldo = ingresos.subtract(gastos);
 
-                                gastos = Double.valueOf(df.format(gastos));
-                                ingresos = Double.valueOf(df.format(ingresos));
-                                saldo = Double.valueOf(df.format(saldo));
-
-                                ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos));
+                                ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(df.format(ingresos) + Util.formatoMoneda(getApplicationContext()));
                                 TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);
-                                tvGastosTotal.setText(String.valueOf(gastos) + Util.formatoMoneda(getApplicationContext()));
+                                tvGastosTotal.setText(df.format(gastos) + Util.formatoMoneda(getApplicationContext()));
                                 TextView tvSaldoTotal = (TextView) findViewById(R.id.tvSaldoInformesValor);
-                                tvSaldoTotal.setText(String.valueOf(saldo) + Util.formatoMoneda(getApplicationContext()));
+                                tvSaldoTotal.setText(df.format(saldo) + Util.formatoMoneda(getApplicationContext()));
                             }
                             //tipo ingreso
                             else {
                                 for (InformeItem inf : informes) {
-                                    ingresos += Double.valueOf(inf.getIngresoValor());
+                                    try {
+                                        ingresos = ingresos.add(BigDecimal.valueOf((Long) df.parse(inf.getIngresoValor())));
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
                                 }
-                                saldo = ingresos - gastos;
+                                saldo = ingresos.subtract(gastos);
 
-                                gastos = Double.valueOf(df.format(gastos));
-                                ingresos = Double.valueOf(df.format(ingresos));
-                                saldo = Double.valueOf(df.format(saldo));
-
-                                ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(String.valueOf(ingresos) + Util.formatoMoneda(getApplicationContext()));
+                                ((TextView) findViewById(R.id.tvIngresosInformesValor)).setText(df.format(ingresos) + Util.formatoMoneda(getApplicationContext()));
                                 TextView tvGastosTotal = (TextView) findViewById(R.id.tvGastosInformesValor);
-                                tvGastosTotal.setText(String.valueOf(gastos) + Util.formatoMoneda(getApplicationContext()));
+                                tvGastosTotal.setText(df.format(gastos) + Util.formatoMoneda(getApplicationContext()));
                                 TextView tvSaldoTotal = (TextView) findViewById(R.id.tvSaldoInformesValor);
-                                tvSaldoTotal.setText(String.valueOf(saldo) + Util.formatoMoneda(getApplicationContext()));
+                                tvSaldoTotal.setText(df.format(saldo) + Util.formatoMoneda(getApplicationContext()));
                             }
                         }
                     }
