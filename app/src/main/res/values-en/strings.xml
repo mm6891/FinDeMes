@@ -16,8 +16,8 @@
     <string name="MENU_INGRESOS">Income</string>
     <string name="MENU_MOVIMIENTOS">Movements</string>
     <string name="MENU_INFORMES">Reports</string>
-    <string name="MENU_REGISTROS">Periodic movements</string>
-    <string name="MENU_OPCIONES">Options</string>
+    <string name="MENU_REGISTROS">Frequent records</string>
+    <string name="MENU_OPCIONES">Settings</string>
     <string name="titulo">Fin de Mes</string>
     <string name="tituloCategoriaIngresos">Income Categories</string>
     <string name="tituloCategoriaGastos">Expense Categories</string>

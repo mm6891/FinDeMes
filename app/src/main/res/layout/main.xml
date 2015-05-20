@@ -145,6 +145,7 @@
         android:layout_gravity="top|center"
         android:columnCount="2"
         android:rowCount="3"
+        android:baselineAligned="false"
         android:orientation="horizontal"
         android:layout_below="@+id/glResumen"
         android:layout_centerHorizontal="true">
