@@ -6,7 +6,9 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/titulo"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:versionCode="1"
+        android:versionName="1.0.0">
         <activity
             android:name=".pantallas.activity.Password">
             <intent-filter>

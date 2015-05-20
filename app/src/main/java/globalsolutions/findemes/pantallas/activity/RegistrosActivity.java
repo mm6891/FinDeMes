@@ -74,16 +74,33 @@ public class RegistrosActivity extends FragmentActivity implements NuevoRegistro
                             public void onClick(DialogInterface dialog, int item) {
                                 //Eliminar Registro
                                 String accion = (String) items[item];
-                                boolean realizado;
-
                                 if (accion.equals(getResources().getString(R.string.Eliminar))) {
-                                    RegistroDAO registroDAO = new RegistroDAO(RegistrosActivity.this);
-                                    realizado = registroDAO.deleteRegistro(registroItem.get_id());
-                                    if (realizado) {
-                                        Util.showToast(getApplicationContext(), getResources().getString(R.string.Eliminado));
-                                        ((RegistroAdapter) listViewReg.getAdapter()).updateReceiptsList(new RegistroDAO(getApplicationContext()).selectRegistrosItems());
-                                    } else
-                                        Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Eliminado));
+                                    new AlertDialog.Builder(RegistrosActivity.this)
+                                            //set message, title, and icon
+                                            .setTitle(getApplicationContext().getResources().getString(R.string.Eliminar))
+                                            .setMessage(getApplicationContext().getResources().getString(R.string.Confirmar))
+                                            .setIcon(R.drawable.delete)
+                                            .setPositiveButton(getApplicationContext().getResources().getString(R.string.Eliminar), new DialogInterface.OnClickListener() {
+
+                                                public void onClick(DialogInterface dialog, int whichButton) {
+                                                    //your deleting code
+                                                    RegistroDAO registroDAO = new RegistroDAO(RegistrosActivity.this);
+                                                    boolean realizado = registroDAO.deleteRegistro(registroItem.get_id());
+                                                    if (realizado) {
+                                                        Util.showToast(getApplicationContext(), getResources().getString(R.string.Eliminado));
+                                                        ((RegistroAdapter) listViewReg.getAdapter()).updateReceiptsList(new RegistroDAO(getApplicationContext()).selectRegistrosItems());
+                                                    } else
+                                                        Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Eliminado));
+                                                    dialog.dismiss();
+                                                }
+
+                                            })
+                                            .setNegativeButton(getApplicationContext().getResources().getString(R.string.Cancelar), new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+                                                }
+                                            })
+                                            .create().show();
                                 }
                                 if (accion.equals(getResources().getString(R.string.Modificar))) {
                                     Bundle bundle = new Bundle();

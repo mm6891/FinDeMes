@@ -62,19 +62,35 @@ public class CategoriasIngresosDialog extends DialogFragment {
                             public void onClick(DialogInterface dialog, int item) {
                                 //Eliminar Movimiento
                                 String accion = (String) items[item];
-                                boolean realizado;
-
                                 if (accion.equals(getResources().getString(R.string.Eliminar))) {
+                                    new AlertDialog.Builder(getActivity())
+                                            //set message, title, and icon
+                                            .setTitle(view.getContext().getResources().getString(R.string.Eliminar))
+                                            .setMessage(view.getContext().getResources().getString(R.string.Confirmar))
+                                            .setIcon(R.drawable.delete)
+                                            .setPositiveButton(view.getContext().getResources().getString(R.string.Eliminar), new DialogInterface.OnClickListener() {
 
-                                    GrupoIngresoDAO grupoIngresoDAO = new GrupoIngresoDAO(getActivity());
-                                    realizado = grupoIngresoDAO.deleteRecords(categoriaIngreso);
-                                    if (realizado) {
-                                        Util.showToast(view.getContext(), getResources().getString(R.string.Eliminado));
-                                        String[] newList = grupoIngresoDAO.selectGrupos();
-                                        ((CategoriaAdapter) listViewCategoriasIngresos.getAdapter()).updateReceiptsList(
-                                                new ArrayList<String>(Arrays.asList(newList)));
-                                    } else
-                                        Util.showToast(view.getContext(), getResources().getString(R.string.No_Eliminado));
+                                                public void onClick(DialogInterface dialog, int whichButton) {
+                                                    //your deleting code
+                                                    GrupoIngresoDAO grupoIngresoDAO = new GrupoIngresoDAO(getActivity());
+                                                    boolean realizado = grupoIngresoDAO.deleteRecords(categoriaIngreso);
+                                                    if (realizado) {
+                                                        Util.showToast(view.getContext(), getResources().getString(R.string.Eliminado));
+                                                        String[] newList = grupoIngresoDAO.selectGrupos();
+                                                        ((CategoriaAdapter) listViewCategoriasIngresos.getAdapter()).updateReceiptsList(
+                                                                new ArrayList<String>(Arrays.asList(newList)));
+                                                    } else
+                                                        Util.showToast(view.getContext(), getResources().getString(R.string.No_Eliminado));
+                                                    dialog.dismiss();
+                                                }
+
+                                            })
+                                            .setNegativeButton(view.getContext().getResources().getString(R.string.Cancelar), new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+                                                }
+                                            })
+                                            .create().show();
                                 }
                                 if (accion.equals(getResources().getString(R.string.Modificar))) {
                                     Bundle bundle = new Bundle();

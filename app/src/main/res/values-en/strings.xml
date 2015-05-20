@@ -126,4 +126,6 @@
     <string name="OpcionGrafica_Barra">Bar Chart</string>
     <string name="OpcionGrafica_Lineal">Line Chart</string>
     <string name="ConjuncionSemana">to</string>
+    <string name="Cancelar">Cancel</string>
+    <string name="Confirmar">Are you sure?</string>
 </resources>

@@ -140,16 +140,12 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         spFiltroMes.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, meses));
         spFiltroMes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    filtraMesAnyo(view, position, devuelveAnyo());
+                filtraMesAnyo(view, position, devuelveAnyo());
             }
 
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
-        //filtro categoria del movimiento
-        spFiltroCategoria = (Spinner) findViewById(R.id.spCategoriaMovimiento);
-        spFiltroCategoria.setEnabled(false);
 
         SharedPreferences prefs = getApplicationContext().getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
         spFiltroMes.setSelection(prefs.getInt("spFiltroMes", meses.length - 1));
@@ -161,13 +157,16 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         ((CheckBox) findViewById(R.id.cbIconMinus)).setChecked(prefs.getBoolean("checkGastos",false));
         ((CheckBox) findViewById(R.id.cbIconPlus)).setChecked(prefs.getBoolean("checkIngresos",false));
 
+        //filtro categoria del movimiento
+        spFiltroCategoria = (Spinner) findViewById(R.id.spCategoriaMovimiento);
+        spFiltroCategoria.setEnabled(false);
+
         listViewMovs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position,
                                     long id) {
 
                 final MovimientoItem movSeleccionado = (MovimientoItem) listViewMovs.getItemAtPosition(position);
-               /* if (!movSeleccionado.isEsFrecuente()) {*/
                     final String[] items = {getResources().getString(R.string.Modificar), getResources().getString(R.string.Eliminar)};
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(MovimientosActivity.this);
@@ -177,35 +176,45 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                                 public void onClick(DialogInterface dialog, int item) {
                                     //Eliminar Movimiento
                                     String accion = (String) items[item];
-                                    boolean realizado;
 
                                     if (accion.equals(getResources().getString(R.string.Eliminar))) {
-                                        if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
-                                            GastoDAO gastoDAO = new GastoDAO(MovimientosActivity.this);
-                                            realizado = gastoDAO.deleteGasto(movSeleccionado.get_id());
-                                            if (realizado) {
-                                               /* //almacenamos la fecha del movimiento en sharedPreferences
-                                                if(movSeleccionado.get_idRegistro() > 0){
-                                                    actualizaFechaPreferencias(movSeleccionado.get_idRegistro(),movSeleccionado.getFecha());
-                                                }*/
-                                                Util.showToast(getApplicationContext(), getResources().getString(R.string.Eliminado));
-                                                actualizarFiltro(String.valueOf(Activity.RESULT_OK));
-                                            } else
-                                                Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Eliminado));
-                                        }
-                                        if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO))) {
-                                            IngresoDAO ingresoDAO = new IngresoDAO(MovimientosActivity.this);
-                                            realizado = ingresoDAO.deleteIngreso(movSeleccionado.get_id());
-                                            if (realizado) {
-                                              /*  //almacenamos la fecha del movimiento en sharedPreferences
-                                                if(movSeleccionado.get_idRegistro() > 0){
-                                                    actualizaFechaPreferencias(movSeleccionado.get_idRegistro(),movSeleccionado.getFecha());
-                                                }*/
-                                                Util.showToast(getApplicationContext(), getResources().getString(R.string.Eliminado));
-                                                actualizarFiltro(String.valueOf(Activity.RESULT_OK));
-                                            } else
-                                                Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Eliminado));
-                                        }
+                                            new AlertDialog.Builder(MovimientosActivity.this)
+                                                //set message, title, and icon
+                                                .setTitle(getApplicationContext().getResources().getString(R.string.Eliminar))
+                                                .setMessage(getApplicationContext().getResources().getString(R.string.Confirmar))
+                                                .setIcon(R.drawable.delete)
+                                                .setPositiveButton(getApplicationContext().getResources().getString(R.string.Eliminar), new DialogInterface.OnClickListener() {
+
+                                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                                        //your deleting code
+                                                        if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
+                                                            GastoDAO gastoDAO = new GastoDAO(MovimientosActivity.this);
+                                                            boolean realizado = gastoDAO.deleteGasto(movSeleccionado.get_id());
+                                                            if (realizado) {
+                                                                Util.showToast(getApplicationContext(), getResources().getString(R.string.Eliminado));
+                                                                actualizarFiltro(String.valueOf(Activity.RESULT_OK));
+                                                            } else
+                                                                Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Eliminado));
+                                                        }
+                                                        if (movSeleccionado.getTipoMovimiento().trim().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO))) {
+                                                            IngresoDAO ingresoDAO = new IngresoDAO(MovimientosActivity.this);
+                                                            boolean realizado = ingresoDAO.deleteIngreso(movSeleccionado.get_id());
+                                                            if (realizado) {
+                                                                Util.showToast(getApplicationContext(), getResources().getString(R.string.Eliminado));
+                                                                actualizarFiltro(String.valueOf(Activity.RESULT_OK));
+                                                            } else
+                                                                Util.showToast(getApplicationContext(), getResources().getString(R.string.No_Eliminado));
+                                                        }
+                                                        dialog.dismiss();
+                                                    }
+
+                                                })
+                                                .setNegativeButton(getApplicationContext().getResources().getString(R.string.Cancelar), new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        dialog.dismiss();
+                                                    }
+                                                })
+                                                .create().show();
                                     }
                                     if (accion.equals(getResources().getString(R.string.Modificar))) {
                                         Bundle bundle = new Bundle();
@@ -226,12 +235,8 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
                                 }
                             }
                     ).show();
-                /*}
-                else
-                    Util.showToast(getApplicationContext(), getResources().getString(R.string.MovimientoFrecuente));*/
             }
         });
-        //}
     }
 
     public void showGastoDialog(View v, Bundle bundle) {
@@ -347,10 +352,12 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         edit.remove("spFitroAnyo");
         edit.remove("checkIngresos");
         edit.remove("checkGastos");
+        edit.remove("spFiltroCategoria");
         edit.putInt("spFiltroMes", spFiltroMes.getSelectedItemPosition());
         edit.putInt("spFitroAnyo", spFitroAnyo.getSelectedItemPosition());
         edit.putBoolean("checkIngresos", ((CheckBox) findViewById(R.id.cbIconPlus)).isChecked());
         edit.putBoolean("checkGastos", ((CheckBox) findViewById(R.id.cbIconMinus)).isChecked());
+        edit.putInt("spFiltroCategoria",spFiltroCategoria.getSelectedItemPosition());
         edit.commit();
         super.onSaveInstanceState(outState);
     }

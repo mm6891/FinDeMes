@@ -101,6 +101,9 @@ public class OptionActivityBarChart extends Activity {
         mRenderer.setYAxisMax(MAX_VALUE);
         mRenderer.setYAxisMin(0);
         mRenderer.setShowGrid(true); // we show the grid
+        mRenderer.setYLabelsColor(0, Color.BLACK);
+        mRenderer.setXLabelsColor(Color.BLACK);
+        mRenderer.setLabelsColor(Color.BLACK);
 
         mRenderer.setZoomButtonsVisible(true);
         mRenderer.setZoomEnabled(true);

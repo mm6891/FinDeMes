@@ -199,9 +199,12 @@ public class InformesActivity extends Activity {
                                 double[] valoresGastos = new double[count];
                                 String[] ejeX = new String[count];
                                 for(int i = 0 ; i < count ; i++){
-                                    valoresIngresos[i] = Double.valueOf(informes.get(count-i-1).getIngresoValor());
+                                    /*valoresIngresos[i] = Double.valueOf(informes.get(count-i-1).getIngresoValor());
                                     valoresGastos[i] = Double.valueOf(informes.get(count-i-1).getGastoValor());
-                                    ejeX[i] = informes.get(count-i-1).getPeriodoDesc();
+                                    ejeX[i] = informes.get(count-i-1).getPeriodoDesc();*/
+                                    valoresIngresos[i] = Double.valueOf(informes.get(i).getIngresoValor());
+                                    valoresGastos[i] = Double.valueOf(informes.get(i).getGastoValor());
+                                    ejeX[i] = informes.get(i).getPeriodoDesc();
                                 }
 
                                 intent.putExtra("tipoGrafica" , accion);
@@ -230,6 +233,7 @@ public class InformesActivity extends Activity {
                             BigDecimal ingresos = new BigDecimal(0.00);
                             BigDecimal gastos = new BigDecimal(0.00);
                             BigDecimal saldo = new BigDecimal(0.00);
+
 
                             DecimalFormat df = new DecimalFormat("#.00");
                             df.setMaximumFractionDigits(2);

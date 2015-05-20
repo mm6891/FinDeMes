@@ -61,6 +61,7 @@ public class FormatoMonedaDialog extends DialogFragment {
                 editor.putString("moneda", (String)spFormatoMoneda.getSelectedItem());
                 editor.commit();
                 Util.showToast(view.getContext(),view.getResources().getString(R.string.Modificado));
+                dismiss();
             }
         });
 
