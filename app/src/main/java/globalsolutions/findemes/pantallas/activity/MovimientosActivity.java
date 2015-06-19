@@ -66,6 +66,20 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         }
     }
 
+    public void actualizarFiltroEditText(String result,String editText) {
+        if(result.equals(String.valueOf(Activity.RESULT_OK))){
+            ((MovimientoAdapter)listViewMovs.getAdapter()).setMesSeleccionado(spFiltroMes.getSelectedItemPosition());
+            ((MovimientoAdapter)listViewMovs.getAdapter()).setAnyoSeleccionado(devuelveAnyo());
+
+            if(!((CheckBox) findViewById(R.id.cbIconMinus)).isChecked() && ((CheckBox) findViewById(R.id.cbIconPlus)).isChecked())
+                ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO) + ";" + editText);
+            else if(((CheckBox) findViewById(R.id.cbIconMinus)).isChecked() && !((CheckBox) findViewById(R.id.cbIconPlus)).isChecked())
+                ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO)+ ";" + editText);
+            else
+                ((MovimientoAdapter)listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_FILTRO_RESETEO)+ ";" + editText);
+        }
+    }
+
     public void actualizarFiltroCategoria() {
         if(!((CheckBox) findViewById(R.id.cbIconMinus)).isChecked() && ((CheckBox) findViewById(R.id.cbIconPlus)).isChecked())
             ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO));
@@ -172,7 +186,7 @@ public class MovimientosActivity extends FragmentActivity implements GastoDialog
         etSearchbox.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-                ((MovimientoAdapter) listViewMovs.getAdapter()).getFilter().filter(arg0);
+                actualizarFiltroEditText(String.valueOf(Activity.RESULT_OK), arg0.toString());
             }
             @Override
             public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
