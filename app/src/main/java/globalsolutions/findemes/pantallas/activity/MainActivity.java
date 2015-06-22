@@ -2,15 +2,19 @@ package globalsolutions.findemes.pantallas.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Point;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
@@ -41,6 +45,8 @@ public class MainActivity extends Activity {
     private Button btnMovimientosFrecuentes;
     private Button btnOpciones;
     private GridLayout gv;
+
+    private ImageButton btnCalc;
 
     //resumen
     private TextView tvIngresosValor;
@@ -164,8 +170,12 @@ public class MainActivity extends Activity {
             int anyoMovimiento = cal.get(Calendar.YEAR);
             if (mov.getTipoMovimiento().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))
                     && mesMovimiento == mesActual && anyoActal == anyoMovimiento) {
+                BigDecimal bdGasto;
                 try {
-                    BigDecimal bdGasto = BigDecimal.valueOf((Long) df.parse(mov.getValor()));
+                    if(mov.getValor().contains("."))
+                        bdGasto = BigDecimal.valueOf((Double) df.parse(mov.getValor()));
+                    else
+                        bdGasto = BigDecimal.valueOf((Long) df.parse(mov.getValor()));
                     gastos = gastos.add(bdGasto);
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -174,7 +184,11 @@ public class MainActivity extends Activity {
             else if (mov.getTipoMovimiento().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO))
                     && mesMovimiento == mesActual && anyoActal == anyoMovimiento) {
                 try {
-                    BigDecimal bdIngreso =  BigDecimal.valueOf((Long) df.parse(mov.getValor()));
+                    BigDecimal bdIngreso;
+                    if(mov.getValor().contains("."))
+                        bdIngreso =  BigDecimal.valueOf((Double) df.parse(mov.getValor()));
+                    else
+                        bdIngreso =  BigDecimal.valueOf((Long) df.parse(mov.getValor()));
                     ingresos = ingresos.add(bdIngreso);
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -191,6 +205,15 @@ public class MainActivity extends Activity {
         tvSaldo.setText(df.format(saldo) + Util.formatoMoneda(getApplicationContext()));
         tvMes = (TextView) findViewById(R.id.tvMesResumen);
         tvMes.setText(new DateFormatSymbols().getMonths()[mesActual].toUpperCase());
+
+        //enlazamos calculadora
+        btnCalc = (ImageButton) findViewById(R.id.btnCalc);
+        btnCalc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchCalculator();
+            }
+        });
     }
 
     public void CreaRegistros(){
@@ -242,6 +265,22 @@ public class MainActivity extends Activity {
 
             // Don't forget to close database connection
             dbHelper.close();
+        }
+    }
+
+    private static final String CALCULATOR_PACKAGE_NAME = "com.android.calculator2";
+    private static final String CALCULATOR_CLASS_NAME = "com.android.calculator2.Calculator";
+
+    public void launchCalculator() {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.setComponent(new ComponentName(CALCULATOR_PACKAGE_NAME,
+                CALCULATOR_CLASS_NAME));
+        try {
+            this.startActivity(intent);
+        } catch (ActivityNotFoundException noSuchActivity) {
+            // handle exception where calculator intent filter is not registered
         }
     }
 

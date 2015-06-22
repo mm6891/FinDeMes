@@ -146,10 +146,12 @@ public class MovimientoAdapter extends BaseAdapter implements Filterable {
                 final ArrayList<MovimientoItem> nlist = new ArrayList<MovimientoItem>(count);
 
                 //comprobamos filtro edittext
-                if(constraint.toString().split(";").length > 1) {
-                    constraint = constraint.toString().split(";")[0];
+                if(constraint.toString().contains(";") && constraint.toString().split(";").length > 1) {
                     filterableEditText = constraint.toString().split(";")[1].toLowerCase().trim();
+                    constraint = constraint.toString().split(";")[0];
                 }
+                else if(constraint.toString().contains(";"))
+                    constraint = constraint.toString().split(";")[0];
 
                 //gastos + ingresos
                 if(constraint.toString().equals(context.getResources().getString(R.string.TIPO_FILTRO_RESETEO))){
