@@ -128,4 +128,8 @@
   <string name="Grupo_ventas">Vendas</string>
   <string name="Grupo_extra">Outros</string>
   <string name="AcercaDeDescripcion4">Este aplicativo foi traduzido por Jervânio Lima em Português do Brasil</string>
+  <string name="Nueva_version_1">** Novo filtro por descrição da lista de movimentos</string>
+  <string name="Nueva_version_2">** Calculadora no menu principal</string>
+  <string name="Nueva_version_3">** Mudança no cliente, enviando e-mails relacionados com problemas</string>
+  <string name="Nueva_version_4">** Erro formato decimal Fixo</string>
 </resources>

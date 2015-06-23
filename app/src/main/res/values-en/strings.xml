@@ -128,4 +128,8 @@
     <string name="Cancelar">Cancel</string>
     <string name="Confirmar">Are you sure?</string>
     <string name="AcercaDeDescripcion4">This application has been translated by Jervânio Lima to to the Portuguese of Brazil</string>
+    <string name="Nueva_version_1">** New Filter by description in list of movements</string>
+    <string name="Nueva_version_2">** Calculator in main menu</string>
+    <string name="Nueva_version_3">** Change in the client by sending e-mails related problems</string>
+    <string name="Nueva_version_4">** Error Fixed decimal format</string>
 </resources>

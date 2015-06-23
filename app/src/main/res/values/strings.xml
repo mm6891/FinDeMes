@@ -129,4 +129,9 @@
     <string name="Grupo_prestamo">Préstamo</string>
     <string name="Grupo_ventas">Ventas</string>
     <string name="Grupo_extra">Extra</string>
+	
+	<string name="Nueva_version_1">** Nuevo Filtro por descripción en lista de movimientos</string>
+	<string name="Nueva_version_2">** Calculadora en menú principal</string>
+	<string name="Nueva_version_3">** Cambio en el cliente de envío de correos por problemas relacionados</string>
+	<string name="Nueva_version_4">** Corregido error de formato decimal</string>
     </resources>
