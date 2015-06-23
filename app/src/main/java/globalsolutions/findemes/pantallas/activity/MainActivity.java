@@ -2,10 +2,13 @@ package globalsolutions.findemes.pantallas.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.media.Image;
 import android.os.Bundle;
@@ -32,6 +35,7 @@ import globalsolutions.findemes.database.model.GrupoGasto;
 import globalsolutions.findemes.database.model.GrupoIngreso;
 import globalsolutions.findemes.database.model.MovimientoItem;
 import globalsolutions.findemes.database.util.MyDatabaseHelper;
+import globalsolutions.findemes.pantallas.dialog.NuevaVersionDialog;
 import globalsolutions.findemes.pantallas.util.Util;
 
 
@@ -156,7 +160,6 @@ public class MainActivity extends Activity {
         BigDecimal gastos = new BigDecimal(0.00);
         gastos = gastos.setScale(2, BigDecimal.ROUND_DOWN);
         BigDecimal saldo = new BigDecimal(0.00);
-        saldo = saldo.setScale(2, BigDecimal.ROUND_DOWN);
 
         for(MovimientoItem mov : movs){
             String fecha = mov.getFecha();
@@ -201,6 +204,7 @@ public class MainActivity extends Activity {
         tvGastosValor = (TextView) findViewById(R.id.tvGastosValor);
         tvGastosValor.setText(df.format(gastos) + Util.formatoMoneda(getApplicationContext()));
         saldo = ingresos.subtract(gastos);
+        saldo = saldo.setScale(2, BigDecimal.ROUND_DOWN);
         tvSaldo = (TextView) findViewById(R.id.tvSaldoValor);
         tvSaldo.setText(df.format(saldo) + Util.formatoMoneda(getApplicationContext()));
         tvMes = (TextView) findViewById(R.id.tvMesResumen);
@@ -214,6 +218,19 @@ public class MainActivity extends Activity {
                 launchCalculator();
             }
         });
+
+        //novedades de cada version
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences("MisPreferencias", Context.MODE_PRIVATE);
+        String version = prefs.getString("version102",null);
+        if(version == null){
+            SharedPreferences.Editor edit = prefs.edit();
+            edit.remove("version102");
+            edit.putString("version102", "version102");
+            edit.commit();
+            //mostramos el dialog
+            DialogFragment newFragment = new NuevaVersionDialog();
+            newFragment.show(getFragmentManager(), "NUEVA VERSION");
+        }
     }
 
     public void CreaRegistros(){
