@@ -160,7 +160,6 @@ public class MainActivity extends Activity {
         BigDecimal gastos = new BigDecimal(0.00);
         gastos = gastos.setScale(2, BigDecimal.ROUND_DOWN);
         BigDecimal saldo = new BigDecimal(0.00);
-        saldo = saldo.setScale(2, BigDecimal.ROUND_DOWN);
 
         for(MovimientoItem mov : movs){
             String fecha = mov.getFecha();
@@ -205,6 +204,7 @@ public class MainActivity extends Activity {
         tvGastosValor = (TextView) findViewById(R.id.tvGastosValor);
         tvGastosValor.setText(df.format(gastos) + Util.formatoMoneda(getApplicationContext()));
         saldo = ingresos.subtract(gastos);
+        saldo = saldo.setScale(2, BigDecimal.ROUND_DOWN);
         tvSaldo = (TextView) findViewById(R.id.tvSaldoValor);
         tvSaldo.setText(df.format(saldo) + Util.formatoMoneda(getApplicationContext()));
         tvMes = (TextView) findViewById(R.id.tvMesResumen);

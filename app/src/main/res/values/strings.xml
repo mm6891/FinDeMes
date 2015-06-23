@@ -134,4 +134,5 @@
 	<string name="Nueva_version_2">** Calculadora en menú principal</string>
 	<string name="Nueva_version_3">** Cambio en el cliente de envío de correos por problemas relacionados</string>
 	<string name="Nueva_version_4">** Corregido error de formato decimal</string>
+    <string name="Nueva_version_5">** Añadido idioma Portugués de Brasil</string>
     </resources>
