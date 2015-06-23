@@ -7,8 +7,8 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/titulo"
         android:theme="@style/AppTheme"
-        android:versionCode="1"
-        android:versionName="1.0.0">
+        android:versionCode="2"
+        android:versionName="1.0.1">
         <activity
             android:name=".pantallas.activity.Password">
             <intent-filter>
