@@ -239,15 +239,9 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
                 try {
                     for (MovimientoItem mov : movsMes) {
                         if (mov.getTipoMovimiento().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
-                            if (mov.getValor().contains("."))
-                                gastos = gastos.add(BigDecimal.valueOf((Double) df.parse(mov.getValor())));
-                            else
-                                gastos = gastos.add(BigDecimal.valueOf((Long) df.parse(mov.getValor())));
+                            gastos = gastos.add(new BigDecimal(df.parse(mov.getValor()).toString()));
                         } else if (mov.getTipoMovimiento().equals(context.getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO))) {
-                            if(mov.getValor().contains("."))
-                                ingresos = ingresos.add(BigDecimal.valueOf((Double) df.parse(mov.getValor())));
-                            else
-                                ingresos = ingresos.add(BigDecimal.valueOf((Long) df.parse(mov.getValor())));
+                            ingresos = ingresos.add(new BigDecimal(df.parse(mov.getValor()).toString()));
                         }
                     }
 
@@ -260,7 +254,7 @@ public class InformeAdapter extends BaseAdapter implements Filterable {
                         continue;
                 } catch (ParseException e) {
                 e.printStackTrace();
-            }
+                }
 
                 InformeItem nuevoInforme = new InformeItem();
                 nuevoInforme.setTipoInforme(tipoMovimiento);

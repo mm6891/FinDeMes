@@ -242,14 +242,8 @@ public class InformesActivity extends Activity {
                             if (((String) spTipoMovimiento.getSelectedItem()).equals(getResources().getString(R.string.TIPO_FILTRO_RESETEO))) {
                                 for (InformeItem inf : informes) {
                                     try {
-                                        if(inf.getIngresoValor().contains("."))
-                                            ingresos = ingresos.add(BigDecimal.valueOf((Double) df.parse(inf.getIngresoValor())));
-                                        else
-                                            ingresos = ingresos.add(BigDecimal.valueOf((Long) df.parse(inf.getIngresoValor())));
-                                        if(inf.getGastoValor().contains("."))
-                                            gastos = gastos.add(BigDecimal.valueOf((Double) df.parse(inf.getGastoValor())));
-                                        else
-                                            gastos = gastos.add(BigDecimal.valueOf((Long) df.parse(inf.getGastoValor())));
+                                            ingresos = ingresos.add(new BigDecimal(df.parse(inf.getIngresoValor()).toString()));
+                                            gastos = gastos.add(new BigDecimal(df.parse(inf.getGastoValor()).toString()));
                                     } catch (ParseException e) {
                                         e.printStackTrace();
                                     }
@@ -267,10 +261,7 @@ public class InformesActivity extends Activity {
                             else if (((String) spTipoMovimiento.getSelectedItem()).equals(getResources().getString(R.string.TIPO_MOVIMIENTO_GASTO))) {
                                 for (InformeItem inf : informes) {
                                     try {
-                                        if(inf.getGastoValor().contains("."))
-                                            gastos = gastos.add(BigDecimal.valueOf((Double) df.parse(inf.getGastoValor())));
-                                        else
-                                            gastos = gastos.add(BigDecimal.valueOf((Long) df.parse(inf.getGastoValor())));
+                                        gastos = gastos.add(new BigDecimal(df.parse(inf.getGastoValor()).toString()));
                                     } catch (ParseException e) {
                                         e.printStackTrace();
                                     }
@@ -288,10 +279,7 @@ public class InformesActivity extends Activity {
                             else {
                                 for (InformeItem inf : informes) {
                                     try {
-                                        if(inf.getIngresoValor().contains("."))
-                                            ingresos = ingresos.add(BigDecimal.valueOf((Double) df.parse(inf.getIngresoValor())));
-                                        else
-                                            ingresos = ingresos.add(BigDecimal.valueOf((Long) df.parse(inf.getIngresoValor())));
+                                        ingresos = ingresos.add(new BigDecimal(df.parse(inf.getIngresoValor()).toString()));
                                     } catch (ParseException e) {
                                         e.printStackTrace();
                                     }

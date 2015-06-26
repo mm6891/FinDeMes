@@ -79,7 +79,7 @@
     <string name="Formato">Selecciona el formato de fecha preferido</string>
     <string name="Formato_Moneda">Selecciona el formato de moneda preferido</string>
     <string name="Numero_Semana">Semana nº</string>
-    <string name="Version" translatable="false">1.0.1</string>
+    <string name="Version" translatable="false">1.0.2</string>
     <string name="AcercaDeDescripcion1">Esta es una aplicación desarrollada por Manuel Molero Busto</string>
     <string name="AcercaDeDescripcion2">Las traducciones disponibles son español (castellano) e inglés</string>
     <string name="AcercaDeDescripcion3">Si quieres ayudar con la traducción de la aplicación a otro idioma o mejorar la existente envía un correo a la siguiente dirección:</string>
@@ -128,7 +128,7 @@
     <string name="Grupo_prestamo">Préstamo</string>
     <string name="Grupo_ventas">Ventas</string>
     <string name="Grupo_extra">Extra</string>
-	
+    <string name="AcercaDeDescripcion4">Este aplicativo ha sido traducido por Jervânio Lima al Portugues de Brasil</string>
 	<string name="Nueva_version_1">** Nuevo Filtro por descripción en lista de movimientos</string>
 	<string name="Nueva_version_2">** Calculadora en menú principal</string>
 	<string name="Nueva_version_3">** Cambio en el cliente de envío de correos por problemas relacionados</string>

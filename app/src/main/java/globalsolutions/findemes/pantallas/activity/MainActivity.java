@@ -23,9 +23,11 @@ import android.widget.TextView;
 import java.math.BigDecimal;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 import globalsolutions.findemes.R;
 import globalsolutions.findemes.database.dao.GrupoGastoDAO;
@@ -175,10 +177,7 @@ public class MainActivity extends Activity {
                     && mesMovimiento == mesActual && anyoActal == anyoMovimiento) {
                 BigDecimal bdGasto;
                 try {
-                    if(mov.getValor().contains("."))
-                        bdGasto = BigDecimal.valueOf((Double) df.parse(mov.getValor()));
-                    else
-                        bdGasto = BigDecimal.valueOf((Long) df.parse(mov.getValor()));
+                    bdGasto = new BigDecimal(df.parse(mov.getValor()).toString());
                     gastos = gastos.add(bdGasto);
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -186,12 +185,9 @@ public class MainActivity extends Activity {
             }
             else if (mov.getTipoMovimiento().equals(getResources().getString(R.string.TIPO_MOVIMIENTO_INGRESO))
                     && mesMovimiento == mesActual && anyoActal == anyoMovimiento) {
+                BigDecimal bdIngreso;
                 try {
-                    BigDecimal bdIngreso;
-                    if(mov.getValor().contains("."))
-                        bdIngreso =  BigDecimal.valueOf((Double) df.parse(mov.getValor()));
-                    else
-                        bdIngreso =  BigDecimal.valueOf((Long) df.parse(mov.getValor()));
+                    bdIngreso =  new BigDecimal(df.parse(mov.getValor()).toString());
                     ingresos = ingresos.add(bdIngreso);
                 } catch (ParseException e) {
                     e.printStackTrace();

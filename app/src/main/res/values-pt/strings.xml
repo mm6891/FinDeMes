@@ -14,8 +14,8 @@
   <string name="Eliminar">Apagar</string>
   <string name="Cerrar">Fechar</string>
   <string name="Cancelar">Cancelar</string>
-  <string name="MENU_GASTOS">Gasto</string>
-  <string name="MENU_INGRESOS">Ingreso</string>
+  <string name="MENU_GASTOS">Despesa</string>
+  <string name="MENU_INGRESOS">Entrada</string>
   <string name="MENU_MOVIMIENTOS">Movimentos</string>
   <string name="MENU_INFORMES">Informações</string>
   <string name="MENU_REGISTROS">Registros</string>
